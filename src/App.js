@@ -4,6 +4,26 @@ import { Github, Linkedin, Mail, BookOpen, Instagram, Music, ChevronDown, Code, 
 export default function Portfolio() {
   const [darkMode, setDarkMode] = useState(true);
   const [showCertifications, setShowCertifications] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [navVisible, setNavVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setNavVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setNavVisible(false);
+        setShowCertifications(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,21 +54,21 @@ export default function Portfolio() {
   // Use root-level paths like: /portfolio/profile.jpg
 
   const skillsData = [
-    { name: "Python", icon: "https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" },
-    { name: "Java", icon: "https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" },
-    { name: "NumPy", icon: "https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" },
-    { name: "Pandas", icon: "https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" },
-    { name: "TensorFlow", icon: "https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" },
-    { name: "Jupyter", icon: "https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white" },
-    { name: "HTML5", icon: "https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" },
-    { name: "CSS3", icon: "https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" },
-    { name: "Git", icon: "https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" },
-    { name: "GitHub", icon: "https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" },
-    { name: "VS Code", icon: "https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" },
-    { name: "PyCharm", icon: "https://img.shields.io/badge/PyCharm-000000?style=for-the-badge&logo=pycharm&logoColor=white" },
-    { name: "IntelliJ", icon: "https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=intellijidea&logoColor=white" },
-    { name: "AWS", icon: "https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" },
-    { name: "Linux", icon: "https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" }
+    { name: "Python", color: "#3776AB" },
+    { name: "Java", color: "#ED8B00" },
+    { name: "NumPy", color: "#013243" },
+    { name: "Pandas", color: "#150458" },
+    { name: "TensorFlow", color: "#FF6F00" },
+    { name: "Jupyter", color: "#F37626" },
+    { name: "HTML5", color: "#E34F26" },
+    { name: "CSS3", color: "#1572B6" },
+    { name: "Git", color: "#F05032" },
+    { name: "GitHub", color: "#181717" },
+    { name: "VS Code", color: "#007ACC" },
+    { name: "PyCharm", color: "#000000" },
+    { name: "IntelliJ", color: "#000000" },
+    { name: "AWS", color: "#FF9900" },
+    { name: "Linux", color: "#FCC624" }
   ];
 
   const projects = [
@@ -76,9 +96,7 @@ export default function Portfolio() {
       date: "November 2024 - January 2025",
       issueDate: "January 10, 2025",
       description: "Completed intensive 2-month certification program covering advanced analytics, machine learning, data visualization, and real-world applications. Program included hands-on projects in Python, statistical analysis, predictive modeling, and data-driven decision making.",
-      skills: ["Python", "Machine Learning", "Data Analytics", "Data Visualization", "Statistical Analysis"],
-      // TO ADD CERTIFICATE IMAGE: Place in public/assets/certification.jpg
-      image: "/assets/certification.jpg"
+      skills: ["Python", "Machine Learning", "Data Analytics", "Data Visualization", "Statistical Analysis"]
     }
   ];
 
@@ -188,28 +206,28 @@ export default function Portfolio() {
           transition: transform 0.3s ease;
         }
         
-        .nav.hidden {
+        .nav.nav-hidden {
           transform: translateY(-100%);
         }
         
         .nav-content {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 0.75rem 2rem;
+          padding: 0.5rem 1.5rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
         }
         
         .logo {
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           font-weight: 700;
           color: ${headingColor};
         }
         
         .nav-links {
           display: flex;
-          gap: 1.5rem;
+          gap: 1rem;
           align-items: center;
           flex-wrap: wrap;
         }
@@ -219,9 +237,9 @@ export default function Portfolio() {
           background: none;
           border: none;
           cursor: pointer;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           position: relative;
-          padding: 0.5rem 0;
+          padding: 0.4rem 0;
           transition: all 0.3s;
           font-weight: 500;
         }
@@ -267,69 +285,50 @@ export default function Portfolio() {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          border: 1.5px solid ${accentColor};
-          color: ${accentColor};
+          padding: 0.5rem 1.25rem;
+          background: linear-gradient(135deg, #8b5cf6, #6366f1);
+          color: white;
+          border: none;
           border-radius: 0.5rem;
-          background: transparent;
           cursor: pointer;
           transition: all 0.3s;
           text-decoration: none;
-          font-weight: 500;
-          font-size: 0.9rem;
+          font-weight: 600;
+          font-size: 0.85rem;
+          box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
         }
         
         .github-btn:hover {
-          background: ${darkMode ? 'rgba(88, 166, 255, 0.15)' : 'rgba(59, 130, 246, 0.1)'};
-          box-shadow: 0 0 25px ${darkMode ? 'rgba(88, 166, 255, 0.4)' : 'rgba(59, 130, 246, 0.3)'};
-          transform: translateY(-3px);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
         }
         
         .cert-modal {
           position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(4px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 2000;
-          padding: 2rem;
-          opacity: 0;
-          animation: fadeIn 0.3s forwards;
-        }
-        
-        @keyframes fadeIn {
-          to { opacity: 1; }
-        }
-        
-        .cert-modal-content {
+          top: 80px;
+          right: 2rem;
+          width: 400px;
+          max-height: 80vh;
           background: ${cardBg};
-          border-radius: 1.5rem;
-          max-width: 900px;
-          width: 100%;
-          max-height: 90vh;
-          overflow-y: auto;
-          position: relative;
+          border-radius: 1rem;
           border: 2px solid ${darkMode ? '#8b5cf6' : '#a855f7'};
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-          transform: scale(0.9);
-          animation: scaleIn 0.3s forwards;
+          z-index: 1500;
+          opacity: 0;
+          animation: slideIn 0.3s forwards;
+          overflow-y: auto;
         }
         
-        @keyframes scaleIn {
-          to { transform: scale(1); }
+        @keyframes slideIn {
+          to { opacity: 1; }
         }
         
         .cert-close {
           position: absolute;
-          top: 1.5rem;
-          right: 1.5rem;
-          width: 40px;
-          height: 40px;
+          top: 1rem;
+          right: 1rem;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
           background: ${darkMode ? '#21262d' : '#f1f5f9'};
           border: 1px solid ${borderColor};
@@ -339,6 +338,7 @@ export default function Portfolio() {
           cursor: pointer;
           transition: all 0.3s;
           color: ${headingColor};
+          z-index: 10;
         }
         
         .cert-close:hover {
@@ -349,12 +349,13 @@ export default function Portfolio() {
         .cert-image {
           width: 100%;
           height: auto;
-          border-radius: 1rem 1rem 0 0;
+          border-radius: 0.5rem;
           object-fit: cover;
+          margin-bottom: 1rem;
         }
         
         .cert-details {
-          padding: 2rem;
+          padding: 1.5rem;
         }
         
         .hero {
@@ -362,14 +363,14 @@ export default function Portfolio() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 6rem 2rem 4rem;
+          padding: 4rem 2rem 4rem;
           text-align: center;
           position: relative;
         }
         
         .profile-image {
-          width: 200px;
-          height: 200px;
+          width: 180px;
+          height: 180px;
           border-radius: 50%;
           margin: 0 auto 2rem;
           border: 4px solid ${darkMode ? '#8b5cf6' : '#a855f7'};
@@ -549,9 +550,9 @@ export default function Portfolio() {
         }
         
         .skill-tag {
-          padding: 1.25rem;
+          padding: 1rem;
           background: ${sectionBg};
-          border: 1px solid ${borderColor};
+          border: 2px solid transparent;
           border-radius: 0.75rem;
           color: ${textColor};
           transition: all 0.3s;
@@ -559,21 +560,26 @@ export default function Portfolio() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.75rem;
-          font-weight: 500;
+          gap: 0.5rem;
+          font-weight: 600;
+          font-size: 0.9rem;
         }
         
         .skill-tag:hover {
-          border-color: ${accentColor};
           transform: translateY(-8px);
-          box-shadow: 0 12px 35px ${darkMode ? 'rgba(88, 166, 255, 0.25)' : 'rgba(59, 130, 246, 0.2)'};
-          background: ${darkMode ? 'rgba(88, 166, 255, 0.08)' : 'rgba(59, 130, 246, 0.08)'};
+          box-shadow: 0 12px 35px rgba(0,0,0,0.15);
         }
         
         .skill-icon {
-          width: 100%;
-          height: auto;
-          max-width: 120px;
+          width: 40px;
+          height: 40px;
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: white;
         }
         
         .projects-grid {
@@ -700,22 +706,32 @@ export default function Portfolio() {
         
         @media (max-width: 968px) {
           .nav-content {
-            padding: 1rem 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            padding: 0.5rem 1rem;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+          
+          .logo {
+            font-size: 1.1rem;
           }
           
           .nav-links {
-            gap: 1rem;
-            font-size: 0.85rem;
-            order: 3;
+            gap: 0.75rem;
+            font-size: 0.8rem;
             width: 100%;
             justify-content: center;
           }
           
           .github-btn {
-            padding: 0.4rem 0.875rem;
-            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+          }
+          
+          .cert-modal {
+            right: 1rem;
+            left: 1rem;
+            width: auto;
+            top: 70px;
           }
           
           .projects-grid {
@@ -723,16 +739,16 @@ export default function Portfolio() {
           }
           
           .skills-grid {
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
           }
           
           .profile-image {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
           }
           
-          .cert-modal-content {
-            margin: 1rem;
+          .hero {
+            padding: 3rem 1.5rem 3rem;
           }
         }
       `}</style>
@@ -747,7 +763,7 @@ export default function Portfolio() {
           <path className="wave-path" d="M 0 350 Q 200 250 400 350 T 800 350 T 1200 350" />
         </svg>
 
-        <nav className="nav">
+        <nav className={`nav ${!navVisible ? 'nav-hidden' : ''}`}>
           <div className="nav-content">
             <div className="logo">ASAD</div>
             <div className="nav-links">
@@ -761,106 +777,93 @@ export default function Portfolio() {
                 Certifications
               </button>
               <button onClick={() => scrollToSection('contact')} className="nav-link">Socials</button>
-              <a 
-                href="/portfolio/resume.pdf" 
-                download="Muhammad_Asad_Khan_Resume.pdf"
-                className="nav-link"
-                style={{ color: darkMode ? '#8b5cf6' : '#a855f7', fontWeight: '600' }}
-              >
-                Download CV
-              </a>
               <button onClick={() => setDarkMode(!darkMode)} className="theme-toggle" title="Toggle theme">
-                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                {darkMode ? <Sun size={16} /> : <Moon size={16} />}
               </button>
-              <a href="https://github.com/Asad101001" target="_blank" rel="noopener noreferrer" className="github-btn">
-                <Github size={16} />
-                <span>GitHub</span>
-              </a>
             </div>
           </div>
         </nav>
 
         {showCertifications && (
           <div 
-            className="cert-modal" 
-            onClick={() => setShowCertifications(false)}
+            className="cert-modal"
             onMouseLeave={() => setShowCertifications(false)}
           >
-            <div className="cert-modal-content" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowCertifications(false)} className="cert-close">
-                <X size={20} />
-              </button>
-              {certifications.map((cert, i) => (
-                <div key={i}>
-                  {/* TO ADD CERTIFICATE IMAGE: Place file as public/certification.jpg */}
+            <button onClick={() => setShowCertifications(false)} className="cert-close">
+              <X size={16} />
+            </button>
+            {certifications.map((cert, i) => (
+              <div key={i}>
+                <div className="cert-details">
                   <img 
                     src="/portfolio/certification.jpg" 
                     alt={cert.title} 
                     className="cert-image"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }} 
+                    onError={(e) => { e.target.style.display = 'none'; }} 
                   />
-                  <div className="cert-details">
-                    <h2 style={{ color: headingColor, fontSize: '2rem', fontWeight: '700', marginBottom: '1rem' }}>
-                      <Award size={32} style={{display: 'inline', marginRight: '0.5rem', verticalAlign: 'middle', color: darkMode ? '#8b5cf6' : '#a855f7'}} />
-                      {cert.title}
-                    </h2>
-                    <div style={{ marginBottom: '1.5rem' }}>
-                      <p style={{ color: darkMode ? '#8b5cf6' : '#a855f7', fontWeight: '600', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                        {cert.issuer}
-                      </p>
-                      <p style={{ color: mutedColor, fontSize: '0.95rem', marginBottom: '0.25rem' }}>
-                        {cert.issuingAuthority}
-                      </p>
-                      <p style={{ color: mutedColor, fontSize: '0.9rem' }}>
-                        Program Duration: {cert.date}
-                      </p>
-                      <p style={{ color: mutedColor, fontSize: '0.9rem', marginBottom: '1rem' }}>
-                        Issued: {cert.issueDate}
-                      </p>
-                    </div>
-                    <p style={{ color: textColor, lineHeight: '1.8', marginBottom: '1.5rem' }}>
-                      {cert.description}
+                  <h2 style={{ color: headingColor, fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.75rem' }}>
+                    <Award size={24} style={{display: 'inline', marginRight: '0.5rem', verticalAlign: 'middle', color: darkMode ? '#8b5cf6' : '#a855f7'}} />
+                    {cert.title}
+                  </h2>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <p style={{ color: darkMode ? '#8b5cf6' : '#a855f7', fontWeight: '600', fontSize: '0.95rem', marginBottom: '0.25rem' }}>
+                      {cert.issuer}
                     </p>
-                    <div>
-                      <h3 style={{ color: headingColor, fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                        Skills Acquired
-                      </h3>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                        {cert.skills.map((skill, j) => (
-                          <span key={j} className="tech-tag">{skill}</span>
-                        ))}
-                      </div>
+                    <p style={{ color: mutedColor, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      {cert.issuingAuthority}
+                    </p>
+                    <p style={{ color: mutedColor, fontSize: '0.8rem' }}>
+                      Duration: {cert.date}
+                    </p>
+                    <p style={{ color: mutedColor, fontSize: '0.8rem', marginBottom: '0.75rem' }}>
+                      Issued: {cert.issueDate}
+                    </p>
+                  </div>
+                  <p style={{ color: textColor, lineHeight: '1.6', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                    {cert.description}
+                  </p>
+                  <div>
+                    <h3 style={{ color: headingColor, fontSize: '1rem', fontWeight: '600', marginBottom: '0.5rem' }}>
+                      Skills Acquired
+                    </h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      {cert.skills.map((skill, j) => (
+                        <span key={j} className="tech-tag" style={{ fontSize: '0.75rem' }}>{skill}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         )}
 
         <section id="home" className="hero">
           <div style={{ maxWidth: '1100px' }}>
-            {/* TO ADD YOUR PROFILE IMAGE: Place file as public/profile.jpg (YES - replaces MA circle!) */}
             <img 
               src="/portfolio/profile.jpg" 
               alt="Muhammad Asad Khan" 
               className="profile-image"
               onError={(e) => {
-                // Fallback to MA circle if image not found
                 e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='%238b5cf6'/%3E%3Ctext x='100' y='120' text-anchor='middle' fill='white' font-size='80' font-weight='bold' font-family='Arial'%3EMA%3C/text%3E%3C/svg%3E";
               }}
             />
-            <div className="hello-tag">HELLO, WORLD</div>
             <h1 className="hero-title">
               I'm <span className="hero-gradient">Muhammad Asad</span>
             </h1>
             <p className="subtitle">CS Student & Python Developer | Data Science & Cloud Enthusiast</p>
             <div className="cta-buttons">
               <button onClick={() => scrollToSection('projects')} className="btn-primary">View Projects</button>
-              <a href="https://github.com/Asad101001" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                <Github size={20} />GitHub
+              <a 
+                href="/portfolio/resume.pdf" 
+                download="Muhammad_Asad_Khan_Resume.pdf"
+                className="github-btn"
+              >
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                  <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>
+                </svg>
+                Download CV
               </a>
             </div>
             <button onClick={() => scrollToSection('about')} className="bounce" style={{ background: 'none', border: 'none', color: mutedColor, cursor: 'pointer' }}>
