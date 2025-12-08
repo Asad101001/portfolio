@@ -54,21 +54,21 @@ export default function Portfolio() {
   // Use root-level paths like: /portfolio/profile.jpg
 
   const skillsData = [
-    { name: "Python", color: "#3776AB" },
-    { name: "Java", color: "#ED8B00" },
-    { name: "NumPy", color: "#013243" },
-    { name: "Pandas", color: "#150458" },
-    { name: "TensorFlow", color: "#FF6F00" },
-    { name: "Jupyter", color: "#F37626" },
-    { name: "HTML5", color: "#E34F26" },
-    { name: "CSS3", color: "#1572B6" },
-    { name: "Git", color: "#F05032" },
-    { name: "GitHub", color: "#181717" },
-    { name: "VS Code", color: "#007ACC" },
-    { name: "PyCharm", color: "#000000" },
-    { name: "IntelliJ", color: "#000000" },
-    { name: "AWS", color: "#FF9900" },
-    { name: "Linux", color: "#FCC624" }
+    { name: "Python", icon: "devicon-python-plain colored" },
+    { name: "Java", icon: "devicon-java-plain colored" },
+    { name: "NumPy", icon: "devicon-numpy-plain colored" },
+    { name: "Pandas", icon: "devicon-pandas-plain colored" },
+    { name: "TensorFlow", icon: "devicon-tensorflow-original colored" },
+    { name: "Jupyter", icon: "devicon-jupyter-plain colored" },
+    { name: "HTML5", icon: "devicon-html5-plain colored" },
+    { name: "CSS3", icon: "devicon-css3-plain colored" },
+    { name: "Git", icon: "devicon-git-plain colored" },
+    { name: "GitHub", icon: "devicon-github-original colored" },
+    { name: "VSCode", icon: "devicon-vscode-plain colored" },
+    { name: "PyCharm", icon: "devicon-pycharm-plain colored" },
+    { name: "IntelliJ", icon: "devicon-intellij-plain colored" },
+    { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" },
+    { name: "Linux", icon: "devicon-linux-plain colored" }
   ];
 
   const projects = [
@@ -543,16 +543,16 @@ export default function Portfolio() {
         
         .skills-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
           gap: 1rem;
           max-width: 1000px;
           margin: 0 auto;
         }
         
         .skill-tag {
-          padding: 1rem;
+          padding: 1rem 0.75rem;
           background: ${sectionBg};
-          border: 2px solid transparent;
+          border: 1px solid ${borderColor};
           border-radius: 0.75rem;
           color: ${textColor};
           transition: all 0.3s;
@@ -561,25 +561,19 @@ export default function Portfolio() {
           flex-direction: column;
           align-items: center;
           gap: 0.5rem;
-          font-weight: 600;
-          font-size: 0.9rem;
+          font-weight: 500;
+          font-size: 0.75rem;
         }
         
         .skill-tag:hover {
+          border-color: ${accentColor};
           transform: translateY(-8px);
-          box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+          box-shadow: 0 12px 35px ${darkMode ? 'rgba(88, 166, 255, 0.25)' : 'rgba(59, 130, 246, 0.2)'};
+          background: ${darkMode ? 'rgba(88, 166, 255, 0.05)' : 'rgba(59, 130, 246, 0.05)'};
         }
         
         .skill-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          font-weight: bold;
-          color: white;
+          font-size: 3rem;
         }
         
         .projects-grid {
@@ -739,7 +733,17 @@ export default function Portfolio() {
           }
           
           .skills-grid {
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.75rem;
+          }
+          
+          .skill-tag {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.7rem;
+          }
+          
+          .skill-icon {
+            font-size: 2.5rem;
           }
           
           .profile-image {
@@ -754,6 +758,9 @@ export default function Portfolio() {
       `}</style>
 
       <div style={{ background: bgColor, minHeight: '100vh', position: 'relative' }}>
+        {/* Load DevIcons CSS */}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+        
         <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', opacity: darkMode ? 0.08 : 0.04, zIndex: 0 }}>
           {[...Array(9)].map((_, i) => <div key={i} className="particle" />)}
         </div>
@@ -905,7 +912,8 @@ export default function Portfolio() {
             <div className="skills-grid">
               {skillsData.map((skill, i) => (
                 <div key={i} className="skill-tag">
-                  <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                  <i className={`${skill.icon} skill-icon`}></i>
+                  <span>{skill.name}</span>
                 </div>
               ))}
             </div>
