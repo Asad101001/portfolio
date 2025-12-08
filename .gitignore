@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+public/profile.jpg
+public/certification.jpg
+public/resume.pdf

@@ -24,6 +24,15 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
+  // TO ADD YOUR IMAGES: 
+  // For GitHub Pages, images need to be in public folder
+  // Profile: public/profile.jpg (NOT in assets folder for GitHub Pages!)
+  // Certification: public/certification.jpg
+  // CV/Resume: public/resume.pdf
+  
+  // Note: GitHub Pages paths don't include 'assets' in deployment
+  // Use root-level paths like: /portfolio/profile.jpg
+
   const skillsData = [
     { name: "Python", icon: "https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" },
     { name: "Java", icon: "https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" },
@@ -745,8 +754,21 @@ export default function Portfolio() {
               <button onClick={() => scrollToSection('about')} className="nav-link">About</button>
               <button onClick={() => scrollToSection('skills')} className="nav-link">Skills</button>
               <button onClick={() => scrollToSection('projects')} className="nav-link">Projects</button>
-              <button onClick={() => setShowCertifications(true)} className="nav-link">Certifications</button>
+              <button 
+                onMouseEnter={() => setShowCertifications(true)}
+                className="nav-link"
+              >
+                Certifications
+              </button>
               <button onClick={() => scrollToSection('contact')} className="nav-link">Socials</button>
+              <a 
+                href="/portfolio/resume.pdf" 
+                download="Muhammad_Asad_Khan_Resume.pdf"
+                className="nav-link"
+                style={{ color: darkMode ? '#8b5cf6' : '#a855f7', fontWeight: '600' }}
+              >
+                Download CV
+              </a>
               <button onClick={() => setDarkMode(!darkMode)} className="theme-toggle" title="Toggle theme">
                 {darkMode ? <Sun size={18} /> : <Moon size={18} />}
               </button>
@@ -759,16 +781,26 @@ export default function Portfolio() {
         </nav>
 
         {showCertifications && (
-          <div className="cert-modal" onClick={() => setShowCertifications(false)}>
+          <div 
+            className="cert-modal" 
+            onClick={() => setShowCertifications(false)}
+            onMouseLeave={() => setShowCertifications(false)}
+          >
             <div className="cert-modal-content" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowCertifications(false)} className="cert-close">
                 <X size={20} />
               </button>
               {certifications.map((cert, i) => (
                 <div key={i}>
-                  <img src={cert.image} alt={cert.title} className="cert-image" onError={(e) => {
-                    e.target.style.display = 'none';
-                  }} />
+                  {/* TO ADD CERTIFICATE IMAGE: Place file as public/certification.jpg */}
+                  <img 
+                    src="/portfolio/certification.jpg" 
+                    alt={cert.title} 
+                    className="cert-image"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }} 
+                  />
                   <div className="cert-details">
                     <h2 style={{ color: headingColor, fontSize: '2rem', fontWeight: '700', marginBottom: '1rem' }}>
                       <Award size={32} style={{display: 'inline', marginRight: '0.5rem', verticalAlign: 'middle', color: darkMode ? '#8b5cf6' : '#a855f7'}} />
@@ -810,11 +842,13 @@ export default function Portfolio() {
 
         <section id="home" className="hero">
           <div style={{ maxWidth: '1100px' }}>
+            {/* TO ADD YOUR PROFILE IMAGE: Place file as public/profile.jpg (YES - replaces MA circle!) */}
             <img 
-              src="public/assets/profile.jpg" 
+              src="/portfolio/profile.jpg" 
               alt="Muhammad Asad Khan" 
               className="profile-image"
               onError={(e) => {
+                // Fallback to MA circle if image not found
                 e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='%238b5cf6'/%3E%3Ctext x='100' y='120' text-anchor='middle' fill='white' font-size='80' font-weight='bold' font-family='Arial'%3EMA%3C/text%3E%3C/svg%3E";
               }}
             />
