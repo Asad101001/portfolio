@@ -19,9 +19,9 @@ export const CONFIG = {
   },
   big3: {
     players: [
-      { name: 'Lamine Yamal',   fallback: '⚽', wikiQuery: 'Lamine_Yamal' },
-      { name: 'Michael Olise',  fallback: '⚽', wikiQuery: 'Michael_Olise' },
-      { name: 'Pedri',          fallback: '⚽', wikiQuery: 'Pedri' }
+      { name: 'Lamine Yamal', shortName: 'LAMINE', fallback: '⚽', wikiQuery: 'Lamine_Yamal' },
+      { name: 'Rayan Cherki', shortName: 'CHERKI', fallback: '⚽', wikiQuery: 'Rayan_Cherki' },
+      { name: 'Pedri',        shortName: 'PEDRI',  fallback: '⚽', wikiQuery: 'Pedro_González_López' }
     ],
     watchlist: [
       { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
@@ -1709,7 +1709,7 @@ function _starsHTML(starsStr) {
 
         var nameLabel = document.createElement('span');
         nameLabel.className   = 'footballer-name-label';
-        nameLabel.textContent = p.name.split(' ')[0];
+        nameLabel.textContent = p.shortName || p.name.split(' ')[0].toUpperCase();
 
         wrap.appendChild(podiumWrap);
         wrap.appendChild(nameLabel);
@@ -1753,17 +1753,20 @@ function _starsHTML(starsStr) {
         var rawArtists = data.topartists.artist;
         var artistArr  = Array.isArray(rawArtists) ? rawArtists : [rawArtists];
 
-        // Normalize collaborative credits → primary artist, dedupe, take top 3
+        // Skip collaborative credits entirely (e.g. "Future, Metro Boomin & The Weeknd")
+        // Normalising to the first name still inflates wrong solo artists.
+        // Only count entries that are genuinely a single artist.
         var seen = {};
         var top3 = [];
         for (var i = 0; i < artistArr.length && top3.length < 3; i++) {
           var a = artistArr[i];
           if (!a || !a.name) continue;
-          var primary = _primaryArtist(a.name);
-          var key = primary.toLowerCase();
-          if (seen[key]) continue;  // skip duplicate primary artists
+          // Detect collab: comma, ampersand, ft., feat., " x ", ×, presents
+          if (/,|feat\.|ft\.|\s+&\s+|\s+x\s+|\s+×\s+|presents?/i.test(a.name)) continue;
+          var key = a.name.toLowerCase();
+          if (seen[key]) continue;
           seen[key] = true;
-          top3.push({ name: primary, playcount: a.playcount });
+          top3.push({ name: a.name, playcount: a.playcount });
         }
 
         if (top3 && top3.length) {
