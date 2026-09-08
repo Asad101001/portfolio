@@ -19,9 +19,9 @@ export const CONFIG = {
   },
   big3: {
     players: [
-      { name: 'Lamine Yamal',    fallback: '⚽' },
-      { name: 'Pedri González',  fallback: '⚽', wikiQuery: 'Pedri' },
-      { name: 'Nuno Mendes',     fallback: '⚽' }
+      { name: 'Lamine Yamal',   fallback: '⚽', wikiQuery: 'Lamine_Yamal' },
+      { name: 'Michael Olise',  fallback: '⚽', wikiQuery: 'Michael_Olise' },
+      { name: 'Pedri',          fallback: '⚽', wikiQuery: 'Pedri' }
     ],
     watchlist: [
       { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
@@ -187,33 +187,41 @@ function _moviePoster(title) {
 function _artistImage(name) {
   if (!name) return Promise.resolve(null);
 
-  const FALLBACK_SVG = 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23222%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20font-family%3D%22sans-serif%22%20font-size%3D%2230%22%20text-anchor%3D%22middle%22%20fill%3D%22%23444%22%3E%F0%9F%8E%B5%3C%2Ftext%3E%3C%2Fsvg%3E';
-
-  // 1. Try Spotify Search API (Best quality)
+  // 1. Spotify via serverless API (best quality, proper artist photo)
   return fetch('/api/search-artist?name=' + encodeURIComponent(name))
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
       if (data && data.image) return data.image;
-      
-      // 2. Fallback: Search Spotify by artist name in a broader way or iTunes
-      return fetch('https://itunes.apple.com/search?term=' + encodeURIComponent(name) + '&entity=song&limit=1')
-        .then(r => r.ok ? r.json() : null)
-        .then(d2 => {
-          if (d2 && d2.results && d2.results[0] && d2.results[0].artworkUrl100) {
-            return d2.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
-          }
-          // 3. Last Fallback: Wikipedia
-          return fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(name))
-            .then(r => r.ok ? r.json() : null)
-            .then(wikiData => {
-              if (wikiData && wikiData.thumbnail && wikiData.thumbnail.source) return wikiData.thumbnail.source;
-              return FALLBACK_SVG;
-            })
-            .catch(() => FALLBACK_SVG);
+
+      // 2. MusicBrainz -> fanart.tv for correct artist portrait (NOT album art)
+      return fetch('https://musicbrainz.org/ws/2/artist/?query=' + encodeURIComponent(name) + '&fmt=json&limit=1', {
+        headers: { 'Accept': 'application/json', 'User-Agent': 'PortfolioSite/1.0 (https://muhammadasadk.dev)' }
+      })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(mb) {
+          var mbid = mb && mb.artists && mb.artists[0] && mb.artists[0].id;
+          if (!mbid) throw new Error('No MBID');
+          return fetch('https://webservice.fanart.tv/v3/music/' + mbid + '?api_key=8b9b90b4a27c47218d80cde69e2fd7e3')
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(ft) {
+              var thumbs = (ft && ft.artistthumb) || [];
+              if (thumbs.length) return thumbs[0].url;
+              var logos = (ft && ft.hdmusiclogo) || (ft && ft.musiclogo) || [];
+              if (logos.length) return logos[0].url;
+              throw new Error('No fanart image');
+            });
         })
-        .catch(() => FALLBACK_SVG);
+        .catch(function() {
+          // 3. Wikipedia as final fallback
+          return fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(name))
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(wiki) {
+              return (wiki && wiki.thumbnail && wiki.thumbnail.source) ? wiki.thumbnail.source : null;
+            })
+            .catch(function() { return null; });
+        });
     })
-    .catch(() => FALLBACK_SVG);
+    .catch(function() { return null; });
 }
 
 /**
@@ -935,7 +943,7 @@ function _starsHTML(starsStr) {
     const nS   = new Date(nObj.getFullYear(), nObj.getMonth(), nObj.getDate());
     const diff = Math.round((nS - dS) / (1000 * 60 * 60 * 24));
     
-    var leagueName = (data.event && data.event.league && data.event.league.name) || 'Soccer';
+    var leagueName = (data.event && data.event.league && data.event.league.name) || 'Football';
     var headerLabel = 'MATCHDAY';
     if (state === 'in') {
       headerLabel = 'LIVE MATCH';
@@ -1710,12 +1718,30 @@ function _starsHTML(starsStr) {
     }
   }
 
-  /* ── TOP WEEKLY ARTISTS — FIXED: iTunes Search API (replaces deprecated Deezer) ── */
+  /* ── TOP WEEKLY ARTISTS ── */
   var USER       = CONFIG.usernames.lastfm;
   var API_KEY    = 'eccfb681fcf620a63fcb300d526544ba';
+  // Fetch top 10 so we have room to normalize collab credits and still get 3 real artists
   var LASTFM_URL = 'https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=' + USER +
-                   '&api_key=' + API_KEY + '&format=json&period=7day&limit=3';
+                   '&api_key=' + API_KEY + '&format=json&period=7day&limit=10';
   var artistThumbsEl = document.getElementById('big3-artist-thumbs');
+
+  /**
+   * Normalize a Last.fm artist name to its primary credited artist.
+   * Strips collaborative suffixes: "Future, Metro Boomin, The Weeknd" → "Future"
+   *                               "Drake & 21 Savage" → "Drake"
+   *                               "Travis Scott ft. The Weeknd" → "Travis Scott"
+   */
+  function _primaryArtist(rawName) {
+    if (!rawName) return '';
+    return rawName
+      .split(/\s*,\s*/)[0]           // comma: "A, B, C" → "A"
+      .split(/\s+&\s+/)[0]           // ampersand: "A & B" → "A"
+      .split(/\s+x\s+/i)[0]          // "A x B" → "A"
+      .split(/\s+×\s+/)[0]           // "A × B" → "A"
+      .split(/\s+(?:ft\.?|feat\.?|with|presents?)\s+/i)[0]  // "A ft. B" → "A"
+      .trim();
+  }
 
   function fetchArtists() {
     fetch(LASTFM_URL)
@@ -1726,13 +1752,25 @@ function _starsHTML(starsStr) {
 
         var rawArtists = data.topartists.artist;
         var artistArr  = Array.isArray(rawArtists) ? rawArtists : [rawArtists];
-        var top3       = artistArr.slice(0, 3);
+
+        // Normalize collaborative credits → primary artist, dedupe, take top 3
+        var seen = {};
+        var top3 = [];
+        for (var i = 0; i < artistArr.length && top3.length < 3; i++) {
+          var a = artistArr[i];
+          if (!a || !a.name) continue;
+          var primary = _primaryArtist(a.name);
+          var key = primary.toLowerCase();
+          if (seen[key]) continue;  // skip duplicate primary artists
+          seen[key] = true;
+          top3.push({ name: primary, playcount: a.playcount });
+        }
 
         if (top3 && top3.length) {
-          // 1. Render names text
+          // 1. Render names text — use bullet separator to avoid confusion with artist names containing commas
           var names = top3.map(function(a, idx) {
             return (idx + 1) + '. ' + (a && a.name ? a.name : 'Unknown Artist');
-          }).join(', ');
+          }).join(' · ');
           artistsEl.textContent = names;
 
           if (artistThumbsEl) {
@@ -1909,7 +1947,7 @@ function _starsHTML(starsStr) {
   }
 
   function fetchWatchlist() {
-    fetch('/api/watchlist?source=trakt')
+    fetch('/api/watchlist?source=simkl')
       .then(function(r) { return r.ok ? r.json() : null; })
       .then(function(data) {
         if (!data) throw new Error('Empty payload');

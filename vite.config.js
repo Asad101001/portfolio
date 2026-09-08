@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'url';
-import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
 
 /**
@@ -88,34 +87,6 @@ export default defineConfig({
     react(),
     htmlIncludePlugin(),
     apiMiddlewarePlugin(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      devOptions: {
-        enabled: true,
-        suppressWarnings: true
-      },
-      workbox: {
-        navigateFallback: null,
-        navigateFallbackDenylist: [/^\/demo\.html/, /^\/projects\//, /^\/api\//],
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2,json}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'jsdelivr-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
-      }
-    })
   ],
   server: {
     port: 5173
