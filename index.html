@@ -75,6 +75,18 @@
 <body>
     <script>
         (function() {
+            // Unregister any legacy service workers and clear cache storage from removed PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(regs) {
+                    for (var i = 0; i < regs.length; i++) regs[i].unregister();
+                });
+            }
+            if ('caches' in window) {
+                caches.keys().then(function(keys) {
+                    keys.forEach(function(k) { caches.delete(k); });
+                });
+            }
+
             const themes = ['professional', 'sunset', 'cyberpunk', 'komik'];
             const savedTheme = localStorage.getItem('asad_portfolio_theme');
             const initialTheme = (savedTheme && themes.includes(savedTheme)) ? savedTheme : 'komik';

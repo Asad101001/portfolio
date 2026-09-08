@@ -1,46 +1,26 @@
-const CACHE_NAME = 'portfolio-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/css/perf.css',
-  '/manifest.json'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+// Self-destructing service worker: unregisters itself and purges all caches
+self.addEventListener('install', function() {
+  self.skipWaiting();
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      })
-  );
-});
-
-self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+    caches.keys()
+      .then(function(keys) {
+        return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+      })
+      .then(function() {
+        return self.registration.unregister();
+      })
+      .then(function() {
+        return self.clients.matchAll({ type: 'window' });
+      })
+      .then(function(clients) {
+        clients.forEach(function(client) {
+          if (client.url && 'navigate' in client) {
+            client.navigate(client.url);
           }
-        })
-      );
-    })
+        });
+      })
   );
 });
