@@ -94,7 +94,7 @@ function parseRSS(xml, username) {
     if (mediaUrl && mediaUrl.startsWith('/') && !mediaUrl.startsWith('//')) {
       try {
         const base = new URL(link || '').origin;
-        mediaUrl = base + mediaUrl;
+        mediaUrl = base.replace('http://', 'https://') + mediaUrl;
       } catch (_) {}
     }
 
@@ -102,13 +102,22 @@ function parseRSS(xml, username) {
     if (mediaUrl && mediaUrl.includes('/pic/')) {
       const part = mediaUrl.split('/pic/').pop();
       const decoded = decodeURIComponent(part);
-      if (decoded.startsWith('http')) {
+      if (decoded.startsWith('https://')) {
         mediaUrl = decoded;
+      } else if (decoded.startsWith('http://')) {
+        mediaUrl = decoded.replace('http://', 'https://');
+      } else if (decoded.startsWith('video.twimg.com') || decoded.startsWith('video.twimg.com/')) {
+        mediaUrl = 'https://' + decoded;
       } else if (decoded.startsWith('media/') || decoded.startsWith('media%2F')) {
         mediaUrl = 'https://pbs.twimg.com/' + decoded.replace(/^media%2F/, 'media/');
       } else if (/^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)/i.test(decoded)) {
         mediaUrl = 'https://pbs.twimg.com/media/' + decoded;
       }
+    }
+
+    // Strict HTTPS enforcement on all media URLs
+    if (mediaUrl && mediaUrl.startsWith('http://')) {
+      mediaUrl = mediaUrl.replace('http://', 'https://');
     }
 
     items.push({

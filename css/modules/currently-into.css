@@ -43,6 +43,12 @@
   font-weight: 500; padding-left: 2px;
 }
 
+.rotating-widget {
+  position: relative;
+  min-height: 150px;
+  contain: layout;
+}
+
 /* Layout stabilization for rotating widgets */
 .rotating-item {
   position: absolute;

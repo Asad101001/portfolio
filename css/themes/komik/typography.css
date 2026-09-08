@@ -1,8 +1,6 @@
 /* ── KOMIK Typography ── */
 /* Crystal-clear print typography, natural charcoal ink, classic comic font hierarchy */
 
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-
 /* ── Global Text & Font Resets for KOMIK ── */
 body.theme-komik {
     color: #23272F !important;

@@ -83,11 +83,18 @@ import { CONFIG, escHtml } from './config.js';
         if (!mediaUrl) return '';
 
         if (mediaUrl.startsWith('/') && !mediaUrl.startsWith('//')) {
-            try { mediaUrl = new URL(item.link || '').origin + mediaUrl; } catch (_) {}
+            try { mediaUrl = new URL(item.link || '').origin.replace('http://', 'https://') + mediaUrl; } catch (_) {}
         }
         if (mediaUrl.includes('/pic/')) {
             const decoded = decodeURIComponent(mediaUrl.split('/pic/').pop());
-            if (decoded.startsWith('http')) mediaUrl = decoded;
+            if (decoded.startsWith('https://')) mediaUrl = decoded;
+            else if (decoded.startsWith('http://')) mediaUrl = decoded.replace('http://', 'https://');
+            else if (decoded.startsWith('video.twimg.com') || decoded.startsWith('video.twimg.com/')) mediaUrl = 'https://' + decoded;
+            else if (decoded.startsWith('media/')) mediaUrl = 'https://pbs.twimg.com/' + decoded;
+        }
+
+        if (mediaUrl.startsWith('http://')) {
+            mediaUrl = mediaUrl.replace('http://', 'https://');
         }
 
         if (mediaType === 'video') {
