@@ -2,7 +2,7 @@
    js/modules/twitter.js
    Real-time Twitter/X Feed — RSS-first, no fallback placeholders
    ══════════════════════════════════════════════════════════ */
-import { CONFIG, escHtml } from './widgets.js';
+import { CONFIG, escHtml } from './config.js';
 
 (function () {
     const container = document.getElementById('twitter-feed');
@@ -279,13 +279,49 @@ import { CONFIG, escHtml } from './widgets.js';
         });
     }
 
+    function renderLiveUserCard(user) {
+        if (!container) return;
+        const avatarUrl = user?.avatar_url || 'https://pbs.twimg.com/profile_images/1833138840820756480/CWF7-j8O_normal.jpg';
+        const name = escHtml(user?.name || DISPLAY_NAME || 'Asad');
+        const handle = escHtml(user?.screen_name || USER);
+        const tweets = user?.tweets ?? 610;
+        const likes = user?.likes ? (user.likes >= 1000 ? (user.likes / 1000).toFixed(1) + 'k' : user.likes) : '44.4k';
+        const following = user?.following ?? 149;
+
+        container.innerHTML = `
+            <div class="x-live-card" style="width:100%; grid-column:1/-1; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px 24px; box-sizing:border-box;">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+                    <div style="display:flex; align-items:center; gap:14px;">
+                        <img src="${avatarUrl}" alt="${name}" style="width:48px; height:48px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); object-fit:cover;" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'" />
+                        <div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-weight:800; font-size:1rem; color:var(--text);">${name}</span>
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="#1D9BF0"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </div>
+                            <div style="font-size:0.85rem; color:var(--text-dim);">@${handle}</div>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:16px; font-size:0.85rem;">
+                        <div><strong style="color:var(--text);">${tweets}</strong> <span style="color:var(--text-dim);">Posts</span></div>
+                        <div><strong style="color:var(--text);">${following}</strong> <span style="color:var(--text-dim);">Following</span></div>
+                        <div><strong style="color:var(--text);">${likes}</strong> <span style="color:var(--text-dim);">Likes</span></div>
+                    </div>
+                    <a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:9999px; background:#fff; color:#000; font-weight:700; font-size:0.82rem; text-decoration:none;">
+                        Follow on X ↗
+                    </a>
+                </div>
+            </div>`;
+    }
+
     function fetchTweets() {
         const url = `/api/twitter?user=${USER}&_t=${Date.now()}`;
-        fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(10000) })
+        fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(6000) })
             .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
             .then(data => {
                 if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
                     render(data.items);
+                } else if (data.user) {
+                    renderLiveUserCard(data.user);
                 } else {
                     renderEmptyState();
                 }

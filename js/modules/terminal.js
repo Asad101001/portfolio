@@ -6,7 +6,7 @@
    ══════════════════════════════════════════════════════════ */
 'use strict';
 
-import { escHtml } from './widgets.js';
+import { escHtml } from './config.js';
 
 function bootTerminal() {
     const terminalBody = document.getElementById('terminal-body');

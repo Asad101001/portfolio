@@ -1,54 +1,6 @@
-/* ── Configuration ── */
-export const CONFIG = {
-  usernames: {
-    letterboxd: 'asad_k',
-    lastfm: 'Asad991',
-    github: 'Asad101001',
-    twitter: 'As4d_41'
-  },
-  currently: {
-    reading: '1984 George Orwell',
-    tv: {
-      title: 'House of the Dragon',
-      season: 3,
-      episode: 8,
-      watching: false,
-      lastWatched: '2026-08-18T05:06:00.000Z'
-    },
-    series: ['House of the Dragon', 'Off Campus', 'Adults', 'Widow\'s Bay', 'Euphoria', 'The Great', 'Shrinking', 'Batman: The Animated Series', 'Dark', 'Lost']
-  },
-  big3: {
-    players: [
-      { name: 'Lamine Yamal', shortName: 'LAMINE', fallback: '⚽', wikiQuery: 'Lamine_Yamal' },
-      { name: 'Rayan Cherki', shortName: 'CHERKI', fallback: '⚽', wikiQuery: 'Rayan_Cherki' },
-      { name: 'Pedri',        shortName: 'PEDRI',  fallback: '⚽', wikiQuery: 'Pedro_González_López' }
-    ],
-    watchlist: [
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' }
-    ],
-    seriesWatchlist: [
-      { title: 'Lost' },
-      { title: 'Dark' },
-      { title: 'Cape Fear' },
-      { title: 'The Wire' }
-    ]
-  }
-};
-
-/**
- * Simple HTML escaping to prevent XSS.
- */
-export function escHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
+/* ── Shared Configuration & Utilities ── */
+import { CONFIG, escHtml } from './config.js';
+export { CONFIG, escHtml };
 
 /* ══════════════════════════════════════════════════════════
    IMAGE / DATA UTILITY HELPERS — FIXED VERSION
@@ -193,42 +145,22 @@ function _artistImage(name) {
     .then(function(data) {
       if (data && data.image) return data.image;
 
-      // 2. MusicBrainz -> fanart.tv for correct artist portrait (NOT album art)
-      return fetch('https://musicbrainz.org/ws/2/artist/?query=' + encodeURIComponent(name) + '&fmt=json&limit=1', {
-        headers: { 'Accept': 'application/json', 'User-Agent': 'PortfolioSite/1.0 (https://muhammadasadk.dev)' }
-      })
+      // 2. Wikipedia summary fallback
+      return fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(name))
         .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(mb) {
-          var mbid = mb && mb.artists && mb.artists[0] && mb.artists[0].id;
-          if (!mbid) throw new Error('No MBID');
-          return fetch('https://webservice.fanart.tv/v3/music/' + mbid + '?api_key=8b9b90b4a27c47218d80cde69e2fd7e3')
-            .then(function(r) { return r.ok ? r.json() : null; })
-            .then(function(ft) {
-              var thumbs = (ft && ft.artistthumb) || [];
-              if (thumbs.length) return thumbs[0].url;
-              var logos = (ft && ft.hdmusiclogo) || (ft && ft.musiclogo) || [];
-              if (logos.length) return logos[0].url;
-              throw new Error('No fanart image');
-            });
+        .then(function(wiki) {
+          return (wiki && wiki.thumbnail && wiki.thumbnail.source) ? wiki.thumbnail.source : null;
         })
-        .catch(function() {
-          // 3. Wikipedia as final fallback
-          return fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(name))
-            .then(function(r) { return r.ok ? r.json() : null; })
-            .then(function(wiki) {
-              return (wiki && wiki.thumbnail && wiki.thumbnail.source) ? wiki.thumbnail.source : null;
-            })
-            .catch(function() { return null; });
-        });
+        .catch(function() { return null; });
     })
     .catch(function() { return null; });
 }
 
 /**
- * FIXED: Footballer headshot via TheSportsDB + Wikipedia API fallback.
- * TheSportsDB free tier + Wikipedia summary thumbnail.
+ * Footballer headshot: local verified photo first, then TheSportsDB + Wikipedia fallback.
  */
 function _sportsdbPlayer(pObj) {
+  if (pObj && pObj.image) return Promise.resolve(pObj.image);
   var name = typeof pObj === 'string' ? pObj : pObj.name;
   var wikiQ = (typeof pObj === 'object' && pObj.wikiQuery) ? pObj.wikiQuery : name.replace(/ /g, '_');
 
@@ -943,14 +875,27 @@ function _starsHTML(starsStr) {
     const nS   = new Date(nObj.getFullYear(), nObj.getMonth(), nObj.getDate());
     const diff = Math.round((nS - dS) / (1000 * 60 * 60 * 24));
     
-    var leagueName = (data.event && data.event.league && data.event.league.name) || 'Football';
+    var leagueName = (data.event && data.event.league && data.event.league.name) || '';
+    var isGenericLeague = !leagueName || leagueName.toLowerCase() === 'football' || leagueName.toLowerCase() === 'soccer';
     var headerLabel = 'MATCHDAY';
     if (state === 'in') {
       headerLabel = 'LIVE MATCH';
     } else if (state === 'post') {
-      headerLabel = (diff === 0) ? 'MATCHDAY' : (leagueName ? leagueName.toUpperCase() + ' · FINAL' : 'MATCHDAY');
+      if (diff === 0) {
+        headerLabel = 'MATCHDAY · FULL TIME';
+      } else if (!isGenericLeague) {
+        headerLabel = leagueName.toUpperCase() + ' · FULL TIME';
+      } else {
+        headerLabel = 'LAST MATCH · FULL TIME';
+      }
     } else if (state === 'pre') {
-      headerLabel = leagueName ? leagueName.toUpperCase() + ' · FIXTURE' : 'NEXT MATCH';
+      if (diff === 0) {
+        headerLabel = 'MATCHDAY · FIXTURE';
+      } else if (!isGenericLeague) {
+        headerLabel = leagueName.toUpperCase() + ' · FIXTURE';
+      } else {
+        headerLabel = 'UPCOMING FIXTURE';
+      }
     }
 
     // Suppress "Today" if header is "Matchday", or if it is "Live Now"
@@ -1699,6 +1644,8 @@ function _starsHTML(starsStr) {
             img.className = 'footballer-headshot-img';
             img.alt       = p.name;
             img.loading   = 'lazy';
+            img.width     = originalIdx === 0 ? 76 : 64;
+            img.height    = originalIdx === 0 ? 76 : 64;
             img.src       = imgUrl;
             img.onerror   = function() { this.style.display = 'none'; };
             avatarEl.parentNode.replaceChild(img, avatarEl);

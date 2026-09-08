@@ -2,18 +2,16 @@
  * api/twitter.js — Serverless Twitter/X feed via RSS sources
  *
  * Sources tried in order:
- *  1. RSSHub (self-hostable, Twitter RSS aggregator)
- *  2. Nitter public instances (multiple mirrors)
- *  3. Graceful empty-state fallback
+ *  1. Nitter verified active mirrors (e.g. jaydenha.uk, cz)
+ *  2. RSSHub fallback
+ *  3. fxTwitter user profile fallback
  */
 
-const RSS_TIMEOUT = 5000;
+const RSS_TIMEOUT = 3500;
 
 const NITTER_INSTANCES = [
-  'https://nitter.poast.org',
-  'https://nitter.privacydev.net',
-  'https://nitter.1d4.us',
-  'https://nitter.kavin.rocks',
+  'https://nitter.jaydenha.uk',
+  'https://nitter.cz',
 ];
 
 const RSSHUB_INSTANCES = [
@@ -29,7 +27,7 @@ async function fetchWithTimeout(url, ms = RSS_TIMEOUT) {
     const r = await fetch(url, {
       signal: ctrl.signal,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; Portfolio/1.0; +https://muhammadasadk.dev)',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
         'Accept': 'application/rss+xml, application/xml, text/xml, */*',
       },
     });
@@ -63,7 +61,6 @@ function parseRSS(xml, username) {
     const description = extractTag(block, 'description');
     const guid        = extractTag(block, 'guid');
 
-    // Skip RT titles that are purely from others if wanted, keep here for display
     if (!title && !description) continue;
 
     // Clean link: nitter → x.com
@@ -86,7 +83,6 @@ function parseRSS(xml, username) {
       const imgMatch = description.match(/<img[^>]+src="([^"]+)"/i);
       if (imgMatch) {
         const candidate = imgMatch[1];
-        // Filter out avatar images (small profile pics)
         if (!candidate.includes('profile_images') && !candidate.includes('_normal.')) {
           mediaUrl  = candidate;
           mediaType = 'image';
@@ -95,18 +91,24 @@ function parseRSS(xml, username) {
     }
 
     // Resolve relative media URLs
-    if (mediaUrl && mediaUrl.startsWith('/')) {
+    if (mediaUrl && mediaUrl.startsWith('/') && !mediaUrl.startsWith('//')) {
       try {
         const base = new URL(link || '').origin;
         mediaUrl = base + mediaUrl;
       } catch (_) {}
     }
 
-    // Convert nitter media URLs to Twitter CDN equivalents
+    // Convert nitter proxied media URLs to Twitter CDN equivalents
     if (mediaUrl && mediaUrl.includes('/pic/')) {
-      // nitter proxied image: decode the encoded twitter URL
-      const decoded = decodeURIComponent(mediaUrl.split('/pic/').pop());
-      if (decoded.startsWith('http')) mediaUrl = decoded;
+      const part = mediaUrl.split('/pic/').pop();
+      const decoded = decodeURIComponent(part);
+      if (decoded.startsWith('http')) {
+        mediaUrl = decoded;
+      } else if (decoded.startsWith('media/') || decoded.startsWith('media%2F')) {
+        mediaUrl = 'https://pbs.twimg.com/' + decoded.replace(/^media%2F/, 'media/');
+      } else if (/^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)/i.test(decoded)) {
+        mediaUrl = 'https://pbs.twimg.com/media/' + decoded;
+      }
     }
 
     items.push({
@@ -148,21 +150,9 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'public, s-maxage=180, stale-while-revalidate=360');
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
 
-  // 1. Try RSSHub instances
-  for (const base of RSSHUB_INSTANCES) {
-    const items = await tryRSSUrl(`${base}${username}`, username);
-    if (items) {
-      return res.status(200).json({
-        status: 'ok',
-        items,
-        source: 'rsshub',
-      });
-    }
-  }
-
-  // 2. Try Nitter instances
+  // 1. Try Nitter instances first (jaydenha.uk is fastest)
   for (const host of NITTER_INSTANCES) {
     const items = await tryRSSUrl(`${host}/${username}/rss`, username);
     if (items) {
@@ -174,7 +164,19 @@ export default async function handler(req, res) {
     }
   }
 
-  // 3. Try fxtwitter for user profile only as last resort
+  // 2. Try RSSHub instances
+  for (const base of RSSHUB_INSTANCES) {
+    const items = await tryRSSUrl(`${base}${username}`, username);
+    if (items) {
+      return res.status(200).json({
+        status: 'ok',
+        items,
+        source: 'rsshub',
+      });
+    }
+  }
+
+  // 3. Try fxtwitter for live user profile stats fallback
   try {
     const r = await fetchWithTimeout(`https://api.fxtwitter.com/${username}`);
     if (r.ok) {
