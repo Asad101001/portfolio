@@ -70,6 +70,7 @@
     <!-- Preload critical hero background image for instant desktop LCP only -->
     <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" media="(min-width: 769px)" fetchpriority="high" />
     <style>
+      #loading-screen { position: fixed; inset: 0; z-index: 9999; background: #050505; display: flex; align-items: center; justify-content: center; pointer-events: none; }
       @media (max-width: 768px) { #loading-screen { display: none !important; } }
     </style>
     <!-- Critical CSS -->
