@@ -10,12 +10,26 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Muhammad Asad Khan';
+    const CACHE_KEY = 'asad_twitter_cache_v4';
+    const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
-    try {
-        localStorage.removeItem('asad_twitter_cache_v3');
-        localStorage.removeItem('asad_twitter_cache_v2');
-        localStorage.removeItem('asad_twitter_cache');
-    } catch (_) {}
+    function getLocalCache() {
+        try {
+            const raw = localStorage.getItem(CACHE_KEY);
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (Date.now() - parsed.timestamp < CACHE_TTL) {
+                return parsed.data;
+            }
+        } catch (_) {}
+        return null;
+    }
+
+    function setLocalCache(data) {
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+        } catch (_) {}
+    }
 
     function renderLoadingState() {
         container.innerHTML = `
@@ -27,13 +41,13 @@ import { CONFIG, escHtml } from './config.js';
 
     function renderEmptyState() {
         container.innerHTML = `
-            <div class="x-empty-state-card" style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;border-radius:12px;background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);gap:12px;width:100%;box-sizing:border-box;">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="opacity:0.6;">
+            <div class="x-empty-state-card x-error-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="x-error-icon" style="opacity:0.75;">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-                <div style="font-size:0.95rem;font-weight:700;color:var(--text);">X feed unavailable right now</div>
-                <div style="font-size:0.82rem;color:var(--text-dim);max-width:320px;line-height:1.5;">The live tweet sync couldn't connect. Check back shortly or visit directly.</div>
-                <a href="https://x.com/${USER}" target="_blank" rel="noopener noreferrer" style="margin-top:4px;display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:9999px;background:#fff;color:#000;font-weight:700;font-size:0.8rem;text-decoration:none;">
+                <div class="x-empty-state-title x-error-title">X feed unavailable right now</div>
+                <div class="x-empty-state-desc x-error-desc">The live tweet sync couldn't connect. Check back shortly or visit directly.</div>
+                <a href="https://x.com/${USER}" target="_blank" rel="noopener noreferrer" class="x-empty-cta x-error-btn">
                     @${USER} on X ↗
                 </a>
             </div>`;
@@ -286,57 +300,41 @@ import { CONFIG, escHtml } from './config.js';
         });
     }
 
-    function renderLiveUserCard(user) {
-        if (!container) return;
-        const avatarUrl = user?.avatar_url || 'https://pbs.twimg.com/profile_images/1833138840820756480/CWF7-j8O_normal.jpg';
-        const name = escHtml(user?.name || DISPLAY_NAME || 'Asad');
-        const handle = escHtml(user?.screen_name || USER);
-        const tweets = user?.tweets ?? 610;
-        const likes = user?.likes ? (user.likes >= 1000 ? (user.likes / 1000).toFixed(1) + 'k' : user.likes) : '44.4k';
-        const following = user?.following ?? 149;
-
-        container.innerHTML = `
-            <div class="x-live-card" style="width:100%; grid-column:1/-1; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:20px 24px; box-sizing:border-box;">
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-                    <div style="display:flex; align-items:center; gap:14px;">
-                        <img src="${avatarUrl}" alt="${name}" style="width:48px; height:48px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); object-fit:cover;" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'" />
-                        <div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="font-weight:800; font-size:1rem; color:var(--text);">${name}</span>
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="#1D9BF0"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                            </div>
-                            <div style="font-size:0.85rem; color:var(--text-dim);">@${handle}</div>
-                        </div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:16px; font-size:0.85rem;">
-                        <div><strong style="color:var(--text);">${tweets}</strong> <span style="color:var(--text-dim);">Posts</span></div>
-                        <div><strong style="color:var(--text);">${following}</strong> <span style="color:var(--text-dim);">Following</span></div>
-                        <div><strong style="color:var(--text);">${likes}</strong> <span style="color:var(--text-dim);">Likes</span></div>
-                    </div>
-                    <a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:9999px; background:#fff; color:#000; font-weight:700; font-size:0.82rem; text-decoration:none;">
-                        Follow on X ↗
-                    </a>
-                </div>
-            </div>`;
+    function applyPayload(data) {
+        if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+            render(data.items);
+        } else {
+            renderEmptyState();
+        }
     }
 
     function fetchTweets() {
         const url = `/api/twitter?user=${USER}&_t=${Date.now()}`;
-        fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(6000) })
+        fetch(url, { signal: AbortSignal.timeout(10000) })
             .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
             .then(data => {
-                if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
-                    render(data.items);
-                } else if (data.user) {
-                    renderLiveUserCard(data.user);
+                setLocalCache(data);
+                applyPayload(data);
+            })
+            .catch(() => {
+                const cached = getLocalCache();
+                if (cached) {
+                    applyPayload(cached);
                 } else {
                     renderEmptyState();
                 }
-            })
-            .catch(() => renderEmptyState());
+            });
     }
 
-    renderLoadingState();
-    fetchTweets();
+    const initialCache = getLocalCache();
+    if (initialCache) {
+        applyPayload(initialCache);
+        // Refresh in background after a short delay
+        setTimeout(fetchTweets, 2000);
+    } else {
+        renderLoadingState();
+        fetchTweets();
+    }
+
     setInterval(fetchTweets, 60000 * 5);
 })();

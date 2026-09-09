@@ -132,6 +132,7 @@ body.theme-komik .hero-backdrop-overlay {
 }
 
 /* ── Hero background image: soft vintage halftone effect ── */
+body.theme-komik #hero-bg-img,
 body.theme-komik .hero-bg-img {
     opacity: 0.05 !important;
     filter: grayscale(100%) contrast(1.5) sepia(0.2) !important;

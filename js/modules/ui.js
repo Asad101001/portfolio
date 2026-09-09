@@ -114,10 +114,12 @@
     });
   }
 
-  /* ── Scroll-position based active section (reliable) ─────── */
-  /* Finds the section whose top is closest above 35% viewport  */
+  /* ── Scroll-position based active section (optimized) ─────── */
   var lastActiveIdx = -1;
   var sectionOffsets = [];
+  var navLinksCache = null;
+  var mbnItemsCache = null;
+
   function updateSectionOffsets() {
     var scrollTop = window.scrollY || window.pageYOffset;
     sectionOffsets = sections.map(function(id) {
@@ -127,7 +129,8 @@
   }
   window.addEventListener('resize', updateSectionOffsets, { passive: true });
   window.addEventListener('load', updateSectionOffsets);
-  
+  setTimeout(updateSectionOffsets, 500);
+
   function getActiveSectionIdx() {
     if (sectionOffsets.length === 0) updateSectionOffsets();
     var scrollTop = window.scrollY || window.pageYOffset;
@@ -139,40 +142,44 @@
     return best;
   }
 
+  var indicatorTicking = false;
   function updateAllIndicators() {
-    var idx = getActiveSectionIdx();
-    if (idx === lastActiveIdx) return;
-    lastActiveIdx = idx;
-    var activeSection = sections[idx];
+    if (indicatorTicking) return;
+    indicatorTicking = true;
+    requestAnimationFrame(function() {
+      indicatorTicking = false;
+      var idx = getActiveSectionIdx();
+      if (idx === lastActiveIdx) return;
+      lastActiveIdx = idx;
+      var activeSection = sections[idx];
 
-    /* Desktop side dots */
-    updateDots(idx);
+      /* Desktop side dots */
+      updateDots(idx);
 
-    /* Desktop top-nav link highlights */
-    document.querySelectorAll('.nav-links a').forEach(function(link) {
-      var href = (link.getAttribute('href') || '').replace('#','');
-      var matchId = activeSection;
-      if (activeSection === 'demo' || activeSection === 'tech') matchId = 'projects';
-      if (activeSection === 'education') matchId = 'about';
-      link.classList.toggle('active', href === matchId || href === 'certifications' ? false : href === matchId);
-    });
+      /* Desktop top-nav link highlights */
+      if (!navLinksCache) navLinksCache = document.querySelectorAll('.nav-links a');
+      navLinksCache.forEach(function(link) {
+        var href = (link.getAttribute('href') || '').replace('#','');
+        var matchId = activeSection;
+        if (activeSection === 'demo' || activeSection === 'tech') matchId = 'projects';
+        if (activeSection === 'education') matchId = 'about';
+        link.classList.toggle('active', href === matchId && href !== 'certifications');
+      });
 
-    /* Mobile bottom nav */
-    var targetHref = '#' + activeSection;
-    if (activeSection === 'demo' || activeSection === 'tech') targetHref = '#projects';
-    if (activeSection === 'education') targetHref = '#about';
-    document.querySelectorAll('.mbn-item:not(.mbn-cta):not([href="#certifications"])').forEach(function(item) {
-      item.classList.toggle('active', item.getAttribute('href') === targetHref);
+      /* Mobile bottom nav */
+      if (!mbnItemsCache) mbnItemsCache = document.querySelectorAll('.mbn-item:not(.mbn-cta):not([href="#certifications"])');
+      var targetHref = '#' + activeSection;
+      if (activeSection === 'demo' || activeSection === 'tech') targetHref = '#projects';
+      if (activeSection === 'education') targetHref = '#about';
+      mbnItemsCache.forEach(function(item) {
+        item.classList.toggle('active', item.getAttribute('href') === targetHref);
+      });
     });
   }
 
-  /* Hook into the existing rAF scroll task loop */
-  if (window._scrollTasks) {
-    window._scrollTasks.push(updateAllIndicators);
-  } else {
-    window.addEventListener('scroll', updateAllIndicators, { passive: true });
-  }
-  setTimeout(updateAllIndicators, 300);
+  /* Hook into scroll with throttling */
+  window.addEventListener('scroll', updateAllIndicators, { passive: true });
+  setTimeout(updateAllIndicators, 200);
 
   /* Mobile bottom nav tap: spring bounce + haptic */
   document.querySelectorAll('.mbn-item').forEach(function(item) {

@@ -66,8 +66,11 @@
     <!-- Devicons: non-critical async stylesheet -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" /></noscript>
-    <!-- Preload critical hero background image for instant LCP -->
-    <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" fetchpriority="high" />
+    <!-- Preload critical hero background image for instant desktop LCP only -->
+    <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" media="(min-width: 769px)" fetchpriority="high" />
+    <style>
+      @media (max-width: 768px) { #loading-screen { display: none !important; } }
+    </style>
     <!-- Critical CSS -->
     <link rel="stylesheet" href="./css/style.css" />
 </head>
