@@ -1,6 +1,9 @@
 /* ============================================================
    js/modules/theme.js
    Dynamic Theme Engine — KOMIK Default + Device-Split Controls
+   
+   Performance: Only komik CSS is bundled. Other themes are
+   lazy-loaded on first switch via <link rel="stylesheet">.
    ============================================================ */
 'use strict';
 
@@ -17,22 +20,56 @@
     // Apply initial theme immediately to body (before DOM is ready)
     document.body.classList.add(`theme-${themes[currentThemeIndex]}`);
 
+    // ── Lazy CSS loading for non-default themes ──
+    // komik is bundled statically; others load on demand
+    const loadedThemeCSS = new Set(['komik']); // komik is always present
+
+    function ensureThemeCSS(theme) {
+        if (loadedThemeCSS.has(theme)) return Promise.resolve();
+
+        return new Promise((resolve) => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            // In production, these are served from public/css/themes/ (pre-built concatenated files).
+            // In dev, Vite serves them from public/ as static assets.
+            link.href = `/css/themes/${theme}.css`;
+            link.dataset.theme = theme;
+            link.onload = () => {
+                loadedThemeCSS.add(theme);
+                resolve();
+            };
+            link.onerror = () => {
+                loadedThemeCSS.add(theme); // Don't retry
+                resolve();
+            };
+            document.head.appendChild(link);
+        });
+    }
+
+    // If user's saved theme is not komik, load its CSS immediately
+    if (themes[currentThemeIndex] !== 'komik') {
+        ensureThemeCSS(themes[currentThemeIndex]);
+    }
+
     function rotateTheme() {
         currentThemeIndex = (currentThemeIndex + 1) % themes.length;
         const nextTheme = themes[currentThemeIndex];
 
-        // Use View Transition API for buttery smooth fade if available
-        if (document.startViewTransition) {
-            document.body.classList.add('theme-transitioning');
-            const transition = document.startViewTransition(() => {
+        // Ensure CSS is loaded before applying theme
+        ensureThemeCSS(nextTheme).then(() => {
+            // Use View Transition API for buttery smooth fade if available
+            if (document.startViewTransition) {
+                document.body.classList.add('theme-transitioning');
+                const transition = document.startViewTransition(() => {
+                    applyTheme(nextTheme);
+                });
+                transition.finished.finally(() => {
+                    document.body.classList.remove('theme-transitioning');
+                });
+            } else {
                 applyTheme(nextTheme);
-            });
-            transition.finished.finally(() => {
-                document.body.classList.remove('theme-transitioning');
-            });
-        } else {
-            applyTheme(nextTheme);
-        }
+            }
+        });
 
         localStorage.setItem('asad_portfolio_theme', nextTheme);
     }

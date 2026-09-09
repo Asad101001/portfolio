@@ -40,4 +40,6 @@ refactor/
 .env*
 temp_backup_images/
 trakt-export-as4d/
+compress-images.cjs
+compress-project-images.cjs
 
