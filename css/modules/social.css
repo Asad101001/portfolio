@@ -197,33 +197,69 @@
 }
 
 /* Platform Theme Colors & Specific Glows */
-.social-platform-card.github { --p-clr: #ffffff; }
-.social-platform-card.linkedin { --p-clr: #0077b5; }
-.social-platform-card.discord { --p-clr: #5865F2; }
-.social-platform-card.medium { --p-clr: #ffffff; }
-.social-platform-card.instagram { --p-clr: #E4405F; }
-.social-platform-card.spotify { --p-clr: #1DB954; }
+.social-platform-card.github   { --p-clr: #e0e0e0; }
+.social-platform-card.linkedin { --p-clr: #0a66c2; }
+.social-platform-card.discord  { --p-clr: #5865F2; }
+.social-platform-card.medium   { --p-clr: #ffffff;  }
+.social-platform-card.instagram{ --p-clr: #E4405F; }
+.social-platform-card.spotify  { --p-clr: #1DB954; }
 
+/* Base card */
 .social-platform-card {
   position: relative;
   overflow: hidden;
-  border-color: rgba(255, 255, 255, 0.05) !important;
-  background: rgba(255, 255, 255, 0.02) !important;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  min-width: 140px;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  min-width: 130px;
+  /* Left accent border per platform — applied per-card below */
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
+}
+
+/* Per-platform distinct resting states */
+.social-platform-card.github {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-left-color: #e0e0e0 !important;
+}
+.social-platform-card.linkedin {
+  background: rgba(10, 102, 194, 0.08) !important;
+  border-left-color: #0a66c2 !important;
+}
+.social-platform-card.discord {
+  background: rgba(88, 101, 242, 0.08) !important;
+  border-left-color: #5865F2 !important;
+}
+.social-platform-card.instagram {
+  background: rgba(228, 64, 95, 0.07) !important;
+  border-left-color: #E4405F !important;
+}
+.social-platform-card.spotify {
+  background: rgba(29, 185, 84, 0.08) !important;
+  border-left-color: #1DB954 !important;
+}
+
+/* Icon tinted to platform color at rest */
+.social-platform-card .spc-icon svg,
+.social-platform-card .spc-icon i {
+  color: var(--p-clr) !important;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
 .social-platform-card:hover {
   border-color: var(--p-clr) !important;
-  transform: translateY(-5px);
-  box-shadow: 
+  transform: translateY(-5px) !important;
+  box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.4),
-    0 0 15px var(--p-clr),
+    0 0 15px color-mix(in srgb, var(--p-clr) 40%, transparent),
     inset 0 0 10px rgba(255, 255, 255, 0.02) !important;
 }
 
 .social-platform-card:hover .spc-icon svg {
   color: var(--p-clr) !important;
+  opacity: 1;
+  transform: scale(1.1);
 }
 /* Only fill SVGs that are intended to be solid (Discord has fill, IG doesn't) */
 .social-platform-card.discord:hover .spc-icon svg {

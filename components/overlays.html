@@ -143,30 +143,4 @@
     </div>
 </div>
 
-<!-- ERROR POPUP — triggered by #experience-toggle click -->
-<div id="error-popup" class="error-popup" aria-hidden="true">
-    <div class="error-popup-bar">
-        <span class="error-popup-trafficlight red"></span>
-        <span class="error-popup-trafficlight yellow"></span>
-        <span class="error-popup-trafficlight green"></span>
-        <span class="error-popup-title">runtime_exception.log</span>
-    </div>
-    <div class="error-popup-body">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="12" />
-            <line x1="12" y1="16" x2="12.01" y2="16" />
-        </svg>
-        <div>
-            <p class="error-popup-msg">ExperienceNotFoundException</p>
-            <p class="error-popup-trace">at Portfolio.getWorkHistory() → line 404</p>
-            <p class="error-popup-trace">at #experience-toggle :: click handler</p>
-            <p class="error-popup-trace" style="color:#94a3b8;margin-top:4px;">Experience Not Found — you scrolled all the way
-                down here looking for hints of past experience. Good luck finding it.</p>
-        </div>
-    </div>
-    <div class="error-popup-timer">
-        <div class="error-popup-timer-fill" id="error-timer-fill"></div>
-    </div>
-</div>
+

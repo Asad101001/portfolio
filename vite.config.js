@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'url';
-import react from '@vitejs/plugin-react';
 
 /**
  * A basic Vite plugin to inline HTML files using <include src="./components/foo.html"></include>
@@ -84,7 +83,6 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [
-    react(),
     htmlIncludePlugin(),
     apiMiddlewarePlugin(),
   ],
@@ -123,7 +121,6 @@ export default defineConfig({
         // Code-split by module — keeps initial bundle minimal
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('lenis') || id.includes('swup')) return 'vendor-scroll';
             if (id.includes('gsap')) return 'vendor-gsap';
             return 'vendor';
           }

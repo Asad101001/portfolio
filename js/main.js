@@ -7,6 +7,13 @@ import './modules/theme.js';
 import './modules/ui.js';
 import './modules/mobile.js';
 import './modules/desktop.js';
+import { initDeskCalendar } from './modules/calendar.js';
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDeskCalendar);
+} else {
+  initDeskCalendar();
+}
 
 // Fast native fallback for smoothScrollTo before any deferred libraries load
 if (!window.smoothScrollTo) {

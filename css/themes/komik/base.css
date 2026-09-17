@@ -121,7 +121,6 @@ body.theme-komik .hero-section::after {
 /* ── Remove backdrop filters on cards for clean crisp paper feel ── */
 body.theme-komik .glass-card,
 body.theme-komik .proj-card,
-body.theme-komik .nav-inner,
 body.theme-komik .stat-card,
 body.theme-komik .wip-card,
 body.theme-komik .hero-backdrop-overlay {

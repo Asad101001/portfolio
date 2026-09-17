@@ -1,12 +1,12 @@
 /* ── KOMIK Theme Variables ── */
-/* Authentic vintage newsprint & comic book color system */
+/* Balanced vintage newsprint & comic book color system */
 body.theme-komik {
     /* ── 1. Base Paper Palette (Authentic Warm Newsprint) ── */
     --bg:        #F4EFE6 !important;   /* Natural warm vintage newsprint paper */
     --bg2:       #EBE3D3 !important;   /* Slightly darker newsprint section */
     --surface:   #FCFAF5 !important;   /* Clean paper card panel */
     --border:    #23272F !important;   /* Natural charcoal print ink line */
-    --border-h:  #D32F2F !important;   /* Comic action red hover */
+    --border-h:  #1565C0 !important;   /* Comic blue hover (was harsh red) */
 
     /* ── 2. Natural Ink Typography (High contrast, never harsh) ── */
     --text:      #23272F !important;   /* Charcoal comic ink */
@@ -16,25 +16,30 @@ body.theme-komik {
     /* ── 3. Classic 4-Color Comic Printing Accents ── */
     --cyan:      #1565C0 !important;   /* Classic Comic Blue (high contrast against paper) */
     --lime:      #2E7D32 !important;   /* Classic Comic Forest Green */
-    --purple:    #D32F2F !important;   /* Classic Comic Action Red */
+    --purple:    #5C35A3 !important;   /* Muted comic violet (was harsh red) */
     --orange:    #E65100 !important;   /* Classic Comic Rust Orange */
 
     /* ── 4. Dedicated Comic Design Tokens ── */
     --komik-yellow: #FFC700;           /* Warm golden comic yellow */
-    --komik-red:    #D32F2F;           /* Action red */
-    --komik-blue:   #1565C0;           /* Cobalt comic blue */
+    --komik-red:    #B71C1C;           /* Action red — used only for hover/alerts, not primary text */
+    --komik-blue:   #1565C0;           /* Cobalt comic blue — primary accent */
     --komik-ink:    #23272F;           /* Charcoal print ink */
     --komik-paper:  #F4EFE6;           /* Newsprint paper */
     --komik-card:   #FCFAF5;           /* Card panel paper */
     --komik-green:  #2E7D32;           /* Comic green */
 
-    /* ── 5. Comic Geometry & Shadows (Balanced, not overwhelming) ── */
+    /* ── 5. Comic Speech Bubble Token ── */
+    --komik-bubble-bg:     #FFFEF7;    /* Warm off-white bubble interior */
+    --komik-bubble-border: #23272F;    /* Ink border */
+    --komik-bubble-shadow: 3px 3px 0px rgba(35, 39, 47, 0.25);
+
+    /* ── 6. Comic Geometry & Shadows (Balanced, not overwhelming) ── */
     --radius:    0px !important;
     --radius-lg: 0px !important;
-    --card-shadow: 4px 4px 0px #23272F !important;
+    --card-shadow: 3px 3px 0px #23272F !important;  /* Reduced from 4px for subtlety */
     --btn-shadow:  3px 3px 0px #23272F !important;
 
-    /* ── 6. Overrides ── */
+    /* ── 7. Overrides ── */
     --scanline-op: 0 !important;
     --grid-clr: rgba(35, 39, 47, 0.04) !important;
     --spotlight-gradient: none !important;

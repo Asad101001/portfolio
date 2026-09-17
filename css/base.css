@@ -87,13 +87,18 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(30vmax circle at var(--x, 50.1%) var(--y, 50.1%), var(--grid-clr) 0%, transparent 80%);
-  transition: opacity 0.5s ease;
+  /* Static multi-layer gradient — no JS, no rAF, no repaints */
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(16, 185, 129, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 75%, rgba(168, 85, 247, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 10%, rgba(45, 212, 191, 0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
-  opacity: 1;
-  /* PERF: isolated paint layer, no will-change (auto is cheaper than 'background') */
 }
+
+/* Hide the canvas — background is now pure CSS */
+#bg-canvas { display: none !important; }
+
 
 /* ── Selection ──────────────────────────────────────────── */
 ::selection { background: rgba(16,185,129,0.3); color: #ADFF2F; }

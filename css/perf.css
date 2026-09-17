@@ -44,23 +44,15 @@
   }
 }
 
-/* ── 2. FIX body::before mouse-tracking background ───────────
-   The --x/--y vars update on EVERY mousemove and trigger a full
-   page background repaint. Isolate this to its own composited layer
-   that doesn't affect layout, and use a more subtle effect.
+/* ── 2. body::before — now static, no override needed ─────────
+   Mouse tracking was removed from ui.js (no more --x/--y CSS vars).
+   body::before now uses a static multi-layer gradient in base.css.
    ──────────────────────────────────────────────────────────── */
 body::before {
-  /* Move to its own GPU layer so repaints don't cascade */
-  will-change: background;
-  /* Dampen the effect intensity — doesn't need to be this strong */
-  background: radial-gradient(
-    30vmax circle at var(--x, 50%) var(--y, 50%),
-    rgba(16, 185, 129, 0.025) 0%,
-    transparent 80%
-  ) !important;
-  /* Critical: isolate from paint */
-  isolation: isolate;
+  /* Static — no will-change needed, no repaints */
+  will-change: auto;
 }
+
 
 /* ── 3. GPU promotion only where it actually moves ───────────
    Only promote elements that will be transformed or animated.

@@ -16,17 +16,18 @@ body.theme-komik .main-footer {
 }
 
 body.theme-komik .main-footer::before {
-    content: 'MEANWHILE... SOMEWHERE IN KARACHI 🇵🇰';
-    font-family: 'Bangers', cursive;
-    font-size: 1.3rem;
-    letter-spacing: 0.12em;
-    color: #23272F;
-    background: #FFC700;
-    border: 2px solid #23272F;
-    box-shadow: 3px 3px 0px #FFC700;
-    padding: 6px 18px;
-    margin-bottom: 28px;
-    display: inline-block;
+    content: '— Meanwhile, somewhere in Karachi 🇵🇰';
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    color: rgba(235, 227, 211, 0.6);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 20px;
+    display: block;
 }
 
 body.theme-komik .main-footer p,

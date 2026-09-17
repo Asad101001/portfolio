@@ -86,98 +86,204 @@
                 </div>
             </div>
 
-            <div class="card hero-side glass-card reveal" style="--delay:100ms">
-                <div class="terminal-bar">
-                    <span class="t-dot t-red"></span>
-                    <span class="t-dot t-yellow"></span>
-                    <span class="t-dot t-green"></span>
-                    <span class="t-title">asad@2006 ~</span>
+            <!-- Tabletop Spiral Desk Calendar (Replaces Terminal) -->
+            <div class="card hero-side desk-calendar-card glass-card reveal" style="--delay:100ms" id="desk-calendar">
+                
+                <!-- Desk Calendar Easel Stand / Tent Base -->
+                <div class="calendar-easel-stand" aria-hidden="true"></div>
+
+                <!-- Spiral Ring Binder (Loops piercing top holes) -->
+                <div class="calendar-spiral-binder" aria-hidden="true">
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
+                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
                 </div>
-                <div class="terminal-body interactive-terminal" id="terminal-body">
-                    <div id="terminal-history">
-                        <div class="terminal-meta">Last login: Mon Mar 16 02:12:01 2026 from 192.168.1.1</div>
-                        <p class="t-line t-visible"><span class="t-prompt">asad@2006:~$</span> <span class="t-cmd">whoami</span></p>
-                        <p class="t-line t-out t-visible">Muhammad Asad Khan</p>
-                        <p class="t-line t-visible"><span class="t-prompt">asad@2006:~$</span> <span class="t-cmd">cat focus.txt</span></p>
-                        <p class="t-line t-out t-visible">Python &middot; OOP &middot; Data Science</p>
-                        <p class="t-line t-out t-visible">Cloud (AWS) &middot; AI &middot; RAG</p>
-                        <p class="t-line t-visible"><span class="t-prompt">asad@2006:~$</span> <span class="t-cmd">echo $LOCATION</span></p>
-                        <p class="t-line t-out t-visible">Karachi, Pakistan 🇵🇰</p>
-                        <p class="t-line t-visible"><span class="t-prompt">asad@2006:~$</span> <span class="t-cmd">git log -1 --oneline</span></p>
-                        <p class="t-line t-out t-visible" id="git-commit-line" style="opacity:0.6">fetching...</p>
-                        <p class="t-line t-out t-visible" style="color:var(--cyan)">🟢 Open to collabs &amp; internships</p>
-                    </div>
-                    <div class="terminal-input-row">
-                        <span class="t-prompt" id="terminal-prompt-prefix">asad@2006:~$</span>
-                        <div class="terminal-input-wrapper">
-                            <span class="t-autosuggest"></span>
-                            <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="Type 'help'..." />
+
+                <!-- Calendar Header Bar -->
+                <div class="calendar-header-bar">
+                    <div class="calendar-meta-group">
+                        <span class="cal-desk-icon">🗓️</span>
+                        <div>
+                            <div class="cal-title-main">DESK PLANNER · 2026</div>
+                            <div class="cal-page-tracker" id="cal-page-tracker">PAGE 01 / 04</div>
                         </div>
                     </div>
+                    <div class="calendar-controls">
+                        <button class="cal-btn-nav" id="cal-prev-btn" aria-label="Previous Month Page" title="Flip Back">◀</button>
+                        <button class="cal-btn-toggle" id="cal-pause-btn" aria-label="Toggle Auto-flip" title="Pause / Resume Flip">❚❚</button>
+                        <button class="cal-btn-nav" id="cal-next-btn" aria-label="Next Month Page" title="Flip Forward">▶</button>
+                    </div>
                 </div>
-            </div>
 
+                <!-- Flip Calendar Stage -->
+                <div class="calendar-stage" id="calendar-stage">
 
-            <!-- Row 3 Left: Currently Into Card -->
-            <div class="card currently-into-card glass-card reveal" style="--delay:200ms">
-                <p class="card-label">Activity Hub</p>
-
-                <div class="rotating-widget" id="rotating-widget">
-
-                    <!-- Movie (Letterboxd) -->
-                    <div class="rotating-item currently-into-item active" data-index="0">
-                        <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
-                            style="display:none" />
-                        <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
-                            <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
+                    <!-- Page 0: Profile & Identity -->
+                    <div class="calendar-page active" data-index="0">
+                        <div class="page-header-row">
+                            <div class="page-date-box">
+                                <span class="page-month">MAR</span>
+                                <span class="page-day">01</span>
+                            </div>
+                            <div class="page-tag-group">
+                                <span class="page-category-pill">IDENTITY</span>
+                                <span class="page-cmd-sub">whoami</span>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="cal-item-row">
+                                <span class="cal-lbl">NAME</span>
+                                <div class="cal-val-highlight">Muhammad Asad Khan</div>
+                            </div>
+                            <div class="cal-split-row">
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">ACADEMIA</span>
+                                    <div class="cal-val">CS Student @ UBIT '28</div>
+                                </div>
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">LOCATION</span>
+                                    <div class="cal-val">Karachi, Pakistan 🇵🇰</div>
+                                </div>
+                            </div>
+                            <div class="cal-status-badge">
+                                <span class="cal-dot-pulse"></span>
+                                <span>Open to collabs &amp; internships</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- TV Series Tracking (Simkl / Trakt) -->
-                    <div class="rotating-item currently-into-item" data-index="1">
-                        <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
-                        <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
-                            <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
-                            <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
-                                <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
-                                    <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
+                    <!-- Page 1: Tech Focus & Stack -->
+                    <div class="calendar-page" data-index="1">
+                        <div class="page-header-row">
+                            <div class="page-date-box">
+                                <span class="page-month">MAR</span>
+                                <span class="page-day">02</span>
+                            </div>
+                            <div class="page-tag-group">
+                                <span class="page-category-pill">FOCUS</span>
+                                <span class="page-cmd-sub">cat focus.txt</span>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="cal-item-row">
+                                <span class="cal-lbl">CORE SPECIALTIES</span>
+                                <div class="cal-chips-wrap">
+                                    <span class="cal-tech-chip">Python</span>
+                                    <span class="cal-tech-chip">OOP</span>
+                                    <span class="cal-tech-chip">Data Science</span>
+                                    <span class="cal-tech-chip">Cloud (AWS)</span>
+                                    <span class="cal-tech-chip">AI &amp; RAG</span>
+                                </div>
+                            </div>
+                            <div class="cal-item-row" style="margin-top:6px;">
+                                <span class="cal-lbl">DEV PRINCIPLE</span>
+                                <div class="cal-quote-box">"Build broken things, understand why they broke, then unbreak them."</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 2: Live Git Log & Host -->
+                    <div class="calendar-page" data-index="2">
+                        <div class="page-header-row">
+                            <div class="page-date-box">
+                                <span class="page-month">MAR</span>
+                                <span class="page-day">03</span>
+                            </div>
+                            <div class="page-tag-group">
+                                <span class="page-category-pill">GIT LOG</span>
+                                <span class="page-cmd-sub">git log -1 --oneline</span>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="cal-item-row">
+                                <span class="cal-lbl">LATEST REPO COMMIT</span>
+                                <div class="cal-git-box">
+                                    <span class="cal-git-icon">⎇ main</span>
+                                    <p class="cal-git-text" id="git-commit-line">fetching commit info...</p>
+                                </div>
+                            </div>
+                            <div class="cal-split-row" style="margin-top:6px;">
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">ENVIRONMENT</span>
+                                    <div class="cal-val mono">asad@2006 ~</div>
+                                </div>
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">SYSTEM UPTIME</span>
+                                    <div class="cal-val mono">Mon Mar 16 · Online</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Reading -->
-                    <div class="rotating-item currently-into-item" data-index="2">
-                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
-                            style="display:none" />
-                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label">Currently Reading</span>
-                            <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
+                    <!-- Page 3: Work Mode & Availability -->
+                    <div class="calendar-page" data-index="3">
+                        <div class="page-header-row">
+                            <div class="page-date-box">
+                                <span class="page-month">MAR</span>
+                                <span class="page-day">04</span>
+                            </div>
+                            <div class="page-tag-group">
+                                <span class="page-category-pill">AVAILABILITY</span>
+                                <span class="page-cmd-sub">echo $CONNECT</span>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="cal-split-row">
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">TIMEZONE</span>
+                                    <div class="cal-val">PKT (UTC+5)</div>
+                                </div>
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">AVG RESPONSE</span>
+                                    <div class="cal-val">&lt; 24 Hours</div>
+                                </div>
+                            </div>
+                            <div class="cal-item-row" style="margin-top:8px;">
+                                <span class="cal-lbl">DIRECT INBOX</span>
+                                <a href="mailto:muhammadasadk42@gmail.com" class="cal-inbox-link">
+                                    ✉️ muhammadasadk42@gmail.com
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Football -->
-                    <div class="rotating-item currently-into-item" data-index="3">
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label">Watching Football</span>
-                            <span class="rotating-value currently-into-value" id="barca-score-static">
-                                Loading scores...
-                            </span>
-                        </div>
-                    </div>
+                </div><!-- /#calendar-stage -->
 
+                <!-- Calendar Footer Tabs / Dots -->
+                <div class="calendar-footer-bar">
+                    <div class="calendar-dots" id="cal-dots">
+                        <button class="cal-dot-tab active" data-index="0" aria-label="Month 1: Identity">01 Identity</button>
+                        <button class="cal-dot-tab" data-index="1" aria-label="Month 2: Tech Focus">02 Focus</button>
+                        <button class="cal-dot-tab" data-index="2" aria-label="Month 3: Git Log">03 Sprint</button>
+                        <button class="cal-dot-tab" data-index="3" aria-label="Month 4: Availability">04 Connect</button>
+                    </div>
+                    <span class="cal-auto-badge">↺ rotating desk calendar</span>
                 </div>
 
-                <div class="rotating-dots" id="rotating-dots">
-                    <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
-                    <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
-                    <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
-                    <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
+            </div><!-- /.desk-calendar-card -->
+
+
+            <!-- Quick Stats Card (replaces rotating Activity Hub) -->
+            <div class="card glass-card reveal" style="--delay:200ms">
+                <p class="card-label">At a Glance</p>
+                <div class="focus-list" style="gap:16px;">
+                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
+                        <span>Projects Built</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">4+</span>
+                    </div>
+                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
+                        <span>Certifications</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">6+</span>
+                    </div>
+                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
+                        <span>Technologies</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">20+</span>
+                    </div>
                 </div>
             </div>
 

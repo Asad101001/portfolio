@@ -23,23 +23,9 @@
   setTimeout(spawn, 3500);
 })();
 
-/* â”€â”€ Global Mouse Tracking for Glows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-(function () {
-  if (window._isMobile) return;
-  var ticking = false, mx = 0, my = 0;
-  document.addEventListener('mousemove', function (e) {
-    mx = e.clientX;
-    my = e.clientY;
-    if (!ticking) {
-      requestAnimationFrame(function () {
-        document.documentElement.style.setProperty('--x', mx + 'px');
-        document.documentElement.style.setProperty('--y', my + 'px');
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-})();
+/* â”€â”€ Global mouse tracking removed — body::before is now a static CSS gradient.
+   The cursor-glow follower below handles interactive mouse feedback instead. */
+
 
 /* â”€â”€ Cursor Glow (Follower) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function () {
@@ -431,29 +417,6 @@
   document.querySelectorAll('.section-in, .proj-tags').forEach(s => obs.observe(s));
 })();
 
-/* â”€â”€ Experience Accordion â”€â”€ */
-(function() {
-  var btn = document.getElementById('experience-toggle'), content = document.getElementById('demo-content'), popup = document.getElementById('error-popup'), tFill = document.getElementById('error-timer-fill');
-  if (!btn || !content) return;
-  var arrow = btn.querySelector('.exp-toggle-arrow'), isOpen = false, pTimer = null;
-  function showPopup() {
-    if (!popup) return;
-    popup.classList.add('visible');
-    if (tFill) { tFill.style.transition = 'none'; tFill.style.transform = 'scaleX(1)'; setTimeout(() => { tFill.style.transition = 'transform 4s linear'; tFill.style.transform = 'scaleX(0)'; }, 50); }
-    clearTimeout(pTimer); pTimer = setTimeout(() => popup.classList.remove('visible'), 4200);
-  }
-  btn.addEventListener('click', () => {
-    isOpen = !isOpen; btn.classList.toggle('open', isOpen); content.classList.toggle('demo-content-open', isOpen);
-    if (arrow) arrow.textContent = isOpen ? 'â–²' : 'â–¼';
-    if (isOpen) {
-      content.querySelectorAll('.demo-progress-fill').forEach(f => { f.style.transition = 'width 1.2s cubic-bezier(0.22, 1, 0.36, 1)'; f.style.width = f.getAttribute('data-w') || '0%'; });
-      setTimeout(showPopup, 200);
-    } else {
-      content.querySelectorAll('.demo-progress-fill').forEach(f => { f.style.transition = 'none'; f.style.width = '0%'; });
-      if (popup) popup.classList.remove('visible');
-    }
-  });
-})();
 
   /* --- Arsenal: Filter + Reveal + Touch Expansion --- */
   (function() {
