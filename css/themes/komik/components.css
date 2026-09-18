@@ -93,6 +93,12 @@ body.theme-komik .nav-inner {
     flex-wrap: nowrap !important;
 }
 
+@media (max-width: 768px) {
+    body.theme-komik .nav-inner {
+        display: none !important;
+    }
+}
+
 /* Kill the inner gloss pseudo before element in komik */
 body.theme-komik .nav-inner::before {
     display: none !important;

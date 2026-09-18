@@ -194,48 +194,83 @@
     overflow: hidden !important;
   }
 
-  .barca-team-crest {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-  }
-
-  .barca-stadium-arena {
+  /* FC Barcelona Supporter & Scorecard Hybrid Widget */
+  .barca-content-layout-hybrid {
     gap: 8px !important;
-    margin: 2px 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-items: center !important;
   }
 
-  .barca-team-name {
-    font-size: 0.72rem !important;
+  .barca-identity-side {
+    min-width: 60px !important;
+    max-width: 68px !important;
+    gap: 2px !important;
+    flex-shrink: 0 !important;
   }
 
-  .barca-scorers-list {
-    display: none !important;
+  .barca-main-logo {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
   }
 
-  .barca-digits-wrap {
-    padding: 2px 8px !important;
+  .barca-mini-tag {
+    font-size: 0.32rem !important;
+    padding: 1px 3px !important;
+    top: -3px !important;
+    left: -5px !important;
   }
 
-  .barca-digit {
-    font-size: 1.15rem !important;
+  .barca-name-pink {
+    font-size: 0.54rem !important;
+    white-space: nowrap !important;
   }
 
-  .barca-strip-chip.motto-chip {
-    display: none !important;
+  .barca-slogan-cyan {
+    font-size: 0.32rem !important;
+    white-space: nowrap !important;
   }
 
-  .barca-top-meta {
-    gap: 6px !important;
+  .barca-score-rows-side {
+    flex: 1 !important;
+    min-width: 0 !important;
+    gap: 4px !important;
   }
 
-  .barca-club-pill {
-    font-size: 0.62rem !important;
-    padding: 1px 6px !important;
+  .score-row-mini {
+    padding: 3px 6px !important;
+    gap: 5px !important;
+    min-height: 28px !important;
   }
+
+  .score-team-info {
+    max-width: 88px !important;
+    gap: 4px !important;
+  }
+
+  .score-team-abbr {
+    font-size: 0.58rem !important;
+  }
+
+  .tiny-logo {
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    min-height: 15px !important;
+  }
+
+  .score-row-scorer {
+    font-size: 0.45rem !important;
+    max-width: 100px !important;
+    margin: 0 2px !important;
+  }
+
+  .score-num {
+    font-size: 0.95rem !important;
+  }
+
 
 
   /* ── Projects Overhaul ─────────────────────────────────── */
@@ -313,12 +348,18 @@
   /* NOTE: .reveal is animated by GSAP — no CSS opacity/transform here */
 
 
-  /* ── Navigation ────────────────────────────────────────── */
-  .nav-inner {
-    padding: 10px 16px;
-    backdrop-filter: blur(12px) saturate(180%) !important;
-    background: rgba(10, 10, 15, 0.7) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  /* ── Navigation: Top Navbar hidden on mobile, bottom island active ── */
+  nav {
+    position: static !important;
+    padding: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .nav-inner,
+  body .nav-inner,
+  body[class*="theme-"] .nav-inner {
+    display: none !important;
   }
 
   /* ── Education Timeline (Mobile Fix) ─────────────────── */

@@ -299,9 +299,17 @@ nav.nav-hidden {
   display: none;
 }
 @media (max-width: 768px) {
+  nav {
+    position: static !important;
+    padding: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+  }
 
-  /* ── Hide top nav pill on mobile, theme trigger moved to hero name ── */
-  .nav-inner {
+  /* ── Hide top nav pill on mobile entirely across all themes ── */
+  .nav-inner,
+  body .nav-inner,
+  body[class*="theme-"] .nav-inner {
     display: none !important;
   }
 

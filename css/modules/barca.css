@@ -1,651 +1,52 @@
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   FOOTBALL / BARCA â€” full blaugrana bleed on active slot
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ═══════════════════════════════════════════════════════════
+   FOOTBALL / FC BARCELONA WIDGET
+   Proud Blaugrana supporter identity & live/recent match scorecard
+   ═══════════════════════════════════════════════════════════ */
 
-
-/* The ENTIRE currently-into card gets a blaugrana border when football is active */
+/* The entire rotating widget card gets a blaugrana accent when football is active */
 #rotating-widget.football-active {
-  border-radius: 3px;
-  outline: 1.5px solid rgba(163,30,45,0.4);
+  border-radius: 4px;
+  outline: 1.5px solid rgba(163, 30, 45, 0.45);
   outline-offset: 2px;
-  transition: outline 0.4s ease;
+  transition: outline 0.3s ease;
 }
 
-/* Football item itself â€” full blaugrana fill */
+/* Football item background */
 .rotating-item.barca-slot {
   background: linear-gradient(135deg,
-    rgba(163,30,45,0.22) 0%,
-    rgba(4,55,119,0.20) 50%,
-    rgba(163,30,45,0.15) 100%
+    rgba(163, 30, 45, 0.22) 0%,
+    rgba(4, 55, 119, 0.20) 50%,
+    rgba(163, 30, 45, 0.15) 100%
   );
-  border: 1.5px solid rgba(163,30,45,0.5);
+  border: 1.5px solid rgba(163, 30, 45, 0.5);
   box-shadow:
-    0 0 24px rgba(163,30,45,0.18),
-    inset 0 0 20px rgba(4,55,119,0.1);
+    0 0 24px rgba(163, 30, 45, 0.18),
+    inset 0 0 20px rgba(4, 55, 119, 0.1);
+  overflow: hidden;
+  box-sizing: border-box;
 }
-/* Barca Scorecard Redesign — SHRUNK for better fit */
+
+/* Card container */
 .barca-scorecard-wrap {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 4px 6px;
   position: relative;
-  transition: all 0.4s ease;
-  border-radius: 6px;
   box-sizing: border-box;
-  overflow: hidden;
+  justify-content: center;
+  padding: 2px 4px;
 }
 
-/* ── Wide Stadium Arena Scorecard (Utilizes wide Activity Hub) ── */
-.barca-scorecard-wrap.wide-scorecard {
-  padding: 6px 12px;
-  justify-content: space-between;
-}
-
+/* Top header row */
 .barca-top-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 8px;
-}
-
-.barca-top-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.barca-club-pill {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: 0.04em;
-  background: rgba(163, 30, 45, 0.4);
-  border: 1px solid rgba(163, 30, 45, 0.7);
-  padding: 2px 8px;
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.barca-stadium-arena {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-}
-
-.barca-team-col {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.barca-team-col.home-col {
-  justify-content: flex-start;
-}
-
-.barca-team-col.away-col {
-  justify-content: flex-end;
-}
-
-.barca-team-crest {
-  width: 44px !important;
-  height: 44px !important;
-  min-width: 44px !important;
-  min-height: 44px !important;
-  max-width: 44px !important;
-  max-height: 44px !important;
-  object-fit: contain !important;
-  flex-shrink: 0 !important;
-  display: block !important;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
-}
-
-.barca-team-details {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.barca-team-details.text-right {
-  text-align: right;
-  align-items: flex-end;
-}
-
-.barca-team-name {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.barca-team-details.text-right .barca-team-name {
-  justify-content: flex-end;
-}
-
-.host-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.52rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--text-dim, rgba(255,255,255,0.5));
-  background: rgba(255, 255, 255, 0.08);
-  padding: 1px 4px;
-  border-radius: 3px;
-}
-
-.barca-scorers-list {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text-muted, rgba(255,255,255,0.7));
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px;
-}
-
-.barca-cards-list {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: #ef4444;
-  font-weight: 700;
-}
-
-.barca-center-score {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 0 8px;
-}
-
-.barca-digits-wrap {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 3px 12px;
-  border-radius: 6px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.barca-digit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--cyan, #00f2ff);
-  line-height: 1;
-}
-
-.barca-digit-divider {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.4);
-  line-height: 1;
-}
-
-.barca-status-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--text-dim, rgba(255,255,255,0.6));
-  text-transform: uppercase;
-}
-
-.barca-footer-stats-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 8px;
-  margin-top: 4px;
-  padding-top: 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.barca-strip-chip {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text-dim, rgba(255,255,255,0.6));
-  background: rgba(255, 255, 255, 0.04);
-  padding: 2px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-.barca-strip-chip.motto-chip {
-  color: #ffb114;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
-/* Win/Loss Tints on the whole card */
-.barca-scorecard-wrap.barca-win-tint {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0.05) 100%);
-  border: 1px solid rgba(34, 197, 94, 0.25);
-  box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
-}
-
-.barca-scorecard-wrap.barca-loss-tint {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.05) 100%);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
-}
-
-/* Scorer names under score number */
-.barca-scorers {
-  font-size: 0.38rem;
-  color: rgba(255,255,255,0.4);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.01em;
-  line-height: 1.2;
-  max-width: 80px;
-  word-break: break-word;
-  margin-top: 1px;
-}
-
-/* Wrapper for score + scorers stacked vertically */
-.score-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-left: auto;
-}
-
-.barca-header-title {
-  text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.22em;
-  color: var(--text-dim);
+  width: 100%;
   margin-bottom: 6px;
-  text-transform: uppercase;
-  font-weight: 800;
-}
-
-.barca-layout-main {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.centered-scorecard {
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.barca-content-split {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.barca-identity {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  min-width: 75px;
-}
-
-.barca-main-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(255, 0, 85, 0.25));
-}
-
-.barca-logo-wrap {
   position: relative;
-  display: inline-block;
-}
-
-.barca-mini-tag {
-  position: absolute;
-  top: -4px;
-  left: -6px;
-  background: #ffb114;
-  color: #000;
-  font-size: 0.35rem;
-  font-weight: 900;
-  padding: 1px 3px;
-  border-radius: 2px;
-  transform: rotate(-12deg);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  pointer-events: none;
-}
-
-.barca-text-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.barca-pink-name {
-  color: #ff0055;
-  font-size: 0.75rem;
-  font-weight: 900;
-  text-shadow: 0 0 8px rgba(255, 0, 85, 0.15);
-  line-height: 1.1;
-}
-
-.barca-mes-que {
-  font-size: 0.42rem;
-  text-transform: uppercase;
-  color: #ffb114;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  margin-top: 1px;
-  opacity: 0.9;
-}
-
-/* Hybrid Layout Split */
-.barca-content-layout-hybrid {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 6px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.barca-identity-side {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  min-width: 72px;
-  flex-shrink: 0;
-  padding-top: 10px;
-}
-
-.barca-name-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-
-.barca-name-pink {
-  color: #ff0055;
-  font-size: 0.62rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
-  text-align: center;
-  white-space: nowrap;
-}
-
-.barca-slogan-cyan {
-  color: #00f2ff;
-  font-size: 0.38rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.barca-score-rows-side {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.score-num {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--cyan);
-  font-weight: 900;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  margin-left: auto;
-  text-align: right;
-}
-
-.score-row-mini {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.6rem;
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 4px 6px;
-  border-radius: 4px;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.score-team-info {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  min-width: 0;
-}
-
-.score-team-abbr {
-  font-weight: 800;
-  color: #ffffff;
-  font-size: 0.58rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 75px;
-}
-
-.score-row-scorer {
-  font-size: 0.38rem;
-  color: rgba(255, 255, 255, 0.75);
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  margin: 0 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 140px;
-  flex-shrink: 1;
-  animation: fade-in 0.3s ease;
-}
-
-.score-row-card {
-  font-size: 0.62rem;
-  color: #ff5d6c;
-  font-weight: 800;
-  margin-right: 6px;
-  white-space: nowrap;
-  text-shadow: 0 0 8px rgba(255, 93, 108, 0.45);
-}
-
-.home-icon {
-  font-size: 0.5rem;
-  opacity: 0.8;
-  filter: grayscale(1);
-}
-
-.is-host .home-icon {
-  filter: none;
-  opacity: 1;
-}
-
-.score-vs-divider {
-  font-size: 0.48rem;
-  text-align: center;
-  color: var(--text-dim);
-  font-weight: 900;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding-top: 2px;
-  letter-spacing: 0.08em;
-}
-
-.barca-emotion-badge {
-  position: absolute;
-  top: -6px;
-  right: -4px;
-  font-size: 1rem;
-}
-
-.tiny-logo {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-}
-
-.barca-score-col-right {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 140px; /* Wider horizontally as requested */
-}
-
-/* Mobile Breakpoint for Barca Widget */
-@media (max-width: 520px) {
-  .barca-content-layout-hybrid {
-    flex-direction: row;
-    gap: 8px;
-    align-items: flex-start;
-  }
-  .barca-identity-side {
-    min-width: 64px;
-    gap: 4px;
-  }
-  .barca-name-pink {
-    font-size: 0.58rem;
-  }
-  .barca-slogan-cyan {
-    font-size: 0.36rem;
-    letter-spacing: 0.04em;
-  }
-  .barca-score-rows-side {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
-  .score-row-mini {
-    font-size: 0.58rem;
-    padding: 3px 5px;
-  }
-  .score-team-abbr {
-    font-size: 0.52rem;
-    white-space: nowrap;
-  }
-  .score-row-scorer {
-    display: none; /* Hide scorer on very narrow screens */
-  }
-  .rotating-item.barca-slot {
-    /* Height handled by currently-into.css */
-  }
-  .barca-scorecard-wrap {
-    padding: 3px 4px;
-  }
-}
-
-.score-row-mini {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.65rem;
-  opacity: 0.55;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 3px 6px;
-  border-radius: 4px;
-  justify-content: space-between;
-}
-
-.score-row-mini.is-host {
-  opacity: 1;
-  font-weight: 800;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.score-team-abbr {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--text-dim);
-}
-
-.is-host .score-team-abbr {
-  color: #fff;
-}
-
-/* live badge positioning */
-.rotating-item.barca-live .barca-live-badge {
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.5rem;
-  background: #ff0055;
-  color: white;
-  padding: 1px 5px;
-  border-radius: 2px;
-  font-weight: 900;
-  box-shadow: 0 0 10px #ff0055;
-}
-.barca-live-badge::before {
-  content: ''; display: inline-block; width: 5px; height: 5px;
-  border-radius: 50%; background: #fff;
-  box-shadow: 0 0 5px rgba(255,255,255,0.8);
-  animation: barca-dot-blink 1s step-end infinite;
-}
-@keyframes barca-live-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(163,30,45,0.5); }
-  50%       { box-shadow: 0 0 10px 3px rgba(163,30,45,0.6); }
-}
-@keyframes barca-dot-blink { 50% { opacity: 0; } }
-
-/* Also color barca-live item (when API confirms live) */
-.rotating-item.barca-live {
-  background: linear-gradient(135deg, rgba(163,30,45,0.28) 0%, rgba(4,55,119,0.24) 100%) !important;
-  border-color: rgba(163,30,45,0.6) !important;
-  box-shadow: 0 0 30px rgba(163,30,45,0.22), inset 0 0 20px rgba(4,55,119,0.1) !important;
-}
-
-/* Redesigned Football Widget additions */
-.barca-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  margin-bottom: 4px;
 }
 
 .barca-top-row .rotating-label {
@@ -654,89 +55,231 @@
 }
 
 .match-timeframe {
-  font-size: 0.55rem;
-  color: rgba(255,255,255,0.35);
+  font-size: 0.52rem;
+  color: rgba(255, 255, 255, 0.55);
   font-family: 'JetBrains Mono', monospace;
-  margin-left: 0;
-  background: rgba(255,255,255,0.05);
-  padding: 1px 4px;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
 }
 
-.score-meta-left {
+/* Emotion badge in top right corner */
+.barca-emotion-badge {
+  position: absolute;
+  top: -2px;
+  right: 0px;
+  font-size: 1.15rem;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Hybrid Layout: Left Identity + Right Score Rows */
+.barca-content-layout-hybrid {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  margin-right: 8px;
+  gap: 16px;
+  width: 100%;
+  max-width: 640px; /* Constrained on wide screens so rows don't stretch into massive empty bars */
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
+/* ── LEFT: Identity Side (Proud Supporter Block) ── */
+.barca-identity-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 76px;
+  flex-shrink: 0;
+  position: relative;
+}
 
-/* Win/loss tints removed â€” no green/red background for results */
-
-
-
-.tiny-logo, .barca-main-logo {
-  width: 18px !important;
-  height: 18px !important;
-  min-width: 18px !important;
-  min-height: 18px !important;
-  object-fit: contain;
-  filter: drop-shadow(0 0 4px rgba(0,0,0,0.4));
+.barca-logo-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
 }
 
 .barca-main-logo {
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  min-height: 28px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  object-fit: contain !important;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
 }
 
-.score-team-info {
+/* Angled "SUPPORTING" sticker badge across crest */
+.barca-mini-tag {
+  position: absolute;
+  top: -4px;
+  left: -7px;
+  background: #ffb114;
+  color: #111;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.38rem;
+  font-weight: 900;
+  padding: 1px 4px;
+  border-radius: 2px;
+  transform: rotate(-12deg);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.barca-name-stack {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
+  gap: 1px;
+  margin-top: 1px;
+}
+
+.barca-name-pink {
+  color: #ff0055;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 10px rgba(255, 0, 85, 0.25);
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.barca-slogan-cyan {
+  color: #00f2ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.38rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ── RIGHT: Score Rows Side ── */
+.barca-score-rows-side {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
 }
 
 .score-row-mini {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.7rem;
-  opacity: 0.85; /* Increased for better readability */
-  background: rgba(255, 255, 255, 0.03);
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 4px;
-  justify-content: space-between;
-  border: 1px solid transparent;
   width: 100%;
-  transition: all 0.3s ease;
+  box-sizing: border-box;
+  min-height: 32px;
+  transition: all 0.2s ease;
+}
+
+.score-row-mini.is-host {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.score-team-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 130px;
+}
+
+.tiny-logo {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+}
+
+.score-team-abbr {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 0.66rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.01em;
 }
 
 .host-tag {
-  font-size: 0.55rem;
-  color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1px 3px;
-  border-radius: 2px;
-  margin-left: 4px;
-  font-weight: 500;
+  font-size: 0.52rem;
+  margin-left: 2px;
+  opacity: 0.9;
+  vertical-align: middle;
 }
 
+.score-row-scorer {
+  font-size: 0.52rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+  margin: 0 4px;
+}
+
+.score-row-card {
+  font-size: 0.6rem;
+  color: #ff5d6c;
+  font-weight: 800;
+  margin-right: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.score-num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan, #00f2ff);
+  font-weight: 900;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-left: auto;
+  text-align: right;
+  line-height: 1;
+}
+
+/* ── Live Match Pulsing Badge ── */
 .barca-live-badge {
-  font-size: 0.55rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 8px;
-  background: #ff4d4d;
+  font-size: 0.52rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  background: #ff0055;
   color: white;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
-  animation: barca-pulse 2s infinite ease-in-out;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+  animation: barca-pulse 1.8s infinite ease-in-out;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -749,11 +292,139 @@
   height: 5px;
   background: white;
   border-radius: 50%;
+  animation: barca-dot-blink 1s step-end infinite;
 }
 
 @keyframes barca-pulse {
-  0% { transform: scale(1); opacity: 0.88; }
-  50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.88; }
+  0%   { transform: scale(1); opacity: 0.9; }
+  50%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
+@keyframes barca-dot-blink { 50% { opacity: 0; } }
+
+/* When API confirms live, enrich background */
+.rotating-item.barca-live {
+  background: linear-gradient(135deg, rgba(163,30,45,0.35) 0%, rgba(4,55,119,0.30) 100%) !important;
+  border-color: rgba(163,30,45,0.7) !important;
+  box-shadow: 0 0 28px rgba(163,30,45,0.3), inset 0 0 20px rgba(4,55,119,0.15) !important;
+}
+
+/* ── Responsive & Mobile Viewport Polish ── */
+@media (max-width: 600px) {
+  .barca-content-layout-hybrid {
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .barca-identity-side {
+    min-width: 64px;
+    gap: 2px;
+  }
+
+  .barca-main-logo {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+  }
+
+  .barca-mini-tag {
+    font-size: 0.34rem;
+    padding: 1px 3px;
+    top: -4px;
+    left: -6px;
+  }
+
+  .barca-name-pink {
+    font-size: 0.56rem;
+  }
+
+  .barca-slogan-cyan {
+    font-size: 0.34rem;
+    letter-spacing: 0.03em;
+  }
+
+  .score-row-mini {
+    padding: 3px 6px;
+    gap: 5px;
+    min-height: 28px;
+  }
+
+  .score-team-info {
+    max-width: 96px;
+    gap: 4px;
+  }
+
+  .score-team-abbr {
+    font-size: 0.58rem;
+  }
+
+  .score-row-scorer {
+    font-size: 0.46rem;
+    max-width: 110px;
+  }
+
+  .score-num {
+    font-size: 0.95rem;
+  }
+
+  .barca-emotion-badge {
+    top: -2px;
+    right: 0px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .barca-content-layout-hybrid {
+    gap: 8px;
+  }
+
+  .barca-identity-side {
+    min-width: 58px;
+  }
+
+  .barca-main-logo {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  .barca-name-pink {
+    font-size: 0.52rem;
+  }
+
+  .barca-slogan-cyan {
+    font-size: 0.32rem;
+  }
+
+  .score-team-info {
+    max-width: 82px;
+  }
+
+  .score-team-abbr {
+    font-size: 0.54rem;
+  }
+
+  .score-row-scorer {
+    font-size: 0.42rem;
+    max-width: 80px;
+  }
+
+  .score-num {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .score-row-scorer {
+    display: none; /* Hide scorers on ultra-narrow screens to keep team name and score legible */
+  }
+
+  .score-team-info {
+    max-width: none;
+    flex: 1;
+  }
+}
