@@ -317,7 +317,8 @@ body.theme-cyberpunk .mobile-bottom-nav {
         inset 0 1.5px 1px rgba(255, 255, 255, 0.35),
         inset 0 -1px 1px rgba(0, 242, 255, 0.2) !important;
     padding: 6px 8px !important;
-    z-index: 500 !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
 }
 
 body.theme-cyberpunk .mobile-bottom-nav::before {

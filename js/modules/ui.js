@@ -100,32 +100,89 @@
     });
   }
 
-  /* ── Scroll-position based active section (optimized) ─────── */
-  var lastActiveIdx = -1;
-  var sectionOffsets = [];
+  /* ── Resume Dual Action: View in New Tab + Instantaneous Download ── */
+  function handleResumeAction(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    
+    var viewUrl = 'https://drive.google.com/file/d/1gvB1-w130_q4dpVpGDjcB8WKm5Kd4qkq/view';
+    var downloadUrl = 'https://drive.google.com/uc?export=download&id=1gvB1-w130_q4dpVpGDjcB8WKm5Kd4qkq';
+    
+    // 1. Open Google Drive preview in a new tab immediately (within direct user gesture)
+    try {
+      var previewWin = window.open(viewUrl, '_blank', 'noopener,noreferrer');
+      if (!previewWin || previewWin.closed || typeof previewWin.closed === 'undefined') {
+        window.location.href = viewUrl;
+      }
+    } catch(err) {
+      window.location.href = viewUrl;
+    }
+
+    // 2. Instantaneously trigger direct file download
+    try {
+      var dlFrame = document.getElementById('resume-dl-iframe');
+      if (!dlFrame) {
+        dlFrame = document.createElement('iframe');
+        dlFrame.id = 'resume-dl-iframe';
+        dlFrame.style.cssText = 'position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;opacity:0.01;pointer-events:none;border:none;';
+        dlFrame.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(dlFrame);
+      }
+      dlFrame.src = downloadUrl;
+
+      // Secondary trigger via hidden download link
+      var dlLink = document.createElement('a');
+      dlLink.href = downloadUrl;
+      dlLink.download = 'Muhammad_Asad_Khan_Resume.pdf';
+      dlLink.target = '_self';
+      dlLink.style.display = 'none';
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      setTimeout(function() { dlLink.remove(); }, 1200);
+    } catch(err) {
+      console.warn('Direct download trigger error:', err);
+    }
+
+    if (typeof window.showToast === 'function') {
+      window.showToast('Opening PDF preview & downloading Resume...');
+    }
+  }
+  window.handleResumeAction = handleResumeAction;
+
+  // Bind resume action to all resume buttons across the app
+  document.querySelectorAll('.resume-btn, .mbn-cta, .nav-cta, [data-action="resume"]').forEach(function(btn) {
+    btn.addEventListener('click', handleResumeAction);
+  });
+
+  /* ── Dynamic Viewport-Relative Active Section Detection ─── */
+  var lastActiveSection = '';
   var navLinksCache = null;
   var mbnItemsCache = null;
 
-  function updateSectionOffsets() {
-    var scrollTop = window.scrollY || window.pageYOffset;
-    sectionOffsets = sections.map(function(id) {
-      var el = document.getElementById(id);
-      return el ? el.getBoundingClientRect().top + scrollTop : 0;
-    });
-  }
-  window.addEventListener('resize', updateSectionOffsets, { passive: true });
-  window.addEventListener('load', updateSectionOffsets);
-  setTimeout(updateSectionOffsets, 500);
-
-  function getActiveSectionIdx() {
-    if (sectionOffsets.length === 0) updateSectionOffsets();
-    var scrollTop = window.scrollY || window.pageYOffset;
-    var trigger = scrollTop + window.innerHeight * 0.35;
-    var best = 0;
-    for (var i = 0; i < sectionOffsets.length; i++) {
-      if (sectionOffsets[i] <= trigger) best = i;
+  function getActiveSectionId() {
+    var certsDrawer = document.getElementById('certs-drawer');
+    if (certsDrawer && certsDrawer.classList.contains('open')) {
+      return 'certifications';
     }
-    return best;
+
+    var scrollY = window.scrollY || window.pageYOffset || 0;
+    if (scrollY < 120) return 'hero';
+
+    var docH = document.documentElement.scrollHeight || document.body.scrollHeight || 0;
+    var winH = window.innerHeight || 800;
+    if (scrollY + winH >= docH - 80) return 'contact';
+
+    var focalLine = winH * 0.38;
+    var current = 'hero';
+    for (var i = 0; i < sections.length; i++) {
+      var id = sections[i];
+      var el = document.getElementById(id);
+      if (!el) continue;
+      var rect = el.getBoundingClientRect();
+      if (rect.top <= focalLine) {
+        current = id;
+      }
+    }
+    return current;
   }
 
   var indicatorTicking = false;
@@ -134,43 +191,65 @@
     indicatorTicking = true;
     requestAnimationFrame(function() {
       indicatorTicking = false;
-      var idx = getActiveSectionIdx();
-      if (idx === lastActiveIdx) return;
-      lastActiveIdx = idx;
-      var activeSection = sections[idx];
+      var activeSection = getActiveSectionId();
+      if (activeSection === lastActiveSection) return;
+      lastActiveSection = activeSection;
+
+      var isCerts = (activeSection === 'certifications');
 
       /* Desktop side dots */
-      updateDots(idx);
+      if (isCerts) {
+        dotEls.forEach(function(d) { d.classList.remove('active', 'nearby'); });
+      } else {
+        var idx = sections.indexOf(activeSection);
+        if (idx !== -1) updateDots(idx);
+      }
+
+      /* Determine target navigation link */
+      var targetHref = '#' + activeSection;
+      if (activeSection === 'demo' || activeSection === 'tech' || activeSection === 'education') {
+        targetHref = '#projects';
+      }
 
       /* Desktop top-nav link highlights */
       if (!navLinksCache) navLinksCache = document.querySelectorAll('.nav-links a');
       navLinksCache.forEach(function(link) {
-        var href = (link.getAttribute('href') || '').replace('#','');
-        var matchId = activeSection;
-        if (activeSection === 'demo' || activeSection === 'tech') matchId = 'projects';
-        if (activeSection === 'education') matchId = 'about';
-        link.classList.toggle('active', href === matchId && href !== 'certifications');
+        var href = link.getAttribute('href') || '';
+        if (isCerts) {
+          link.classList.toggle('active', href === '#certifications');
+        } else {
+          link.classList.toggle('active', href === targetHref && href !== '#certifications');
+        }
       });
 
-      /* Mobile bottom nav */
-      if (!mbnItemsCache) mbnItemsCache = document.querySelectorAll('.mbn-item:not(.mbn-cta):not([href="#certifications"])');
-      var targetHref = '#' + activeSection;
-      if (activeSection === 'demo' || activeSection === 'tech') targetHref = '#projects';
-      if (activeSection === 'education') targetHref = '#about';
+      /* Mobile bottom nav highlights */
+      if (!mbnItemsCache) mbnItemsCache = document.querySelectorAll('.mbn-item');
       mbnItemsCache.forEach(function(item) {
-        item.classList.toggle('active', item.getAttribute('href') === targetHref);
+        if (item.classList.contains('mbn-cta') || item.classList.contains('resume-btn') || item.getAttribute('data-action') === 'resume') {
+          return;
+        }
+        var href = item.getAttribute('href') || '';
+        if (isCerts) {
+          item.classList.toggle('active', href === '#certifications');
+        } else {
+          item.classList.toggle('active', href === targetHref);
+        }
       });
     });
   }
+  window._updateAllIndicators = updateAllIndicators;
 
-  /* Hook into scroll with throttling */
+  /* Hook into scroll & resize with throttling */
   window.addEventListener('scroll', updateAllIndicators, { passive: true });
-  setTimeout(updateAllIndicators, 200);
+  window.addEventListener('resize', updateAllIndicators, { passive: true });
+  setTimeout(updateAllIndicators, 150);
 
-  /* Mobile bottom nav tap: spring bounce + haptic */
+  /* Mobile bottom nav interactions: click routing, spring bounce & haptic */
   document.querySelectorAll('.mbn-item').forEach(function(item) {
     item.addEventListener('click', function(e) {
-      if (navigator.vibrate) navigator.vibrate(8);
+      if (navigator.vibrate) {
+        try { navigator.vibrate(8); } catch(_) {}
+      }
       var el = this;
       el.style.transition = 'transform 0.1s cubic-bezier(0.34,1.56,0.64,1)';
       el.style.transform  = 'scale(0.82)';
@@ -181,6 +260,55 @@
           el.style.transition = '';
         }, 200);
       }, 80);
+
+      var href = el.getAttribute('href') || '';
+      var isResume = el.classList.contains('resume-btn') || 
+                     el.classList.contains('mbn-cta') || 
+                     el.getAttribute('data-action') === 'resume' || 
+                     href.indexOf('drive.google.com') !== -1;
+
+      if (isResume) {
+        e.preventDefault();
+        handleResumeAction(e);
+        return;
+      }
+
+      if (href === '#certifications') {
+        e.preventDefault();
+        var drawer = document.getElementById('certs-drawer');
+        if (drawer) {
+          if (drawer.classList.contains('open')) {
+            if (window._closeCertsDrawer) window._closeCertsDrawer();
+            else drawer.classList.remove('open');
+          } else {
+            if (window._openCertsDrawer) window._openCertsDrawer();
+            else drawer.classList.add('open');
+          }
+          updateAllIndicators();
+        }
+        return;
+      }
+
+      if (href.charAt(0) === '#') {
+        e.preventDefault();
+        var drawer = document.getElementById('certs-drawer');
+        if (drawer && drawer.classList.contains('open')) {
+          if (window._closeCertsDrawer) window._closeCertsDrawer();
+          else drawer.classList.remove('open');
+        }
+
+        var target = document.querySelector(href);
+        if (target) {
+          if (typeof window.smoothScrollTo === 'function') {
+            window.smoothScrollTo(target, -30);
+          } else if (window.lenis) {
+            window.lenis.scrollTo(target, { offset: -30, duration: 1.05 });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+        setTimeout(updateAllIndicators, 60);
+      }
     });
   });
 
@@ -250,12 +378,26 @@
   }
 })();
 
-/* â”€â”€ Certifications Drawer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Certifications Drawer ───────────────────────────────── */
 (function () {
   var drawer = document.getElementById('certs-drawer'), backdrop = document.getElementById('certs-backdrop'), closeBtn = document.getElementById('certs-close');
   if (!drawer) return;
-  function open()  { window.smoothTransition(() => { drawer.classList.add('open'); document.body.style.overflow = 'hidden'; }); }
-  function close() { window.smoothTransition(() => { drawer.classList.remove('open'); document.body.style.overflow = ''; }); }
+  function open()  { 
+    window.smoothTransition(() => { 
+      drawer.classList.add('open'); 
+      document.body.style.overflow = 'hidden'; 
+      if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
+    }); 
+  }
+  function close() { 
+    window.smoothTransition(() => { 
+      drawer.classList.remove('open'); 
+      document.body.style.overflow = ''; 
+      if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
+    }); 
+  }
+  window._openCertsDrawer = open;
+  window._closeCertsDrawer = close;
   
   // Toggle on certs click
   document.querySelectorAll('a[href="#certifications"]').forEach(a => a.addEventListener('click', e => { 
