@@ -220,6 +220,69 @@ body.theme-komik .barca-scorecard-wrap {
     color: #23272F !important;
 }
 
+body.theme-komik .barca-team-crest {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    filter: drop-shadow(1px 2px 0px #23272F) !important;
+}
+
+body.theme-komik .barca-club-pill {
+    background: #23272F !important;
+    color: #FFC700 !important;
+    border: 1.5px solid #23272F !important;
+    font-weight: 800 !important;
+    box-shadow: 1px 1px 0px #23272F !important;
+}
+
+body.theme-komik .barca-team-name {
+    color: #23272F !important;
+    font-family: 'Bangers', cursive !important;
+    font-size: 1.05rem !important;
+    letter-spacing: 0.04em !important;
+}
+
+body.theme-komik .barca-digits-wrap {
+    background: #23272F !important;
+    border: 2px solid #23272F !important;
+    box-shadow: 2px 2px 0px #23272F !important;
+}
+
+body.theme-komik .barca-digit {
+    color: #FFC700 !important;
+    font-family: 'Bangers', cursive !important;
+    font-size: 1.5rem !important;
+}
+
+body.theme-komik .barca-digit-divider {
+    color: #FFFFFF !important;
+}
+
+body.theme-komik .barca-status-pill {
+    color: #23272F !important;
+    font-weight: 800 !important;
+}
+
+body.theme-komik .barca-strip-chip {
+    background: #FCFAF5 !important;
+    border: 1.5px solid #23272F !important;
+    color: #23272F !important;
+    font-weight: 800 !important;
+    box-shadow: 1px 1px 0px #23272F !important;
+}
+
+body.theme-komik .barca-strip-chip.motto-chip {
+    background: #FFC700 !important;
+    color: #23272F !important;
+    border-color: #23272F !important;
+}
+
 body.theme-komik .barca-name-pink {
     color: #A50044 !important;
     font-weight: 900 !important;

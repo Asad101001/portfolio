@@ -2,6 +2,7 @@
    js/modules/calendar.js
    Tabletop Spiral Desk Calendar Controller
    Auto-rotating, interactive page-flip logic with pause/play
+   and authentic, live month calendar grid generator.
    ============================================================ */
 'use strict';
 
@@ -15,13 +16,85 @@ export function initDeskCalendar() {
   const nextBtn = document.getElementById('cal-next-btn');
   const pauseBtn = document.getElementById('cal-pause-btn');
   const pageTracker = document.getElementById('cal-page-tracker');
+  const daysGrid = document.getElementById('cal-days-grid');
+  const monthTitle = document.getElementById('cal-month-title');
+  const monthAbbr = document.getElementById('cal-month-abbr');
+  const dayNum = document.getElementById('cal-day-num');
 
   if (pages.length === 0) return;
+
+  const pageNames = [
+    'MONTH VIEW',
+    'WEEKLY ROUTINE',
+    '2026 ROADMAP',
+    'CONNECT & WORK'
+  ];
+
+  // ── Render Authentic Month Grid ───────────────────────────────
+  function buildMonthGrid() {
+    if (!daysGrid) return;
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth(); // 0-indexed
+    const todayDate = now.getDate();
+
+    const monthNames = [
+      'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+      'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+    ];
+    const monthAbbrs = [
+      'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+      'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
+    ];
+
+    if (monthTitle) monthTitle.textContent = `${monthNames[month]} ${year}`;
+    if (monthAbbr) monthAbbr.textContent = monthAbbrs[month];
+    if (dayNum) dayNum.textContent = todayDate < 10 ? `0${todayDate}` : `${todayDate}`;
+
+    // First day of month (0 = Sun, 1 = Mon, ..., 6 = Sat)
+    const firstDay = new Date(year, month, 1).getDay();
+    // Total days in month
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // Days with active commit indicators (semi-randomized realistic commit pattern around today)
+    const commitDays = new Set([
+      todayDate,
+      Math.max(1, todayDate - 1),
+      Math.max(1, todayDate - 3),
+      Math.max(1, todayDate - 4),
+      Math.max(1, todayDate - 7),
+      Math.min(totalDays, todayDate + 2),
+      Math.min(totalDays, todayDate + 5)
+    ]);
+
+    let gridHTML = '';
+
+    // Empty lead cells before day 1
+    for (let i = 0; i < firstDay; i++) {
+      gridHTML += '<span class="cal-day-cell empty"></span>';
+    }
+
+    // Days 1 to totalDays
+    for (let day = 1; day <= totalDays; day++) {
+      const isToday = day === todayDate;
+      const hasCommit = commitDays.has(day);
+      let classes = 'cal-day-cell';
+      if (isToday) classes += ' today';
+      if (hasCommit && !isToday) classes += ' has-commit';
+
+      gridHTML += `<span class="${classes}" title="${isToday ? "Today's Date" : ''}">${day}${hasCommit ? '<i class="cal-dot-mark"></i>' : ''}</span>`;
+    }
+
+    daysGrid.innerHTML = gridHTML;
+  }
+
+  buildMonthGrid();
 
   let currentIndex = 0;
   let isPaused = false;
   let autoFlipTimer = null;
-  const ROTATE_INTERVAL = 5500; // 5.5s per month page
+  const ROTATE_INTERVAL = 6000; // 6s per planner page
 
   function updatePage(nextIndex, direction = 'next') {
     if (nextIndex === currentIndex) return;
@@ -53,7 +126,7 @@ export function initDeskCalendar() {
 
     // Update tracker
     if (pageTracker) {
-      pageTracker.textContent = `PAGE 0${nextIndex + 1} / 0${pages.length}`;
+      pageTracker.textContent = `PAGE 0${nextIndex + 1} / 0${pages.length} · ${pageNames[nextIndex] || ''}`;
     }
 
     currentIndex = nextIndex;
@@ -88,7 +161,7 @@ export function initDeskCalendar() {
     prevBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       prev();
-      startAutoFlip(); // Reset interval on interaction
+      startAutoFlip();
     });
   }
 
@@ -126,7 +199,6 @@ export function initDeskCalendar() {
   });
 
   container.addEventListener('mouseleave', () => {
-    // Only resume if pause button wasn't explicitly toggled
     if (pauseBtn && pauseBtn.textContent === '❚❚') {
       isPaused = false;
     }
@@ -135,3 +207,4 @@ export function initDeskCalendar() {
   // Start auto-rotation
   startAutoFlip();
 }
+

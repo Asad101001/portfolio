@@ -109,127 +109,151 @@
                     <div class="calendar-meta-group">
                         <span class="cal-desk-icon">🗓️</span>
                         <div>
-                            <div class="cal-title-main">DESK PLANNER · 2026</div>
-                            <div class="cal-page-tracker" id="cal-page-tracker">PAGE 01 / 04</div>
+                            <div class="cal-title-main" id="cal-month-title">SEPTEMBER 2026</div>
+                            <div class="cal-page-tracker" id="cal-page-tracker">PAGE 01 / 04 · MONTH VIEW</div>
                         </div>
                     </div>
                     <div class="calendar-controls">
-                        <button class="cal-btn-nav" id="cal-prev-btn" aria-label="Previous Month Page" title="Flip Back">◀</button>
+                        <button class="cal-btn-nav" id="cal-prev-btn" aria-label="Previous Page" title="Flip Back">◀</button>
                         <button class="cal-btn-toggle" id="cal-pause-btn" aria-label="Toggle Auto-flip" title="Pause / Resume Flip">❚❚</button>
-                        <button class="cal-btn-nav" id="cal-next-btn" aria-label="Next Month Page" title="Flip Forward">▶</button>
+                        <button class="cal-btn-nav" id="cal-next-btn" aria-label="Next Page" title="Flip Forward">▶</button>
                     </div>
                 </div>
 
                 <!-- Flip Calendar Stage -->
                 <div class="calendar-stage" id="calendar-stage">
 
-                    <!-- Page 0: Profile & Identity -->
+                    <!-- Page 0: Authentic Month Calendar Grid & Today's Dev Sprint -->
                     <div class="calendar-page active" data-index="0">
                         <div class="page-header-row">
                             <div class="page-date-box">
-                                <span class="page-month">MAR</span>
-                                <span class="page-day">01</span>
+                                <span class="page-month" id="cal-month-abbr">SEP</span>
+                                <span class="page-day" id="cal-day-num">18</span>
                             </div>
                             <div class="page-tag-group">
-                                <span class="page-category-pill">IDENTITY</span>
-                                <span class="page-cmd-sub">whoami</span>
+                                <span class="page-category-pill">MONTHLY VIEW</span>
+                                <span class="page-cmd-sub">Live Dev Grid</span>
                             </div>
                         </div>
                         <div class="page-content-area">
-                            <div class="cal-item-row">
-                                <span class="cal-lbl">NAME</span>
-                                <div class="cal-val-highlight">Muhammad Asad Khan</div>
-                            </div>
-                            <div class="cal-split-row">
-                                <div class="cal-item-col">
-                                    <span class="cal-lbl">ACADEMIA</span>
-                                    <div class="cal-val">CS Student @ UBIT '28</div>
+                            <!-- Mini Calendar Days Grid -->
+                            <div class="cal-grid-wrapper" id="cal-grid-container">
+                                <div class="cal-grid-weekdays">
+                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
                                 </div>
-                                <div class="cal-item-col">
-                                    <span class="cal-lbl">LOCATION</span>
-                                    <div class="cal-val">Karachi, Pakistan 🇵🇰</div>
+                                <div class="cal-grid-days" id="cal-days-grid">
+                                    <!-- Populated dynamically or fallback static -->
                                 </div>
                             </div>
-                            <div class="cal-status-badge">
-                                <span class="cal-dot-pulse"></span>
-                                <span>Open to collabs &amp; internships</span>
+                            <!-- Today's Dev Sprint Strip -->
+                            <div class="cal-sprint-strip">
+                                <div class="cal-sprint-meta">
+                                    <span class="cal-git-icon">⎇</span>
+                                    <span class="cal-git-text" id="git-commit-line">fetching commit info...</span>
+                                </div>
+                                <div class="cal-status-badge">
+                                    <span class="cal-dot-pulse"></span>
+                                    <span>Semester 4 &middot; Active Dev</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Page 1: Tech Focus & Stack -->
+                    <!-- Page 1: Weekly Student & Engineer Timetable -->
                     <div class="calendar-page" data-index="1">
                         <div class="page-header-row">
                             <div class="page-date-box">
-                                <span class="page-month">MAR</span>
-                                <span class="page-day">02</span>
+                                <span class="page-month">WEEK</span>
+                                <span class="page-day">PLAN</span>
                             </div>
                             <div class="page-tag-group">
-                                <span class="page-category-pill">FOCUS</span>
-                                <span class="page-cmd-sub">cat focus.txt</span>
+                                <span class="page-category-pill">ROUTINE</span>
+                                <span class="page-cmd-sub">timetable.log</span>
                             </div>
                         </div>
                         <div class="page-content-area">
-                            <div class="cal-item-row">
-                                <span class="cal-lbl">CORE SPECIALTIES</span>
-                                <div class="cal-chips-wrap">
-                                    <span class="cal-tech-chip">Python</span>
-                                    <span class="cal-tech-chip">OOP</span>
-                                    <span class="cal-tech-chip">Data Science</span>
-                                    <span class="cal-tech-chip">Cloud (AWS)</span>
-                                    <span class="cal-tech-chip">AI &amp; RAG</span>
+                            <div class="cal-schedule-list">
+                                <div class="cal-schedule-row">
+                                    <span class="cal-day-badge">MON – WED</span>
+                                    <div class="cal-sched-detail">
+                                        <div class="cal-sched-title">CS Core &amp; Algorithmic Analysis</div>
+                                        <div class="cal-sched-sub">DSA, OOP &amp; Discrete Structures @ UBIT</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="cal-item-row" style="margin-top:6px;">
-                                <span class="cal-lbl">DEV PRINCIPLE</span>
-                                <div class="cal-quote-box">"Build broken things, understand why they broke, then unbreak them."</div>
+                                <div class="cal-schedule-row">
+                                    <span class="cal-day-badge">THU – FRI</span>
+                                    <div class="cal-sched-detail">
+                                        <div class="cal-sched-title">Cloud Systems &amp; Backend</div>
+                                        <div class="cal-sched-sub">AWS Architecture, Microservices &amp; Linux Labs</div>
+                                    </div>
+                                </div>
+                                <div class="cal-schedule-row">
+                                    <span class="cal-day-badge">WEEKEND</span>
+                                    <div class="cal-sched-detail">
+                                        <div class="cal-sched-title">Open-Source &amp; Deep Work</div>
+                                        <div class="cal-sched-sub">Mogscope, Asaaniyat &amp; Hackathon Sprints</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Page 2: Live Git Log & Host -->
+                    <!-- Page 2: 2026 Semester Project Roadmap -->
                     <div class="calendar-page" data-index="2">
                         <div class="page-header-row">
                             <div class="page-date-box">
-                                <span class="page-month">MAR</span>
-                                <span class="page-day">03</span>
+                                <span class="page-month">YEAR</span>
+                                <span class="page-day">2026</span>
                             </div>
                             <div class="page-tag-group">
-                                <span class="page-category-pill">GIT LOG</span>
-                                <span class="page-cmd-sub">git log -1 --oneline</span>
+                                <span class="page-category-pill">ROADMAP</span>
+                                <span class="page-cmd-sub">milestones.json</span>
                             </div>
                         </div>
                         <div class="page-content-area">
-                            <div class="cal-item-row">
-                                <span class="cal-lbl">LATEST REPO COMMIT</span>
-                                <div class="cal-git-box">
-                                    <span class="cal-git-icon">⎇ main</span>
-                                    <p class="cal-git-text" id="git-commit-line">fetching commit info...</p>
+                            <div class="cal-roadmap-grid">
+                                <div class="cal-roadmap-item done">
+                                    <div class="cal-roadmap-dot">✓</div>
+                                    <div>
+                                        <div class="cal-roadmap-quarter">Q1 2026 · Foundation</div>
+                                        <div class="cal-roadmap-text">Core CS DSA &amp; Linux Kernel Systems</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="cal-split-row" style="margin-top:6px;">
-                                <div class="cal-item-col">
-                                    <span class="cal-lbl">ENVIRONMENT</span>
-                                    <div class="cal-val mono">asad@2006 ~</div>
+                                <div class="cal-roadmap-item done">
+                                    <div class="cal-roadmap-dot">✓</div>
+                                    <div>
+                                        <div class="cal-roadmap-quarter">Q2 2026 · Shipped</div>
+                                        <div class="cal-roadmap-text">Asaaniyat &amp; Mogscope Architecture</div>
+                                    </div>
                                 </div>
-                                <div class="cal-item-col">
-                                    <span class="cal-lbl">SYSTEM UPTIME</span>
-                                    <div class="cal-val mono">Mon Mar 16 · Online</div>
+                                <div class="cal-roadmap-item active">
+                                    <div class="cal-roadmap-dot">⚡</div>
+                                    <div>
+                                        <div class="cal-roadmap-quarter">Q3 2026 · Active Sprint</div>
+                                        <div class="cal-roadmap-text">Portfolio Engine v2 &amp; Multi-Theme UX</div>
+                                    </div>
+                                </div>
+                                <div class="cal-roadmap-item upcoming">
+                                    <div class="cal-roadmap-dot">🎯</div>
+                                    <div>
+                                        <div class="cal-roadmap-quarter">Q4 2026 · Target</div>
+                                        <div class="cal-roadmap-text">AWS Solutions Architect &amp; AI Systems</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Page 3: Work Mode & Availability -->
+                    <!-- Page 3: Collab & Office Hours -->
                     <div class="calendar-page" data-index="3">
                         <div class="page-header-row">
                             <div class="page-date-box">
-                                <span class="page-month">MAR</span>
-                                <span class="page-day">04</span>
+                                <span class="page-month">SYNC</span>
+                                <span class="page-day">HOURS</span>
                             </div>
                             <div class="page-tag-group">
-                                <span class="page-category-pill">AVAILABILITY</span>
-                                <span class="page-cmd-sub">echo $CONNECT</span>
+                                <span class="page-category-pill">CONNECT</span>
+                                <span class="page-cmd-sub">office-hours</span>
                             </div>
                         </div>
                         <div class="page-content-area">
@@ -239,15 +263,25 @@
                                     <div class="cal-val">PKT (UTC+5)</div>
                                 </div>
                                 <div class="cal-item-col">
-                                    <span class="cal-lbl">AVG RESPONSE</span>
-                                    <div class="cal-val">&lt; 24 Hours</div>
+                                    <span class="cal-lbl">HOURS</span>
+                                    <div class="cal-val">14:00 – 22:00 PKT</div>
                                 </div>
                             </div>
-                            <div class="cal-item-row" style="margin-top:8px;">
+                            <div class="cal-item-row" style="margin-top:4px;">
                                 <span class="cal-lbl">DIRECT INBOX</span>
                                 <a href="mailto:muhammadasadk42@gmail.com" class="cal-inbox-link">
                                     ✉️ muhammadasadk42@gmail.com
                                 </a>
+                            </div>
+                            <div class="cal-split-row" style="margin-top:4px;">
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">COLLAB STATUS</span>
+                                    <div class="cal-val" style="color:var(--cyan);font-weight:700;">Open for Internships</div>
+                                </div>
+                                <div class="cal-item-col">
+                                    <span class="cal-lbl">AVG RESPONSE</span>
+                                    <div class="cal-val">&lt; 24 Hours</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,12 +291,12 @@
                 <!-- Calendar Footer Tabs / Dots -->
                 <div class="calendar-footer-bar">
                     <div class="calendar-dots" id="cal-dots">
-                        <button class="cal-dot-tab active" data-index="0" aria-label="Month 1: Identity">01 Identity</button>
-                        <button class="cal-dot-tab" data-index="1" aria-label="Month 2: Tech Focus">02 Focus</button>
-                        <button class="cal-dot-tab" data-index="2" aria-label="Month 3: Git Log">03 Sprint</button>
-                        <button class="cal-dot-tab" data-index="3" aria-label="Month 4: Availability">04 Connect</button>
+                        <button class="cal-dot-tab active" data-index="0" aria-label="Month View">01 Month</button>
+                        <button class="cal-dot-tab" data-index="1" aria-label="Weekly Routine">02 Routine</button>
+                        <button class="cal-dot-tab" data-index="2" aria-label="Roadmap">03 Roadmap</button>
+                        <button class="cal-dot-tab" data-index="3" aria-label="Connect">04 Connect</button>
                     </div>
-                    <span class="cal-auto-badge">↺ rotating desk calendar</span>
+                    <span class="cal-auto-badge">↺ rotating planner</span>
                 </div>
 
             </div><!-- /.desk-calendar-card -->

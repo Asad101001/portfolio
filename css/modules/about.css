@@ -1,9 +1,6 @@
 /* ── About ────────────────────────────────────────────────── */
-.about-grid { display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: stretch; }
-@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } .about-stats-col { flex-direction: row; } .about-stat-card { flex: 1; } }
-.about-text { padding: 32px 36px; font-size: 0.93rem; line-height: 1.78; color: var(--text-muted); display: flex; flex-direction: column; justify-content: center; }
-.about-stats-col { display: flex; flex-direction: column; gap: 12px; }
-.about-stat-card { padding: 20px 16px; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.about-grid { display: block; width: 100%; max-width: 900px; margin: 0 auto; }
+.about-text { padding: 32px 36px; font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); display: flex; flex-direction: column; justify-content: center; }
 .stat-big { font-size: 2.2rem; font-weight: 900; color: #fff; display: block; line-height: 1; }
 .stat-lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; display: block; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
 

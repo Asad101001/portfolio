@@ -180,17 +180,61 @@
 
   /* ── Rotating Widget (Mobile Sync & Perf) ─────────────────── */
   .rotating-widget {
-    height: 145px !important;
-    min-height: 145px !important;
+    height: 155px !important;
+    min-height: 155px !important;
   }
   
   .rotating-item {
-    height: 145px !important;
-    min-height: 145px !important;
-    padding: 10px 14px !important;
-    gap: 16px !important;
+    height: 155px !important;
+    min-height: 155px !important;
+    padding: 8px 12px !important;
+    gap: 12px !important;
     transform: translateZ(0) !important; /* Hardware acceleration */
     will-change: transform, opacity !important;
+    overflow: hidden !important;
+  }
+
+  .barca-team-crest {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+  }
+
+  .barca-stadium-arena {
+    gap: 8px !important;
+    margin: 2px 0 !important;
+  }
+
+  .barca-team-name {
+    font-size: 0.72rem !important;
+  }
+
+  .barca-scorers-list {
+    display: none !important;
+  }
+
+  .barca-digits-wrap {
+    padding: 2px 8px !important;
+  }
+
+  .barca-digit {
+    font-size: 1.15rem !important;
+  }
+
+  .barca-strip-chip.motto-chip {
+    display: none !important;
+  }
+
+  .barca-top-meta {
+    gap: 6px !important;
+  }
+
+  .barca-club-pill {
+    font-size: 0.62rem !important;
+    padding: 1px 6px !important;
   }
 
 

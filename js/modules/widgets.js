@@ -903,44 +903,46 @@ function _starsHTML(starsStr) {
     
     // Identity column layout: logo on top, name+slogan below
     barcaItem.innerHTML =
-      '<div class="barca-scorecard-wrap">' +
+      '<div class="barca-scorecard-wrap wide-scorecard">' +
         '<div class="barca-top-row">' +
-          '<span class="rotating-label currently-into-label">' + headerLabel + '</span>' +
-          (state !== 'in' && timeframe ? '<span class="match-timeframe">' + timeframe + '</span>' : '') +
-        '</div>' +
-        '<div class="barca-content-layout-hybrid">' +
-          '<div class="barca-identity-side">' +
-            '<div class="barca-logo-wrap">' +
-              '<img src="' + barcaLogo + '" class="barca-main-logo" alt="">' +
-              '<span class="barca-mini-tag">SUPPORTING</span>' +
-            '</div>' +
-            '<div class="barca-name-stack">' +
-               '<span class="barca-name-pink">FC Barcelona</span>' +
-               '<span class="barca-slogan-cyan">MÉS QUE UN CLUB</span>' +
-             '</div>' +
+          '<div class="barca-top-meta">' +
+            '<span class="barca-club-pill">🔵🔴 FC Barcelona</span>' +
+            '<span class="rotating-label currently-into-label">' + headerLabel + '</span>' +
+            (state !== 'in' && timeframe ? '<span class="match-timeframe">' + timeframe + '</span>' : '') +
           '</div>' +
-          '<div class="barca-score-rows-side">' +
-            '<div class="score-row-mini is-home-row">' +
-              '<div class="score-team-info">' +
-                '<img src="' + logo1 + '" class="tiny-logo" alt="">' +
-                '<span class="score-team-abbr">' + team1 + ' <small class="host-tag" title="Home"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-top:-2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></small></span>' +
-              '</div>' +
-              (s1 ? '<span class="score-row-scorer">' + s1 + '</span>' : '') +
-              (red1 ? '<span class="score-row-card" title="Red cards">🟥' + (red1 > 1 ? ' x' + red1 : '') + '</span>' : '') +
-              '<span class="score-num">' + (state === 'pre' ? '-' : score1) + '</span>' +
-            '</div>' +
-            '<div class="score-row-mini">' +
-              '<div class="score-team-info">' +
-                '<img src="' + logo2 + '" class="tiny-logo" alt="">' +
-                '<span class="score-team-abbr">' + team2 + '</span>' +
-              '</div>' +
-              (s2 ? '<span class="score-row-scorer">' + s2 + '</span>' : '') +
-              (red2 ? '<span class="score-row-card" title="Red cards">🟥' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +
-              '<span class="score-num">' + (state === 'pre' ? '-' : score2) + '</span>' +
+          (state !== 'in' ? '<div class="barca-emotion-badge">' + emotion + '</div>' : '') +
+        '</div>' +
+        '<div class="barca-stadium-arena">' +
+          '<div class="barca-team-col home-col">' +
+            '<img src="' + logo1 + '" class="barca-team-crest" alt="' + team1 + '">' +
+            '<div class="barca-team-details">' +
+              '<div class="barca-team-name">' + team1 + ' <span class="host-pill">' + (barcaIsHost ? 'Home' : 'Away') + '</span></div>' +
+              (s1 ? '<div class="barca-scorers-list">⚽ ' + s1 + '</div>' : '') +
+              (red1 ? '<div class="barca-cards-list">🟥 ' + (red1 > 1 ? 'x' + red1 : 'Red') + '</div>' : '') +
             '</div>' +
           '</div>' +
+          '<div class="barca-center-score">' +
+            '<div class="barca-digits-wrap">' +
+              '<span class="barca-digit">' + (state === 'pre' ? '-' : score1) + '</span>' +
+              '<span class="barca-digit-divider">:</span>' +
+              '<span class="barca-digit">' + (state === 'pre' ? '-' : score2) + '</span>' +
+            '</div>' +
+            '<span class="barca-status-pill">' + (state === 'in' ? 'LIVE NOW' : state === 'pre' ? 'UPCOMING' : 'FULL TIME') + '</span>' +
+          '</div>' +
+          '<div class="barca-team-col away-col">' +
+            '<div class="barca-team-details text-right">' +
+              '<div class="barca-team-name">' + team2 + ' <span class="host-pill">' + (!barcaIsHost ? 'Home' : 'Away') + '</span></div>' +
+              (s2 ? '<div class="barca-scorers-list">⚽ ' + s2 + '</div>' : '') +
+              (red2 ? '<div class="barca-cards-list">🟥 ' + (red2 > 1 ? 'x' + red2 : 'Red') + '</div>' : '') +
+            '</div>' +
+            '<img src="' + logo2 + '" class="barca-team-crest" alt="' + team2 + '">' +
+          '</div>' +
         '</div>' +
-        (state !== 'in' ? '<div class="barca-emotion-badge">' + emotion + '</div>' : '') +
+        '<div class="barca-footer-stats-strip">' +
+          '<span class="barca-strip-chip">🏆 ' + (leagueName || 'La Liga') + '</span>' +
+          '<span class="barca-strip-chip">🏟️ ' + (barcaIsHost ? 'Spotify Camp Nou' : 'Away Fixture') + '</span>' +
+          '<span class="barca-strip-chip motto-chip">🔵🔴 MÉS QUE UN CLUB</span>' +
+        '</div>' +
       '</div>';
 
     var oldBadge = barcaItem.querySelector('.barca-live-badge');

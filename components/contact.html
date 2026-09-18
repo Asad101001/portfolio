@@ -51,74 +51,76 @@
             </a>
         </div>
 
-        <!-- 2-Column Social Grid -->
-        <div class="social-cards-grid-v2 stagger">
+        <!-- Centered Activity Hub Card (Utilizing Wide Space) -->
+        <div class="activity-hub-centered-wrap reveal" style="max-width:920px; margin:28px auto 24px; width:100%;">
+            <div class="card currently-into-card glass-card" id="activity-hub-card" style="width:100%; margin:0;">
+                <p class="card-label">Activity Hub</p>
 
-            <!-- LEFT: Activity Hub + Spotify + Last.fm stacked -->
-            <div class="social-left-col stagger-item" style="display:flex;flex-direction:column;gap:20px;">
+                <div class="rotating-widget" id="rotating-widget">
 
-                <!-- Activity Hub Card (Moved from Hero) -->
-                <div class="card currently-into-card glass-card reveal" style="--delay:200ms;margin-bottom:0;">
-                    <p class="card-label">Activity Hub</p>
-
-                    <div class="rotating-widget" id="rotating-widget">
-
-                        <!-- Movie (Letterboxd) -->
-                        <div class="rotating-item currently-into-item active" data-index="0">
-                            <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
-                                style="display:none" />
-                            <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
-                            <div class="currently-into-text">
-                                <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
-                                <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
-                            </div>
+                    <!-- Movie (Letterboxd) -->
+                    <div class="rotating-item currently-into-item active" data-index="0">
+                        <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
+                            style="display:none" />
+                        <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
+                            <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
                         </div>
+                    </div>
 
-                        <!-- TV Series Tracking (Simkl / Trakt) -->
-                        <div class="rotating-item currently-into-item" data-index="1">
-                            <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
-                            <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
-                            <div class="currently-into-text">
-                                <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
-                                <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
-                                <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
-                                    <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
-                                        <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
-                                    </div>
+                    <!-- TV Series Tracking (Simkl / Trakt) -->
+                    <div class="rotating-item currently-into-item" data-index="1">
+                        <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
+                        <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
+                            <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
+                            <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
+                                <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
+                                    <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Reading -->
-                        <div class="rotating-item currently-into-item" data-index="2">
-                            <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
-                                style="display:none" />
-                            <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
-                            <div class="currently-into-text">
-                                <span class="rotating-label currently-into-label">Currently Reading</span>
-                                <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
-                            </div>
-                        </div>
-
-                        <!-- Football -->
-                        <div class="rotating-item currently-into-item" data-index="3">
-                            <div class="currently-into-text">
-                                <span class="rotating-label currently-into-label">Watching Football</span>
-                                <span class="rotating-value currently-into-value" id="barca-score-static">
-                                    Loading scores...
-                                </span>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <div class="rotating-dots" id="rotating-dots">
-                        <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
-                        <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
-                        <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
-                        <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
+                    <!-- Reading -->
+                    <div class="rotating-item currently-into-item" data-index="2">
+                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
+                            style="display:none" />
+                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label">Currently Reading</span>
+                            <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
+                        </div>
                     </div>
+
+                    <!-- Football -->
+                    <div class="rotating-item currently-into-item" data-index="3">
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label">Watching Football</span>
+                            <span class="rotating-value currently-into-value" id="barca-score-static">
+                                Loading scores...
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
+
+                <div class="rotating-dots" id="rotating-dots">
+                    <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
+                    <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
+                    <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
+                    <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2-Column Social Grid -->
+        <div class="social-cards-grid-v2 stagger">
+
+            <!-- LEFT: Spotify + Last.fm stacked -->
+            <div class="social-left-col stagger-item" style="display:flex;flex-direction:column;gap:20px;">
 
                 <!-- Spotify -->
                 <div class="spotify-widget glass-card" id="spotify-widget">
