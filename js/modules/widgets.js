@@ -61,16 +61,36 @@ function _tvmazePoster(title) {
 }
 
 /**
+ * Universal date parser with UTC normalization for date strings lacking timezone.
+ */
+function parseUniversalDate(dateStr) {
+  if (!dateStr) return null;
+  if (typeof dateStr === 'number') return new Date(dateStr);
+  var s = String(dateStr).trim();
+  // If string is YYYY-MM-DD HH:MM:SS without timezone (e.g. from rss2json), parse as UTC
+  if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}$/.test(s)) {
+    s = s.replace(' ', 'T') + 'Z';
+  } else if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    var parts = s.split('-');
+    return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  }
+  var d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+/**
  * Universal time ago helper.
  */
 function timeAgo(dateStr) {
   if (!dateStr) return '';
-  var date = new Date(dateStr);
-  if (isNaN(date.getTime())) return '';
+  var date = parseUniversalDate(dateStr);
+  if (!date) return '';
   var diff = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (diff < 60)    return diff + 's ago';
+  if (diff < 0)     return 'just now';
+  if (diff < 60)    return 'just now';
   if (diff < 3600)  return Math.floor(diff / 60) + 'm ago';
   if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 86400 * 2) return 'yesterday';
   if (diff < 86400 * 10) return Math.floor(diff / 86400) + 'd ago';
   if (diff < 86400 * 30) return Math.floor(diff / (86400 * 7)) + 'w ago';
   return Math.floor(diff / (86400 * 30)) + 'mo ago';
@@ -308,25 +328,42 @@ function _starsHTML(starsStr) {
         var item = items[0];
         var title       = item.querySelector('title')    ? item.querySelector('title').textContent    : '';
         var pubDate     = item.querySelector('pubDate')  ? item.querySelector('pubDate').textContent  : '';
+        var wEl = item.getElementsByTagName('letterboxd:watchedDate')[0] || item.querySelector('watchedDate');
+        var watchedDate = wEl ? wEl.textContent.trim() : '';
         var description = item.querySelector('description') ? item.querySelector('description').textContent : '';
         // Extract thumbnail from <description> HTML
         var imgMatch = description.match(/<img[^>]+src=["']([^"']+)["']/i);
         var thumbnail = imgMatch ? imgMatch[1] : '';
-        return { title: title, pubDate: pubDate, thumbnail: thumbnail, description: description };
+        return { title: title, pubDate: pubDate, watchedDate: watchedDate, thumbnail: thumbnail, description: description };
       } catch (e) {
         return null;
       }
     }
 
     /**
-     * Try multiple RSS fetch strategies in order.
-     * Returns a Promise resolving to { title, pubDate, thumbnail } or null.
+     * Try multiple RSS fetch strategies in order with 5-minute TTL caching.
+     * Returns a Promise resolving to { title, pubDate, watchedDate, thumbnail } or null.
      */
     function _fetchLbRss() {
-      var rssUrl  = 'https://letterboxd.com/' + LB_USER + '/rss/';
-      var cache   = sessionStorage.getItem('asad_lb_cache');
+      var rssUrl = 'https://letterboxd.com/' + LB_USER + '/rss/';
+      sessionStorage.removeItem('asad_lb_cache'); // Clear legacy unexpiring cache
+      var cache = sessionStorage.getItem('asad_lb_cache_v2');
       if (cache) {
-        try { return Promise.resolve(JSON.parse(cache)); } catch(e) {}
+        try {
+          var parsedCache = JSON.parse(cache);
+          if (parsedCache && parsedCache.timestamp && (Date.now() - parsedCache.timestamp < 300000)) {
+            return Promise.resolve(parsedCache.data);
+          }
+        } catch(e) {}
+      }
+
+      function _saveCache(data) {
+        if (data) {
+          try {
+            sessionStorage.setItem('asad_lb_cache_v2', JSON.stringify({ timestamp: Date.now(), data: data }));
+          } catch(_) {}
+        }
+        return data;
       }
 
       // Strategy 1: Local Vercel Serverless Function (Most Reliable)
@@ -335,8 +372,7 @@ function _starsHTML(starsStr) {
         .then(function(xml) {
           if (!xml) return null;
           var parsed = _parseLbRssXml(xml);
-          if (parsed) sessionStorage.setItem('asad_lb_cache', JSON.stringify(parsed));
-          return parsed;
+          return _saveCache(parsed);
         })
         .catch(function() { return null; })
         // Strategy 2: codetabs.com CORS proxy (Reliable public proxy)
@@ -347,8 +383,7 @@ function _starsHTML(starsStr) {
             .then(function(xml) {
               if (!xml) return null;
               var parsed = _parseLbRssXml(xml);
-              if (parsed) sessionStorage.setItem('asad_lb_cache', JSON.stringify(parsed));
-              return parsed;
+              return _saveCache(parsed);
             })
             .catch(function() { return null; });
         })
@@ -360,12 +395,11 @@ function _starsHTML(starsStr) {
             .then(function(xml) {
               if (!xml) return null;
               var parsed = _parseLbRssXml(xml);
-              if (parsed) sessionStorage.setItem('asad_lb_cache', JSON.stringify(parsed));
-              return parsed;
+              return _saveCache(parsed);
             })
             .catch(function() { return null; });
         })
-        // Strategy 3: rss2json.com (fallback when others fail)
+        // Strategy 4: rss2json.com (fallback when others fail)
         .then(function(res) {
           if (res) return res;
           var jsonUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' +
@@ -381,9 +415,13 @@ function _starsHTML(starsStr) {
                   var m   = src.match(/src=["']([^"']+)["']/i);
                   if (m) thumb = m[1];
                 }
-                var result = { title: item.title, pubDate: item.pubDate || item.pubdate, thumbnail: thumb };
-                sessionStorage.setItem('asad_lb_cache', JSON.stringify(result));
-                return result;
+                var rawPub = item.pubDate || item.pubdate || '';
+                // Ensure rss2json pubDate has timezone context
+                if (rawPub && /^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}$/.test(rawPub.trim())) {
+                  rawPub = rawPub.trim().replace(' ', 'T') + 'Z';
+                }
+                var result = { title: item.title, pubDate: rawPub, thumbnail: thumb };
+                return _saveCache(result);
               }
               return null;
             })
@@ -402,7 +440,7 @@ function _starsHTML(starsStr) {
             if (m) url = m[1];
           }
 
-          // Try to get a better poster via iTunes if thumbnail is missing/small
+          // Try to get a better poster via Wikipedia / iTunes if thumbnail is missing/small
           var posterPromise = url
             ? Promise.resolve(url)
             : (latest.title ? _moviePoster(_parseLetterboxd(latest.title).title) : Promise.resolve(null));
@@ -434,7 +472,27 @@ function _starsHTML(starsStr) {
             starsEl.innerHTML = _starsHTML(parsed.starsStr);
 
             var pubDate = latest.pubDate;
-            if (pubDate) {
+            var watchedDate = latest.watchedDate;
+            var timeLabel = '';
+
+            if (watchedDate) {
+              var now = new Date();
+              var todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+              var yestDate = new Date(now.getTime() - 86400000);
+              var yestStr = yestDate.getFullYear() + '-' + String(yestDate.getMonth() + 1).padStart(2, '0') + '-' + String(yestDate.getDate()).padStart(2, '0');
+
+              if (watchedDate === todayStr) {
+                timeLabel = pubDate ? timeAgo(pubDate) : 'today';
+              } else if (watchedDate === yestStr) {
+                timeLabel = 'yesterday';
+              } else {
+                timeLabel = timeAgo(watchedDate);
+              }
+            } else if (pubDate) {
+              timeLabel = timeAgo(pubDate);
+            }
+
+            if (timeLabel) {
               var timeEl = document.getElementById('movie-logged-time');
               if (!timeEl) {
                 timeEl = document.createElement('span');
@@ -442,7 +500,7 @@ function _starsHTML(starsStr) {
                 timeEl.className = 'movie-timeline-label';
                 if (starsEl) starsEl.appendChild(timeEl);
               }
-              timeEl.textContent = ' \u2022 ' + timeAgo(pubDate);
+              timeEl.textContent = ' \u2022 ' + timeLabel;
               starsEl.style.display = 'inline-flex';
               starsEl.style.alignItems = 'center';
             }
@@ -511,7 +569,7 @@ function _starsHTML(starsStr) {
 
       // Format status + timeago
       if (tvStatus) {
-        var statusText = tvConf.watching ? 'Currently Watching Series/TV Show' : 'Last Watched Series/TV Show';
+        var statusText = tvConf.watching ? 'Currently Watching' : 'Last Watched';
         if (tvConf.lastWatched) {
           statusText += ' \u2022 ' + timeAgo(tvConf.lastWatched);
         }
@@ -583,7 +641,7 @@ function _starsHTML(starsStr) {
           }
 
           if (tvStatus) {
-            var statusText = data.watching ? 'Currently Watching Series/TV Show' : 'Last Watched Series/TV Show';
+            var statusText = data.watching ? 'Currently Watching' : 'Last Watched';
             if (data.date) {
               statusText += ' \u2022 ' + timeAgo(data.date);
             }

@@ -45,26 +45,33 @@ function apiMiddlewarePlugin() {
     name: 'api-middleware',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (req.url && req.url.startsWith('/api/twitter')) {
+        if (req.url && req.url.startsWith('/api/')) {
           try {
             const parsedUrl = new URL(req.url, 'http://localhost');
-            const user = parsedUrl.searchParams.get('user') || 'As4d_41';
-            const { default: handler } = await import('./api/twitter.js');
-            const mockReq = { query: { user } };
-            const mockRes = {
-              setHeader: (k, v) => res.setHeader(k, v),
-              status: (code) => {
-                res.statusCode = code;
-                return {
-                  json: (data) => {
-                    res.setHeader('Content-Type', 'application/json');
-                    res.end(JSON.stringify(data));
-                  }
-                };
-              }
-            };
-            await handler(mockReq, mockRes);
-            return;
+            const route = parsedUrl.pathname.replace(/^\/api\//, '').split('/')[0];
+            const query = Object.fromEntries(parsedUrl.searchParams.entries());
+            const handlerFile = path.resolve(process.cwd(), `api/${route}.js`);
+            if (fs.existsSync(handlerFile)) {
+              const { default: handler } = await import(`file://${handlerFile}?t=${Date.now()}`);
+              const mockReq = { query, url: req.url, headers: req.headers };
+              const mockRes = {
+                setHeader: (k, v) => res.setHeader(k, v),
+                status: (code) => {
+                  res.statusCode = code;
+                  return {
+                    json: (data) => {
+                      res.setHeader('Content-Type', 'application/json');
+                      res.end(JSON.stringify(data));
+                    },
+                    send: (data) => {
+                      res.end(data);
+                    }
+                  };
+                }
+              };
+              await handler(mockReq, mockRes);
+              return;
+            }
           } catch (err) {
             console.error('Vite API middleware error:', err);
             res.statusCode = 500;

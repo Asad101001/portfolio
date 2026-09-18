@@ -64,11 +64,19 @@ export function initDeskCalendar() {
     for (let day = 1; day <= totalDays; day++) {
       const isToday = day === todayDate;
       const hasCommit = commitDays.has(day);
+      const isBirthday = (month === 8 && day === 28); // September 28
       let classes = 'cal-day-cell';
       if (isToday) classes += ' today';
       if (hasCommit && !isToday) classes += ' has-commit';
+      if (isBirthday) classes += ' birthday-cell';
 
-      gridHTML += `<span class="${classes}" title="${isToday ? "Today's Date" : ''}">${day}${hasCommit ? '<i class="cal-dot-mark"></i>' : ''}</span>`;
+      let cellTitle = isToday ? "Today's Date" : `Day ${day}`;
+      if (isBirthday) cellTitle = "🎂 September 28 — Asad's Birthday! 🎉";
+
+      const bdayBadge = isBirthday ? '<span class="cal-bday-icon" aria-label="Birthday">🎂</span>' : '';
+      const commitDot = hasCommit ? '<i class="cal-dot-mark"></i>' : '';
+
+      gridHTML += `<span class="${classes}" title="${cellTitle}" data-day="${day}">${bdayBadge}<span class="cal-day-num">${day}</span>${commitDot}</span>`;
     }
 
     daysGrid.innerHTML = gridHTML;

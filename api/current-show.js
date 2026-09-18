@@ -50,7 +50,7 @@ export default async function handler(req, res) {
               progress: (item.watched_episodes_count && item.total_episodes_count)
                 ? Math.round((item.watched_episodes_count / item.total_episodes_count) * 100)
                 : null,
-              watched_at: item.last_watched_at || new Date().toISOString()
+              watched_at: item.last_watched_at || null
             };
             watching = item.status === 'watching';
             progress = data.progress;
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
               progress: (item.watched_episodes && item.total_episodes)
                 ? Math.round((item.watched_episodes / item.total_episodes) * 100)
                 : null,
-              watched_at: item.last_watched_at || new Date().toISOString()
+              watched_at: item.last_watched_at || null
             };
             watching = true;
             progress = data.progress;
