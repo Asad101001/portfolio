@@ -799,7 +799,7 @@ function _starsHTML(starsStr) {
     if (!list.length) return '';
     if (list.length <= limit) return list.join(', ');
     var overflow = list.length - limit;
-    return list.slice(0, limit).join(', ') + ' +' + overflow;
+    return list.slice(0, limit).join(', ') + ' ..+' + overflow;
   }
 
   function getScoreValue(competitor) {
@@ -858,8 +858,9 @@ function _starsHTML(starsStr) {
     var score1 = barcaIsHost ? getScoreDisplay(barca) : getScoreDisplay(opp);
     var score2 = !barcaIsHost ? getScoreDisplay(barca) : getScoreDisplay(opp);
     
-    var s1 = compactEventList(barcaIsHost ? barcaScorers : oppScorers, 3);
-    var s2 = compactEventList(!barcaIsHost ? barcaScorers : oppScorers, 3);
+    // Allow up to 5 scorers with micro font sizes to properly utilize available space
+    var s1 = compactEventList(barcaIsHost ? barcaScorers : oppScorers, 5);
+    var s2 = compactEventList(!barcaIsHost ? barcaScorers : oppScorers, 5);
     var red1 = barcaIsHost ? barcaRedCards : oppRedCards;
     var red2 = !barcaIsHost ? barcaRedCards : oppRedCards;
     
@@ -901,7 +902,7 @@ function _starsHTML(starsStr) {
     // Suppress "Today" if header is "Matchday", or if it is "Live Now"
     if (state === 'in' || timeframe === 'Today') timeframe = '';
     
-    // Identity column layout: logo on top with SUPPORTING tag, name+slogan below
+    // Identity column layout: logo + name + slogan + clean unclipped SUPPORTING pill badge
     barcaItem.innerHTML =
       '<div class="barca-scorecard-wrap">' +
         '<div class="barca-top-row">' +
@@ -912,30 +913,30 @@ function _starsHTML(starsStr) {
           '<div class="barca-identity-side">' +
             '<div class="barca-logo-wrap">' +
               '<img src="' + barcaLogo + '" class="barca-main-logo" alt="FC Barcelona">' +
-              '<span class="barca-mini-tag">SUPPORTING</span>' +
             '</div>' +
             '<div class="barca-name-stack">' +
                '<span class="barca-name-pink">FC Barcelona</span>' +
                '<span class="barca-slogan-cyan">MÉS QUE UN CLUB</span>' +
+               '<span class="barca-supporter-badge">SUPPORTING</span>' +
              '</div>' +
           '</div>' +
           '<div class="barca-score-rows-side">' +
             '<div class="score-row-mini is-home-row' + (barcaIsHost ? ' is-host' : '') + '">' +
               '<div class="score-team-info">' +
                 '<img src="' + logo1 + '" class="tiny-logo" alt="' + team1 + '">' +
-                '<span class="score-team-abbr">' + team1 + (barcaIsHost ? ' <small class="host-tag" title="Home">🏠</small>' : '') + '</span>' +
+                '<span class="score-team-abbr">' + team1 + (barcaIsHost ? ' <span class="host-pill" title="Home Team">H</span>' : '') + '</span>' +
               '</div>' +
-              (s1 ? '<span class="score-row-scorer">⚽ ' + s1 + '</span>' : '') +
-              (red1 ? '<span class="score-row-card" title="Red cards">🟥' + (red1 > 1 ? ' x' + red1 : '') + '</span>' : '') +
+              (s1 ? '<span class="score-row-scorer">' + s1 + '</span>' : '') +
+              (red1 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red1 > 1 ? ' x' + red1 : '') + '</span>' : '') +
               '<span class="score-num">' + (state === 'pre' ? '-' : score1) + '</span>' +
             '</div>' +
             '<div class="score-row-mini' + (!barcaIsHost ? ' is-host' : '') + '">' +
               '<div class="score-team-info">' +
                 '<img src="' + logo2 + '" class="tiny-logo" alt="' + team2 + '">' +
-                '<span class="score-team-abbr">' + team2 + (!barcaIsHost ? ' <small class="host-tag" title="Home">🏠</small>' : '') + '</span>' +
+                '<span class="score-team-abbr">' + team2 + (!barcaIsHost ? ' <span class="host-pill" title="Home Team">H</span>' : '') + '</span>' +
               '</div>' +
-              (s2 ? '<span class="score-row-scorer">⚽ ' + s2 + '</span>' : '') +
-              (red2 ? '<span class="score-row-card" title="Red cards">🟥' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +
+              (s2 ? '<span class="score-row-scorer">' + s2 + '</span>' : '') +
+              (red2 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +
               '<span class="score-num">' + (state === 'pre' ? '-' : score2) + '</span>' +
             '</div>' +
           '</div>' +
@@ -1070,11 +1071,11 @@ function _starsHTML(starsStr) {
           '<div class="barca-identity-side">' +
             '<div class="barca-logo-wrap">' +
               '<img src="' + barcaLogo + '" class="barca-main-logo" alt="FC Barcelona">' +
-              '<span class="barca-mini-tag">SUPPORTING</span>' +
             '</div>' +
             '<div class="barca-name-stack">' +
               '<span class="barca-name-pink">FC Barcelona</span>' +
               '<span class="barca-slogan-cyan">MÉS QUE UN CLUB</span>' +
+              '<span class="barca-supporter-badge">SUPPORTING</span>' +
             '</div>' +
           '</div>' +
           '<div class="barca-score-rows-side" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;">' +

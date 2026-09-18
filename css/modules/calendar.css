@@ -113,6 +113,22 @@
   gap: 6px;
 }
 
+/* Calendar Live Pill Badge */
+.cal-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--cyan, #10b981);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
 .cal-btn-nav,
 .cal-btn-toggle {
   background: rgba(255, 255, 255, 0.06);
@@ -634,6 +650,24 @@
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 }
 
+.cal-footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--text-dim, rgba(255, 255, 255, 0.45));
+}
+
+.cal-footer-status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--cyan, #10b981);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
 .cal-auto-badge {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.62rem;
@@ -906,3 +940,25 @@ body.theme-komik .cal-roadmap-text {
   color: #5C6473 !important;
   font-weight: 600 !important;
 }
+
+body.theme-komik .cal-live-pill {
+  background: #E8F5E9 !important;
+  border: 1.5px solid #23272F !important;
+  color: #1B5E20 !important;
+  font-weight: 900 !important;
+  box-shadow: 1.5px 1.5px 0px #23272F !important;
+}
+
+body.theme-komik .cal-footer-status-pill {
+  background: #FFC700 !important;
+  border: 1.5px solid #23272F !important;
+  color: #23272F !important;
+  font-weight: 900 !important;
+  box-shadow: 1.5px 1.5px 0px #23272F !important;
+}
+
+body.theme-komik .cal-footer-meta {
+  color: #5C6473 !important;
+  font-weight: 800 !important;
+}
+

@@ -156,12 +156,19 @@ body.theme-komik .commit-day-tooltip {
 }
 
 /* ── Currently Into / Activity Hub Rotating Widget ── */
-body.theme-komik .currently-into-item,
-body.theme-komik .rotating-item {
+body.theme-komik #activity-hub-card {
     background: #FCFAF5 !important;
-    border: 2px solid #23272F !important;
-    box-shadow: 3px 3px 0px #23272F !important;
+    border: 2.5px solid #23272F !important;
+    box-shadow: 5px 5px 0px #1565C0 !important;
+}
+
+body.theme-komik #activity-hub-card .currently-into-item,
+body.theme-komik #activity-hub-card .rotating-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     color: #23272F !important;
+    padding: 6px 12px !important;
 }
 
 body.theme-komik .currently-into-label,
@@ -190,17 +197,19 @@ body.theme-komik .movie-timeline-label {
     font-weight: 700 !important;
 }
 
+/* Polished comic dots */
 body.theme-komik .r-dot::before {
     border: 1.5px solid #23272F !important;
-    background: #FCFAF5 !important;
-    border-radius: 0px !important;
-    width: 8px !important;
+    background: #EBE3D3 !important;
+    border-radius: 3px !important;
+    width: 10px !important;
     height: 8px !important;
 }
 body.theme-komik .r-dot.active::before {
-    background: #23272F !important;
+    background: #FFC700 !important;
     width: 24px !important;
-    box-shadow: 2px 2px 0px #FFC700 !important;
+    border-radius: 4px !important;
+    box-shadow: 2px 2px 0px #23272F !important;
 }
 
 /* ── Barca Scorecard Widget (Komik Theme) ── */
@@ -209,9 +218,9 @@ body.theme-komik #rotating-widget.football-active {
 }
 
 body.theme-komik .rotating-item.barca-slot {
-    background: #FCFAF5 !important;
-    border: 2px solid #23272F !important;
-    box-shadow: 3px 3px 0px #23272F !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 body.theme-komik .barca-scorecard-wrap {
@@ -221,34 +230,34 @@ body.theme-komik .barca-scorecard-wrap {
 }
 
 body.theme-komik .barca-main-logo {
-    filter: drop-shadow(1px 2px 0px #23272F) !important;
+    filter: drop-shadow(1.5px 2px 0px #23272F) !important;
 }
 
-body.theme-komik .barca-mini-tag {
+/* Clean, unclipped SUPPORTING pill badge */
+body.theme-komik .barca-supporter-badge {
     background: #FFC700 !important;
     color: #23272F !important;
     border: 1.5px solid #23272F !important;
     font-weight: 900 !important;
-    box-shadow: 1px 1px 0px #23272F !important;
+    box-shadow: 1.5px 1.5px 0px #23272F !important;
+    font-size: 0.52rem !important;
+    padding: 1.5px 6px !important;
+    border-radius: 3px !important;
+    letter-spacing: 0.06em !important;
 }
 
 body.theme-komik .barca-name-pink {
     color: #A50044 !important;
     font-weight: 900 !important;
+    font-size: 0.72rem !important;
     text-shadow: none !important;
 }
 
 body.theme-komik .barca-slogan-cyan {
     color: #004D98 !important;
     font-weight: 800 !important;
+    font-size: 0.44rem !important;
     text-shadow: none !important;
-}
-
-body.theme-komik .barca-mini-tag {
-    background: #FFC700 !important;
-    color: #23272F !important;
-    border: 1px solid #23272F !important;
-    font-weight: 900 !important;
 }
 
 body.theme-komik .barca-header-title {
@@ -258,12 +267,13 @@ body.theme-komik .barca-header-title {
 }
 
 body.theme-komik .score-row-mini {
-    background: #EBE3D3 !important;
+    background: #F4EEDB !important;
     border: 1.5px solid #23272F !important;
     opacity: 1 !important;
     color: #23272F !important;
     box-shadow: 2px 2px 0px #23272F !important;
-    padding: 3px 6px !important;
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
@@ -274,7 +284,7 @@ body.theme-komik .barca-top-row {
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 6px !important;
 }
 
 body.theme-komik .barca-top-row .rotating-label {
@@ -283,11 +293,11 @@ body.theme-komik .barca-top-row .rotating-label {
 }
 
 body.theme-komik .match-timeframe {
-    color: #5C6473 !important;
-    background: #EBE3D3 !important;
+    color: #23272F !important;
+    background: #FFC700 !important;
     border: 1.5px solid #23272F !important;
-    font-weight: 800 !important;
-    font-size: 0.52rem !important;
+    font-weight: 900 !important;
+    font-size: 0.54rem !important;
     padding: 1px 5px !important;
     border-radius: 2px !important;
     box-shadow: 1px 1px 0px #23272F !important;
@@ -300,34 +310,56 @@ body.theme-komik .barca-team-name,
 body.theme-komik .barca-opp-name {
     color: #23272F !important;
     font-weight: 900 !important;
-    font-size: 0.58rem !important;
-    max-width: 140px !important;
+    font-size: 0.72rem !important;
+    max-width: 150px !important;
 }
 
+body.theme-komik .host-pill {
+    background: #FFC700 !important;
+    color: #23272F !important;
+    border: 1.5px solid #23272F !important;
+    font-weight: 900 !important;
+    font-size: 0.48rem !important;
+    box-shadow: 1px 1px 0px #23272F !important;
+    padding: 1px 4px !important;
+    border-radius: 2px !important;
+}
+
+/* Micro typography for scorers utilizing space gracefully without icons */
 body.theme-komik .score-row-scorer,
 body.theme-komik .barca-scorers,
 body.theme-komik .barca-match-date,
 body.theme-komik .barca-competition {
-    color: #004D98 !important;
-    font-weight: 800 !important;
+    color: #4A5568 !important;
+    font-weight: 700 !important;
     font-size: 0.52rem !important;
-    max-width: 160px !important;
+    max-width: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    margin: 0 8px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
+    font-family: 'JetBrains Mono', monospace !important;
 }
 
 body.theme-komik .score-num,
 body.theme-komik .barca-score-num {
     color: #A50044 !important;
     font-family: 'Bangers', cursive !important;
-    font-size: 1.1rem !important;
+    font-size: 1.35rem !important;
     font-weight: 900 !important;
+    letter-spacing: 0.04em !important;
 }
 
 body.theme-komik .score-row-card {
     color: #D32F2F !important;
     font-weight: 900 !important;
+}
+
+body.theme-komik .red-card-box {
+    background: #D32F2F !important;
+    border: 1px solid #23272F !important;
 }
 
 body.theme-komik .barca-status-badge {

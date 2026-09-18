@@ -297,6 +297,9 @@
   /* ── Social Cards ─────────────────────────────────────── */
   .social-cards-grid-v2 {
     grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .spotify-widget, .lastfm-widget {

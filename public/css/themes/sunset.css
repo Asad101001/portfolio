@@ -487,8 +487,11 @@ body.theme-sunset .score-team-abbr {
 body.theme-sunset .score-row-scorer {
     color: #ff758c !important;
     font-weight: 600 !important;
-    font-size: 0.38rem !important;
-    max-width: 140px !important;
+    font-size: 0.52rem !important;
+    max-width: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    margin: 0 8px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
@@ -498,6 +501,18 @@ body.theme-sunset .score-num {
     color: var(--cyan) !important;
     font-weight: 900 !important;
     font-size: 1.05rem !important;
+}
+
+body.theme-sunset .barca-supporter-badge {
+    background: rgba(255, 177, 20, 0.18) !important;
+    border: 1px solid rgba(255, 177, 20, 0.4) !important;
+    color: #ffb114 !important;
+}
+
+body.theme-sunset .host-pill {
+    background: rgba(255, 117, 140, 0.18) !important;
+    border: 1px solid #ff758c !important;
+    color: #ff758c !important;
 }
 
 /* ── Sunset Twitter Widget ── */

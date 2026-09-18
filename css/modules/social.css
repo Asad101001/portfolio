@@ -114,6 +114,18 @@
 }
 .social-cards-grid > div { min-width: 0; }
 
+/* 2-Column Grid for widgets below Activity Hub (uniform 920px width) */
+.social-cards-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 920px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.social-cards-grid-v2 > div { min-width: 0; }
+
 .spotify-widget, .lastfm-widget { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .xp-widget, .game-widget, .dev-notes-widget { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
