@@ -21,12 +21,12 @@ export const CONFIG = {
     players: [
       { name: 'Lamine Yamal', shortName: 'LAMINE', fallback: '⚽', image: '/images/footballers/lamine.jpg' },
       { name: 'Pedri',        shortName: 'PEDRI',  fallback: '⚽', image: '/images/footballers/pedri.jpg' },
-      { name: 'Rayan Cherki', shortName: 'CHERKI', fallback: '⚽', image: '/images/footballers/cherki.jpg' }
+      { name: 'Rodri Hernández', shortName: 'RODRI', fallback: '⚽', image: '/images/footballers/rodri.jpg' }
     ],
     watchlist: [
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' }
+      { title: 'Dune: Part Two', searchQuery: 'Dune: Part Two' },
+      { title: 'The Batman Part II', searchQuery: 'The Batman Part II' },
+      { title: 'Blade Runner 2049', searchQuery: 'Blade Runner 2049' }
     ],
     seriesWatchlist: [
       { title: 'Lost' },

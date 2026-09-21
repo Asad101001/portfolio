@@ -125,6 +125,9 @@
   box-sizing: border-box;
 }
 .social-cards-grid-v2 > div { min-width: 0; }
+.social-left-col { display: flex; flex-direction: column; height: 100%; }
+.social-left-col #spotify-widget { height: 100%; flex: 1; }
+.social-right-col { display: flex; flex-direction: column; gap: 20px; }
 
 .spotify-widget, .lastfm-widget { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .xp-widget, .game-widget, .dev-notes-widget { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }

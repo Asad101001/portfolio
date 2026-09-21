@@ -159,3 +159,28 @@
 /* Labels missing from currently-into override */
 .rotating-label { display: block; font-size: 0.6rem; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 2px; }
 .rotating-value { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); }
+
+/* Big Threes widget specific sizing to ensure all names fit */
+#big3-social-widget .currently-into-label,
+#big3-social-widget .rotating-label {
+  font-size: 0.62rem !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1.2 !important;
+  margin-bottom: 3px !important;
+}
+
+#big3-social-widget .currently-into-value,
+#big3-social-widget .rotating-value,
+#big3-social-widget #big3-players,
+#big3-social-widget #big3-watchlist,
+#big3-social-widget #big3-series,
+#big3-social-widget #big3-artists {
+  font-size: 0.78rem !important;
+  line-height: 1.35 !important;
+  -webkit-line-clamp: 3 !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  max-width: 100% !important;
+  word-break: normal !important;
+}

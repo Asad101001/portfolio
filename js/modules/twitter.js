@@ -10,20 +10,24 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Muhammad Asad Khan';
+    const CACHE_KEYS = ['asad_twitter_cache_v5', 'asad_twitter_cache_v4', 'asad_twitter_cache_v3', 'asad_twitter_cache'];
     const CACHE_KEY = 'asad_twitter_cache_v5';
     const CACHE_TTL = 60 * 60 * 1000; // 1 hour fresh
 
     function getLocalCache(allowStale = true) {
-        try {
-            const raw = localStorage.getItem(CACHE_KEY);
-            if (!raw) return null;
-            const parsed = JSON.parse(raw);
-            if (!parsed || !parsed.data) return null;
-            if (!allowStale && Date.now() - parsed.timestamp > CACHE_TTL) {
-                return null;
-            }
-            return parsed.data;
-        } catch (_) {}
+        for (const key of CACHE_KEYS) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) continue;
+                const parsed = JSON.parse(raw);
+                if (!parsed || !parsed.data) continue;
+                if (!allowStale && Date.now() - parsed.timestamp > CACHE_TTL) continue;
+                if (key !== CACHE_KEY) {
+                    try { localStorage.setItem(CACHE_KEY, raw); } catch (_) {}
+                }
+                return parsed.data;
+            } catch (_) {}
+        }
         return null;
     }
 

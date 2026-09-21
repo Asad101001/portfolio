@@ -540,3 +540,59 @@ body.theme-komik .x-error-btn:hover {
     transform: translate(-2px, -2px) !important;
     box-shadow: 4px 4px 0px #23272F !important;
 }
+
+/* ── Big Threes Widget Font Sizing (Komik Theme) ── */
+body.theme-komik #big3-social-widget .currently-into-label,
+body.theme-komik #big3-social-widget .rotating-label {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em !important;
+    margin-bottom: 3px !important;
+}
+
+body.theme-komik #big3-social-widget .currently-into-value,
+body.theme-komik #big3-social-widget .rotating-value,
+body.theme-komik #big3-social-widget #big3-players,
+body.theme-komik #big3-social-widget #big3-watchlist,
+body.theme-komik #big3-social-widget #big3-series,
+body.theme-komik #big3-social-widget #big3-artists {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+    font-weight: 800 !important;
+    -webkit-line-clamp: 3 !important;
+    max-width: 100% !important;
+    word-break: normal !important;
+}
+
+/* ── Last.fm Scrobbles Uniform Grid (Komik Theme) ── */
+body.theme-komik .lastfm-tracks {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    padding: 16px 18px !important;
+}
+@media (max-width: 680px) {
+    body.theme-komik .lastfm-tracks {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        padding: 12px 14px !important;
+    }
+}
+body.theme-komik .lastfm-track {
+    background: #FCFAF5 !important;
+    border: 2px solid #23272F !important;
+    box-shadow: 3px 3px 0px #23272F !important;
+    border-radius: 0px !important;
+    box-sizing: border-box !important;
+    min-height: 64px !important;
+    padding: 10px 12px !important;
+}
+body.theme-komik .lastfm-track:hover {
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 4px 4px 0px #23272F !important;
+    background: #FFF9E6 !important;
+}
+body.theme-komik .lastfm-track-art-wrap {
+    border: 1.5px solid #23272F !important;
+    border-radius: 0px !important;
+}
+

@@ -1175,7 +1175,8 @@ function _starsHTML(starsStr) {
 
   function render(tracks) {
     container.innerHTML = '';
-    tracks.forEach(function(t) {
+    var displayTracks = (tracks || []).slice(0, 4);
+    displayTracks.forEach(function(t) {
       var nowPlaying = t['@attr'] && t['@attr'].nowplaying === 'true';
       var art = '';
       if (t.image) {
