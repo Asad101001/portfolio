@@ -79,13 +79,6 @@ portfolio-v2/
 +-- index.html                  <-- Entry point
 +-- vite.config.js              <-- Multi-page build logic
 \-- vercel.json                 <-- Deployment configuration
-```ile.js               ← Touch feedback & mobile-specific logic
-│       └── desktop.js              ← Smooth scrolling & desktop-only polish
-│
-├── 🗂️  projects/                   ← Case study pages (standalone HTML)
-├── index.html                      ← Entry point
-├── vite.config.js                  ← Multi-page build + HTML include logic
-└── vercel.json                     ← Deployment configuration
 ```
 
 ---

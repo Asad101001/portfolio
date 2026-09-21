@@ -598,6 +598,8 @@ function _starsHTML(starsStr) {
           var seasonEpisodes = episodes.filter(function(e) { return e.season === tvConf.season; });
           var progressWrap = document.getElementById('tv-progress-wrap');
           var progressFill = document.getElementById('tv-progress-fill');
+          // Only mark completed if the show itself has ended/been cancelled
+          var showEnded = showData.status && (showData.status === 'Ended' || showData.status === 'Canceled');
           
           if (progressWrap && progressFill) {
             if (seasonEpisodes.length > 0 && tvConf.episode != null) {
@@ -606,7 +608,7 @@ function _starsHTML(starsStr) {
               progressFill.style.width = percent + '%';
               
               var existingStamp = document.getElementById('tv-completed-stamp');
-              if (percent === 100) {
+              if (percent === 100 && showEnded) {
                 if (!existingStamp) {
                   existingStamp = document.createElement('div');
                   existingStamp.id = 'tv-completed-stamp';
@@ -671,13 +673,14 @@ function _starsHTML(starsStr) {
 
           var progressWrap = document.getElementById('tv-progress-wrap');
           var progressFill = document.getElementById('tv-progress-fill');
+          // data.showEnded is passed from the API; only stamp if show is truly over
           if (progressWrap && progressFill) {
             if (data.progress != null) {
               progressWrap.style.display = 'block';
               progressFill.style.width   = data.progress + '%';
               
               var existingStamp = document.getElementById('tv-completed-stamp');
-              if (data.progress === 100) {
+              if (data.progress === 100 && data.showEnded === true) {
                 if (!existingStamp) {
                   existingStamp = document.createElement('div');
                   existingStamp.id = 'tv-completed-stamp';
@@ -979,19 +982,19 @@ function _starsHTML(starsStr) {
              '</div>' +
           '</div>' +
           '<div class="barca-score-rows-side">' +
-            '<div class="score-row-mini is-home-row' + (barcaIsHost ? ' is-host' : '') + '">' +
+            '<div class="score-row-mini is-home-row is-host">' +
               '<div class="score-team-info">' +
                 '<img src="' + logo1 + '" class="tiny-logo" alt="' + team1 + '">' +
-                '<span class="score-team-abbr">' + team1 + (barcaIsHost ? ' <span class="host-pill" title="Home Team">H</span>' : '') + '</span>' +
+                '<span class="score-team-abbr">' + team1 + ' <span class="host-pill" title="Home Team">H</span></span>' +
               '</div>' +
               (s1 ? '<span class="score-row-scorer">' + s1 + '</span>' : '') +
               (red1 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red1 > 1 ? ' x' + red1 : '') + '</span>' : '') +
               '<span class="score-num">' + (state === 'pre' ? '-' : score1) + '</span>' +
             '</div>' +
-            '<div class="score-row-mini' + (!barcaIsHost ? ' is-host' : '') + '">' +
+            '<div class="score-row-mini">' +
               '<div class="score-team-info">' +
                 '<img src="' + logo2 + '" class="tiny-logo" alt="' + team2 + '">' +
-                '<span class="score-team-abbr">' + team2 + (!barcaIsHost ? ' <span class="host-pill" title="Home Team">H</span>' : '') + '</span>' +
+                '<span class="score-team-abbr">' + team2 + '</span>' +
               '</div>' +
               (s2 ? '<span class="score-row-scorer">' + s2 + '</span>' : '') +
               (red2 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +

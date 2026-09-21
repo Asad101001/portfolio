@@ -3,23 +3,29 @@
  *
  * Fast concurrent fetching:
  *  1. In-memory server cache (10 min TTL) for sub-millisecond responses
- *  2. Fast parallel race across RSS mirrors with strict 1600ms cap
- *  3. Returns real tweets when available, or standard empty response when unreachable
+ *  2. Parallel race across RSS mirrors with 3.5s cap
+ *  3. allorigins.win proxy as final fallback
+ *  4. Returns real tweets when available, or standard empty response when unreachable
  */
 
-const RSS_TIMEOUT = 1600;
+const RSS_TIMEOUT = 3500;
 const memoryCache = new Map();
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
 
 const NITTER_INSTANCES = [
+  'https://nitter.poast.org',
   'https://nitter.jaydenha.uk',
   'https://nitter.catsarch.com',
   'https://nitter.privacydev.net',
+  'https://nitter.tiekoetter.com',
+  'https://nitter.1d4.us',
+  'https://nitter.foss.wtf',
 ];
 
 const RSSHUB_INSTANCES = [
   'https://rsshub.app/twitter/user/',
   'https://rsshub.rss.plus/twitter/user/',
+  'https://hub.slarker.me/twitter/user/',
 ];
 
 /** Fetch with strict timeout */
@@ -67,7 +73,7 @@ function parseRSS(xml, username) {
     if (!title && !description) continue;
 
     let cleanLink = link || guid || '';
-    cleanLink = cleanLink.replace(/https?:\/\/[^/]+\/([\w]+\/status\/.+)/, 'https://x.com/$1');
+    cleanLink = cleanLink.replace(/https?:\/\/[^/]+(\/[\w]+\/status\/.+)/, 'https://x.com$1');
     if (!cleanLink.includes('/status/')) {
       cleanLink = `https://x.com/${username}`;
     }
@@ -126,9 +132,9 @@ function parseRSS(xml, username) {
       mediaUrl,
       mediaType,
       metrics: {
-        replies: Math.floor(Math.random() * 15) + 3,
+        replies:  Math.floor(Math.random() * 15) + 3,
         retweets: Math.floor(Math.random() * 25) + 6,
-        likes: Math.floor(Math.random() * 80) + 24,
+        likes:    Math.floor(Math.random() * 80) + 24,
       },
     });
   }
@@ -147,6 +153,19 @@ async function tryRSSUrl(url, username) {
   return items;
 }
 
+/** Last resort: allorigins.win CORS proxy wrapping RSSHub directly */
+async function tryAllOrigins(username) {
+  const rssUrl = `https://rsshub.app/twitter/user/${username}`;
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+  const r = await fetchWithTimeout(proxyUrl, RSS_TIMEOUT);
+  if (!r.ok) throw new Error('allorigins HTTP ' + r.status);
+  const text = await r.text();
+  if (!text.includes('<item>')) throw new Error('No items via allorigins');
+  const items = parseRSS(text, username);
+  if (items.length === 0) throw new Error('Empty parse via allorigins');
+  return items;
+}
+
 export default async function handler(req, res) {
   const { user } = req.query;
   const username = (user || 'As4d_41').replace(/[^a-zA-Z0-9_]/g, '');
@@ -156,43 +175,37 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1200');
 
-  // Check in-memory cache
+  // Check in-memory cache first
   const cached = memoryCache.get(username);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     return res.status(200).json(cached.payload);
   }
 
-  // Race RSS sources in parallel with tight timeout
+  // Race all RSS sources in parallel
   const rssUrls = [
     ...NITTER_INSTANCES.map(h => `${h}/${username}/rss`),
-    ...RSSHUB_INSTANCES.map(b => `${b}${username}`)
+    ...RSSHUB_INSTANCES.map(b => `${b}${username}`),
   ];
 
   let liveItems = null;
   try {
     liveItems = await Promise.any(rssUrls.map(u => tryRSSUrl(u, username)));
   } catch (_) {
-    liveItems = null;
+    // All main sources failed — try allorigins proxy as last resort
+    try {
+      liveItems = await tryAllOrigins(username);
+    } catch (_2) {
+      liveItems = null;
+    }
   }
 
   let payload;
   if (liveItems && liveItems.length > 0) {
-    payload = {
-      status: 'ok',
-      items: liveItems,
-      source: 'live-rss',
-    };
+    payload = { status: 'ok', items: liveItems, source: 'live-rss' };
   } else {
-    // Standard cleanly handled empty/unavailable state (no fake/generated tweets)
-    payload = {
-      status: 'empty',
-      items: [],
-      source: 'empty',
-    };
+    payload = { status: 'empty', items: [], source: 'empty' };
   }
 
-  // Cache in server memory
   memoryCache.set(username, { timestamp: Date.now(), payload });
-
   return res.status(200).json(payload);
 }

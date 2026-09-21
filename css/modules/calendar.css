@@ -1119,3 +1119,275 @@ body.theme-professional .cal-day-cell.birthday-cell {
   font-weight: 800 !important;
 }
 
+
+/* ══════════════════════════════════════════════════════════
+   SUNSET THEME — Desk Calendar Overrides
+   Warm brutalist palette, thick borders, punchy accent
+   ══════════════════════════════════════════════════════════ */
+body.theme-sunset .desk-calendar-card {
+  background: #080105 !important;
+  border: 2px solid var(--cyan) !important;
+  box-shadow: 4px 4px 0 var(--cyan) !important;
+  border-radius: 0 !important;
+}
+body.theme-sunset .desk-calendar-card::before { display: none !important; }
+
+body.theme-sunset .spiral-ring {
+  border: 2px solid var(--cyan) !important;
+  background: linear-gradient(180deg, #ffe57f 0%, var(--cyan) 100%) !important;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.6), inset 1px 1px 0 rgba(255,255,255,0.3) !important;
+}
+body.theme-sunset .spiral-hole { background: #080105 !important; }
+
+body.theme-sunset .calendar-header-bar {
+  background: var(--cyan) !important;
+  border-bottom: 2px solid rgba(255,255,255,0.25) !important;
+}
+body.theme-sunset .cal-title-main { color: #000 !important; font-weight: 900 !important; }
+body.theme-sunset .cal-page-tracker { color: rgba(0,0,0,0.65) !important; font-weight: 700 !important; }
+body.theme-sunset .cal-live-pill {
+  background: #000 !important;
+  border: 2px solid #000 !important;
+  color: var(--cyan) !important;
+  font-weight: 900 !important;
+  box-shadow: 2px 2px 0 rgba(255,255,255,0.2) !important;
+}
+body.theme-sunset .cal-btn-nav,
+body.theme-sunset .cal-btn-toggle {
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.3) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+body.theme-sunset .cal-btn-nav:hover,
+body.theme-sunset .cal-btn-toggle:hover {
+  background: var(--cyan) !important;
+  border-color: var(--cyan) !important;
+  color: #000 !important;
+}
+body.theme-sunset .page-header-row { border-bottom: 1px dashed rgba(255,255,255,0.2) !important; }
+body.theme-sunset .page-date-box { background: rgba(255,255,255,0.08) !important; border: 1px solid rgba(255,255,255,0.18) !important; }
+body.theme-sunset .page-month { color: var(--cyan) !important; }
+body.theme-sunset .page-day { color: #fff !important; }
+body.theme-sunset .page-category-pill {
+  background: rgba(var(--cyan-rgb, 16,185,129),0.15) !important;
+  border: 1px solid var(--cyan) !important;
+  color: var(--cyan) !important;
+  font-weight: 800 !important;
+}
+body.theme-sunset .cal-lbl { color: rgba(255,255,255,0.5) !important; font-weight: 700 !important; }
+body.theme-sunset .cal-val,
+body.theme-sunset .cal-val-highlight { color: #fff !important; font-weight: 700 !important; }
+body.theme-sunset .cal-status-badge {
+  background: rgba(16,185,129,0.12) !important;
+  border: 1px solid var(--cyan) !important;
+  color: var(--cyan) !important;
+}
+body.theme-sunset .cal-tech-chip {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.8) !important;
+}
+body.theme-sunset .cal-quote-box {
+  background: rgba(255,255,255,0.03) !important;
+  border-left: 3px solid var(--cyan) !important;
+  color: rgba(255,255,255,0.75) !important;
+}
+body.theme-sunset .cal-git-box { background: rgba(0,0,0,0.4) !important; border-color: rgba(255,255,255,0.1) !important; }
+body.theme-sunset .cal-git-icon,
+body.theme-sunset .cal-git-text { color: var(--cyan) !important; }
+body.theme-sunset .cal-footer-meta { color: rgba(255,255,255,0.4) !important; }
+
+/* ── Sunset Calendar Grid ── */
+body.theme-sunset .cal-day-cell.today {
+  background: var(--cyan) !important;
+  color: #000 !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 10px rgba(16,185,129,0.4) !important;
+}
+body.theme-sunset .cal-day-cell.has-event::after { background: var(--cyan) !important; }
+body.theme-sunset .cal-sprint-meta { color: rgba(255,255,255,0.5) !important; }
+body.theme-sunset .cal-sprint-bar-fill { background: var(--cyan) !important; }
+
+
+/* ══════════════════════════════════════════════════════════
+   CYBERPUNK THEME — Desk Calendar Overrides
+   Dark background, neon magenta + cyan glows
+   ══════════════════════════════════════════════════════════ */
+body.theme-cyberpunk .desk-calendar-card {
+  background: rgba(5, 0, 20, 0.95) !important;
+  border: 1.5px solid #ff0055 !important;
+  box-shadow: 0 0 20px rgba(255, 0, 85, 0.3), 0 0 40px rgba(0, 242, 255, 0.1) !important;
+  border-radius: 6px !important;
+}
+body.theme-cyberpunk .desk-calendar-card::before { display: none !important; }
+
+body.theme-cyberpunk .spiral-ring {
+  border: 2px solid #ff0055 !important;
+  background: linear-gradient(180deg, #ff0055 0%, #9b00ff 60%, #00f2ff 100%) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 85, 0.6), inset 0 1px 1px rgba(255,255,255,0.2) !important;
+}
+body.theme-cyberpunk .spiral-hole { background: #050014 !important; box-shadow: 0 0 4px #ff0055 !important; }
+
+body.theme-cyberpunk .calendar-header-bar {
+  background: linear-gradient(90deg, rgba(255,0,85,0.15) 0%, rgba(0,242,255,0.08) 100%) !important;
+  border-bottom: 1px solid rgba(255, 0, 85, 0.4) !important;
+}
+body.theme-cyberpunk .cal-title-main { color: #ff0055 !important; text-shadow: 0 0 8px rgba(255, 0, 85, 0.7) !important; }
+body.theme-cyberpunk .cal-page-tracker { color: rgba(0, 242, 255, 0.6) !important; }
+body.theme-cyberpunk .cal-live-pill {
+  background: rgba(255, 0, 85, 0.1) !important;
+  border: 1px solid #ff0055 !important;
+  color: #ff0055 !important;
+  box-shadow: 0 0 6px rgba(255, 0, 85, 0.4) !important;
+}
+body.theme-cyberpunk .cal-btn-nav,
+body.theme-cyberpunk .cal-btn-toggle {
+  background: rgba(255, 0, 85, 0.06) !important;
+  border: 1px solid rgba(255, 0, 85, 0.3) !important;
+  color: #ff0055 !important;
+}
+body.theme-cyberpunk .cal-btn-nav:hover,
+body.theme-cyberpunk .cal-btn-toggle:hover {
+  background: rgba(255, 0, 85, 0.2) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 85, 0.5) !important;
+  color: #fff !important;
+}
+body.theme-cyberpunk .page-header-row { border-bottom: 1px dashed rgba(255, 0, 85, 0.25) !important; }
+body.theme-cyberpunk .page-date-box {
+  background: rgba(255, 0, 85, 0.1) !important;
+  border: 1px solid rgba(255, 0, 85, 0.4) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 85, 0.2) !important;
+}
+body.theme-cyberpunk .page-month { color: #ff0055 !important; text-shadow: 0 0 6px rgba(255, 0, 85, 0.6) !important; }
+body.theme-cyberpunk .page-day { color: #fff !important; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important; }
+body.theme-cyberpunk .page-category-pill {
+  background: rgba(0, 242, 255, 0.1) !important;
+  border: 1px solid #00f2ff !important;
+  color: #00f2ff !important;
+  box-shadow: 0 0 6px rgba(0, 242, 255, 0.3) !important;
+}
+body.theme-cyberpunk .cal-lbl { color: rgba(0, 242, 255, 0.5) !important; }
+body.theme-cyberpunk .cal-val,
+body.theme-cyberpunk .cal-val-highlight { color: #fff !important; }
+body.theme-cyberpunk .cal-status-badge {
+  background: rgba(0, 242, 255, 0.08) !important;
+  border: 1px solid rgba(0, 242, 255, 0.4) !important;
+  color: #00f2ff !important;
+  box-shadow: 0 0 8px rgba(0, 242, 255, 0.2) !important;
+}
+body.theme-cyberpunk .cal-tech-chip {
+  background: rgba(255, 0, 85, 0.05) !important;
+  border: 1px solid rgba(255, 0, 85, 0.25) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+body.theme-cyberpunk .cal-quote-box {
+  background: rgba(0, 242, 255, 0.04) !important;
+  border-left: 2px solid #00f2ff !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+body.theme-cyberpunk .cal-git-box { background: rgba(0, 0, 0, 0.5) !important; border-color: rgba(255, 0, 85, 0.2) !important; }
+body.theme-cyberpunk .cal-git-icon { color: #ff0055 !important; text-shadow: 0 0 6px rgba(255, 0, 85, 0.5) !important; }
+body.theme-cyberpunk .cal-git-text { color: rgba(255, 255, 255, 0.75) !important; }
+body.theme-cyberpunk .cal-footer-meta { color: rgba(0, 242, 255, 0.35) !important; }
+
+/* ── Cyberpunk Calendar Grid ── */
+body.theme-cyberpunk .cal-day-cell.today {
+  background: rgba(255, 0, 85, 0.25) !important;
+  border: 1.5px solid #ff0055 !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.6) !important;
+}
+body.theme-cyberpunk .cal-day-cell.has-event::after { background: #ff0055 !important; box-shadow: 0 0 4px #ff0055 !important; }
+body.theme-cyberpunk .cal-sprint-bar-fill { background: linear-gradient(90deg, #ff0055, #9b00ff) !important; }
+
+
+/* ══════════════════════════════════════════════════════════
+   PROFESSIONAL THEME — Desk Calendar Overrides
+   Clean #fff background, black borders, minimal depth
+   ══════════════════════════════════════════════════════════ */
+body.theme-professional .desk-calendar-card {
+  background: #ffffff !important;
+  border: 2px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  border-radius: 0 !important;
+  color: #000 !important;
+}
+body.theme-professional .desk-calendar-card::before { display: none !important; }
+
+body.theme-professional .spiral-ring {
+  border: 2px solid #000 !important;
+  background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 50%, #334155 100%) !important;
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.4) !important;
+}
+body.theme-professional .spiral-hole { background: #000 !important; }
+
+body.theme-professional .calendar-header-bar {
+  background: #000 !important;
+  border-bottom: 2px solid #000 !important;
+}
+body.theme-professional .cal-title-main { color: #fff !important; font-weight: 900 !important; }
+body.theme-professional .cal-page-tracker { color: rgba(255,255,255,0.6) !important; font-weight: 700 !important; }
+body.theme-professional .cal-live-pill {
+  background: #fff !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  color: #000 !important;
+  font-weight: 900 !important;
+}
+body.theme-professional .cal-btn-nav,
+body.theme-professional .cal-btn-toggle {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+body.theme-professional .cal-btn-nav:hover,
+body.theme-professional .cal-btn-toggle:hover {
+  background: #fff !important;
+  border-color: #fff !important;
+  color: #000 !important;
+}
+body.theme-professional .page-header-row { border-bottom: 1.5px solid rgba(0,0,0,0.12) !important; }
+body.theme-professional .page-date-box { background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; }
+body.theme-professional .page-month { color: var(--cyan, #0077b5) !important; font-weight: 800 !important; }
+body.theme-professional .page-day { color: #000 !important; font-weight: 900 !important; }
+body.theme-professional .page-category-pill {
+  background: #eff6ff !important;
+  border: 1px solid #3b82f6 !important;
+  color: #1d4ed8 !important;
+  font-weight: 800 !important;
+}
+body.theme-professional .cal-lbl { color: #64748b !important; font-weight: 700 !important; }
+body.theme-professional .cal-val,
+body.theme-professional .cal-val-highlight { color: #0f172a !important; font-weight: 700 !important; }
+body.theme-professional .cal-status-badge {
+  background: #f0fdf4 !important;
+  border: 1px solid #4ade80 !important;
+  color: #15803d !important;
+}
+body.theme-professional .cal-tech-chip {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+}
+body.theme-professional .cal-quote-box {
+  background: #fffbeb !important;
+  border-left: 3px solid #f59e0b !important;
+  color: #44403c !important;
+}
+body.theme-professional .cal-git-box { background: #f8fafc !important; border-color: #e2e8f0 !important; }
+body.theme-professional .cal-git-icon { color: #0f172a !important; }
+body.theme-professional .cal-git-text { color: #475569 !important; }
+body.theme-professional .cal-footer-meta { color: #94a3b8 !important; font-weight: 600 !important; }
+
+/* ── Professional Calendar Grid ── */
+body.theme-professional .cal-day-cell.today {
+  background: #0f172a !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  border-color: #0f172a !important;
+}
+body.theme-professional .cal-day-cell.has-event::after { background: #3b82f6 !important; }
+body.theme-professional .cal-sprint-bar-fill { background: #000 !important; }
+body.theme-professional .cal-sprint-meta { color: #64748b !important; }
