@@ -59,16 +59,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <!-- Fonts: async load with font-display:swap to eliminate render-blocking -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Bangers&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Bangers&display=swap" /></noscript>
-    <!-- Devicons: non-critical async stylesheet -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" /></noscript>
-    <!-- Preload critical hero background image for instant desktop LCP only -->
-    <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" media="(min-width: 769px)" fetchpriority="high" />
+    <!-- Fonts: preconnect + display:swap for fast FCP/LCP without layout shift -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Bangers&display=swap" />
+    <!-- Preload critical hero background image for instant LCP on both mobile and desktop -->
+    <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" fetchpriority="high" />
     <style>
       #loading-screen { position: fixed; inset: 0; z-index: 9999; background: #050505; display: flex; align-items: center; justify-content: center; pointer-events: none; }
       @media (max-width: 768px) { #loading-screen { display: none !important; } }

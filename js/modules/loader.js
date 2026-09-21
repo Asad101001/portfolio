@@ -9,6 +9,11 @@
   var loader = document.getElementById('loading-screen');
   if (!loader) return;
 
+  if (window._isMobile || window.innerWidth <= 768) {
+    loader.remove();
+    return;
+  }
+
   /* ── Build the 3D intro DOM ─────────────────────────────── */
   var inner = loader.querySelector('.loading-inner');
   if (!inner) return;
@@ -41,11 +46,6 @@
     ].join(';');
     inner.appendChild(el);
   });
-
-  if (window._isMobile || window.innerWidth <= 768) {
-    if (loader) loader.remove();
-    return;
-  }
 
   /* ── Dismiss logic ──────────────────────────────────────── */
   function dismiss() {
