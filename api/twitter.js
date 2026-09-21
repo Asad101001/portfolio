@@ -166,6 +166,9 @@ async function tryAllOrigins(username) {
   return items;
 }
 
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour fresh TTL
+const lastKnownGood = new Map();
+
 export default async function handler(req, res) {
   const { user } = req.query;
   const username = (user || 'As4d_41').replace(/[^a-zA-Z0-9_]/g, '');
@@ -173,7 +176,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1200');
+  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
 
   // Check in-memory cache first
   const cached = memoryCache.get(username);
@@ -202,10 +205,14 @@ export default async function handler(req, res) {
   let payload;
   if (liveItems && liveItems.length > 0) {
     payload = { status: 'ok', items: liveItems, source: 'live-rss' };
+    lastKnownGood.set(username, payload);
+    memoryCache.set(username, { timestamp: Date.now(), payload });
+  } else if (lastKnownGood.has(username)) {
+    // Fall back to last known good tweets so feed never breaks!
+    payload = { ...lastKnownGood.get(username), source: 'cache-fallback' };
   } else {
     payload = { status: 'empty', items: [], source: 'empty' };
   }
 
-  memoryCache.set(username, { timestamp: Date.now(), payload });
   return res.status(200).json(payload);
 }

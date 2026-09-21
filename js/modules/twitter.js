@@ -10,24 +10,28 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Muhammad Asad Khan';
-    const CACHE_KEY = 'asad_twitter_cache_v4';
-    const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
+    const CACHE_KEY = 'asad_twitter_cache_v5';
+    const CACHE_TTL = 60 * 60 * 1000; // 1 hour fresh
 
-    function getLocalCache() {
+    function getLocalCache(allowStale = true) {
         try {
             const raw = localStorage.getItem(CACHE_KEY);
             if (!raw) return null;
             const parsed = JSON.parse(raw);
-            if (Date.now() - parsed.timestamp < CACHE_TTL) {
-                return parsed.data;
+            if (!parsed || !parsed.data) return null;
+            if (!allowStale && Date.now() - parsed.timestamp > CACHE_TTL) {
+                return null;
             }
+            return parsed.data;
         } catch (_) {}
         return null;
     }
 
     function setLocalCache(data) {
         try {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+            if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+                localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+            }
         } catch (_) {}
     }
 
@@ -313,11 +317,20 @@ import { CONFIG, escHtml } from './config.js';
         fetch(url, { signal: AbortSignal.timeout(10000) })
             .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
             .then(data => {
-                setLocalCache(data);
-                applyPayload(data);
+                if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+                    setLocalCache(data);
+                    applyPayload(data);
+                } else {
+                    const cached = getLocalCache(true);
+                    if (cached) {
+                        applyPayload(cached);
+                    } else {
+                        renderEmptyState();
+                    }
+                }
             })
             .catch(() => {
-                const cached = getLocalCache();
+                const cached = getLocalCache(true);
                 if (cached) {
                     applyPayload(cached);
                 } else {
@@ -326,7 +339,7 @@ import { CONFIG, escHtml } from './config.js';
             });
     }
 
-    const initialCache = getLocalCache();
+    const initialCache = getLocalCache(true);
     if (initialCache) {
         applyPayload(initialCache);
         // Refresh in background after a short delay
