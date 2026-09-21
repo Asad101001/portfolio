@@ -86,87 +86,68 @@
                 </div>
             </div>
 
-            <!-- Tabletop Spiral Desk Calendar (Replaces Terminal) -->
-            <div class="card hero-side desk-calendar-card glass-card reveal" style="--delay:100ms" id="desk-calendar">
-                
-                <!-- Desk Calendar Easel Stand / Tent Base -->
-                <div class="calendar-easel-stand" aria-hidden="true"></div>
+            <!-- Activity Hub Card (Moved up from Socials section) -->
+            <div class="card hero-side currently-into-card glass-card reveal" style="--delay:100ms" id="activity-hub-card">
+                <p class="card-label">Activity Hub</p>
 
-                <!-- Spiral Ring Binder (Loops piercing top holes) -->
-                <div class="calendar-spiral-binder" aria-hidden="true">
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                    <div class="spiral-loop"><span class="spiral-ring"></span><span class="spiral-hole"></span></div>
-                </div>
+                <div class="rotating-widget" id="rotating-widget">
 
-                <!-- Calendar Header Bar -->
-                <div class="calendar-header-bar">
-                    <div class="calendar-meta-group">
-                        <span class="cal-desk-icon">🗓️</span>
-                        <div>
-                            <div class="cal-title-main" id="cal-month-title">SEPTEMBER 2026</div>
-                            <div class="cal-page-tracker">DEVELOPER SCHEDULE</div>
+                    <!-- Movie (Letterboxd) -->
+                    <div class="rotating-item currently-into-item active" data-index="0">
+                        <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
+                            style="display:none" />
+                        <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
+                            <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
                         </div>
                     </div>
-                    <div class="cal-live-pill">
-                        <span class="cal-dot-pulse"></span>
-                        <span>ACTIVE</span>
-                    </div>
-                </div>
 
-                <!-- Flip Calendar Stage: Single Authentic Month View -->
-                <div class="calendar-stage" id="calendar-stage">
-
-                    <!-- Authentic Month Calendar Grid & Today's Dev Sprint -->
-                    <div class="calendar-page active" data-index="0">
-                        <div class="page-header-row">
-                            <div class="page-date-box">
-                                <span class="page-month" id="cal-month-abbr">SEP</span>
-                                <span class="page-day" id="cal-day-num">18</span>
-                            </div>
-                            <div class="page-tag-group">
-                                <span class="page-category-pill">MONTHLY VIEW</span>
-                                <span class="page-cmd-sub">Live Dev Grid</span>
-                            </div>
-                        </div>
-                        <div class="page-content-area">
-                            <!-- Mini Calendar Days Grid -->
-                            <div class="cal-grid-wrapper" id="cal-grid-container">
-                                <div class="cal-grid-weekdays">
-                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-                                </div>
-                                <div class="cal-grid-days" id="cal-days-grid">
-                                    <!-- Populated dynamically -->
-                                </div>
-                            </div>
-                            <!-- Today's Dev Sprint Strip -->
-                            <div class="cal-sprint-strip">
-                                <div class="cal-sprint-meta">
-                                    <span class="cal-git-icon">⎇</span>
-                                    <span class="cal-git-text" id="git-commit-line">fetching commit info...</span>
-                                </div>
-                                <div class="cal-status-badge">
-                                    <span class="cal-dot-pulse"></span>
-                                    <span>Semester 4 &middot; Active Dev</span>
+                    <!-- TV Series Tracking (Simkl / Trakt) -->
+                    <div class="rotating-item currently-into-item" data-index="1">
+                        <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
+                        <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
+                            <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
+                            <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
+                                <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
+                                    <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div><!-- /#calendar-stage -->
+                    <!-- Reading -->
+                    <div class="rotating-item currently-into-item" data-index="2">
+                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
+                            style="display:none" />
+                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label">Currently Reading</span>
+                            <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
+                        </div>
+                    </div>
 
-                <!-- Calendar Footer Bar -->
-                <div class="calendar-footer-bar">
-                    <span class="cal-footer-meta">Karachi, PK (UTC+5)</span>
-                    <span class="cal-footer-status-pill">Active Sprint · UBIT '28</span>
+                    <!-- Football -->
+                    <div class="rotating-item currently-into-item" data-index="3">
+                        <div class="currently-into-text">
+                            <span class="rotating-label currently-into-label">Watching Football</span>
+                            <span class="rotating-value currently-into-value" id="barca-score-static">
+                                Loading scores...
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div><!-- /.desk-calendar-card -->
+                <div class="rotating-dots" id="rotating-dots">
+                    <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
+                    <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
+                    <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
+                    <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
+                </div>
+            </div><!-- /#activity-hub-card -->
 
 
             <!-- Quick Stats Card (replaces rotating Activity Hub) -->
