@@ -8,7 +8,7 @@ body.theme-komik .letterboxd-widget {
     background: #FCFAF5 !important;
     border: 2px solid #23272F !important;
     box-shadow: 4px 4px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
     color: #23272F !important;
 }
 
@@ -65,7 +65,7 @@ body.theme-komik .spotify-play-btn {
     background: #2E7D32 !important;
     color: #FFFFFF !important;
     border: 2px solid #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 50% !important;
     box-shadow: 2px 2px 0px #23272F !important;
 }
 
@@ -90,7 +90,7 @@ body.theme-komik .clock-widget {
     border: 2px solid #23272F !important;
     border-right: 8px solid #23272F !important;
     box-shadow: 4px 4px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
     color: #23272F !important;
 }
 
@@ -120,7 +120,7 @@ body.theme-komik .github-widget {
     border: 2px solid #23272F !important;
     border-bottom: 8px solid #23272F !important;
     box-shadow: 4px 4px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
     color: #23272F !important;
 }
 
@@ -159,6 +159,7 @@ body.theme-komik .commit-day-tooltip {
 body.theme-komik #activity-hub-card {
     background: #FCFAF5 !important;
     border: 2.5px solid #23272F !important;
+    border-radius: 8px !important;
     box-shadow: 5px 5px 0px #1565C0 !important;
 }
 
@@ -373,7 +374,7 @@ body.theme-komik .barca-status-badge {
 body.theme-komik .movie-card {
     background: #FCFAF5 !important;
     border: 2px solid #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
     box-shadow: 3px 3px 0px #23272F !important;
     color: #23272F !important;
 }
@@ -402,7 +403,7 @@ body.theme-komik .xp-level {
     background: #FFC700 !important;
     color: #23272F !important;
     border: 1.5px solid #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
     box-shadow: 2px 2px 0px #23272F !important;
     font-weight: 900 !important;
 }
@@ -412,7 +413,7 @@ body.theme-komik .wip-bar-wrap {
     border: 1.5px solid #23272F !important;
     background: #EBE3D3 !important;
     height: 12px !important;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
 }
 
 body.theme-komik .xp-bar-fill {
@@ -433,7 +434,7 @@ body.theme-komik .twitter-widget {
     border: 2px solid #23272F !important;
     box-shadow: 4px 4px 0px #23272F !important;
     color: #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
 }
 
 body.theme-komik .x-post-container {
@@ -441,7 +442,7 @@ body.theme-komik .x-post-container {
     border: 1.5px solid #23272F !important;
     box-shadow: 2px 2px 0px #23272F !important;
     margin-bottom: 8px !important;
-    border-radius: 4px !important;
+    border-radius: 6px !important;
 }
 
 body.theme-komik .x-post-container:hover {
@@ -502,7 +503,7 @@ body.theme-komik .x-error-box {
     background: #EBE3D3 !important;
     border: 2px solid #23272F !important;
     box-shadow: 4px 4px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 8px !important;
 }
 
 body.theme-komik .x-error-icon {
@@ -527,7 +528,7 @@ body.theme-komik .x-error-btn {
     color: #23272F !important;
     border: 2px solid #23272F !important;
     box-shadow: 3px 3px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
     font-weight: 900 !important;
     font-family: 'Bangers', cursive !important;
     font-size: 1rem !important;
@@ -581,7 +582,7 @@ body.theme-komik .lastfm-track {
     background: #FCFAF5 !important;
     border: 2px solid #23272F !important;
     box-shadow: 3px 3px 0px #23272F !important;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
     box-sizing: border-box !important;
     min-height: 64px !important;
     padding: 10px 12px !important;

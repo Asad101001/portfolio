@@ -8,9 +8,9 @@
 'use strict';
 
 (function() {
-    const themes = ['professional', 'sunset', 'cyberpunk', 'komik'];
-    // komik is index 3 — default unless user has saved something else
-    let currentThemeIndex = 3;
+    const themes = ['komik', 'professional'];
+    // komik is index 0 — default unless user has saved professional
+    let currentThemeIndex = 0;
 
     const savedTheme = localStorage.getItem('asad_portfolio_theme');
     if (savedTheme && themes.includes(savedTheme)) {
