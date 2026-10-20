@@ -86,7 +86,7 @@
                 });
             }
 
-            const themes = ['professional', 'sunset', 'cyberpunk', 'komik'];
+            const themes = ['komik', 'professional'];
             const savedTheme = localStorage.getItem('asad_portfolio_theme');
             const initialTheme = (savedTheme && themes.includes(savedTheme)) ? savedTheme : 'komik';
             document.body.classList.add(`theme-${initialTheme}`);

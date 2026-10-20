@@ -146,6 +146,12 @@ import { CONFIG, escHtml } from './config.js';
         container.innerHTML = '';
         items.slice(0, 4).forEach((item, idx) => {
             const isRetweet = /^RT by|^RT @/.test(item.title || '');
+            let retweetAuthor = null;
+            if (isRetweet) {
+                const rtMatch = (item.title || '').match(/^RT @([a-zA-Z0-9_]+):/);
+                if (rtMatch) retweetAuthor = rtMatch[1];
+            }
+
             const rawClean  = (item.title || '')
                 .replace(/^RT by @[a-zA-Z0-9_]+: /, '')
                 .replace(/^RT @[a-zA-Z0-9_]+: /, '')
@@ -194,7 +200,7 @@ import { CONFIG, escHtml } from './config.js';
                             <span class="x-dot">·</span>
                             <time class="x-time" datetime="${item.pubDate || ''}">${timeAgo(item.pubDate)}</time>
                         </div>
-                        ${isRetweet ? '<div class="x-rt-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.43-1.77 1.77L4.5 7.42V17h11v2H2.5V3.88zM21.5 7h-11V5h13v15.12l-4.432-4.43 1.77-1.77 2.662 2.66V7z"/></svg> Reposted</div>' : ''}
+                        ${isRetweet ? `<div class="x-rt-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.43-1.77 1.77L4.5 7.42V17h11v2H2.5V3.88zM21.5 7h-11V5h13v15.12l-4.432-4.43 1.77-1.77 2.662 2.66V7z"/></svg> Reposted${retweetAuthor ? ' @' + retweetAuthor : ''}</div>` : ''}
                     </div>
                     <a href="${twitterLink}" target="_blank" rel="noopener noreferrer" class="x-source-logo" onclick="event.stopPropagation()" aria-label="Open on X">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>

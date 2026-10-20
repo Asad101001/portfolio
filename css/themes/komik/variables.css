@@ -33,10 +33,10 @@ body.theme-komik {
     --komik-bubble-border: #23272F;    /* Ink border */
     --komik-bubble-shadow: 3px 3px 0px rgba(35, 39, 47, 0.25);
 
-    /* ── 6. Comic Geometry & Shadows (Balanced, not overwhelming) ── */
-    --radius:    0px !important;
-    --radius-lg: 0px !important;
-    --card-shadow: 3px 3px 0px #23272F !important;  /* Reduced from 4px for subtlety */
+    /* ── 6. Softened Geometry & Shadows (Professional yet fun Neu-Brutalist blend) ── */
+    --radius:    8px !important;
+    --radius-lg: 12px !important;
+    --card-shadow: 3px 3px 0px #23272F !important;
     --btn-shadow:  3px 3px 0px #23272F !important;
 
     /* ── 7. Overrides ── */
