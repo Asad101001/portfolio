@@ -359,7 +359,7 @@
     setTimeout(() => line.classList.add('t-visible'), 50 + i * 120);
   });
 
-  var counters = [{ id: 'cnt-projects', target: 4 }, { id: 'cnt-certs', target: 6 }, { id: 'cnt-tech', target: 20 }];
+  var counters = [{ id: 'cnt-projects', target: 4 }, { id: 'cnt-certs', target: 8 }, { id: 'cnt-tech', target: 20 }];
   function animOne(el, target) {
     if (el._done) return; el._done = true;
     var start = performance.now(), dur = 1400;

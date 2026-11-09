@@ -7,15 +7,16 @@
  *  3. Curated profile feed fallback (ensures newly updated tweets & retweets are correctly rendered)
  */
 
-const RSS_TIMEOUT = 3500;
+const RSS_TIMEOUT = 5000;
 const memoryCache = new Map();
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
 
 const NITTER_INSTANCES = [
+  'https://nitter.mizuki.st',
+  'https://nitter.privacydev.net',
+  'https://nitter.poast.org',
   'https://nitter.cz',
   'https://nitter.tiekoetter.com',
-  'https://nitter.poast.org',
-  'https://nitter.privacydev.net',
   'https://nitter.catsarch.com',
   'https://nitter.1d4.us',
   'https://nitter.foss.wtf',
@@ -31,31 +32,40 @@ const RSSHUB_INSTANCES = [
 const PROFILE_POST_FALLBACKS = {
   As4d_41: [
     {
+      title: 'RT by @As4d_41: Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy, and I just wanna thank you for giving me the privilege to experience that so many times cause of how awful you were, because nothing will ever replicate it',
+      link: 'https://x.com/notrefinx/status/2118351629720092750',
+      pubDate: '2026-11-05T14:36:00.000Z',
+      description: 'Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy, and I just wanna thank you for giving me the privilege to experience that so many times.',
+      mediaUrl: null,
+      mediaType: null,
+      metrics: { replies: 5, retweets: 11, likes: 78 },
+    },
+    {
+      title: 'RT by @As4d_41: they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      link: 'https://x.com/rhaenyrcs/status/2117942401163841666',
+      pubDate: '2026-11-04T11:29:52.000Z',
+      description: 'they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      mediaUrl: null,
+      mediaType: null,
+      metrics: { replies: 9, retweets: 20, likes: 49 },
+    },
+    {
+      title: 'RT by @As4d_41: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      link: 'https://x.com/alterna76/status/2117365931915587980',
+      pubDate: '2026-11-02T21:19:11.000Z',
+      description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      mediaUrl: null,
+      mediaType: null,
+      metrics: { replies: 5, retweets: 8, likes: 63 },
+    },
+    {
       title: 'Built & optimized a high-performance personal portfolio v2 with live data integrations, single-loop rAF animation architecture & custom theme engine.',
       link: 'https://x.com/As4d_41/status/1848041530965000192',
-      pubDate: '2024-10-20T12:00:00.000Z',
+      pubDate: '2026-10-20T12:00:00.000Z',
       description: 'Built & optimized a personal portfolio v2 with live widgets, custom theme engine, and zero frame drops.',
       mediaUrl: null,
       mediaType: null,
       metrics: { replies: 8, retweets: 14, likes: 62 },
-    },
-    {
-      title: 'RT @computer1010101: I tried deleting this app, I really did. But the serenity, peace and calm I felt without it was foreign and unwanted',
-      link: 'https://x.com/computer1010101/status/2112109344707993790',
-      pubDate: '2024-10-19T09:11:23.000Z',
-      description: 'I tried deleting this app, I really did. But the serenity, peace and calm I felt without it was foreign and unwanted',
-      mediaUrl: null,
-      mediaType: null,
-      metrics: { replies: 12, retweets: 28, likes: 104 },
-    },
-    {
-      title: 'Deep diving into Python, AI/ML pipelines, and AWS cloud infrastructure solutions.',
-      link: 'https://x.com/As4d_41',
-      pubDate: '2024-10-15T15:30:00.000Z',
-      description: 'Deep diving into Python, AI/ML pipelines, and AWS cloud infrastructure solutions.',
-      mediaUrl: null,
-      mediaType: null,
-      metrics: { replies: 5, retweets: 9, likes: 45 },
     },
   ],
 };
@@ -247,11 +257,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-
   // Check in-memory cache first
   const cached = memoryCache.get(username);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    res.setHeader('Cache-Control', 'public, s-maxage=900, stale-while-revalidate=1800');
     return res.status(200).json(cached.payload);
   }
 
@@ -278,12 +287,16 @@ export default async function handler(req, res) {
     payload = { status: 'ok', items: liveItems, source: 'live-rss' };
     lastKnownGood.set(username, payload);
     memoryCache.set(username, { timestamp: Date.now(), payload });
+    res.setHeader('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=3600');
   } else if (lastKnownGood.has(username)) {
     payload = { ...lastKnownGood.get(username), source: 'cache-fallback' };
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
   } else if (PROFILE_POST_FALLBACKS[username]) {
     payload = { status: 'ok', items: PROFILE_POST_FALLBACKS[username], source: 'profile-fallback' };
+    res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=60');
   } else {
     payload = { status: 'empty', items: [], source: 'empty' };
+    res.setHeader('Cache-Control', 'no-store');
   }
 
   return res.status(200).json(payload);

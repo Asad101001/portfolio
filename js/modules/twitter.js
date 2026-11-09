@@ -34,7 +34,9 @@ import { CONFIG, escHtml } from './config.js';
     function setLocalCache(data) {
         try {
             if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
-                localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+                // If this is a profile fallback, age the timestamp so it re-checks within 2 minutes instead of 1 hour
+                const ageOffset = data.source === 'profile-fallback' ? (CACHE_TTL - 2 * 60 * 1000) : 0;
+                localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now() - ageOffset, data }));
             }
         } catch (_) {}
     }

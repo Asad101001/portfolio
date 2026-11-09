@@ -125,19 +125,17 @@ export default async function handler(req, res) {
       ]);
     }
 
-    // Combine: currently watching first, then plan-to-watch
-    const allSimklShows = [...simklWatching, ...simklPlan];
+    // Watchlist endpoint: Only plan-to-watch items belong on a watchlist
+    const allSimklShows = simklPlan.length > 0 ? simklPlan : [];
     const shows = await Promise.all(allSimklShows.map(async (item) => {
       const s = item?.show || {};
       let poster = await getTMDBPoster(s.ids?.tmdb, 'tv');
       if (!poster) poster = await getTVMazePoster(s.title);
-      const total   = Number(item?.total_episodes_count || item?.total_episodes) || 0;
-      const watched = Number(item?.watched_episodes_count || item?.watched_episodes) || 0;
       return {
         title:    s.title || 'Unknown',
         poster,
-        status:   item.status,
-        progress: total > 0 ? Math.round((watched / total) * 100) : null
+        status:   'plantowatch',
+        progress: null
       };
     }));
 
@@ -194,11 +192,11 @@ export default async function handler(req, res) {
       }
     }
 
-    if (!shows.length && !movies.length) {
+    if (!shows.length || !movies.length) {
       const fallback = pullExportFallback();
-      shows = fallback.shows;
-      movies = fallback.movies;
-      source = 'trakt-export';
+      if (!shows.length) shows = fallback.shows;
+      if (!movies.length) movies = fallback.movies;
+      if (source === 'fallback') source = 'trakt-export';
     }
 
     res.status(200).json({
