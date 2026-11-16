@@ -308,19 +308,30 @@
   }
 
   /* ── Certifications Drawer (Mobile Fix) ───────────────── */
+  #certs-drawer {
+    z-index: 10050 !important;
+  }
   #certs-panel {
     width: 100% !important;
     max-width: 100% !important;
-    transform: translateX(100%); /* Maintain transition logic */
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    transform: translateX(100%);
+    padding: 1.5rem !important;
   }
   
+  #certs-drawer.open {
+    pointer-events: all !important;
+  }
+
   #certs-drawer.open #certs-panel {
     transform: translateX(0) !important;
   }
 
   .certs-grid {
     grid-template-columns: 1fr !important;
-    padding-bottom: 80px !important;
+    padding-bottom: 120px !important;
   }
 
   /* ── Terminal Overhaul ─────────────────────────────────── */

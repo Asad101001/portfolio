@@ -383,27 +383,17 @@
   var drawer = document.getElementById('certs-drawer'), backdrop = document.getElementById('certs-backdrop'), closeBtn = document.getElementById('certs-close');
   if (!drawer) return;
   function open()  { 
-    window.smoothTransition(() => { 
-      drawer.classList.add('open'); 
-      document.body.style.overflow = 'hidden'; 
-      if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
-    }); 
+    drawer.classList.add('open'); 
+    document.body.style.overflow = 'hidden'; 
+    if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
   }
   function close() { 
-    window.smoothTransition(() => { 
-      drawer.classList.remove('open'); 
-      document.body.style.overflow = ''; 
-      if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
-    }); 
+    drawer.classList.remove('open'); 
+    document.body.style.overflow = ''; 
+    if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
   }
   window._openCertsDrawer = open;
   window._closeCertsDrawer = close;
-  
-  // Toggle on certs click
-  document.querySelectorAll('a[href="#certifications"]').forEach(a => a.addEventListener('click', e => { 
-    e.preventDefault(); 
-    if (drawer.classList.contains('open')) close(); else open(); 
-  }));
   
   // Close on other nav links click
   document.querySelectorAll('.nav-links a:not([href="#certifications"]), .mobile-bottom-nav a:not([href="#certifications"])').forEach(a => {

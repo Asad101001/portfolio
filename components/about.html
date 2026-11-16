@@ -85,48 +85,87 @@
 
                 <!-- Movie (Letterboxd) -->
                 <div class="rotating-item currently-into-item active" data-index="0">
-                    <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
-                        style="display:none" />
-                    <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
+                    <div class="currently-into-media">
+                        <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster" style="display:none" />
+                        <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
+                    </div>
                     <div class="currently-into-text">
                         <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
-                        <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
+                        <h3 class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</h3>
+                        <div class="currently-into-meta" id="movie-meta-row">
+                            <span class="currently-into-pill">Letterboxd</span>
+                            <span class="movie-timeline-label" id="movie-date-tag"></span>
+                        </div>
+                    </div>
+                    <div class="currently-into-action desktop-only">
+                        <a href="https://letterboxd.com/Asad101001/" target="_blank" rel="noopener noreferrer" class="activity-link-btn" title="View profile on Letterboxd">
+                            <span>Letterboxd</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                        </a>
                     </div>
                 </div>
 
                 <!-- TV Series Tracking (Simkl / Trakt) -->
                 <div class="rotating-item currently-into-item" data-index="1">
-                    <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
-                    <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
+                    <div class="currently-into-media">
+                        <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
+                        <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
+                    </div>
                     <div class="currently-into-text">
-                        <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
-                        <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
-                        <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
-                            <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
-                                <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
+                        <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series</span>
+                        <h3 class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</h3>
+                        <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 8px;">
+                            <div class="tv-progress-bar" style="height: 6px; background: rgba(18,18,18,0.08); border-radius: 99px; width: 100%; max-width: 320px;">
+                                <div id="tv-progress-fill" style="height: 100%; background: #F59E0B; width: 0%; border-radius: 99px; transition: width 0.5s ease;"></div>
                             </div>
                         </div>
+                        <div class="currently-into-meta" style="margin-top: 6px;">
+                            <span class="currently-into-pill">Simkl Tracker</span>
+                            <span class="currently-into-sub">Active Binge</span>
+                        </div>
+                    </div>
+                    <div class="currently-into-action desktop-only">
+                        <a href="https://simkl.com/5842189/dashboard/" target="_blank" rel="noopener noreferrer" class="activity-link-btn" title="View Simkl Tracker">
+                            <span>Simkl</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Reading -->
                 <div class="rotating-item currently-into-item" data-index="2">
-                    <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
-                        style="display:none" />
-                    <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
+                    <div class="currently-into-media">
+                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover" style="display:none" />
+                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
+                    </div>
                     <div class="currently-into-text">
                         <span class="rotating-label currently-into-label">Currently Reading</span>
-                        <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
+                        <h3 class="rotating-value currently-into-value" id="reading-title">Checking Library...</h3>
+                        <div class="currently-into-meta">
+                            <span class="currently-into-pill">Open Library</span>
+                            <span class="currently-into-sub">Curated Bookshelf</span>
+                        </div>
+                    </div>
+                    <div class="currently-into-action desktop-only">
+                        <span class="activity-status-tag">In Progress</span>
                     </div>
                 </div>
 
                 <!-- Football -->
                 <div class="rotating-item currently-into-item" data-index="3">
+                    <div class="currently-into-media">
+                        <div class="currently-into-thumb-placeholder" style="background:rgba(218,41,28,0.08);border-color:rgba(218,41,28,0.25);font-size:2.4rem;">⚽</div>
+                    </div>
                     <div class="currently-into-text">
                         <span class="rotating-label currently-into-label">Watching Football</span>
-                        <span class="rotating-value currently-into-value" id="barca-score-static">
-                            Loading scores...
-                        </span>
+                        <h3 class="rotating-value currently-into-value" id="barca-score-static">FC Barcelona Matchday</h3>
+                        <div class="currently-into-meta">
+                            <span class="currently-into-pill" style="color:#004D98;border-color:rgba(0,77,152,0.25);background:rgba(0,77,152,0.06)">Culér &middot; Blaugrana</span>
+                            <span class="currently-into-sub">La Liga / UCL</span>
+                        </div>
+                    </div>
+                    <div class="currently-into-action desktop-only">
+                        <span class="activity-status-tag" style="color:#004D98;border-color:rgba(0,77,152,0.25)">Official Supporter</span>
                     </div>
                 </div>
 
@@ -157,12 +196,11 @@
                 <span id="commit-count-label">Loading contributions&hellip;</span>
                 <div class="commit-legend">
                     <span>Less</span>
-                    <div class="commit-legend-sq" style="background:rgba(255,255,255,0.04)"></div>
-                    <div class="commit-legend-sq" style="background:rgba(0,255,65,0.15)"></div>
-                    <div class="commit-legend-sq" style="background:rgba(0,255,65,0.35)"></div>
-                    <div class="commit-legend-sq" style="background:rgba(0,255,65,0.6)"></div>
-                    <div class="commit-legend-sq"
-                        style="background:rgba(0,255,65,0.82);box-shadow:0 0 6px rgba(0,255,65,0.4)"></div>
+                    <div class="commit-legend-sq" style="background:rgba(18,18,18,0.06)"></div>
+                    <div class="commit-legend-sq" style="background:rgba(245,158,11,0.25)"></div>
+                    <div class="commit-legend-sq" style="background:rgba(245,158,11,0.50)"></div>
+                    <div class="commit-legend-sq" style="background:rgba(245,158,11,0.75)"></div>
+                    <div class="commit-legend-sq" style="background:#F59E0B;box-shadow:0 0 6px rgba(245,158,11,0.4)"></div>
                     <span>More</span>
                 </div>
             </div>
