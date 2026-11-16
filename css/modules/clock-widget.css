@@ -1,11 +1,11 @@
 /* ── Coding Clock ─────────────────────────────────────────── */
 .clock-widget { 
-  border-radius: 6px; 
-  border: 1.5px solid rgba(245, 158, 11, 0.35); 
-  background: rgba(18, 16, 13, 0.90); 
+  border-radius: 16px; 
+  border: 1.5px solid rgba(18, 18, 18, 0.12); 
+  background: rgba(255, 255, 255, 0.92); 
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  box-shadow: 4px 4px 0px #F59E0B, 0 16px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 0px #F59E0B, 0 12px 32px rgba(18, 18, 18, 0.06);
   padding: 18px 22px; 
   display: flex; 
   align-items: center; 
@@ -30,8 +30,8 @@
 .clock-label { font-size: 0.62rem; font-weight: 800; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.15em; font-family: 'JetBrains Mono', monospace; text-align: center; margin-top: 4px; }
 .clock-info { flex: 1; min-width: 0; }
 .clock-time-label { font-size: 0.65rem; color: #F59E0B; font-family: 'JetBrains Mono', monospace; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
-.clock-prime-time { font-size: 1.4rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em; font-family: 'JetBrains Mono', monospace; }
+.clock-prime-time { font-size: 1.4rem; font-weight: 800; color: #121212; letter-spacing: -0.01em; font-family: 'JetBrains Mono', monospace; }
 .clock-sub { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px; line-height: 1.4; border-left: 2px solid #F59E0B; padding-left: 8px; }
-.clock-bar-row { display: flex; gap: 3px; margin-top: 8px; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.clock-bar-row { display: flex; gap: 3px; margin-top: 8px; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(18, 18, 18, 0.08); }
 .clock-bar-seg { flex: 1; transition: background 0.6s; }
 .clock-bar-seg.active { background: #F59E0B; box-shadow: 0 0 6px #F59E0B; }

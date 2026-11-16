@@ -52,10 +52,10 @@
 }
 .af-btn {
   padding: 6px 16px;
-  border-radius: 2px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.02);
-  color: var(--text-dim);
+  border-radius: 999px;
+  border: 1px solid rgba(18, 18, 18, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(18, 18, 18, 0.65);
   font-size: 0.72rem;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
@@ -65,18 +65,18 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.25s;
 }
 .af-btn:hover {
-  border-color: rgba(245, 158, 11, 0.45);
-  color: var(--cyan);
-  background: rgba(245, 158, 11, 0.08);
+  border-color: #F59E0B;
+  color: #121212;
+  background: rgba(245, 158, 11, 0.12);
 }
 .af-btn.active {
-  border-color: var(--cyan);
-  color: var(--cyan);
-  background: rgba(245, 158, 11, 0.15);
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
+  border-color: #D97706;
+  color: #121212;
+  background: #F59E0B;
+  box-shadow: 2px 2px 0px rgba(18, 18, 18, 0.15);
 }
 
-/* Arsenal Grid â€” Narrowed for centering */
+/* Arsenal Grid — Narrowed for centering */
 .arsenal-grid {
   width: 100%;
   max-width: 850px;
@@ -88,9 +88,10 @@
 
 /* Domain Block */
 .arsenal-domain {
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 4px;
-  background: rgba(8,10,20,0.6);
+  border: 1.5px solid rgba(18, 18, 18, 0.10);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.90);
+  box-shadow: 3px 3px 0px rgba(245, 158, 11, 0.20);
   overflow: hidden;
   /* Scroll-reveal: starts hidden */
   opacity: 0;
@@ -108,8 +109,8 @@
   display: none;
 }
 .arsenal-domain:hover {
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 4px 4px 0px #F59E0B;
 }
 
 /* Domain Header */
@@ -118,8 +119,8 @@
   align-items: center;
   gap: 14px;
   padding: 12px 20px;
-  background: rgba(255,255,255,0.02);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(18, 18, 18, 0.02);
+  border-bottom: 1px solid rgba(18, 18, 18, 0.08);
 }
 .adom-badge {
   font-size: 0.6rem;
@@ -128,16 +129,16 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 3px 10px;
-  border-radius: 2px;
-  background: rgba(245, 158, 11, 0.12);
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.15);
   border: 1px solid rgba(245, 158, 11, 0.35);
-  color: var(--cyan);
+  color: #B45309;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .adom-desc {
   font-size: 0.72rem;
-  color: var(--text-dim);
+  color: rgba(18, 18, 18, 0.65);
   flex: 1;
   min-width: 0;
   white-space: nowrap;
@@ -147,11 +148,11 @@
 .adom-count {
   font-size: 0.6rem;
   font-family: 'JetBrains Mono', monospace;
-  color: rgba(255,255,255,0.15);
+  color: rgba(18, 18, 18, 0.40);
   white-space: nowrap;
 }
 
-/* Arsenal Row â€” centered icons */
+/* Arsenal Row — centered icons */
 .arsenal-row {
   display: flex;
   flex-wrap: wrap;
@@ -160,17 +161,18 @@
   gap: 12px;
 }
 
-/* Arsenal Card â€” icon only by default, expands on hover */
+/* Arsenal Card — icon only by default, expands on hover */
 .acard {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0;
   padding: 9px;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.07);
-  background: rgba(255,255,255,0.025);
-  /* Fixed initial width â€” transition to max-width to allow content-fit expansion */
+  border-radius: 8px;
+  border: 1px solid rgba(18, 18, 18, 0.10);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px rgba(18, 18, 18, 0.04);
+  /* Fixed initial width — transition to max-width to allow content-fit expansion */
   width: auto;
   min-width: 42px;
   padding: 9px 10px;
@@ -283,7 +285,7 @@ i[class*="devicon-"].colored {
 .acard-name {
   font-size: 0.74rem;
   font-weight: 700;
-  color: #fff;
+  color: #121212;
   white-space: nowrap;
   opacity: 0;
   max-width: 0;
@@ -311,13 +313,16 @@ i[class*="devicon-"].colored {
   gap: 32px;
   margin-top: 32px;
   padding: 18px 32px;
-  background: rgba(8,10,20,0.5);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.90);
+  border: 1.5px solid rgba(18, 18, 18, 0.10);
+  box-shadow: 3px 3px 0px rgba(245, 158, 11, 0.20);
+  border-radius: 12px;
   width: 100%;
   max-width: 400px;
 }
 .astat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.astat-num { font-size: 1.3rem; font-weight: 900; color: #121212; }
+.astat-lbl { font-size: 0.65rem; color: rgba(18, 18, 18, 0.60); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 .astat-n {
   font-size: 1.6rem;
   font-weight: 900;

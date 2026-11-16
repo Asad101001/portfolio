@@ -28,22 +28,14 @@ nav.nav-hidden {
   justify-content: space-between;
   gap: 12px;
   padding: 7px 16px 7px 20px;
-  /* Glossy: enough dark base that text is readable, enough transparency for bg bleed */
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(8, 8, 12, 0.72) 40%,
-    rgba(5, 5, 8, 0.82) 100%
-  );
-  backdrop-filter: blur(52px) saturate(200%) brightness(1.04);
-  -webkit-backdrop-filter: blur(52px) saturate(200%) brightness(1.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.20); /* specular top edge */
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1.5px solid rgba(18, 18, 18, 0.12);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.95);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),  /* inner top shine */
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-    0 4px 6px rgba(0, 0, 0, 0.12),
-    0 14px 44px rgba(0, 0, 0, 0.6);
+    0 4px 18px rgba(18, 18, 18, 0.06),
+    0 1px 3px rgba(18, 18, 18, 0.04);
   border-radius: 999px;
   position: relative;
   overflow: hidden;
@@ -66,28 +58,21 @@ nav.nav-hidden {
 }
 .nav-inner > * { position: relative; z-index: 1; }
 .nav-inner:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(10, 10, 16, 0.78) 40%,
-    rgba(6, 6, 10, 0.88) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(18, 18, 18, 0.18);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-    0 4px 6px rgba(0, 0, 0, 0.14),
-    0 18px 50px rgba(0, 0, 0, 0.65);
+    0 6px 24px rgba(18, 18, 18, 0.09),
+    0 2px 4px rgba(18, 18, 18, 0.04);
 }
 
 /* ── Brand ─────────────────────────────────────────────────── */
 .nav-brand {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.88rem;
-  color: #fff;
+  color: #121212;
   white-space: nowrap;
   letter-spacing: -0.01em;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+  text-shadow: none;
 }
 
 /* ── Nav Links ─────────────────────────────────────────────── */
@@ -99,25 +84,23 @@ nav.nav-hidden {
 .nav-links a {
   padding: 6px 13px;
   font-size: 0.81rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(18, 18, 18, 0.70);
   border-radius: 999px;
   transition: color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
   font-weight: 600;
   white-space: nowrap;
   position: relative;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  text-shadow: none;
 }
 .nav-links a:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.09);
+  color: #121212;
+  background: rgba(18, 18, 18, 0.06);
 }
 /* Active: glowing pill indicator */
 .nav-links a.active {
   color: var(--cyan);
   background: rgba(245, 158, 11, 0.12);
-  box-shadow:
-    0 0 14px rgba(245, 158, 11, 0.18),
-    inset 0 1px 0 rgba(245, 158, 11, 0.20);
+  box-shadow: none;
 }
 /* Glowing underline dot-bar beneath active link */
 .nav-links a.active::after {
@@ -130,7 +113,7 @@ nav.nav-hidden {
   height: 2px;
   border-radius: 999px;
   background: var(--cyan, #F59E0B);
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8), 0 0 18px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
   animation: nav-active-bar 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes nav-active-bar {
@@ -147,21 +130,21 @@ nav.nav-hidden {
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text);
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 0 18px rgba(245, 158, 11, 0.10);
-  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  color: #121212;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1.5px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 2px 2px 0px #F59E0B;
+  transition: all var(--transition);
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 .nav-cta:hover {
-  background: rgba(245, 158, 11, 0.22);
-  border-color: rgba(245, 158, 11, 0.65);
-  box-shadow: 0 0 28px rgba(245, 158, 11, 0.25);
+  background: #F59E0B;
+  border-color: #F59E0B;
+  box-shadow: 3px 3px 0px #121212;
   transform: translateY(-1px);
-  color: #fff;
+  color: #FFFFFF;
 }
 
 /* ── Breakpoints: hide desktop links on small screens ─────── */
@@ -186,12 +169,12 @@ nav.nav-hidden {
   gap: 10px;
   align-items: center;
   padding: 10px 6px;
-  background: rgba(10, 10, 15, 0.5);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(18, 18, 18, 0.12);
   border-radius: 999px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 20px rgba(18, 18, 18, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .section-dot {
@@ -204,7 +187,7 @@ nav.nav-hidden {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-dim, rgba(255, 255, 255, 0.5));
+  color: rgba(18, 18, 18, 0.5);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   outline: none;
@@ -214,7 +197,7 @@ nav.nav-hidden {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(18, 18, 18, 0.25);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .section-dot svg {
@@ -237,9 +220,9 @@ nav.nav-hidden {
 .section-dot.active {
   width: 32px;
   height: 32px;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
-  color: #fff;
+  background: rgba(18, 18, 18, 0.06);
+  border-color: rgba(18, 18, 18, 0.15);
+  color: #121212;
 }
 .section-dot:hover::before,
 .section-dot.active::before {
@@ -252,10 +235,10 @@ nav.nav-hidden {
   transform: translate(-50%, -50%) scale(1);
 }
 .section-dot.active {
-  color: var(--cyan, #F59E0B);
-  background: rgba(245, 158, 11, 0.18);
-  border-color: var(--cyan, rgba(245, 158, 11, 0.5));
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #F59E0B;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
 }
 .section-dot::after {
   content: attr(title);

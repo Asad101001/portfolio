@@ -18,27 +18,27 @@ p, span, a, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption {
 
 /* ── CSS Custom Properties ──────────────────────────────── */
 :root {
-  --cyan:      #F59E0B;   /* Warm Amber primary accent */
-  --amber:     #F59E0B;
+  --cyan:       #F59E0B;   /* Warm Amber primary accent */
+  --amber:      #F59E0B;
   --amber-light:#FDE68A;
   --amber-dark: #D97706;
-  --lime:      #EAB308;   /* Warm Gold */
-  --purple:    #B45309;   /* Warm Terracotta */
-  --orange:    #F97316;   /* Warm Coral-Orange */
-  --bg:        #0C0B0A;   /* Obsidian Warm Base */
-  --bg2:       #151311;   /* Warm Dark Secondary */
-  --surface:   rgba(26, 23, 20, 0.82); /* Warm Stone Glass */
-  --border:    rgba(255, 245, 230, 0.12); /* Subtle warm border */
-  --border-h:  rgba(245, 158, 11, 0.50);  /* Warm amber hover */
-  --text:      #F8F6F0;   /* Natural ivory text */
-  --text-muted:#B8AEA2;   /* Earthy warm taupe */
-  --text-dim:  #7C7368;   /* Muted warm slate */
-  --radius:    12px;
-  --radius-lg: 16px;
-  --card-shadow: 4px 4px 0px rgba(245, 158, 11, 0.35); /* Neo-brutalist tactile offset */
-  --btn-shadow:  3px 3px 0px rgba(245, 158, 11, 0.40);
-  --transition: 0.22s cubic-bezier(0.16, 1, 0.3, 1);   /* Silky expo-out curve */
-  --star-color: rgba(255, 245, 230, 0.7);
+  --lime:       #D97706;   /* Warm Ochre */
+  --purple:     #9A3412;   /* Warm Terracotta */
+  --orange:     #EA580C;   /* Warm Rust */
+  --bg:         #F7F6F3;   /* Warm Light Cream / Linen Paper Canvas (Haleema & Aaisha baseline) */
+  --bg2:        #EFECE6;   /* Soft warm paper secondary */
+  --surface:    rgba(255, 255, 255, 0.88); /* Crisp White Frosted Glass */
+  --border:     rgba(18, 18, 18, 0.12); /* Subtle carbon hairline border */
+  --border-h:   #F59E0B;   /* Warm amber hover */
+  --text:       #121212;   /* Deep carbon ink text */
+  --text-muted: rgba(18, 18, 18, 0.65); /* 65% ink */
+  --text-dim:   rgba(18, 18, 18, 0.42); /* 42% ink */
+  --radius:     12px;
+  --radius-lg:  16px;
+  --card-shadow: 4px 4px 0px #F59E0B; /* Neo-brutalist tactile offset */
+  --btn-shadow:  3px 3px 0px #F59E0B;
+  --transition: 0.28s cubic-bezier(0.16, 1, 0.3, 1);   /* Silky expo-out curve */
+  --star-color: #F59E0B;
 }
 
 /* ── Scroll Behaviour ───────────────────────────────────── */
@@ -61,19 +61,13 @@ html.lenis body {
 
 body {
   font-family: 'Space Grotesk', sans-serif;
-  background: var(--bg, #020202);
-  background-image:
-    radial-gradient(circle at 50% 0%,   var(--grid-clr) 0%, transparent 60%),
-    radial-gradient(circle at 100% 100%, var(--border) 0%, transparent 40%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  /* PERF: background-attachment:fixed removed — forces a full-page repaint on every scroll frame */
-  color: var(--text);
+  background: var(--bg, #F7F6F3);
+  color: var(--text, #121212);
   overflow-x: hidden;
   overflow-y: auto !important;
   line-height: 1.6;
   -webkit-overflow-scrolling: touch;
-  /* PERF: removed background transition — triggers full repaint, use color only */
-  transition: color 0.4s ease;
+  transition: color 0.3s ease;
 }
 
 /* Guard: Prevent external tools or overlay classes from permanently freezing page scroll */
@@ -90,11 +84,10 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  /* Static multi-layer gradient — warm amber and bronze undertones */
+  /* Subtle warm ambient lighting */
   background:
-    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 85% 75%, rgba(180, 83, 9, 0.04) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 10%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 75%, rgba(217, 119, 6, 0.03) 0%, transparent 55%);
   pointer-events: none;
   z-index: -1;
 }
@@ -104,7 +97,7 @@ body::before {
 
 
 /* ── Selection ──────────────────────────────────────────── */
-::selection { background: rgba(245, 158, 11, 0.35); color: #FFFBEB; }
+::selection { background: rgba(245, 158, 11, 0.28); color: #121212; }
 
 /* ── Links ──────────────────────────────────────────────── */
 a { text-decoration: none; color: inherit; }
@@ -112,7 +105,7 @@ a { text-decoration: none; color: inherit; }
 /* ── Loading Screen ─────────────────────────────────────── */
 #loading-screen {
   position: fixed; inset: 0; z-index: 9999;
-  background: #050505;
+  background: #F7F6F3;
   display: flex; align-items: center; justify-content: center;
   pointer-events: none;
 }
@@ -153,14 +146,14 @@ a { text-decoration: none; color: inherit; }
 .intro-cube-face {
   position: absolute;
   width: 100px; height: 100px;
-  border: 1.5px solid color-mix(in srgb, var(--cyan) 35%, transparent);
-  background: color-mix(in srgb, var(--cyan) 4%, transparent);
+  border: 1.5px solid rgba(245, 158, 11, 0.35);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.5rem;
-  color: color-mix(in srgb, var(--cyan) 80%, transparent);
-  box-shadow: inset 0 0 20px color-mix(in srgb, var(--cyan) 8%, transparent), 0 0 20px color-mix(in srgb, var(--cyan) 6%, transparent);
+  color: #F59E0B;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12);
 }
 .intro-cube-face.front  { transform: translateZ(50px); }
 .intro-cube-face.back   { transform: rotateY(180deg) translateZ(50px); }
@@ -219,10 +212,10 @@ a { text-decoration: none; color: inherit; }
 
 /* Name & tagline */
 .loading-name {
-  font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.9);
+  font-size: 1.5rem; font-weight: 800; color: #121212;
   letter-spacing: -0.01em; font-family: 'Space Grotesk', sans-serif;
   text-align: center;
-  background: linear-gradient(135deg, #fff 0%, #e2e8f0 40%, var(--cyan) 80%, var(--lime) 100%);
+  background: linear-gradient(135deg, #121212 0%, #3B332B 40%, #F59E0B 80%, #D97706 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -236,8 +229,8 @@ a { text-decoration: none; color: inherit; }
 .loading-tagline {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--cyan);
+  font-weight: 600;
+  color: #F59E0B;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   margin-top: 6px;
@@ -252,8 +245,8 @@ a { text-decoration: none; color: inherit; }
 /* Progress bar at bottom of loader */
 .loading-bar-wrap {
   width: 160px;
-  height: 2px;
-  background: rgba(255,255,255,0.06);
+  height: 3px;
+  background: rgba(18, 18, 18, 0.08);
   border-radius: 99px;
   margin-top: 28px;
   overflow: hidden;
@@ -261,7 +254,7 @@ a { text-decoration: none; color: inherit; }
 .loading-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  background: linear-gradient(90deg, #F59E0B, #D97706);
   border-radius: 99px;
   animation: bar-fill 0.1s cubic-bezier(0.22,1,0.36,1) forwards;
 }
