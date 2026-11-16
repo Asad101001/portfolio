@@ -1,86 +1,84 @@
 /* ============================================================
-   css/perf.css — PERFORMANCE OVERHAUL PATCH
-   Drop @import url('perf.css') at the END of style.css
-   (after additions.css import) so these rules win specificity.
-
-   Key fixes:
-   1. Remove backdrop-filter from .liquid-glass (most expensive)
-   2. Fix body::before radial-gradient mouse tracking (full repaint on every mousemove)
-   3. Add GPU promotion hints only where needed
-   4. Reduce paint areas with contain: paint
-   5. Fix scroll-anchoring
+   css/perf.css — PERFORMANCE OVERHAUL PATCH (Last specificity)
+   Muhammad Asad Khan Portfolio
+   Enforces:
+   1. Flat plain cream paper background (#F7F6F3) — zero textures/noise
+   2. Crisp pure white cards (#FFFFFF) with warm amber tactile shadows (#F59E0B)
+   3. Eliminates expensive backdrop-filters, canvas, and ambient orbs
    ============================================================ */
 
-/* ── 1. KILL backdrop-filter on liquid-glass ─────────────────
-   backdrop-filter: blur(45px) on Spotify/Lastfm widgets triggers
-   a full compositing layer reconstruction every frame it's visible.
-   Replace with a solid semi-transparent background that looks
-   nearly identical but costs almost nothing.
-   ──────────────────────────────────────────────────────────── */
-.liquid-glass {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  background: rgba(8, 10, 18, 0.92) !important;
+/* ── 1. SOLID CLEAN CREAM CANVAS (NO TEXTURES / NO GRAIN) ──── */
+html, body {
+  background-color: #F7F6F3 !important;
+  background: #F7F6F3 !important;
+  background-image: none !important;
+  color: #121212;
 }
 
-/* Also kill it on the nav — nav blur is fine since it's tiny surface area
-   and position:fixed, so keep it. But kill on section cards. */
-.wip-card,
-.tl-card,
-.lastfm-widget,
-.xp-widget,
-.glass-card:not(.hero-main):not(.hero-side):not(.nav-inner) {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+body::before,
+body::after {
+  display: none !important;
+  content: none !important;
 }
 
-@media (max-width: 768px) {
-  .hero-main,
-  .hero-side,
-  .glass-card,
-  .nav-inner {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-}
-
-/* ── 2. body::before — now static, no override needed ─────────
-   Mouse tracking was removed from ui.js (no more --x/--y CSS vars).
-   body::before now uses a static multi-layer gradient in base.css.
-   ──────────────────────────────────────────────────────────── */
-body::before {
-  /* Static — no will-change needed, no repaints */
-  will-change: auto;
-}
-
-
-/* ── 3. GPU promotion only where it actually moves ───────────
-   Only promote elements that will be transformed or animated.
-   Over-promoting (will-change: transform everywhere) wastes VRAM.
-   ──────────────────────────────────────────────────────────── */
-
-/* Elements that scroll/move — promote */
-#cursor-glow,
 #bg-canvas,
-#hero-ink-mask {
-  will-change: transform;
+#cursor-glow,
+.hero-orb,
+.ambient-glow {
+  display: none !important;
 }
 
-/* Elements that animate opacity/transform on reveal */
+/* ── 2. CRISP WHITE CARDS & TACTILE AMBER NEO-BRUTALIST SHADOWS ── */
+.liquid-glass,
+.glass-card,
+.project-card,
+.hero-main,
+.hero-glance-card,
+.clock-widget,
+.about-stat-card,
+.tech-category-card,
+.tl-card,
+.cert-card,
+.social-platform-card,
+.xp-widget,
+.lastfm-widget,
+#spotify-widget,
+.wip-card {
+  background: #FFFFFF !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  box-shadow: 4px 4px 0px #F59E0B !important;
+  color: #121212 !important;
+}
+
+/* Tactile Hover on All Cards */
+.glass-card:hover,
+.project-card:hover,
+.hero-main:hover,
+.hero-glance-card:hover,
+.clock-widget:hover,
+.about-stat-card:hover,
+.tech-category-card:hover,
+.tl-card:hover,
+.cert-card:hover,
+.social-platform-card:hover {
+  box-shadow: 5px 5px 0px #F59E0B !important;
+  border-color: #F59E0B !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── 3. GPU PROMOTION & REVEAL SMOOTHNESS ───────────────────── */
 .reveal,
 .section-in {
   will-change: transform, opacity;
 }
-/* Release will-change after reveal completes (done in JS) */
 .reveal.visible,
 .section-in.in-view {
   will-change: auto;
 }
 
-/* ── 4. Contain paint to prevent cascade repaints ────────────
-   Without contain:paint, a hover effect on a card can trigger
-   repaints in sibling sections. This stops that.
-   ──────────────────────────────────────────────────────────── */
+/* ── 4. SECTION-LEVEL PAINT CONTAINMENT ────────────────────── */
 .projects-grid .project-card,
 .about-stat-card,
 .wip-card,
@@ -93,29 +91,22 @@ body::before {
   contain: layout style paint;
 }
 
-/* Section-level containment stops cross-section repaint contamination */
 section {
   contain: layout style;
 }
 
-/* ── 5. Scroll-anchor + overscroll ───────────────────────────
-   Prevents layout shifts during scroll that cause jank.
-   ──────────────────────────────────────────────────────────── */
+/* ── 5. SCROLL-ANCHOR & OVERSCROLL ─────────────────────────── */
 html {
   overflow-anchor: auto;
   overscroll-behavior: auto;
 }
 
-/* ── 6. Remove expensive animations on marquee hover expand ──
-   The chip expand animation triggers layout recalc (max-width change).
-   Switch to opacity + transform only.
-   ──────────────────────────────────────────────────────────── */
+/* ── 6. MARQUEE & SKILL CHIPS ──────────────────────────────── */
 .skill-chip {
-  /* Remove max-width animation (causes layout recalc) */
   max-width: none !important;
   width: 32px;
   overflow: hidden;
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.2s,
               box-shadow 0.2s,
               background 0.2s,
@@ -123,52 +114,47 @@ html {
 }
 .skill-chip:hover {
   width: 160px;
-  transform: translateY(-4px) scale(1.08) !important;
-  border-color: var(--chip-color, rgba(16,185,129,0.5)) !important;
-  background: var(--chip-bg, rgba(16,185,129,0.09)) !important;
-  box-shadow: 0 0 20px var(--chip-glow, rgba(16,185,129,0.22)),
-              0 0 6px var(--chip-glow, rgba(16,185,129,0.12)) !important;
-  color: #fff !important;
+  transform: translateY(-2px) !important;
+  border-color: #F59E0B !important;
+  background: rgba(245, 158, 11, 0.10) !important;
+  box-shadow: 3px 3px 0px #F59E0B !important;
+  color: #121212 !important;
 }
 .skill-chip .chip-label {
   max-width: none;
   width: 0;
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.2s !important;
   overflow: hidden;
   display: inline-block;
+  color: #121212 !important;
 }
 .skill-chip:hover .chip-label {
   width: 120px;
   opacity: 1;
 }
 
-/* ── 7. Social platform cards — remove layout-triggering transitions ── */
-.social-platform-card {
-  /* Only transition compositor-safe properties */
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s !important;
-}
-
-/* ── 8. Tag expand (projects) — same fix as chips ────────────── */
+/* ── 7. PROJECT TAGS ───────────────────────────────────────── */
 .tag {
   max-width: none !important;
   width: 36px;
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.3s, box-shadow 0.3s, background 0.3s,
-              transform 0.3s !important;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s, box-shadow 0.2s, background 0.2s,
+              transform 0.2s !important;
 }
 .tag:hover,
 .tag.active {
   width: 200px;
-  transform: translateY(-3px) scale(1.05) !important;
+  transform: translateY(-2px) !important;
+  border-color: #F59E0B !important;
 }
 .tag-label {
   max-width: none !important;
   width: 0;
   overflow: hidden;
   display: inline-block;
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s !important;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s !important;
 }
 .tag:hover .tag-label,
 .tag.active .tag-label {
@@ -177,125 +163,44 @@ html {
   margin-left: 8px;
 }
 
-/* ── 9. Glass card hover — reduce shadow complexity ─────────── */
-.glass-card:hover {
-  /* Single clean shadow instead of 4 layered ones */
-  box-shadow:
-    inset 0 1px 0 rgba(16,185,129,0.15),
-    0 0 40px rgba(16,185,129,0.12),
-    0 20px 50px rgba(0,0,0,0.7) !important;
-  transform: translateY(-6px) !important;
-}
-
-/* ── 10. Reduce project card shadow on hover ─────────────────── */
-.project-card:hover {
-  box-shadow:
-    0 0 0 1.5px rgba(16, 185, 129, 0.4),
-    0 0 40px rgba(16, 185, 129, 0.18),
-    0 30px 70px rgba(0,0,0,0.8) !important;
-  transform: translateY(-8px) scale(1.02) !important;
-}
-
-/* ── 11. Cursor glow — reduce gradient complexity ────────────── */
-#cursor-glow {
-  background: radial-gradient(
-    circle,
-    rgba(16,185,129,0.04) 0%,
-    transparent 60%
-  ) !important;
-}
-
-
-
-/* ── 13. Ambient glow — use opacity:0 not display:none so
-   IntersectionObserver transition still works ─────────────── */
-.ambient-glow {
-  /* Already does opacity transition — just ensure it's on own layer */
-  will-change: opacity;
-}
-
-/* ── 14. AGGRESSIVE MOBILE PERFORMANCE ────────────────────────
-   Native scrolling on mobile shouldn't compete with JS.
-   Kill all expensive filters and complex transitions.
-   ──────────────────────────────────────────────────────────── */
+/* ── 8. MOBILE OPTIMIZATIONS ───────────────────────────────── */
 @media (max-width: 768px) {
-  /* Disable all blur effects on mobile - huge battery/FPS win
-     Exception: mobile-bottom-nav MUST keep its blur for glass effect */
-  *:not(.mobile-bottom-nav):not(#hero-ink-mask),
+  *:not(.mobile-bottom-nav),
   *:not(.mobile-bottom-nav)::before,
   *:not(.mobile-bottom-nav)::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
 
-  /* Simplify cards for mobile - keep background intact! */
   .glass-card, .project-card, .social-platform-card {
-    transition: border-color 0.2s, background 0.2s !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
     transform: none !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
-    /* background preserved via mobile.css overrides */
+    box-shadow: 3px 3px 0px #F59E0B !important;
   }
   
-  /* Disable magnetic/tilt logic in CSS */
   .magnetic, .tilt-card, .btn-primary, .btn-secondary {
     transform: none !important;
   }
 
-  /* Reduce paint surface for glow */
-  body::before {
+  body::before, body::after {
     display: none !important;
   }
   
-  /* Kill scrolling indicator line animation */
   .scroll-indicator-line {
     animation: none !important;
     height: 16px;
   }
 }
 
-/* ── 15. Scroll-jank guard: suppress expensive effects during active scroll ───────────── */
-body.is-scrolling .ambient-glow {
-  /* Only suppress expensive filters, keep everything else interactive */
-  opacity: 0 !important;
-}
-
-/* ── 16. HIGH REFRESH RATE OPTIMIZATIONS (90Hz / 120Hz+) ────────
-   The (update: fast) media query targets devices capable of high
-   framerate rendering. We can elevate the experience for them.
-   ──────────────────────────────────────────────────────────── */
-@media (update: fast) {
-  /* Ultra-smooth transitions for hover states */
-  .glass-card, .project-card, .skill-chip, .tag {
-    transition-duration: 0.15s !important;
-    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-  }
-  
-  /* Enable hardware acceleration explicitly on moving parts */
-  .magnetic, .glass-card:hover, .project-card:hover {
-    transform: translateZ(0); /* Force GPU compositing */
-  }
-
-  /* Reveal animations handled by GSAP — no CSS transition override needed */
-}
-
-/* ── 17. CONTENT-VISIBILITY: skip paint on off-screen sections ────
-   This is the single highest-impact paint optimization available.
-   The browser completely skips painting and layout for sections
-   below the fold until they enter the viewport.
-   contain-intrinsic-size prevents layout shift when sections
-   are skipped (browser reserves space for them).
-   ──────────────────────────────────────────────────────────── */
+/* ── 9. CONTENT-VISIBILITY (PERF) ───────────────────────────── */
 #about      { content-visibility: auto; contain-intrinsic-size: 0 600px; }
 #projects   { content-visibility: auto; contain-intrinsic-size: 0 800px; }
 #demo       { content-visibility: auto; contain-intrinsic-size: 0 500px; }
 #tech       { content-visibility: auto; contain-intrinsic-size: 0 600px; }
 #education  { content-visibility: auto; contain-intrinsic-size: 0 500px; }
 #contact    { content-visibility: auto; contain-intrinsic-size: 0 400px; }
+#hero       { content-visibility: visible !important; }
 
-/* Hero is above fold — NEVER hide it */
-#hero { content-visibility: visible !important; }
-
-/* Mobile: same treatment but smaller reserved heights */
 @media (max-width: 768px) {
   #about      { contain-intrinsic-size: 0 400px; }
   #projects   { contain-intrinsic-size: 0 600px; }
@@ -305,22 +210,14 @@ body.is-scrolling .ambient-glow {
   #contact    { contain-intrinsic-size: 0 300px; }
 }
 
-/* ── 18. TOUCH-ACTION: Eliminate 300ms tap delay on mobile ──────
-   Without this, touch events have a 300ms delay added by browsers
-   to detect double-tap zoom. Pan-y keeps vertical scroll native.
-   ──────────────────────────────────────────────────────────── */
+/* ── 10. TOUCH-ACTION ──────────────────────────────────────── */
 html, body {
   touch-action: pan-y;
 }
 a, button, [role="button"], .mbn-item {
-  touch-action: manipulation; /* Faster tap response */
+  touch-action: manipulation;
 }
 
-/* ── 19. KILL 3D preserve-3d on mobile ──────────────────────────
-   transform-style: preserve-3d creates expensive stacking contexts
-   and prevents the browser from eliding off-screen rendering.
-   Mobile CPUs can't composite these cheaply.
-   ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-micro-orb,
   .intro-cube-wrap,
@@ -331,7 +228,6 @@ a, button, [role="button"], .mbn-item {
     perspective: none !important;
   }
 
-  /* Stop 3D orbit rings from running on mobile */
   .hero-micro-ring,
   .intro-ring,
   .intro-ring-2 {
@@ -339,13 +235,6 @@ a, button, [role="button"], .mbn-item {
     display: none !important;
   }
 
-  /* Kill glitch-header animation on mobile (triggers layout recalc) */
-  .theme-sunset .section-title:hover {
-    animation: none !important;
-    text-shadow: none !important;
-  }
-
-  /* Allow natural vertical momentum scroll on mobile without gesture trapping */
   html, body {
     overscroll-behavior-y: auto;
   }

@@ -1,25 +1,9 @@
 /* ── Shared Theme Effects ── */
 
-/* CRT Scanline Overlay */
+/* CRT Scanline Overlay Removed — Plain Solid Background Enforced */
 body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.15) 50%
-    ), linear-gradient(
-        90deg, 
-        rgba(255, 0, 0, 0.03), 
-        rgba(0, 255, 0, 0.01), 
-        rgba(0, 0, 255, 0.03)
-    );
-    background-size: 100% 3px, 3px 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: var(--scanline-op);
-    mix-blend-mode: overlay;
-    transition: opacity 0.5s ease;
+    display: none !important;
+    content: none !important;
 }
 
 /* View transition for theme swap — smoother cinematic fade */
