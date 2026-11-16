@@ -21,8 +21,10 @@
     <meta name="twitter:description" content="Muhammad Asad Khan — CS student at UBIT '28. Python, AWS, Data Science, AI/ML." />
     <meta name="twitter:image" content="https://muhammadasad-portfolio.vercel.app/images/og-image.webp" />
     <meta name="twitter:image:alt" content="Preview of Muhammad Asad Khan's portfolio showing professional branding and tech stack" />
-    <meta name="theme-color" content="#FFC700" />
+    <meta name="theme-color" content="#0C0B0A" />
     <link rel="canonical" href="https://muhammadasad-portfolio.vercel.app/" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 
 
     <!-- Vercel Analytics -->
@@ -61,8 +63,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Fonts: preconnect + display:swap for fast FCP/LCP without layout shift -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Bangers&display=swap" />
-    <!-- Preload critical hero background image for instant LCP on both mobile and desktop -->
-    <link rel="preload" as="image" href="/images/backgrounds/industrial_bg.webp" fetchpriority="high" />
     <style>
       #loading-screen { position: fixed; inset: 0; z-index: 9999; background: #050505; display: flex; align-items: center; justify-content: center; pointer-events: none; }
       @media (max-width: 768px) { #loading-screen { display: none !important; } }
@@ -85,11 +85,7 @@
                     keys.forEach(function(k) { caches.delete(k); });
                 });
             }
-
-            const themes = ['komik', 'professional'];
-            const savedTheme = localStorage.getItem('asad_portfolio_theme');
-            const initialTheme = (savedTheme && themes.includes(savedTheme)) ? savedTheme : 'komik';
-            document.body.classList.add(`theme-${initialTheme}`);
+            try { localStorage.removeItem('asad_portfolio_theme'); } catch(e) {}
         })();
     </script>
 

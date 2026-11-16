@@ -65,15 +65,15 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.25s;
 }
 .af-btn:hover {
-  border-color: rgba(16,185,129,0.4);
+  border-color: rgba(245, 158, 11, 0.45);
   color: var(--cyan);
-  background: rgba(16,185,129,0.05);
+  background: rgba(245, 158, 11, 0.08);
 }
 .af-btn.active {
   border-color: var(--cyan);
   color: var(--cyan);
-  background: rgba(16,185,129,0.08);
-  box-shadow: 0 0 14px rgba(16,185,129,0.15);
+  background: rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
 }
 
 /* Arsenal Grid â€” Narrowed for centering */
@@ -108,7 +108,7 @@
   display: none;
 }
 .arsenal-domain:hover {
-  border-color: rgba(16,185,129,0.2);
+  border-color: rgba(245, 158, 11, 0.35);
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 
@@ -129,8 +129,8 @@
   text-transform: uppercase;
   padding: 3px 10px;
   border-radius: 2px;
-  background: rgba(16,185,129,0.08);
-  border: 1px solid rgba(16,185,129,0.22);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
   color: var(--cyan);
   white-space: nowrap;
   flex-shrink: 0;
@@ -264,13 +264,20 @@
   align-items: center;
   justify-content: center;
   color: var(--ac, var(--cyan));
-  filter: drop-shadow(0 0 3px var(--ag, rgba(16,185,129,0.1)));
+  filter: drop-shadow(0 0 3px var(--ag, rgba(245,158,11,0.15)));
   transition: filter 0.22s;
 }
 .acard:hover .acard-icon {
-  filter: drop-shadow(0 0 8px var(--ag, rgba(16,185,129,0.5)));
+  filter: drop-shadow(0 0 8px var(--ag, rgba(245,158,11,0.45)));
 }
 .acard-icon svg { width: 22px; height: 22px; display: block; }
+
+/* Ensure unique technical brand icon colors are preserved — no theming applied */
+.acard-icon i.colored,
+i[class*="devicon-"].colored {
+  filter: none !important;
+  opacity: 1 !important;
+}
 
 /* Name â€” hidden in collapsed state, shown in expanded */
 .acard-name {
@@ -305,7 +312,7 @@
   margin-top: 32px;
   padding: 18px 32px;
   background: rgba(8,10,20,0.5);
-  border: 1px solid rgba(16,185,129,0.08);
+  border: 1px solid rgba(245, 158, 11, 0.15);
   border-radius: 4px;
   width: 100%;
   max-width: 400px;
@@ -317,7 +324,7 @@
   color: var(--cyan);
   font-family: 'JetBrains Mono', monospace;
   line-height: 1;
-  text-shadow: 0 0 20px rgba(16,185,129,0.4);
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
 }
 .astat-l {
   font-size: 0.58rem;

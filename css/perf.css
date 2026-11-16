@@ -60,8 +60,6 @@ body::before {
    ──────────────────────────────────────────────────────────── */
 
 /* Elements that scroll/move — promote */
-.hero-backdrop-inner,
-.hero-backdrop,
 #cursor-glow,
 #bg-canvas,
 #hero-ink-mask {
@@ -230,13 +228,6 @@ html {
     -webkit-backdrop-filter: none !important;
   }
 
-  /* Disable parallax/scale on hero to allow native scroll speed */
-  .hero-backdrop, .hero-backdrop-inner {
-    transform: none !important;
-    transition: none !important;
-    will-change: auto !important;
-  }
-
   /* Simplify cards for mobile - keep background intact! */
   .glass-card, .project-card, .social-platform-card {
     transition: border-color 0.2s, background 0.2s !important;
@@ -263,19 +254,9 @@ html {
 }
 
 /* ── 15. Scroll-jank guard: suppress expensive effects during active scroll ───────────── */
-body.is-scrolling .ambient-glow,
-body.is-scrolling .hero-backdrop-texture {
+body.is-scrolling .ambient-glow {
   /* Only suppress expensive filters, keep everything else interactive */
   opacity: 0 !important;
-}
-
-.hero-backdrop {
-  will-change: transform, opacity;
-  border-radius: 24px;
-}
-
-.hero-backdrop-inner {
-  will-change: transform;
 }
 
 /* ── 16. HIGH REFRESH RATE OPTIMIZATIONS (90Hz / 120Hz+) ────────
@@ -290,7 +271,7 @@ body.is-scrolling .hero-backdrop-texture {
   }
   
   /* Enable hardware acceleration explicitly on moving parts */
-  .hero-backdrop, .hero-backdrop-inner, .magnetic, .glass-card:hover, .project-card:hover {
+  .magnetic, .glass-card:hover, .project-card:hover {
     transform: translateZ(0); /* Force GPU compositing */
   }
 

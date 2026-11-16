@@ -43,9 +43,8 @@ function heroEntrance() {
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out', force3D: true } });
 
-  tl.from('.hero-backdrop-inner', { opacity: 0, scale: 1.06, duration: 1.2 })
-    .from('.status-pill',         { opacity: 0, y: -14, duration: 0.45, ease: 'back.out(2)' }, '-=0.85')
-    .from('.hero-name',           { opacity: 0, y: 36, duration: 0.7, skewY: 1.5 }, '-=0.35')
+  tl.from('.status-pill',         { opacity: 0, y: -14, duration: 0.45, ease: 'back.out(2)' })
+    .from('.hero-name',           { opacity: 0, y: 36, duration: 0.7, skewY: 1.5 }, '-=0.25')
     .from('.typewriter-wrap',     { opacity: 0, y: 12, duration: 0.4 }, '-=0.3')
     .from(['.hero-sub', '.hero-desc'], { opacity: 0, y: 18, stagger: 0.1, duration: 0.45, clearProps: 'all' }, '-=0.25')
     .from('.hero-actions > *',    { opacity: 0, scale: 0.9, y: 12, stagger: 0.08, duration: 0.45, ease: 'back.out(2)', clearProps: 'all' }, '-=0.2');

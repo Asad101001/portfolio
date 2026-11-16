@@ -1,12 +1,8 @@
 /* ── Themes Barrel File ── */
-/* Only the default theme (komik) is loaded statically.
-   Cyberpunk, sunset, and professional are lazy-loaded via JS
-   when the user switches themes — saves ~80KB from initial CSS bundle. */
+/* Unused theme stylesheets (komik, cyberpunk, sunset, professional) are 
+   disconnected and preserved in css/themes/ for archival reference only.
+   The portfolio now uses a unified Obsidian & Amber Neo-Brutalist design. */
 
-/* Default Theme */
-@import url('themes/komik.css');
-
-/* Shared Theme Logic (always needed) */
+/* Shared Theme Logic */
 @import url('themes/shared/core.css');
 @import url('themes/shared/effects.css');
-

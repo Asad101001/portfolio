@@ -31,9 +31,9 @@
 }
 .social-platform-card:hover {
   background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(16, 185, 129, 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.1);
+  border-color: rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(245, 158, 11, 0.15);
 }
 .social-platform-card .spc-icon {
   width: 22px;
@@ -79,12 +79,12 @@
   gap: 10px;
   padding: 12px 32px;
   border-radius: 99px;
-  background: rgba(16, 185, 129, 0.06);
+  background: rgba(245, 158, 11, 0.08);
   color: #fff;
   font-size: 0.85rem;
   font-weight: 700;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   margin-bottom: 48px;
 }
@@ -97,10 +97,10 @@
 .linkedin-activity-widget .li-avatar-wrap { background: var(--li-clr) !important; }
 
 .social-ping-btn:hover {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.5);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.2);
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25);
 }
 .social-ping-btn svg { transition: transform 0.3s; }
 .social-ping-btn:hover svg { transform: rotate(15deg) scale(1.1); }

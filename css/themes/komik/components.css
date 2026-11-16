@@ -22,7 +22,7 @@ body.theme-komik .fun-facts-section {
     transform: translateZ(0);
 }
 
-/* Subtle yellow top accent stripe on cards */
+/* Subtle warm amber top accent stripe on cards */
 body.theme-komik .glass-card::before,
 body.theme-komik .proj-card::before {
     content: '';
@@ -31,15 +31,15 @@ body.theme-komik .proj-card::before {
     left: 0;
     right: 0;
     height: 4px;
-    background: #FFC700;
-    border-bottom: 1.5px solid #23272F;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    background: #F59E0B;
+    border-bottom: 1.5px solid #1F2328;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     z-index: 1;
     pointer-events: none;
 }
 
-/* Bottom blue accent on project cards */
+/* Bottom subtle accent on project cards */
 body.theme-komik .proj-card::after {
     content: '';
     position: absolute;
@@ -47,18 +47,18 @@ body.theme-komik .proj-card::after {
     left: 0;
     right: 0;
     height: 3px;
-    background: #1565C0;
-    border-top: 1.5px solid #23272F;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    background: #D97706;
+    border-top: 1.5px solid #1F2328;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     pointer-events: none;
 }
 
-/* Balanced comic hover: offset + cobalt blue pop shadow (not clashing red) */
+/* Balanced tactile hover: offset + warm amber pop shadow */
 body.theme-komik .glass-card:hover,
 body.theme-komik .proj-card:hover {
     transform: translate(-3px, -3px) !important;
-    box-shadow: 6px 6px 0px #1565C0 !important;
+    box-shadow: 5px 5px 0px #F59E0B !important;
 }
 
 body.theme-komik .stat-card:hover {
@@ -211,53 +211,56 @@ body.theme-komik .theme-trigger:hover {
     -webkit-text-fill-color: #FFC700 !important;
 }
 
-/* ── Interactive Buttons (Hero & Global) ── */
+/* ── Interactive Buttons (Hero & Global — Retaining Signature Pills) ── */
 body.theme-komik .btn-primary {
-    background: #24292E !important; /* GitHub Ink Dark */
+    background: #1F2328 !important; /* GitHub Ink Dark */
     color: #FFFFFF !important;
-    border: 2px solid #23272F !important;
-    border-radius: 6px !important;
-    box-shadow: 3px 3px 0px #23272F !important;
-    font-weight: 800 !important;
+    border: 2px solid #1F2328 !important;
+    border-radius: 999px !important;
+    box-shadow: 3px 3px 0px #F59E0B !important;
+    font-weight: 700 !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 body.theme-komik .btn-primary:hover {
     transform: translate(-2px, -2px) !important;
-    box-shadow: 5px 5px 0px #23272F !important;
-    background: #000000 !important;
-    color: #FFC700 !important;
+    box-shadow: 5px 5px 0px #1F2328 !important;
+    background: #F59E0B !important;
+    color: #1F2328 !important;
 }
 
 body.theme-komik .btn-linkedin {
     background: #0A66C2 !important; /* Official LinkedIn Blue */
     color: #FFFFFF !important;
-    border: 2px solid #23272F !important;
-    border-radius: 6px !important;
-    box-shadow: 3px 3px 0px #23272F !important;
-    font-weight: 800 !important;
+    border: 2px solid #1F2328 !important;
+    border-radius: 999px !important;
+    box-shadow: 3px 3px 0px #1F2328 !important;
+    font-weight: 700 !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 body.theme-komik .btn-linkedin:hover {
     transform: translate(-2px, -2px) !important;
-    box-shadow: 5px 5px 0px #23272F !important;
-    background: #004182 !important;
+    box-shadow: 5px 5px 0px #0A66C2 !important;
+    background: #084e96 !important;
     color: #FFFFFF !important;
 }
 
 body.theme-komik .btn-secondary {
-    background: #FCFAF5 !important; /* Off-white comic panel */
-    color: #23272F !important;
-    border: 2px solid #23272F !important;
-    border-radius: 6px !important;
-    box-shadow: 3px 3px 0px #23272F !important;
-    font-weight: 800 !important;
+    background: #FDFBF7 !important; /* Off-white card panel */
+    color: #1F2328 !important;
+    border: 2px solid #1F2328 !important;
+    border-radius: 999px !important;
+    box-shadow: 3px 3px 0px #1F2328 !important;
+    font-weight: 700 !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 body.theme-komik .btn-secondary:hover {
     transform: translate(-2px, -2px) !important;
-    box-shadow: 5px 5px 0px #23272F !important;
-    background: #FFC700 !important;
-    color: #23272F !important;
+    box-shadow: 5px 5px 0px #F59E0B !important;
+    background: #FEF3C7 !important;
+    color: #1F2328 !important;
 }
 
 /* ── View Resume CTA ── */
@@ -273,14 +276,15 @@ body.theme-komik .btn-view-resume {
 
 /* ── Status Pills & Badges ── */
 body.theme-komik .status-pill {
-    background: #FFC700 !important;
-    color: #23272F !important;
-    border: 1.5px solid #23272F !important;
-    font-weight: 800 !important;
-    border-radius: 20px !important;
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+    border: 1.5px solid #F59E0B !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
     font-family: 'JetBrains Mono', monospace !important;
     text-transform: uppercase !important;
-    box-shadow: 2px 2px 0px #23272F !important;
+    letter-spacing: 0.08em !important;
+    box-shadow: 2px 2px 0px #F59E0B !important;
 }
 
 body.theme-komik .status-offline {

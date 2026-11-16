@@ -84,27 +84,27 @@ body.theme-komik .spotify-bar-fill-expanded {
     background: #2E7D32 !important;
 }
 
-/* ── Clock Widget: Comic Yellow Banner ── */
+/* ── Clock Widget: Modern Panel with Amber Accent ── */
 body.theme-komik .clock-widget {
-    background: #FFC700 !important;
-    border: 2px solid #23272F !important;
-    border-right: 8px solid #23272F !important;
-    box-shadow: 4px 4px 0px #23272F !important;
+    background: #FDFBF7 !important;
+    border: 2px solid #1F2328 !important;
+    border-left: 6px solid #F59E0B !important;
+    box-shadow: 4px 4px 0px #1F2328 !important;
     border-radius: 8px !important;
-    color: #23272F !important;
+    color: #1F2328 !important;
 }
 
 body.theme-komik #clock-hour-text {
-    fill: #23272F !important;
+    fill: #1F2328 !important;
     font-weight: 900 !important;
 }
 
 body.theme-komik .clock-prime-time {
-    color: #23272F !important;
-    font-family: 'Bangers', cursive !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.08em !important;
-    font-size: 2.2rem !important;
+    color: #1F2328 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.01em !important;
+    font-size: 1.6rem !important;
 }
 
 body.theme-komik .clock-sub,

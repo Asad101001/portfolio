@@ -114,10 +114,10 @@ nav.nav-hidden {
 /* Active: glowing pill indicator */
 .nav-links a.active {
   color: var(--cyan);
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(245, 158, 11, 0.12);
   box-shadow:
-    0 0 14px rgba(16, 185, 129, 0.2),
-    inset 0 1px 0 rgba(16, 185, 129, 0.15);
+    0 0 14px rgba(245, 158, 11, 0.18),
+    inset 0 1px 0 rgba(245, 158, 11, 0.20);
 }
 /* Glowing underline dot-bar beneath active link */
 .nav-links a.active::after {
@@ -129,9 +129,9 @@ nav.nav-hidden {
   width: 60%;
   height: 2px;
   border-radius: 999px;
-  background: var(--cyan, #10B981);
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8), 0 0 18px rgba(16, 185, 129, 0.4);
-  animation: nav-active-bar 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  background: var(--cyan, #F59E0B);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8), 0 0 18px rgba(245, 158, 11, 0.35);
+  animation: nav-active-bar 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes nav-active-bar {
   from { transform: translateX(-50%) scaleX(0); opacity: 0; }
@@ -148,18 +148,18 @@ nav.nav-hidden {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--text);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  box-shadow: 0 0 18px rgba(16, 185, 129, 0.08);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.10);
   transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 .nav-cta:hover {
-  background: rgba(16, 185, 129, 0.18);
-  border-color: rgba(16, 185, 129, 0.45);
-  box-shadow: 0 0 28px rgba(16, 185, 129, 0.22);
+  background: rgba(245, 158, 11, 0.22);
+  border-color: rgba(245, 158, 11, 0.65);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.25);
   transform: translateY(-1px);
   color: #fff;
 }
@@ -252,10 +252,10 @@ nav.nav-hidden {
   transform: translate(-50%, -50%) scale(1);
 }
 .section-dot.active {
-  color: var(--cyan, #10B981);
-  background: rgba(16, 185, 129, 0.15);
-  border-color: var(--cyan, rgba(16, 185, 129, 0.4));
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  color: var(--cyan, #F59E0B);
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--cyan, rgba(245, 158, 11, 0.5));
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
 }
 .section-dot::after {
   content: attr(title);

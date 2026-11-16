@@ -10,9 +10,9 @@
   min-height: 72px; 
 }
 .currently-into-item:hover {
-  border-color: rgba(16,185,129,0.4);
-  background: rgba(16,185,129,0.08);
-  box-shadow: 0 0 25px rgba(16,185,129,0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.06);
+  box-shadow: 3px 3px 0px rgba(245, 158, 11, 0.25);
 }
 .currently-into-thumb {
   width: 72px; height: 102px; border-radius: 6px; object-fit: cover;
@@ -22,7 +22,7 @@
 }
 .currently-into-thumb-placeholder {
   width: 72px; height: 102px; border-radius: 6px;
-  background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+  background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25);
   display: flex; align-items: center; justify-content: center;
   font-size: 2rem; flex-shrink: 0;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);

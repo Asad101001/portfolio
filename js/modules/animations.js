@@ -130,35 +130,15 @@
 
     /* ── Consolidate Scroll Tasks ── */
     function initScrollAnimations() {
-        var heroBackdropInner = document.querySelector('.hero-backdrop-inner');
-        var heroContainer = document.querySelector('.hero-backdrop');
         var indicator = document.getElementById('scroll-indicator');
-        var prevShrink = -1;
 
         window._scrollTasks.push(function() {
             var y = window._scrollY;
-            var ly = window._lerpY;
             
-            // Skip expensive parallax on mobile for performance
+            // Skip indicator toggle on mobile early if needed
             if (window._isMobile) {
                 if (indicator) indicator.classList.toggle('hidden', y > 80);
                 return;
-            }
-
-            // High performance Parallax for desktop
-            if (heroBackdropInner && ly < 1200) {
-                heroBackdropInner.style.transform = 'translate3d(0,' + (ly * 0.32).toFixed(1) + 'px,0)';
-            }
-
-            // Smooth scale/shrink for hero
-            var shrink = Math.min(ly / 900, 1);
-            if (heroContainer && Math.abs(shrink - prevShrink) > 0.0015) {
-                var scale = Math.max(0.88, 1 - shrink * 0.12);
-                var opacity = Math.max(0, 1 - shrink * 1.15);
-                
-                heroContainer.style.transform = 'scale(' + scale.toFixed(3) + ') translate3d(0,0,0)';
-                heroContainer.style.opacity   = opacity.toFixed(3);
-                prevShrink = shrink;
             }
 
             if (indicator) indicator.classList.toggle('hidden', y > 150);

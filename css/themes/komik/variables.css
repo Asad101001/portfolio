@@ -1,46 +1,46 @@
-/* ── KOMIK Theme Variables ── */
-/* Balanced vintage newsprint & comic book color system */
+/* ── KOMIK Theme Variables (Refined Neo-Brutalist Amber Edition) ── */
+/* Warm newsprint · Crisp ink borders · Amber accents · Smooth tactile motion */
 body.theme-komik {
     /* ── 1. Base Paper Palette (Authentic Warm Newsprint) ── */
-    --bg:        #F4EFE6 !important;   /* Natural warm vintage newsprint paper */
-    --bg2:       #EBE3D3 !important;   /* Slightly darker newsprint section */
-    --surface:   #FCFAF5 !important;   /* Clean paper card panel */
-    --border:    #23272F !important;   /* Natural charcoal print ink line */
-    --border-h:  #1565C0 !important;   /* Comic blue hover (was harsh red) */
+    --bg:        #F7F4EE !important;   /* Natural warm vintage newsprint paper */
+    --bg2:       #EFEAE0 !important;   /* Slightly darker newsprint section */
+    --surface:   #FDFBF7 !important;   /* Clean paper card panel */
+    --border:    #1F2328 !important;   /* Natural charcoal print ink line */
+    --border-h:  #D97706 !important;   /* Warm Amber hover */
 
     /* ── 2. Natural Ink Typography (High contrast, never harsh) ── */
-    --text:      #23272F !important;   /* Charcoal comic ink */
-    --text-muted:#3E4551 !important;   /* Deep slate ink */
-    --text-dim:  #5C6473 !important;   /* Medium slate ink */
+    --text:      #1F2328 !important;   /* Charcoal comic ink */
+    --text-muted:#484F58 !important;   /* Deep slate ink */
+    --text-dim:  #6E7781 !important;   /* Medium slate ink */
 
-    /* ── 3. Classic 4-Color Comic Printing Accents ── */
-    --cyan:      #1565C0 !important;   /* Classic Comic Blue (high contrast against paper) */
-    --lime:      #2E7D32 !important;   /* Classic Comic Forest Green */
-    --purple:    #5C35A3 !important;   /* Muted comic violet (was harsh red) */
-    --orange:    #E65100 !important;   /* Classic Comic Rust Orange */
+    /* ── 3. Accents ── */
+    --cyan:      #D97706 !important;   /* Warm Amber primary accent */
+    --lime:      #2E7D32 !important;   /* Forest Green */
+    --purple:    #9A3412 !important;   /* Warm Terracotta */
+    --orange:    #EA580C !important;   /* Warm Rust Orange */
 
-    /* ── 4. Dedicated Comic Design Tokens ── */
-    --komik-yellow: #FFC700;           /* Warm golden comic yellow */
-    --komik-red:    #B71C1C;           /* Action red — used only for hover/alerts, not primary text */
-    --komik-blue:   #1565C0;           /* Cobalt comic blue — primary accent */
-    --komik-ink:    #23272F;           /* Charcoal print ink */
-    --komik-paper:  #F4EFE6;           /* Newsprint paper */
-    --komik-card:   #FCFAF5;           /* Card panel paper */
+    /* ── 4. Dedicated Design Tokens ── */
+    --komik-yellow: #F59E0B;           /* Warm rich amber */
+    --komik-red:    #DC2626;           /* Action red */
+    --komik-blue:   #D97706;           /* Amber primary accent */
+    --komik-ink:    #1F2328;           /* Charcoal print ink */
+    --komik-paper:  #F7F4EE;           /* Newsprint paper */
+    --komik-card:   #FDFBF7;           /* Card panel paper */
     --komik-green:  #2E7D32;           /* Comic green */
 
     /* ── 5. Comic Speech Bubble Token ── */
     --komik-bubble-bg:     #FFFEF7;    /* Warm off-white bubble interior */
-    --komik-bubble-border: #23272F;    /* Ink border */
-    --komik-bubble-shadow: 3px 3px 0px rgba(35, 39, 47, 0.25);
+    --komik-bubble-border: #1F2328;    /* Ink border */
+    --komik-bubble-shadow: 3px 3px 0px rgba(31, 35, 40, 0.25);
 
     /* ── 6. Softened Geometry & Shadows (Professional yet fun Neu-Brutalist blend) ── */
-    --radius:    8px !important;
-    --radius-lg: 12px !important;
-    --card-shadow: 3px 3px 0px #23272F !important;
-    --btn-shadow:  3px 3px 0px #23272F !important;
+    --radius:    10px !important;
+    --radius-lg: 14px !important;
+    --card-shadow: 4px 4px 0px #1F2328 !important;
+    --btn-shadow:  3px 3px 0px #1F2328 !important;
 
     /* ── 7. Overrides ── */
     --scanline-op: 0 !important;
-    --grid-clr: rgba(35, 39, 47, 0.04) !important;
+    --grid-clr: rgba(31, 35, 40, 0.04) !important;
     --spotlight-gradient: none !important;
 }

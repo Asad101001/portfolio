@@ -149,10 +149,11 @@
 
   /* Ensure all hero glass cards keep some transparency on mobile */
   .hero-grid .glass-card {
-    background: rgba(10, 10, 12, 0.5) !important;
+    background: rgba(18, 16, 13, 0.75) !important;
     backdrop-filter: blur(16px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border-color: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(245, 158, 11, 0.35) !important;
+    box-shadow: 4px 4px 0px rgba(245, 158, 11, 0.35) !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }

@@ -3,56 +3,19 @@
          components/hero.html
     ════════════════════════════════════════════ -->
     <section id="hero">
-        <div class="hero-backdrop" id="hero-backdrop">
-            <!-- ⚡ LCP FIX: real <img> so browser discovers it at HTML parse time,
-                 not after CSS download+parse. JS swaps src on theme change. -->
-            <img
-              id="hero-bg-img"
-              src="/images/backgrounds/industrial_bg.webp"
-              alt=""
-              aria-hidden="true"
-              fetchpriority="high"
-              decoding="async"
-              class="hero-backdrop-inner hero-bg-img"
-              style="object-fit:cover;object-position:center;width:100%;height:100%;position:absolute;inset:0;"
-            />
-            <div class="hero-backdrop-overlay"></div>
-            <div class="hero-backdrop-scrim"></div>
-            <div class="hero-backdrop-texture"></div>
-        </div>
-
         <div class="hero-orb hero-orb-1"></div>
         <div class="hero-orb hero-orb-2"></div>
         <div class="hero-orb hero-orb-3"></div>
 
         <div class="hero-grid">
 
-            <!-- Row 1 & 2 Left: Main Hero Card -->
+            <!-- Left Column: Main Hero Card (65%) -->
             <div class="card hero-main glass-card reveal" style="--delay:0ms" data-liquid-glass="true">
-                <div class="status-pill">
-                    <span class="status-dot"></span>
-                    Building &amp; exploring
-                </div>
-
-                <div class="hero-name-3d-wrap" aria-hidden="true">
-                    <div class="hero-micro-orb">
-                        <div class="hero-micro-orb-inner"></div>
-                        <div class="hero-micro-face"></div>
-                        <div class="hero-micro-face f2"></div>
-                        <div class="hero-micro-face f3"></div>
-                        <div class="hero-micro-ring"></div>
-                        <div class="hero-micro-dot"></div>
-                    </div>
-                </div>
-
-                <header>
-                    <h1 class="hero-name mobile-theme-trigger" title="Cycle Theme">Muhammad<br />Asad Khan</h1>
-                    <div class="typewriter-wrap">
-                        <span id="typewriter" class="typewriter-text"></span><span class="caret">|</span>
-                    </div>
-                    
-                    <p class="hero-sub">CS Student @ UBIT '28</p>
-                    <p class="hero-desc">Python &middot; AWS &middot; Data Science &middot; AI/ML &middot; Networking</p>
+                <header class="hero-header">
+                    <h1 class="hero-name">Muhammad<br />Asad Khan</h1>
+                    <p class="hero-desc hero-statement">
+                        Full-stack software engineer &amp; CS student @ UBIT building distributed systems and agentic AI pipelines.
+                    </p>
                 </header>
                 
                 <div class="hero-actions">
@@ -86,155 +49,64 @@
                 </div>
             </div>
 
-            <!-- Activity Hub Card (Moved up from Socials section) -->
-            <div class="card hero-side currently-into-card glass-card reveal" style="--delay:100ms" id="activity-hub-card">
-                <p class="card-label">Activity Hub</p>
+            <!-- Right Column: Sidebar Stack (35%) -->
+            <div class="hero-sidebar">
 
-                <div class="rotating-widget" id="rotating-widget">
-
-                    <!-- Movie (Letterboxd) -->
-                    <div class="rotating-item currently-into-item active" data-index="0">
-                        <img id="watching-poster" class="currently-into-thumb" src="" alt="Movie poster"
-                            style="display:none" />
-                        <div id="watching-placeholder" class="currently-into-thumb-placeholder">🎬</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label" id="movie-tracking-status">Last Watched Film</span>
-                            <span class="rotating-value currently-into-value" id="movie-title">Checking Letterboxd...</span>
+                <!-- Card 1: At a Glance Stats -->
+                <div class="card hero-glance-card glass-card reveal" style="--delay:150ms">
+                    <p class="card-label">At a Glance</p>
+                    <div class="glance-list">
+                        <div class="glance-item">
+                            <span class="glance-metric">4+</span>
+                            <span class="glance-label">Shipped Systems</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-metric">8+</span>
+                            <span class="glance-label">Certifications</span>
+                        </div>
+                        <div class="glance-item">
+                            <span class="glance-metric">20+</span>
+                            <span class="glance-label">Core Technologies</span>
                         </div>
                     </div>
-
-                    <!-- TV Series Tracking (Simkl / Trakt) -->
-                    <div class="rotating-item currently-into-item" data-index="1">
-                        <img id="tv-tracking-poster" class="currently-into-thumb" src="" alt="TV Poster" style="display:none" />
-                        <div id="tv-tracking-placeholder" class="currently-into-thumb-placeholder">📺</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label" id="tv-tracking-status">Currently Watching Series/TV Show</span>
-                            <span class="rotating-value currently-into-value" id="tv-tracking-title">Checking Media...</span>
-                            <div class="tv-progress-container" id="tv-progress-wrap" style="display:none; margin-top: 4px;">
-                                <div class="tv-progress-bar" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; width: 100%;">
-                                    <div id="tv-progress-fill" style="height: 100%; background: var(--cyan); width: 0%; border-radius: 2px; transition: width 0.5s ease;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reading -->
-                    <div class="rotating-item currently-into-item" data-index="2">
-                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover"
-                            style="display:none" />
-                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label">Currently Reading</span>
-                            <span class="rotating-value currently-into-value" id="reading-title">Checking Library...</span>
-                        </div>
-                    </div>
-
-                    <!-- Football -->
-                    <div class="rotating-item currently-into-item" data-index="3">
-                        <div class="currently-into-text">
-                            <span class="rotating-label currently-into-label">Watching Football</span>
-                            <span class="rotating-value currently-into-value" id="barca-score-static">
-                                Loading scores...
-                            </span>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="rotating-dots" id="rotating-dots">
-                    <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
-                    <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
-                    <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
-                    <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
-                </div>
-            </div><!-- /#activity-hub-card -->
+                <!-- Card 2: PKT Local Time Clock Widget -->
+                <div class="clock-widget glass-card reveal" id="coding-clock" style="--delay:250ms">
+                    <div class="clock-face">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer ring: Day progress -->
+                            <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                            <circle id="clock-arc" cx="32" cy="32" r="30" stroke="var(--cyan)" stroke-width="2"
+                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
+                                transform="rotate(-90 32 32)" />
+                            
+                            <!-- Inner ring: Rotating scanner -->
+                            <circle id="clock-scanner" cx="32" cy="32" r="24" stroke="rgba(245,158,11,0.45)" stroke-width="1.5"
+                                stroke-dasharray="10 40" transform="rotate(0 32 32)">
+                                 <animateTransform attributeName="transform" type="rotate" from="0 32 32" to="360 32 32" dur="4s" repeatCount="indefinite" />
+                            </circle>
 
-
-            <!-- Quick Stats Card (replaces rotating Activity Hub) -->
-            <div class="card glass-card reveal" style="--delay:200ms">
-                <p class="card-label">At a Glance</p>
-                <div class="focus-list" style="gap:16px;">
-                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
-                        <span>Projects Built</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">4+</span>
-                    </div>
-                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
-                        <span>Certifications</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">8+</span>
-                    </div>
-                    <div class="focus-item" style="justify-content:space-between; align-items:center;">
-                        <span>Technologies</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan);">20+</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Build Focus card -->
-            <div class="card glass-card reveal" style="--delay:300ms">
-                <p class="card-label">Build Focus</p>
-                <div class="focus-list">
-                    <div class="focus-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                            stroke="var(--cyan)" stroke-width="2">
-                            <ellipse cx="12" cy="5" rx="9" ry="3" />
-                            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-                            <path d="M3 12A9 3 0 0 0 21 12" />
+                            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-family="Space Grotesk, sans-serif"
+                                font-size="14" font-weight="800" id="clock-hour-text">--</text>
                         </svg>
-                        Solution-oriented Projects
+                        <div class="clock-label">PKT</div>
                     </div>
-                    <div class="focus-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                            stroke="var(--cyan)" stroke-width="2">
-                            <path d="m18 16 4-4-4-4" />
-                            <path d="m6 8-4 4 4 4" />
-                            <path d="m14.5 4-5 16" />
-                        </svg>
-                        AI Integration &amp; RAG Systems
-                    </div>
-                    <div class="focus-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                            stroke="var(--cyan)" stroke-width="2">
-                            <path
-                                d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
-                        </svg>
-                        Cloud Architecture (AWS)
+                    <div class="clock-info">
+                        <div class="clock-time-label">Current local time</div>
+                        <div class="clock-prime-time" id="clock-display">--:-- --</div>
+                        <div class="clock-sub" id="clock-status">Checking...</div>
+                        <div class="clock-bar-row" id="clock-bars">
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="clock-widget glass-card reveal" id="coding-clock" style="--delay:400ms">
-                <div class="clock-face">
-                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Outer ring: Day progress -->
-                        <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                        <circle id="clock-arc" cx="32" cy="32" r="30" stroke="var(--cyan)" stroke-width="2"
-                            stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
-                            transform="rotate(-90 32 32)" />
-                        
-                        <!-- Inner ring: Rotating scanner -->
-                        <circle id="clock-scanner" cx="32" cy="32" r="24" stroke="rgba(168,85,247,0.3)" stroke-width="1.5"
-                            stroke-dasharray="10 40" transform="rotate(0 32 32)">
-                             <animateTransform attributeName="transform" type="rotate" from="0 32 32" to="360 32 32" dur="4s" repeatCount="indefinite" />
-                        </circle>
-
-                        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-family="Space Grotesk, sans-serif"
-                            font-size="14" font-weight="800" id="clock-hour-text">--</text>
-                    </svg>
-                    <div class="clock-label">PKT</div>
-                </div>
-                <div class="clock-info">
-                    <div class="clock-time-label">Current local time</div>
-                    <div class="clock-prime-time" id="clock-display">--:-- --</div>
-                    <div class="clock-sub" id="clock-status">Checking...</div>
-                    <div class="clock-bar-row" id="clock-bars">
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                        <div class="clock-bar-seg" style="--clr:#a855f7"></div>
-                    </div>
-                </div>
             </div>
 
         </div>
