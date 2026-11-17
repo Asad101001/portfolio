@@ -10,9 +10,9 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Asad';
-    const CACHE_KEYS = ['asad_twitter_cache_v6', 'asad_twitter_cache_v5', 'asad_twitter_cache_v4', 'asad_twitter_cache'];
-    const CACHE_KEY = 'asad_twitter_cache_v6';
-    const CACHE_TTL = 60 * 60 * 1000; // 1 hour fresh
+    const CACHE_KEYS = ['asad_twitter_cache_v7'];
+    const CACHE_KEY = 'asad_twitter_cache_v7';
+    const CACHE_TTL = 30 * 60 * 1000; // 30 mins fresh
 
     function getLocalCache(allowStale = true) {
         for (const key of CACHE_KEYS) {
@@ -76,11 +76,17 @@ import { CONFIG, escHtml } from './config.js';
     function cleanAndDecode(str) {
         if (!str) return '';
         let s = str.replace(/<[^>]*>/g, '');
-        const txt = document.createElement('textarea');
-        txt.innerHTML = s;
-        s = txt.value;
-        // Decode second pass if feed had double-encoded entities like &amp;quot;
-        if (s.includes('&quot;') || s.includes('&amp;') || s.includes('&lt;') || s.includes('&gt;') || s.includes('&#')) {
+        try {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(s, 'text/html');
+            s = doc.body.textContent || s;
+            // Decode second pass if feed had double-encoded entities like &amp;quot;
+            if (s.includes('&quot;') || s.includes('&amp;') || s.includes('&lt;') || s.includes('&gt;') || s.includes('&#') || s.includes('&atilde;')) {
+                const doc2 = parser.parseFromString(s, 'text/html');
+                s = doc2.body.textContent || s;
+            }
+        } catch (_) {
+            const txt = document.createElement('textarea');
             txt.innerHTML = s;
             s = txt.value;
         }
@@ -175,30 +181,83 @@ import { CONFIG, escHtml } from './config.js';
     function render(items) {
         container.innerHTML = '';
         items.slice(0, 5).forEach((item, idx) => {
-            const isRetweet = /^RT by|^RT @/.test(item.title || '');
-            let retweetAuthor = null;
-            if (isRetweet) {
-                const rtMatch = (item.title || '').match(/^RT @([a-zA-Z0-9_]+):/);
-                if (rtMatch) retweetAuthor = rtMatch[1];
+            const isRetweet = /^RT by|^RT @/i.test(item.title || '') || !!item.isRetweet;
+            let retweetAuthor = (item.retweetAuthor && item.retweetAuthor.toLowerCase() !== USER.toLowerCase()) ? item.retweetAuthor : null;
+            if (!retweetAuthor) {
+                const linkMatch = (item.link || '').match(/(?:x\.com|twitter\.com|nitter[a-z0-9.-]*)\/([a-zA-Z0-9_]+)\/status/i);
+                if (linkMatch && linkMatch[1].toLowerCase() !== USER.toLowerCase()) {
+                    retweetAuthor = linkMatch[1];
+                }
             }
+            if (!retweetAuthor && isRetweet) {
+                const rtMatch = (item.title || '').match(/^RT @([a-zA-Z0-9_]+):/i);
+                if (rtMatch && rtMatch[1].toLowerCase() !== USER.toLowerCase()) {
+                    retweetAuthor = rtMatch[1];
+                }
+            }
+
+            // Authentic Twitter author presentation
+            const postAuthorHandle = (isRetweet && retweetAuthor) ? retweetAuthor : USER;
+            const postAuthorDisplay = (isRetweet && retweetAuthor) ? (item.authorName || `@${retweetAuthor}`) : DISPLAY_NAME;
+            const postAuthorAvatar = (isRetweet && retweetAuthor)
+                ? (item.authorAvatar || `https://unavatar.io/twitter/${retweetAuthor}`)
+                : `https://unavatar.io/twitter/${USER}`;
 
             // Strip RT prefix and clean/decode HTML entities properly
             const titleClean = (item.title || '')
-                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/, '')
-                .replace(/^RT @[a-zA-Z0-9_]+:\s*/, '');
+                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '');
 
             const descClean = (item.description || '')
-                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/, '')
-                .replace(/^RT @[a-zA-Z0-9_]+:\s*/, '');
+                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '');
 
-            const rawClean = cleanAndDecode(descClean.length > titleClean.length ? descClean : titleClean).slice(0, 280);
+            const rawCandidate = (descClean.replace(/<[^>]*>/g, '').trim().length >= titleClean.replace(/<[^>]*>/g, '').trim().length)
+                ? descClean
+                : titleClean;
+            let rawClean = cleanAndDecode(rawCandidate).slice(0, 320);
 
-            let twitterLink = item.link || `https://x.com/${USER}`;
+            // Quoted Tweet detection
+            let quoteData = item.quote || null;
+            if (!quoteData) {
+                const quotePattern = /(?:Quoting|QT)\s+@([a-zA-Z0-9_]+):?\s*([\s\S]+)$/i;
+                const qm = rawClean.match(quotePattern);
+                if (qm) {
+                    rawClean = rawClean.slice(0, qm.index).trim();
+                    quoteData = {
+                        author: qm[1],
+                        name: `@${qm[1]}`,
+                        text: qm[2].trim(),
+                        link: `https://x.com/${qm[1]}`
+                    };
+                }
+            }
+
+            let quoteHtml = '';
+            if (quoteData && quoteData.text) {
+                const qAuthor = quoteData.author || 'x';
+                const qName = quoteData.name || `@${qAuthor}`;
+                const qAvatar = quoteData.avatar || `https://unavatar.io/twitter/${qAuthor}`;
+                const qLink = quoteData.link || `https://x.com/${qAuthor}`;
+                quoteHtml = `
+                    <div class="x-quoted-card" onclick="event.stopPropagation(); window.open('${qLink}', '_blank', 'noopener,noreferrer');" title="Open quoted post on X">
+                        <div class="x-quoted-header">
+                            <img src="${qAvatar}" class="x-quoted-avatar" alt="${qAuthor}" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
+                            <span class="x-quoted-name">${qName}</span>
+                            <span class="x-quoted-handle">@${qAuthor}</span>
+                            ${quoteData.pubDate ? `<span class="x-dot">·</span><time class="x-quoted-time">${timeAgo(quoteData.pubDate)}</time>` : ''}
+                        </div>
+                        <p class="x-quoted-text">${formatTweetText(cleanAndDecode(quoteData.text))}</p>
+                        ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy"></div>` : ''}
+                    </div>`;
+            }
+
+            let twitterLink = item.link || `https://x.com/${postAuthorHandle}`;
             if (!twitterLink.startsWith('https://x.com') && twitterLink.includes('/status/')) {
                 const m = twitterLink.match(/\/([^/]+\/status\/\d+)/);
                 if (m) twitterLink = 'https://x.com/' + m[1];
             }
-            if (!twitterLink.includes('/status/')) twitterLink = `https://x.com/${USER}`;
+            if (!twitterLink.includes('/status/')) twitterLink = `https://x.com/${postAuthorHandle}`;
 
             const metrics = item.metrics || {
                 replies:  Math.max(2, 4  + idx * 2),
@@ -210,32 +269,36 @@ import { CONFIG, escHtml } from './config.js';
             tweetEl.className = 'x-post-container';
             tweetEl.tabIndex  = 0;
             tweetEl.setAttribute('role', 'article');
-            tweetEl.setAttribute('aria-label', `Post by @${USER}`);
+            tweetEl.setAttribute('aria-label', `Post by @${postAuthorHandle}`);
             tweetEl.addEventListener('click', e => {
-                if (e.target.closest('a, button, video, .x-card-media')) return;
+                if (e.target.closest('a, button, video, .x-card-media, .x-quoted-card')) return;
                 window.open(twitterLink, '_blank', 'noopener,noreferrer');
             });
             tweetEl.addEventListener('keydown', e => {
-                if (e.key === 'Enter' && !e.target.closest('a, button, video'))
+                if (e.key === 'Enter' && !e.target.closest('a, button, video, .x-quoted-card'))
                     window.open(twitterLink, '_blank', 'noopener,noreferrer');
             });
 
             tweetEl.innerHTML = `
+                ${isRetweet ? `
+                    <div class="x-retweet-badge-top">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M4.5 3.88l4.432 4.43-1.77 1.77L4.5 7.42V17h11v2H2.5V3.88zM21.5 7h-11V5h13v15.12l-4.432-4.43 1.77-1.77 2.662 2.66V7z"/></svg>
+                        <span>Asad Reposted</span>
+                    </div>` : ''}
                 <div class="x-post-header">
-                    <a href="https://x.com/${USER}" target="_blank" rel="noopener noreferrer" class="x-avatar" onclick="event.stopPropagation()" aria-label="Visit profile on X">
-                        <img src="https://unavatar.io/twitter/${USER}" alt="${USER} Avatar" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
+                    <a href="https://x.com/${postAuthorHandle}" target="_blank" rel="noopener noreferrer" class="x-avatar" onclick="event.stopPropagation()" aria-label="Visit @${postAuthorHandle} on X">
+                        <img src="${postAuthorAvatar}" alt="${postAuthorHandle} Avatar" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
                     </a>
                     <div class="x-author-info">
                         <div class="x-names">
-                            <span class="x-display-name" title="${DISPLAY_NAME}">${DISPLAY_NAME}</span>
+                            <span class="x-display-name" title="${postAuthorDisplay}">${postAuthorDisplay}</span>
                             <svg class="x-verified-icon" viewBox="0 0 24 24" width="14" height="14" fill="var(--cyan,#00f2ff)" aria-label="Verified">
                                 <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.79-4-4-4-.495 0-.965.084-1.4.238C14.55 2.475 13.18 1.6 11.6 1.6c-1.58 0-2.95.875-3.6 2.148-.435-.154-.905-.238-1.4-.238-2.21 0-4 1.79-4 4 0 .495.084.965.238 1.4C1.575 9.55.7 10.92.7 12.5c0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.79 4 4 4 .495 0 .965-.084 1.4-.238 1.4-1.273 2.77-2.148 4.35-2.148 1.58 0 2.95-.875 3.6-2.148.435.154.905.238 1.4.238 2.21 0 4-1.79 4-4 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.79 4.39l-4.24-4.24 1.41-1.41 2.83 2.83 6.36-6.36 1.41 1.41-7.77 7.77z"/>
                             </svg>
-                            <span class="x-handle">@${USER}</span>
+                            <span class="x-handle">@${postAuthorHandle}</span>
                             <span class="x-dot">·</span>
                             <time class="x-time" datetime="${item.pubDate || ''}">${timeAgo(item.pubDate)}</time>
                         </div>
-                        ${isRetweet ? `<div class="x-rt-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.43-1.77 1.77L4.5 7.42V17h11v2H2.5V3.88zM21.5 7h-11V5h13v15.12l-4.432-4.43 1.77-1.77 2.662 2.66V7z"/></svg> Reposted${retweetAuthor ? ' @' + retweetAuthor : ''}</div>` : ''}
                     </div>
                     <a href="${twitterLink}" target="_blank" rel="noopener noreferrer" class="x-source-logo" onclick="event.stopPropagation()" aria-label="Open on X">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -243,12 +306,13 @@ import { CONFIG, escHtml } from './config.js';
                 </div>
                 <div class="x-post-body">
                     <p class="x-post-text">${formatTweetText(rawClean)}</p>
-                    <div class="x-translate-wrap" style="margin:4px 0 8px 0;">
+                    <div class="x-translate-wrap" style="margin:4px 0 6px 0;">
                         <button type="button" class="x-translate-btn" style="background:none;border:none;color:var(--cyan,#00f2ff);font-size:0.73rem;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;opacity:0.85;font-weight:600;font-family:inherit;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
                             Translate post
                         </button>
                     </div>
+                    ${quoteHtml}
                     ${renderMediaElement(item)}
                 </div>
                 <div class="x-post-actions" onclick="event.stopPropagation()">

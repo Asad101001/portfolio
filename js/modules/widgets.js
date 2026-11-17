@@ -2029,17 +2029,18 @@ function _starsHTML(starsStr) {
   function renderMovies(movieItems) {
     if (!watchlistEl) return;
 
-    // User requested all three slots to be Dune: Part Three
-    var duneList = [
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' },
-      { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' }
-    ];
+    var items = (movieItems && movieItems.length ? movieItems : (CONFIG.big3.watchlist || [])).slice(0, 3);
+    if (!items.length) {
+      items = [
+        { title: 'Dune: Part Two', searchQuery: 'Dune: Part Two' },
+        { title: 'The Batman Part II', searchQuery: 'The Batman Part II' },
+        { title: 'Blade Runner 2049', searchQuery: 'Blade Runner 2049' }
+      ];
+    }
 
-    // Deduplicate titles for clean display without redundant repeats
-    var uniqueTitles = Array.from(new Set(duneList.map(function(m) { return m.title; })));
-    // Render as clickable Letterboxd search links
-    watchlistEl.innerHTML = uniqueTitles.map(function(t) {
+    // Render each movie title as a clickable Letterboxd search link
+    watchlistEl.innerHTML = items.map(function(m) {
+      var t = m.title || m.name || '';
       var href = 'https://letterboxd.com/search/' + encodeURIComponent(t) + '/';
       return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Letterboxd">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
     }).join(', ');
@@ -2048,7 +2049,7 @@ function _starsHTML(starsStr) {
     if (!movieThumbsEl) return;
 
     movieThumbsEl.innerHTML = '';
-    duneList.forEach(function(m) {
+    items.forEach(function(m) {
       var wrap = document.createElement('div');
       wrap.className = 'media-thumb-card';
       wrap.title = m.title;

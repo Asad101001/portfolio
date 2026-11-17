@@ -56,6 +56,13 @@ function apiMiddlewarePlugin() {
               const mockReq = { query, url: req.url, headers: req.headers };
               const mockRes = {
                 setHeader: (k, v) => res.setHeader(k, v),
+                json: (data) => {
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify(data));
+                },
+                send: (data) => {
+                  res.end(data);
+                },
                 status: (code) => {
                   res.statusCode = code;
                   return {

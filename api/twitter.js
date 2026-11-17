@@ -94,7 +94,37 @@ async function fetchWithTimeout(url, ms = RSS_TIMEOUT) {
 function extractTag(xml, tag) {
   const re = new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const m = xml.match(re);
-  return m ? m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim() : '';
+  return m ? decodeEntities(m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim()) : '';
+}
+
+/** Decode common HTML entities safely on the server */
+function decodeEntities(str) {
+  if (!str) return '';
+  return str
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&atilde;/g, 'ã')
+    .replace(/&Atilde;/g, 'Ã')
+    .replace(/&eacute;/g, 'é')
+    .replace(/&Eacute;/g, 'É')
+    .replace(/&ecirc;/g, 'ê')
+    .replace(/&ccedil;/g, 'ç')
+    .replace(/&Ccedil;/g, 'Ç')
+    .replace(/&oacute;/g, 'ó')
+    .replace(/&Oacute;/g, 'Ó')
+    .replace(/&uacute;/g, 'ú')
+    .replace(/&iacute;/g, 'í')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#(\d+);/g, (_, code) => {
+      try { return String.fromCharCode(Number(code)); } catch (_) { return _; }
+    })
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => {
+      try { return String.fromCharCode(parseInt(hex, 16)); } catch (_) { return _; }
+    });
 }
 
 /** Parse RSS XML string into tweet items */
@@ -176,6 +206,38 @@ function parseRSS(xml, username) {
       mediaUrl = mediaUrl.replace('http://', 'https://');
     }
 
+    // Extract quoted tweet if available in RSS description
+    let quote = null;
+    const bqMatch = description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
+    if (bqMatch) {
+      const bqContent = bqMatch[1];
+      const qAuthorMatch = bqContent.match(/@([a-zA-Z0-9_]+)/i);
+      const qAuthor = qAuthorMatch ? qAuthorMatch[1] : '';
+      const qText = bqContent.replace(/<[^>]*>/g, '').trim();
+      quote = {
+        author: qAuthor,
+        name: qAuthor,
+        text: qText,
+        link: qAuthor ? `https://x.com/${qAuthor}` : null
+      };
+    }
+
+    // Determine retweet status and original author
+    let isRetweet = /^RT by|^RT @/i.test(title);
+    let retweetAuthor = null;
+    const linkAuthorMatch = cleanLink.match(/x\.com\/([a-zA-Z0-9_]+)\/status/i);
+    if (linkAuthorMatch && linkAuthorMatch[1].toLowerCase() !== username.toLowerCase()) {
+      isRetweet = true;
+      retweetAuthor = linkAuthorMatch[1];
+    } else if (isRetweet) {
+      const rtMatch = title.match(/^RT @([a-zA-Z0-9_]+):/i);
+      if (rtMatch) retweetAuthor = rtMatch[1];
+    }
+
+    const authorHandle = (isRetweet && retweetAuthor) ? retweetAuthor : username;
+    const authorName = (isRetweet && retweetAuthor) ? `@${retweetAuthor}` : username;
+    const authorAvatar = `https://unavatar.io/twitter/${authorHandle}`;
+
     items.push({
       title,
       link: cleanLink,
@@ -183,6 +245,11 @@ function parseRSS(xml, username) {
       description,
       mediaUrl,
       mediaType,
+      isRetweet,
+      retweetAuthor: isRetweet ? retweetAuthor : null,
+      authorName,
+      authorAvatar,
+      quote,
       metrics: {
         replies:  Math.floor(Math.random() * 10) + 3,
         retweets: Math.floor(Math.random() * 20) + 6,
@@ -253,6 +320,30 @@ async function trySyndication(username) {
       }
     }
 
+    // Extract quoted tweet if present
+    let quote = null;
+    const qStatus = target.quoted_status;
+    if (qStatus) {
+      const qAuthor = qStatus.user?.screen_name || '';
+      const qName = qStatus.user?.name || qAuthor;
+      const qAvatar = qStatus.user?.profile_image_url_https || '';
+      const qText = qStatus.text || '';
+      const qLink = `https://x.com/${qAuthor}/status/${qStatus.id_str}`;
+      let qMediaUrl = null;
+      if (qStatus.entities?.media && qStatus.entities.media.length > 0) {
+        qMediaUrl = qStatus.entities.media[0].media_url_https || qStatus.entities.media[0].media_url;
+      }
+      quote = {
+        author: qAuthor,
+        name: qName,
+        avatar: qAvatar,
+        text: qText,
+        link: qLink,
+        mediaUrl: qMediaUrl,
+        pubDate: qStatus.created_at ? new Date(qStatus.created_at).toISOString() : null
+      };
+    }
+
     items.push({
       title,
       link,
@@ -260,6 +351,11 @@ async function trySyndication(username) {
       description: rawText,
       mediaUrl,
       mediaType,
+      isRetweet,
+      retweetAuthor: isRetweet ? author : null,
+      authorName: target.user?.name || author,
+      authorAvatar: target.user?.profile_image_url_https || null,
+      quote,
       metrics: {
         replies: target.reply_count || Math.floor(Math.random() * 10) + 2,
         retweets: target.retweet_count || Math.floor(Math.random() * 15) + 5,
