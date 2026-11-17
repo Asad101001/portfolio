@@ -118,19 +118,19 @@
   ],
   "moviesWatchlist": [
     {
-      "title": "Dune: Part Three",
-      "tmdbId": 1170608,
-      "poster": "https://image.tmdb.org/t/p/w500/d43fvHQsIMa4kpyhKXw0haEJIvI.jpg"
+      "title": "Dune: Part Two",
+      "tmdbId": 693134,
+      "poster": "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
     },
     {
-      "title": "Dune: Part Three",
-      "tmdbId": 1170608,
-      "poster": "https://image.tmdb.org/t/p/w500/d43fvHQsIMa4kpyhKXw0haEJIvI.jpg"
+      "title": "The Batman Part II",
+      "tmdbId": 948549,
+      "poster": "https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg"
     },
     {
-      "title": "Dune: Part Three",
-      "tmdbId": 1170608,
-      "poster": "https://image.tmdb.org/t/p/w500/d43fvHQsIMa4kpyhKXw0haEJIvI.jpg"
+      "title": "Blade Runner 2049",
+      "tmdbId": 335984,
+      "poster": "https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg"
     }
   ]
 }

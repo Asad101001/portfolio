@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     if (!TMDB_API_KEY || !id) return null;
     try {
       const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_API_KEY}`;
-      const tmdbRes = await fetch(url);
+      const tmdbRes = await fetch(url, { signal: AbortSignal.timeout(3000) });
       if (!tmdbRes.ok) return null;
       const data = await tmdbRes.json();
       return data.poster_path ? toHttpsUrl(`https://image.tmdb.org/t/p/w200${data.poster_path}`) : null;
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         .trim();
 
       if (!clean) return null;
-      const r = await fetch(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(clean)}`);
+      const r = await fetch(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(clean)}`, { signal: AbortSignal.timeout(3000) });
       if (!r.ok) return null;
       const d = await r.json();
       return toHttpsUrl(d?.image?.medium || d?.image?.original || null);
@@ -60,8 +60,8 @@ export default async function handler(req, res) {
     };
 
     const [showsRes, moviesRes] = await Promise.all([
-      fetch(`https://api.trakt.tv/users/${TRAKT_USERNAME}/watchlist/shows?sort=added,asc`, { headers }).catch(() => ({ ok: false })),
-      fetch(`https://api.trakt.tv/users/${TRAKT_USERNAME}/watchlist/movies?sort=added,asc`, { headers }).catch(() => ({ ok: false }))
+      fetch(`https://api.trakt.tv/users/${TRAKT_USERNAME}/watchlist/shows?sort=added,asc`, { headers, signal: AbortSignal.timeout(3000) }).catch(() => ({ ok: false })),
+      fetch(`https://api.trakt.tv/users/${TRAKT_USERNAME}/watchlist/movies?sort=added,asc`, { headers, signal: AbortSignal.timeout(3000) }).catch(() => ({ ok: false }))
     ]);
 
     let showsData = [];
@@ -109,7 +109,7 @@ export default async function handler(req, res) {
     let simklMovies = [];
 
     if (SIMKL_ACCESS_TOKEN) {
-      const res = await fetch(`https://api.simkl.com/sync/all-items${param}`, { headers }).catch(() => ({ ok: false }));
+      const res = await fetch(`https://api.simkl.com/sync/all-items${param}`, { headers, signal: AbortSignal.timeout(3000) }).catch(() => ({ ok: false }));
       if (res.ok) {
         const data = await res.json();
         const allShows = data.shows || [];
@@ -119,9 +119,9 @@ export default async function handler(req, res) {
       }
     } else if (SIMKL_USER_ID) {
       [simklWatching, simklPlan, simklMovies] = await Promise.all([
-        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/tv/watching${param}`, { headers }).then((r) => (r.ok ? r.json() : [])).catch(() => []),
-        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/tv/plantowatch${param}`, { headers }).then((r) => (r.ok ? r.json() : [])).catch(() => []),
-        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/movies/plantowatch${param}`, { headers }).then((r) => (r.ok ? r.json() : [])).catch(() => [])
+        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/tv/watching${param}`, { headers, signal: AbortSignal.timeout(3000) }).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/tv/plantowatch${param}`, { headers, signal: AbortSignal.timeout(3000) }).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+        fetch(`https://api.simkl.com/users/${SIMKL_USER_ID}/ratings/movies/plantowatch${param}`, { headers, signal: AbortSignal.timeout(3000) }).then((r) => (r.ok ? r.json() : [])).catch(() => [])
       ]);
     }
 
@@ -164,8 +164,8 @@ export default async function handler(req, res) {
       if (fs.existsSync(fallbackPath)) {
         const fb = JSON.parse(fs.readFileSync(fallbackPath, 'utf8'));
         return {
-          shows: fb.showsWatchlist || [],
-          movies: fb.moviesWatchlist || []
+          shows: dedupeByTitle(fb.showsWatchlist || []),
+          movies: dedupeByTitle(fb.moviesWatchlist || [])
         };
       }
     } catch (_) {}
@@ -198,6 +198,9 @@ export default async function handler(req, res) {
       if (!movies.length) movies = fallback.movies;
       if (source === 'fallback') source = 'trakt-export';
     }
+
+    shows = dedupeByTitle(shows);
+    movies = dedupeByTitle(movies);
 
     res.status(200).json({
       shows,

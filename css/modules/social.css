@@ -215,10 +215,10 @@
 }
 
 /* Platform Theme Colors & Specific Glows */
-.social-platform-card.github   { --p-clr: #e0e0e0; }
+.social-platform-card.github   { --p-clr: #181717; }
 .social-platform-card.linkedin { --p-clr: #0a66c2; }
 .social-platform-card.discord  { --p-clr: #5865F2; }
-.social-platform-card.medium   { --p-clr: #ffffff;  }
+.social-platform-card.medium   { --p-clr: #181717; }
 .social-platform-card.instagram{ --p-clr: #E4405F; }
 .social-platform-card.spotify  { --p-clr: #1DB954; }
 
@@ -226,52 +226,49 @@
 .social-platform-card {
   position: relative;
   overflow: hidden;
-  border-color: rgba(255, 255, 255, 0.07) !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1.5px solid rgba(18, 18, 18, 0.16) !important;
+  background: #FFFFFF !important;
+  box-shadow: 2px 2px 0px rgba(18, 18, 18, 0.08) !important;
+  border-radius: 999px !important;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   min-width: 130px;
-  /* Left accent border per platform — applied per-card below */
-  border-left-width: 3px !important;
-  border-left-style: solid !important;
 }
 
-/* Per-platform distinct resting states */
+/* Per-platform distinct resting states with high-contrast colored borders */
 .social-platform-card.github {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-left-color: #e0e0e0 !important;
+  border-color: #24292e !important;
+  background: #FAFAFA !important;
 }
 .social-platform-card.linkedin {
-  background: rgba(10, 102, 194, 0.08) !important;
-  border-left-color: #0a66c2 !important;
+  border-color: #0a66c2 !important;
+  background: #F0F7FF !important;
 }
 .social-platform-card.discord {
-  background: rgba(88, 101, 242, 0.08) !important;
-  border-left-color: #5865F2 !important;
+  border-color: #5865F2 !important;
+  background: #F2F3FE !important;
 }
 .social-platform-card.instagram {
-  background: rgba(228, 64, 95, 0.07) !important;
-  border-left-color: #E4405F !important;
+  border-color: #E4405F !important;
+  background: #FFF1F3 !important;
 }
 .social-platform-card.spotify {
-  background: rgba(29, 185, 84, 0.08) !important;
-  border-left-color: #1DB954 !important;
+  border-color: #1DB954 !important;
+  background: #F0FDF4 !important;
 }
 
-/* Icon tinted to platform color at rest */
+/* Icon tinted to vibrant platform color at rest */
 .social-platform-card .spc-icon svg,
 .social-platform-card .spc-icon i {
   color: var(--p-clr) !important;
-  opacity: 0.85;
+  fill: currentColor;
+  opacity: 1 !important;
   transition: opacity 0.2s, transform 0.2s;
 }
 
 .social-platform-card:hover {
   border-color: var(--p-clr) !important;
-  transform: translateY(-5px) !important;
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.4),
-    0 0 15px color-mix(in srgb, var(--p-clr) 40%, transparent),
-    inset 0 0 10px rgba(255, 255, 255, 0.02) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 4px 4px 0px #F59E0B !important;
 }
 
 .social-platform-card:hover .spc-icon svg {
@@ -284,26 +281,27 @@
   fill: var(--p-clr);
 }
 
-/* Platform Chip Refinement */
+/* Platform Chip Refinement — High contrast readability */
 .social-platform-card .spc-info {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 1px;
 }
 .social-platform-card .spc-label {
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 0.80rem !important;
+  font-weight: 900 !important;
   line-height: 1.1;
-  color: #fff;
+  color: #121212 !important;
 }
 .social-platform-card .spc-handle {
-  font-size: 0.62rem;
-  color: var(--text-dim);
+  font-size: 0.68rem !important;
+  color: #4B5563 !important;
   font-family: 'JetBrains Mono', monospace;
-  opacity: 0.7;
+  font-weight: 600 !important;
+  opacity: 1 !important;
 }
 .social-platform-card:hover .spc-handle {
-  color: #fff;
-  opacity: 1;
+  color: #121212 !important;
+  opacity: 1 !important;
 }
 

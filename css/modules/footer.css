@@ -29,48 +29,7 @@
   transform: translateY(-8px) scale(1.05);
 }
 
-.podium-avatar-wrap {
-  position: relative;
-  width: 64px;
-  height: 64px;
-}
-
-.footballer-headshot-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.03);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.footballer-emoji-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(255,255,255,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-}
-
-/* Ranking Specifics */
-.medal-gold { order: 2; z-index: 3; width: 80px; }
-.medal-silver { order: 1; z-index: 2; margin-bottom: -10px; }
-.medal-bronze { order: 3; z-index: 1; margin-bottom: -15px; }
-
-.medal-gold .podium-avatar-wrap { width: 76px; height: 76px; }
-.medal-gold .footballer-headshot-img { 
-  border-color: rgba(255, 215, 0, 0.4); 
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-}
-
-.medal-silver .footballer-headshot-img { border-color: rgba(192, 192, 192, 0.3); }
-.medal-bronze .footballer-headshot-img { border-color: rgba(205, 127, 50, 0.3); }
+/* (Legacy footballer rules removed — see css/modules/currently-into.css for #big3-social-widget) */
 
 
 
@@ -173,44 +132,7 @@
 }
 .footballer-card:hover { transform: scale(1.1); z-index: 5; }
 
-.podium-avatar-wrap {
-  position: relative;
-  border-radius: 50%;
-  padding: 2px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.medal-gold .podium-avatar-wrap { 
-  width: 60px; height: 60px; 
-  border-color: #ffd700; 
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-}
-.medal-silver .podium-avatar-wrap { 
-  width: 50px; height: 50px; 
-  border-color: #c0c0c0; 
-  box-shadow: 0 0 10px rgba(192, 192, 192, 0.2);
-}
-.medal-bronze .podium-avatar-wrap { 
-  width: 45px; height: 45px; 
-  border-color: #cd7f32; 
-  box-shadow: 0 0 8px rgba(205, 127, 50, 0.2);
-}
-
-
-
-.footballer-headshot-img, .footballer-emoji-avatar {
-  width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-}
-
-.footballer-name-label {
-  font-size: 0.6rem;
-  margin-top: 6px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  letter-spacing: 0.05em;
-}
+/* End footer styling */
 
 /* â”€â”€ Mobile Theme Optimizations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (max-width: 768px) {

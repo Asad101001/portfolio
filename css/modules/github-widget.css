@@ -3,7 +3,7 @@
 .github-widget-header { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(18, 18, 18, 0.08); font-size: 0.72rem; font-weight: 700; color: #121212; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'DM Mono', 'JetBrains Mono', monospace; }
 .github-widget-header a { margin-left: auto; color: rgba(18, 18, 18, 0.55); font-size: 0.68rem; font-family: 'DM Mono', 'JetBrains Mono', monospace; font-weight: 600; text-transform: none; letter-spacing: 0; transition: color 0.2s; }
 .github-widget-header a:hover { color: #F59E0B; }
-.commit-grid { display: flex; gap: 3px; padding: 16px 18px 12px; overflow-x: auto; scrollbar-width: none; }
+.commit-grid { display: flex; gap: 3px; padding: 22px 18px 12px; overflow-x: auto; scrollbar-width: none; }
 .commit-grid::-webkit-scrollbar { display: none; }
 .commit-week { display: flex; flex-direction: column; gap: 3px; }
 .commit-day { width: 11px; height: 11px; border-radius: 2px; background: rgba(18, 18, 18, 0.06); border: 1px solid rgba(18, 18, 18, 0.06); transition: transform 0.15s, box-shadow 0.15s; cursor: default; position: relative; }
@@ -13,7 +13,8 @@
 .commit-day[data-count="2"] { background: rgba(245, 158, 11, 0.50); border-color: rgba(245, 158, 11, 0.60); }
 .commit-day[data-count="3"] { background: rgba(245, 158, 11, 0.75); border-color: rgba(245, 158, 11, 0.85); box-shadow: 0 0 6px rgba(245, 158, 11, 0.3); }
 .commit-day[data-count="4"] { background: #F59E0B; border-color: #D97706; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
-.commit-day-tooltip { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #121212; border: 1px solid rgba(245, 158, 11, 0.45); box-shadow: 2px 2px 0px #F59E0B; padding: 4px 10px; border-radius: 6px; font-size: 0.68rem; font-weight: 600; color: #ffffff; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 20; font-family: 'DM Mono', 'JetBrains Mono', monospace; }
+.commit-day-tooltip { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #121212 !important; border: 1px solid rgba(245, 158, 11, 0.6) !important; box-shadow: 2px 2px 0px #F59E0B !important; padding: 4px 10px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; color: #ffffff !important; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 25; font-family: 'DM Mono', 'JetBrains Mono', monospace; }
+.commit-week .commit-day:nth-child(-n+2) .commit-day-tooltip { bottom: auto; top: calc(100% + 6px); }
 .commit-day:hover .commit-day-tooltip { opacity: 1; }
 .commit-grid-footer { display: flex; align-items: center; justify-content: space-between; padding: 0 18px 14px; font-size: 0.68rem; color: rgba(18, 18, 18, 0.55); font-family: 'DM Mono', 'JetBrains Mono', monospace; }
 .commit-legend { display: flex; align-items: center; gap: 4px; }

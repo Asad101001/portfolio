@@ -273,8 +273,9 @@
         return;
       }
 
-      if (href === '#certifications') {
+      if (href === '#certifications' || el.getAttribute('data-action') === 'certs') {
         e.preventDefault();
+        e.stopImmediatePropagation();
         var drawer = document.getElementById('certs-drawer');
         if (drawer) {
           if (drawer.classList.contains('open')) {
@@ -384,22 +385,26 @@
   if (!drawer) return;
   function open()  { 
     drawer.classList.add('open'); 
+    drawer.style.visibility = 'visible';
+    drawer.style.pointerEvents = 'all';
     document.body.style.overflow = 'hidden'; 
     if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
   }
   function close() { 
     drawer.classList.remove('open'); 
+    drawer.style.visibility = '';
+    drawer.style.pointerEvents = '';
     document.body.style.overflow = ''; 
     if (typeof window._updateAllIndicators === 'function') window._updateAllIndicators();
   }
   window._openCertsDrawer = open;
   window._closeCertsDrawer = close;
 
-  // Bind click to open drawer on all cert triggers across desktop top-nav, mobile nav, hero stats, etc.
-  document.querySelectorAll('a[href="#certifications"], [data-action="certs"], [data-drawer="certs"]').forEach(function(el) {
+  // Bind click to open drawer on all cert triggers across desktop top-nav, hero stats, etc.
+  document.querySelectorAll('a[href="#certifications"]:not(.mbn-item), [data-action="certs"]:not(.mbn-item), [data-drawer="certs"]:not(.mbn-item)').forEach(function(el) {
     el.addEventListener('click', function(e) {
       e.preventDefault();
-      e.stopPropagation();
+      e.stopImmediatePropagation();
       if (drawer.classList.contains('open')) {
         close();
       } else {
@@ -507,7 +512,7 @@
       current = idx;
       
       if (widgetId === 'rotating-widget') {
-         if (items[idx] && (items[idx].classList.contains('barca-slot') || idx === 2)) { dotsWrap.classList.add('barca-active'); widget.classList.add('football-active'); }
+         if (items[idx] && (items[idx].classList.contains('barca-slot') || idx === 3)) { dotsWrap.classList.add('barca-active'); widget.classList.add('football-active'); }
          else { dotsWrap.classList.remove('barca-active'); widget.classList.remove('football-active'); }
       }
     }

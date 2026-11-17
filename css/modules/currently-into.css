@@ -350,17 +350,48 @@
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 3px !important;
+  gap: 4px !important;
+}
+
+#big3-social-widget .podium-avatar-wrap {
+  width: 46px !important;
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#big3-social-widget .medal-gold .podium-avatar-wrap {
+  width: 52px !important;
+  height: 52px !important;
+  border: 2px solid #F59E0B !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4) !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+}
+
+#big3-social-widget .medal-silver .podium-avatar-wrap,
+#big3-social-widget .medal-bronze .podium-avatar-wrap {
+  width: 46px !important;
+  height: 46px !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.2) !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 #big3-social-widget .footballer-headshot-img,
 #big3-social-widget .footballer-emoji-avatar {
-  width: 44px !important;
-  height: 44px !important;
+  width: 100% !important;
+  height: 100% !important;
   border-radius: 50% !important;
-  border: 1.5px solid rgba(18, 18, 18, 0.15) !important;
-  box-shadow: 1.5px 1.5px 0px #F59E0B !important;
+  border: none !important;
+  box-shadow: none !important;
   object-fit: cover !important;
+  display: block !important;
 }
 
 #big3-social-widget .footballer-name-label {

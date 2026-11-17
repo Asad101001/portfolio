@@ -9,12 +9,12 @@
   outline: none !important;
 }
 
-/* Football item background — Komik clean high-contrast cream panel */
+/* Football item background — Komik soft Blaugrana subtle gradient panel */
 .rotating-item.barca-slot {
-  background: #FCFAF5 !important;
-  border: 1.5px solid #1F2328 !important;
-  box-shadow: 3px 3px 0px #F59E0B !important;
-  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(220, 30, 80, 0.09) 0%, rgba(252, 250, 245, 0.85) 50%, rgba(0, 77, 152, 0.09) 100%) !important;
+  border: 1.5px solid rgba(165, 0, 68, 0.28) !important;
+  box-shadow: 0 4px 20px -2px rgba(165, 0, 68, 0.08), 0 2px 8px -1px rgba(0, 77, 152, 0.06) !important;
+  border-radius: 14px !important;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -28,7 +28,7 @@
   position: relative;
   box-sizing: border-box;
   justify-content: center;
-  padding: 4px 6px;
+  padding: 8px 12px;
   color: #1F2328 !important;
 }
 
@@ -53,8 +53,8 @@
   background: #FFC700 !important;
   border: 1.5px solid #1F2328 !important;
   font-weight: 900 !important;
-  font-size: 0.54rem !important;
-  padding: 1px 6px !important;
+  font-size: 0.58rem !important;
+  padding: 1.5px 7px !important;
   border-radius: 3px !important;
   box-shadow: 1px 1px 0px #1F2328 !important;
   text-transform: uppercase !important;
@@ -67,7 +67,7 @@
   position: absolute;
   top: -2px;
   right: 0px;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   line-height: 1;
   pointer-events: none;
   z-index: 4;
@@ -84,13 +84,14 @@
   box-sizing: border-box;
 }
 
-/* ── LEFT: Identity Side (Proud Supporter Block) ── */
+/* ── LEFT: Identity Side (Proud Supporter Block upscaled to ~150px height) ── */
 .barca-identity-side {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  min-width: 120px;
+  justify-content: center;
+  gap: 5px;
+  min-width: 140px;
   flex-shrink: 0;
   position: relative;
 }
@@ -102,13 +103,13 @@
 }
 
 .barca-main-logo {
-  width: 52px !important;
-  height: 52px !important;
-  min-width: 52px !important;
-  min-height: 52px !important;
+  width: 76px !important;
+  height: 76px !important;
+  min-width: 76px !important;
+  min-height: 76px !important;
   object-fit: contain !important;
   display: block;
-  filter: drop-shadow(2px 2.5px 0px #1F2328) !important;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12)) !important;
 }
 
 /* Clean, unclipped SUPPORTING pill badge below club identity */
@@ -117,18 +118,18 @@
   align-items: center;
   justify-content: center;
   font-family: 'DM Mono', 'JetBrains Mono', monospace !important;
-  font-size: 0.60rem !important;
+  font-size: 0.70rem !important;
   font-weight: 900 !important;
-  padding: 2.5px 9px !important;
+  padding: 3px 12px !important;
   border-radius: 4px !important;
   background: #FFC700 !important;
   border: 1.5px solid #1F2328 !important;
   color: #1F2328 !important;
   box-shadow: 1.5px 1.5px 0px #1F2328 !important;
-  letter-spacing: 0.07em !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
   line-height: 1.1;
-  margin-top: 3px;
+  margin-top: 5px;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -144,10 +145,10 @@
 .barca-name-pink {
   color: #A50044 !important;
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.90rem !important;
+  font-size: 1.15rem !important;
   font-weight: 900 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.06em !important;
   text-shadow: none !important;
   text-align: center !important;
   white-space: nowrap;
@@ -157,7 +158,7 @@
 .barca-slogan-cyan {
   color: #004D98 !important;
   font-family: 'DM Mono', 'JetBrains Mono', monospace !important;
-  font-size: 0.54rem !important;
+  font-size: 0.65rem !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.08em !important;
@@ -167,36 +168,38 @@
   line-height: 1.1;
 }
 
-/* ── RIGHT: Score Rows Side ── */
+/* ── RIGHT: Score Rows Side (Clean Komilk Translucent aesthetic) ── */
 .barca-score-rows-side {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
   overflow: hidden;
 }
 
 .score-row-mini {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #F4EEDB !important;
-  border: 1.5px solid #1F2328 !important;
-  box-shadow: 2px 2px 0px #1F2328 !important;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(31, 35, 40, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
   color: #1F2328 !important;
-  padding: 5px 12px !important;
-  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
   width: 100%;
   box-sizing: border-box;
-  min-height: 36px;
+  min-height: 44px;
   overflow: hidden;
   transition: transform 0.18s ease;
 }
 
 .score-row-mini.is-host {
-  background: #F4EEDB !important;
-  border-color: #1F2328 !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(31, 35, 40, 0.12) !important;
 }
 
 .score-team-info {

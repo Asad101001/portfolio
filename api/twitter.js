@@ -208,18 +208,22 @@ function parseRSS(xml, username) {
 
     // Extract quoted tweet if available in RSS description
     let quote = null;
+    let mainDescription = description;
     const bqMatch = description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
     if (bqMatch) {
       const bqContent = bqMatch[1];
       const qAuthorMatch = bqContent.match(/@([a-zA-Z0-9_]+)/i);
       const qAuthor = qAuthorMatch ? qAuthorMatch[1] : '';
-      const qText = bqContent.replace(/<[^>]*>/g, '').trim();
+      let qText = bqContent.replace(/<[^>]*>/g, '').trim();
+      qText = qText.replace(/^[^(@\n]*\(@[a-zA-Z0-9_]+\):?\s*/i, '').trim();
+      qText = qText.replace(/—\s*nitter\.[^\s]+$/i, '').trim();
       quote = {
         author: qAuthor,
-        name: qAuthor,
+        name: qAuthor ? `@${qAuthor}` : 'x',
         text: qText,
         link: qAuthor ? `https://x.com/${qAuthor}` : null
       };
+      mainDescription = description.replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '').trim();
     }
 
     // Determine retweet status and original author
@@ -242,7 +246,7 @@ function parseRSS(xml, username) {
       title,
       link: cleanLink,
       pubDate: pubDate ? new Date(pubDate).toISOString() : null,
-      description,
+      description: mainDescription,
       mediaUrl,
       mediaType,
       isRetweet,

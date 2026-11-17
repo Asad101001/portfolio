@@ -740,7 +740,7 @@ function _starsHTML(starsStr) {
   }
 
   /* ── FC Barcelona Scorecard ── */
-  var barcaItem = document.querySelector('.rotating-item.barca-slot') || document.querySelector('.rotating-item[data-index="2"]');
+  var barcaItem = document.querySelector('.rotating-item.barca-slot') || document.querySelector('.rotating-item[data-index="3"]');
   if (barcaItem) barcaItem.classList.add('barca-slot');
   if (!barcaItem) return;
 
@@ -2029,7 +2029,26 @@ function _starsHTML(starsStr) {
   function renderMovies(movieItems) {
     if (!watchlistEl) return;
 
-    var items = (movieItems && movieItems.length ? movieItems : (CONFIG.big3.watchlist || [])).slice(0, 3);
+    var seen = {};
+    var uniqueItems = [];
+    (movieItems || []).forEach(function(m) {
+      var k = (m && (m.title || m.name) ? (m.title || m.name) : '').toLowerCase();
+      if (k && !seen[k]) {
+        seen[k] = true;
+        uniqueItems.push(m);
+      }
+    });
+    // Backfill from CONFIG.big3.watchlist if fewer than 3
+    (CONFIG.big3.watchlist || []).forEach(function(m) {
+      if (uniqueItems.length >= 3) return;
+      var k = (m && m.title ? m.title : '').toLowerCase();
+      if (k && !seen[k]) {
+        seen[k] = true;
+        uniqueItems.push(m);
+      }
+    });
+
+    var items = uniqueItems.slice(0, 3);
     if (!items.length) {
       items = [
         { title: 'Dune: Part Two', searchQuery: 'Dune: Part Two' },

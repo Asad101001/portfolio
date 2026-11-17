@@ -10,8 +10,8 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Asad';
-    const CACHE_KEYS = ['asad_twitter_cache_v7'];
-    const CACHE_KEY = 'asad_twitter_cache_v7';
+    const CACHE_KEYS = ['asad_twitter_cache_v8'];
+    const CACHE_KEY = 'asad_twitter_cache_v8';
     const CACHE_TTL = 30 * 60 * 1000; // 30 mins fresh
 
     function getLocalCache(allowStale = true) {
@@ -114,7 +114,7 @@ import { CONFIG, escHtml } from './config.js';
 
         if (!mediaUrl && item.description) {
             const videoMatch = item.description.match(/<video[^>]*>[\s\S]*?<source[^>]+src="([^"]+)"/i)
-                            || item.description.match(/<video[^>]+src="([^"]+)"/i);
+                                        || item.description.match(/<video[^>]+src="([^"]+)"/i);
             if (videoMatch) { mediaType = 'video'; mediaUrl = videoMatch[1]; }
             else {
                 const imgMatch = item.description.match(/<img[^>]*src="([^"]+)"/i);
@@ -146,7 +146,7 @@ import { CONFIG, escHtml } from './config.js';
         // Convert any Twitter animated gif thumbnails to genuine looping MP4 videos
         if (mediaUrl && (mediaUrl.includes('tweet_video_thumb') || mediaUrl.includes('tweet_video'))) {
             const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i) ||
-                             mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
+                                          mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
             if (vidMatch) {
                 mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
                 mediaType = 'video';
@@ -164,13 +164,13 @@ import { CONFIG, escHtml } from './config.js';
                             <svg class="x-pause-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                         </button>
                         <button type="button" class="x-video-mute-btn" aria-label="Toggle mute">
-                            <svg class="x-mute-icon" style="display:none" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-                            <svg class="x-unmute-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                            <svg class="x-mute-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                            <svg class="x-unmute-icon" style="display:none" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                         </button>
                     </div>
                 </div>`;
         }
-        const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated');
+        const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated') || mediaUrl.includes('tweet_video_thumb');
         return `
             <div class="x-card-media x-media-image-wrap" onclick="event.stopPropagation()">
                 <img src="${mediaUrl}" alt="Post media" ${isGif ? '' : 'loading="lazy"'} decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
@@ -203,18 +203,22 @@ import { CONFIG, escHtml } from './config.js';
                 ? (item.authorAvatar || `https://unavatar.io/twitter/${retweetAuthor}`)
                 : `https://unavatar.io/twitter/${USER}`;
 
-            // Strip RT prefix and clean/decode HTML entities properly
+            // Clean description and title: strip out blockquote first to prevent repetition
+            const descWithoutBq = (item.description || '').replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '');
+            const descClean = descWithoutBq
+                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '')
+                .replace(/<[^>]*>/g, '')
+                .trim();
+
             const titleClean = (item.title || '')
                 .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
-                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '');
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '')
+                .replace(/<[^>]*>/g, '')
+                .trim();
 
-            const descClean = (item.description || '')
-                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
-                .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '');
-
-            const rawCandidate = (descClean.replace(/<[^>]*>/g, '').trim().length >= titleClean.replace(/<[^>]*>/g, '').trim().length)
-                ? descClean
-                : titleClean;
+            // Prefer descClean over titleClean because description cleanly excludes blockquotes
+            let rawCandidate = (descClean && descClean.length > 0) ? descClean : titleClean;
             let rawClean = cleanAndDecode(rawCandidate).slice(0, 320);
 
             // Quoted Tweet detection
@@ -233,8 +237,33 @@ import { CONFIG, escHtml } from './config.js';
                 }
             }
 
+            // Anti-repetition: if quote exists, strip quoted text from main text
             let quoteHtml = '';
             if (quoteData && quoteData.text) {
+                let qClean = cleanAndDecode(quoteData.text);
+                // Strip author prefix if present in quoted text (e.g. "Cana (@xrelicanth_x)")
+                qClean = qClean.replace(/^[^(@\n]*\(@[a-zA-Z0-9_]+\):?\s*/i, '').trim();
+                // Strip trailing Nitter mirror url
+                qClean = qClean.replace(/—\s*nitter\.[^\s]+$/i, '').trim();
+                quoteData.text = qClean;
+
+                // Remove quoted snippet from main text if repeated
+                if (rawClean === qClean) {
+                    rawClean = '';
+                } else if (rawClean.includes(qClean)) {
+                    rawClean = rawClean.replace(qClean, '').trim();
+                } else if (qClean.length > 20) {
+                    const snip = qClean.slice(0, 25);
+                    const idx = rawClean.indexOf(snip);
+                    if (idx !== -1) {
+                        rawClean = rawClean.slice(0, idx).trim();
+                    }
+                }
+                // Strip trailing author tags from main text (e.g. "Video Cana (@xrelicanth_x)...")
+                rawClean = rawClean.replace(/Video\s+[^(@\n]*\(@[a-zA-Z0-9_]+\):?.*$/i, '').trim();
+                rawClean = rawClean.replace(/—\s*nitter\.[^\s]+$/i, '').trim();
+                rawClean = rawClean.replace(/\(@[a-zA-Z0-9_]+\)$/i, '').trim();
+
                 const qAuthor = quoteData.author || 'x';
                 const qName = quoteData.name || `@${qAuthor}`;
                 const qAvatar = quoteData.avatar || `https://unavatar.io/twitter/${qAuthor}`;
@@ -247,7 +276,7 @@ import { CONFIG, escHtml } from './config.js';
                             <span class="x-quoted-handle">@${qAuthor}</span>
                             ${quoteData.pubDate ? `<span class="x-dot">·</span><time class="x-quoted-time">${timeAgo(quoteData.pubDate)}</time>` : ''}
                         </div>
-                        <p class="x-quoted-text">${formatTweetText(cleanAndDecode(quoteData.text))}</p>
+                        <p class="x-quoted-text">${formatTweetText(qClean)}</p>
                         ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy"></div>` : ''}
                     </div>`;
             }
@@ -305,13 +334,14 @@ import { CONFIG, escHtml } from './config.js';
                     </a>
                 </div>
                 <div class="x-post-body">
-                    <p class="x-post-text">${formatTweetText(rawClean)}</p>
+                    ${rawClean ? `<p class="x-post-text">${formatTweetText(rawClean)}</p>` : ''}
+                    ${rawClean ? `
                     <div class="x-translate-wrap" style="margin:4px 0 6px 0;">
                         <button type="button" class="x-translate-btn" style="background:none;border:none;color:var(--cyan,#00f2ff);font-size:0.73rem;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;opacity:0.85;font-weight:600;font-family:inherit;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
                             Translate post
                         </button>
-                    </div>
+                    </div>` : ''}
                     ${quoteHtml}
                     ${renderMediaElement(item)}
                 </div>
@@ -333,9 +363,10 @@ import { CONFIG, escHtml } from './config.js';
                     </button>
                 </div>`;
 
+            // Video controls
             // Translate post inline toggle
             const postTextEl = tweetEl.querySelector('.x-post-text');
-            const transBtn   = tweetEl.querySelector('.x-translate-btn');
+            const transBtn     = tweetEl.querySelector('.x-translate-btn');
             if (transBtn && postTextEl) {
                 let isTranslated = false;
                 let originalHtml = postTextEl.innerHTML;
@@ -395,12 +426,12 @@ import { CONFIG, escHtml } from './config.js';
             // Video controls & auto-play
             const videoWrap = tweetEl.querySelector('.x-media-video-wrap');
             if (videoWrap) {
-                const video     = videoWrap.querySelector('.x-video-player');
-                const playBtn   = videoWrap.querySelector('.x-video-play-btn');
-                const muteBtn   = videoWrap.querySelector('.x-video-mute-btn');
-                const playIcon  = playBtn.querySelector('.x-play-icon');
+                const video         = videoWrap.querySelector('.x-video-player');
+                const playBtn     = videoWrap.querySelector('.x-video-play-btn');
+                const muteBtn     = videoWrap.querySelector('.x-video-mute-btn');
+                const playIcon   = playBtn.querySelector('.x-play-icon');
                 const pauseIcon = playBtn.querySelector('.x-pause-icon');
-                const muteIcon  = muteBtn.querySelector('.x-mute-icon');
+                const muteIcon   = muteBtn.querySelector('.x-mute-icon');
                 const unmuteIcon = muteBtn.querySelector('.x-unmute-icon');
 
                 if (video) {
@@ -424,8 +455,8 @@ import { CONFIG, escHtml } from './config.js';
                 const toggleMute = e => {
                     if (e) e.stopPropagation();
                     video.muted = !video.muted;
-                    muteIcon.style.display   = video.muted ? 'block' : 'none';
-                    unmuteIcon.style.display = video.muted ? 'none'  : 'block';
+                    muteIcon.style.display     = video.muted ? 'block' : 'none';
+                    unmuteIcon.style.display = video.muted ? 'none'   : 'block';
                 };
                 playBtn.addEventListener('click', togglePlay);
                 video.addEventListener('click', togglePlay);
@@ -463,7 +494,7 @@ import { CONFIG, escHtml } from './config.js';
                 likeBtn.addEventListener('click', e => {
                     e.stopPropagation(); liked = !liked;
                     const countEl = likeBtn.querySelector('.x-like-count');
-                    const heart   = likeBtn.querySelector('.x-like-heart');
+                    const heart     = likeBtn.querySelector('.x-like-heart');
                     const n = parseInt(countEl.textContent, 10) || 0;
                     likeBtn.classList.toggle('liked', liked);
                     heart.setAttribute('fill', liked ? '#f43f5e' : 'none');
