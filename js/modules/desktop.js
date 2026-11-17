@@ -7,11 +7,11 @@
   if (!window._isMobile) {
     document.body.classList.add('is-desktop-device');
 
-    // Smooth scroll for anchors routing through Lenis or fallback
+    // Smooth scroll for anchors routing through Lenis or fallback (excluding drawer triggers)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if (!targetId || targetId === '#' || targetId.length <= 1) return;
+            if (!targetId || targetId === '#' || targetId.length <= 1 || targetId === '#certifications') return;
             const target = document.querySelector(targetId);
             if (target) {
                 e.preventDefault();

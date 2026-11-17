@@ -241,35 +241,53 @@
   }
 
   .score-row-mini {
-    padding: 3px 6px !important;
+    background: #F4EEDB !important;
+    border: 1.5px solid #1F2328 !important;
+    box-shadow: 1.5px 1.5px 0px #1F2328 !important;
+    color: #1F2328 !important;
+    padding: 3px 8px !important;
     gap: 5px !important;
     min-height: 28px !important;
   }
 
   .score-team-info {
-    max-width: 88px !important;
+    max-width: 90px !important;
     gap: 4px !important;
   }
 
   .score-team-abbr {
-    font-size: 0.58rem !important;
+    font-size: 0.62rem !important;
+    color: #1F2328 !important;
+    font-weight: 900 !important;
+  }
+
+  .host-pill {
+    background: #FFC700 !important;
+    color: #1F2328 !important;
+    border: 1px solid #1F2328 !important;
   }
 
   .tiny-logo {
-    width: 15px !important;
-    height: 15px !important;
-    min-width: 15px !important;
-    min-height: 15px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
   }
 
   .score-row-scorer {
     font-size: 0.45rem !important;
     max-width: 100px !important;
-    margin: 0 2px !important;
+    margin: 0 4px !important;
+    color: #4A5568 !important;
+    font-weight: 700 !important;
   }
 
-  .score-num {
-    font-size: 0.95rem !important;
+  .score-num,
+  .barca-score-num {
+    font-family: 'Bangers', cursive, sans-serif !important;
+    font-size: 1.15rem !important;
+    color: #A50044 !important;
+    line-height: 1 !important;
   }
 
 
@@ -502,25 +520,60 @@
     padding: 6px 12px !important;
   }
 
-  /* ── Big 3 Social Widget ──────────────────────────────── */
+  /* ── Big 3 Social Widget (Normalized Height & Mobile Polish) ── */
   #big3-social-widget {
-    min-height: 170px !important;
-    height: auto !important;
+    height: 145px !important;
+    min-height: 145px !important;
+    max-height: 145px !important;
+    overflow: hidden !important;
   }
+  #big3-social-widget .rotating-item,
   #big3-social-widget .currently-into-item {
-    flex-direction: column !important;
-    text-align: center !important;
+    flex-direction: row !important;
+    height: 145px !important;
+    min-height: 145px !important;
+    max-height: 145px !important;
+    padding: 10px 12px !important;
     gap: 12px !important;
-    padding: 15px 10px !important;
-    height: auto !important;
-    min-height: 170px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
-  .media-thumbs-row, .artist-thumbs-row {
-    justify-content: center !important;
+  #big3-social-widget .media-thumbs-row,
+  #big3-social-widget .artist-thumbs-row,
+  #big3-social-widget .footballer-headshots-row {
+    justify-content: flex-start !important;
+    margin-bottom: 0 !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
   }
-  .footballer-headshots-row {
-    justify-content: center !important;
-    margin-bottom: 5px !important;
+  #big3-social-widget .media-thumb-card {
+    width: 38px !important;
+    height: 56px !important;
+  }
+  #big3-social-widget .footballer-headshot-img,
+  #big3-social-widget .footballer-emoji-avatar,
+  #big3-social-widget .artist-thumb-img,
+  #big3-social-widget .artist-thumb-emoji {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  #big3-social-widget .currently-into-text {
+    text-align: left !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  #big3-social-widget .currently-into-label,
+  #big3-social-widget .rotating-label {
+    font-size: 0.58rem !important;
+    white-space: nowrap !important;
+  }
+  #big3-social-widget .currently-into-value,
+  #big3-social-widget .rotating-value {
+    font-size: 0.82rem !important;
+    line-height: 1.25 !important;
+    -webkit-line-clamp: 3 !important;
   }
 
   /* ── Education Timeline (Mobile) ───────────────────────── */

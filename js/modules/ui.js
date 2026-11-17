@@ -394,6 +394,24 @@
   }
   window._openCertsDrawer = open;
   window._closeCertsDrawer = close;
+
+  // Bind click to open drawer on all cert triggers across desktop top-nav, mobile nav, hero stats, etc.
+  document.querySelectorAll('a[href="#certifications"], [data-action="certs"], [data-drawer="certs"]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (drawer.classList.contains('open')) {
+        close();
+      } else {
+        open();
+      }
+    });
+  });
+
+  // Handle direct hash navigation to #certifications
+  if (window.location.hash === '#certifications') {
+    setTimeout(open, 250);
+  }
   
   // Close on other nav links click
   document.querySelectorAll('.nav-links a:not([href="#certifications"]), .mobile-bottom-nav a:not([href="#certifications"])').forEach(a => {

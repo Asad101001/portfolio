@@ -289,6 +289,173 @@
   transform: scale(1.2); 
 }
 
+/* ── Big 3 Social Sidebar Widget Normalization ────────────── */
+#big3-social-widget {
+  height: 145px !important;
+  min-height: 145px !important;
+  max-height: 145px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#big3-social-widget .rotating-item {
+  height: 145px !important;
+  min-height: 145px !important;
+  max-height: 145px !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.10) !important;
+  box-shadow: 2px 2px 0px rgba(18, 18, 18, 0.05) !important;
+  border-radius: 12px !important;
+}
+
+#big3-social-widget .media-thumbs-row {
+  display: flex !important;
+  gap: 6px !important;
+  margin-bottom: 0 !important;
+  min-height: auto !important;
+  flex-shrink: 0 !important;
+  align-items: center !important;
+}
+
+#big3-social-widget .media-thumb-card {
+  width: 44px !important;
+  height: 64px !important;
+  border-radius: 6px !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  box-shadow: 1.5px 1.5px 0px #F59E0B !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  background: #F7F6F3 !important;
+}
+
+#big3-social-widget .footballer-headshots-row {
+  display: flex !important;
+  gap: 6px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  align-items: center !important;
+}
+
+#big3-social-widget .footballer-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+#big3-social-widget .footballer-headshot-img,
+#big3-social-widget .footballer-emoji-avatar {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.15) !important;
+  box-shadow: 1.5px 1.5px 0px #F59E0B !important;
+  object-fit: cover !important;
+}
+
+#big3-social-widget .footballer-name-label {
+  font-size: 0.55rem !important;
+  font-weight: 800 !important;
+  color: #121212 !important;
+  font-family: 'DM Mono', monospace !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+#big3-social-widget .artist-thumbs-row {
+  display: flex !important;
+  gap: 6px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  align-items: center !important;
+}
+
+#big3-social-widget .artist-thumb-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+#big3-social-widget .artist-thumb-img,
+#big3-social-widget .artist-thumb-emoji {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.15) !important;
+  box-shadow: 1.5px 1.5px 0px #F59E0B !important;
+  object-fit: cover !important;
+}
+
+#big3-social-widget .artist-thumb-name {
+  font-size: 0.55rem !important;
+  font-weight: 800 !important;
+  color: #121212 !important;
+  font-family: 'DM Mono', monospace !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  max-width: 46px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#big3-social-widget .currently-into-text {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  text-align: left !important;
+  overflow: hidden !important;
+}
+
+#big3-social-widget .currently-into-label,
+#big3-social-widget .rotating-label {
+  font-size: 0.62rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #B45309 !important;
+  font-family: 'DM Mono', monospace !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin: 0 0 2px 0 !important;
+}
+
+#big3-social-widget .currently-into-value,
+#big3-social-widget .rotating-value {
+  font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: #121212 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.01em !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+
 /* ── Mobile Responsiveness ────────────────────────────────── */
 @media (max-width: 768px) {
   .currently-into-card {

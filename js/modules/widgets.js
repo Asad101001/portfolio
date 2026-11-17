@@ -1948,7 +1948,9 @@ function _starsHTML(starsStr) {
       { title: 'Dune: Part Three', searchQuery: 'Dune: Part Three' }
     ];
 
-    watchlistEl.textContent = 'Dune: Part Three, Dune: Part Three, Dune: Part Three';
+    // Deduplicate titles for clean display without redundant repeats
+    var uniqueTitles = Array.from(new Set(duneList.map(function(m) { return m.title; })));
+    watchlistEl.textContent = uniqueTitles.join(', ');
 
     var movieThumbsEl = document.getElementById('big3-movie-thumbs');
     if (!movieThumbsEl) return;
