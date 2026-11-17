@@ -9,9 +9,9 @@ import { CONFIG, escHtml } from './config.js';
     if (!container) return;
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
-    const DISPLAY_NAME = 'Muhammad Asad Khan';
-    const CACHE_KEYS = ['asad_twitter_cache_v5', 'asad_twitter_cache_v4', 'asad_twitter_cache_v3', 'asad_twitter_cache'];
-    const CACHE_KEY = 'asad_twitter_cache_v5';
+    const DISPLAY_NAME = 'Asad';
+    const CACHE_KEYS = ['asad_twitter_cache_v6', 'asad_twitter_cache_v5', 'asad_twitter_cache_v4', 'asad_twitter_cache'];
+    const CACHE_KEY = 'asad_twitter_cache_v6';
     const CACHE_TTL = 60 * 60 * 1000; // 1 hour fresh
 
     function getLocalCache(allowStale = true) {
@@ -73,8 +73,24 @@ import { CONFIG, escHtml } from './config.js';
         return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     }
 
+    function cleanAndDecode(str) {
+        if (!str) return '';
+        let s = str.replace(/<[^>]*>/g, '');
+        const txt = document.createElement('textarea');
+        txt.innerHTML = s;
+        s = txt.value;
+        // Decode second pass if feed had double-encoded entities like &amp;quot;
+        if (s.includes('&quot;') || s.includes('&amp;') || s.includes('&lt;') || s.includes('&gt;') || s.includes('&#')) {
+            txt.innerHTML = s;
+            s = txt.value;
+        }
+        return s.trim();
+    }
+
     function formatTweetText(rawText) {
-        let text = escHtml(rawText);
+        let text = cleanAndDecode(rawText);
+        // Escape only < and > to prevent unintended injection while preserving clean quotes & accents
+        text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         text = text.replace(/(https?:\/\/[^\s<]+)/g, url => {
             const display = url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 24) + (url.length > 30 ? '…' : '');
             return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="x-text-link" onclick="event.stopPropagation()">${display}</a>`;
@@ -121,23 +137,34 @@ import { CONFIG, escHtml } from './config.js';
             mediaUrl = mediaUrl.replace('http://', 'https://');
         }
 
-        if (mediaType === 'video') {
+        // Convert any Twitter animated gif thumbnails to genuine looping MP4 videos
+        if (mediaUrl && (mediaUrl.includes('tweet_video_thumb') || mediaUrl.includes('tweet_video'))) {
+            const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i) ||
+                             mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
+            if (vidMatch) {
+                mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
+                mediaType = 'video';
+            }
+        }
+
+        if (mediaType === 'video' || (mediaUrl && mediaUrl.endsWith('.mp4'))) {
             return `
                 <div class="x-card-media x-media-video-wrap" onclick="event.stopPropagation()">
-                    <video class="x-video-player" src="${mediaUrl}" playsinline webkit-playsinline loop muted preload="metadata"></video>
+                    <video class="x-video-player" src="${mediaUrl}" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <span class="x-gif-badge">GIF</span>
                     <div class="x-video-controls">
-                        <button type="button" class="x-video-play-btn" aria-label="Play or pause video">
-                            <svg class="x-play-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                            <svg class="x-pause-icon" style="display:none" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        <button type="button" class="x-video-play-btn is-playing" aria-label="Play or pause video">
+                            <svg class="x-play-icon" style="display:none" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="x-pause-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                         </button>
                         <button type="button" class="x-video-mute-btn" aria-label="Toggle mute">
-                            <svg class="x-mute-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-                            <svg class="x-unmute-icon" style="display:none" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                            <svg class="x-mute-icon" style="display:none" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                            <svg class="x-unmute-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                         </button>
                     </div>
                 </div>`;
         }
-        const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated') || mediaUrl.includes('tweet_video_thumb');
+        const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated');
         return `
             <div class="x-card-media x-media-image-wrap" onclick="event.stopPropagation()">
                 <img src="${mediaUrl}" alt="Post media" ${isGif ? '' : 'loading="lazy"'} decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
@@ -155,22 +182,16 @@ import { CONFIG, escHtml } from './config.js';
                 if (rtMatch) retweetAuthor = rtMatch[1];
             }
 
-            // Strip RT prefix, HTML tags
+            // Strip RT prefix and clean/decode HTML entities properly
             const titleClean = (item.title || '')
-                .replace(/^RT by @[a-zA-Z0-9_]+: /, '')
-                .replace(/^RT @[a-zA-Z0-9_]+: /, '')
-                .replace(/<[^>]*>/g, '')
-                .trim();
+                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/, '')
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/, '');
 
-            // Try description for more text (strip HTML, pick longer one)
             const descClean = (item.description || '')
-                .replace(/<[^>]*>/g, '')
-                .replace(/^RT by @[a-zA-Z0-9_]+: /, '')
-                .replace(/^RT @[a-zA-Z0-9_]+: /, '')
-                .trim();
+                .replace(/^RT by @[a-zA-Z0-9_]+:\s*/, '')
+                .replace(/^RT @[a-zA-Z0-9_]+:\s*/, '');
 
-            // Use whichever source gives more content, capped at 280 chars
-            const rawClean = (descClean.length > titleClean.length ? descClean : titleClean).slice(0, 280);
+            const rawClean = cleanAndDecode(descClean.length > titleClean.length ? descClean : titleClean).slice(0, 280);
 
             let twitterLink = item.link || `https://x.com/${USER}`;
             if (!twitterLink.startsWith('https://x.com') && twitterLink.includes('/status/')) {
@@ -222,6 +243,12 @@ import { CONFIG, escHtml } from './config.js';
                 </div>
                 <div class="x-post-body">
                     <p class="x-post-text">${formatTweetText(rawClean)}</p>
+                    <div class="x-translate-wrap" style="margin:4px 0 8px 0;">
+                        <button type="button" class="x-translate-btn" style="background:none;border:none;color:var(--cyan,#00f2ff);font-size:0.73rem;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;opacity:0.85;font-weight:600;font-family:inherit;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+                            Translate post
+                        </button>
+                    </div>
                     ${renderMediaElement(item)}
                 </div>
                 <div class="x-post-actions" onclick="event.stopPropagation()">
@@ -229,7 +256,7 @@ import { CONFIG, escHtml } from './config.js';
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                         <span>${metrics.replies}</span>
                     </button>
-                    <button type="button" class="x-action x-action-repost" title="Repost">
+                    <button type="button" class="x-action x-action-repost ${isRetweet ? 'is-reposted' : ''}" style="${isRetweet ? 'color:#00ba7c;' : ''}" title="Repost">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
                         <span>${metrics.retweets}</span>
                     </button>
@@ -242,7 +269,66 @@ import { CONFIG, escHtml } from './config.js';
                     </button>
                 </div>`;
 
-            // Video controls
+            // Translate post inline toggle
+            const postTextEl = tweetEl.querySelector('.x-post-text');
+            const transBtn   = tweetEl.querySelector('.x-translate-btn');
+            if (transBtn && postTextEl) {
+                let isTranslated = false;
+                let originalHtml = postTextEl.innerHTML;
+                let translatedHtml = null;
+
+                transBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    if (isTranslated) {
+                        postTextEl.innerHTML = originalHtml;
+                        transBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg> Translate post`;
+                        isTranslated = false;
+                        return;
+                    }
+
+                    if (translatedHtml) {
+                        postTextEl.innerHTML = translatedHtml;
+                        transBtn.innerHTML = `Show original`;
+                        isTranslated = true;
+                        return;
+                    }
+
+                    transBtn.textContent = 'Translating…';
+                    const q = encodeURIComponent(rawClean);
+                    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${q}`)
+                        .then(r => r.json())
+                        .then(d => {
+                            if (d && d[0] && d[0][0] && d[0][0][0]) {
+                                const transText = d[0].map(s => s[0]).filter(Boolean).join(' ');
+                                const srcLang = (d[2] || 'detected language').toUpperCase();
+                                translatedHtml = formatTweetText(cleanAndDecode(transText));
+                                postTextEl.innerHTML = translatedHtml;
+                                transBtn.innerHTML = `<span style="opacity:0.65;font-weight:400;margin-right:4px;">Translated from ${srcLang} by Google ·</span> Show original`;
+                                isTranslated = true;
+                            } else {
+                                transBtn.textContent = 'Translation unavailable';
+                            }
+                        })
+                        .catch(() => {
+                            transBtn.textContent = 'Translation error';
+                        });
+                });
+            }
+
+            // Repost toggle
+            const repostBtn = tweetEl.querySelector('.x-action-repost');
+            if (repostBtn) {
+                repostBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const countEl = repostBtn.querySelector('span');
+                    const count = parseInt(countEl.textContent, 10) || 0;
+                    const active = repostBtn.classList.toggle('is-reposted');
+                    repostBtn.style.color = active ? '#00ba7c' : '';
+                    countEl.textContent = active ? count + 1 : Math.max(0, count - 1);
+                });
+            }
+
+            // Video controls & auto-play
             const videoWrap = tweetEl.querySelector('.x-media-video-wrap');
             if (videoWrap) {
                 const video     = videoWrap.querySelector('.x-video-player');
@@ -252,6 +338,11 @@ import { CONFIG, escHtml } from './config.js';
                 const pauseIcon = playBtn.querySelector('.x-pause-icon');
                 const muteIcon  = muteBtn.querySelector('.x-mute-icon');
                 const unmuteIcon = muteBtn.querySelector('.x-unmute-icon');
+
+                if (video) {
+                    video.muted = true;
+                    video.play().catch(() => {});
+                }
 
                 const togglePlay = e => {
                     if (e) e.stopPropagation();
@@ -282,16 +373,29 @@ import { CONFIG, escHtml } from './config.js';
                                 video.pause();
                                 playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
                                 playBtn.classList.remove('is-playing');
+                            } else if (e.isIntersecting && video.paused) {
+                                video.play().then(() => {
+                                    playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+                                    playBtn.classList.add('is-playing');
+                                }).catch(() => {});
                             }
                         });
                     }, { threshold: 0.3 }).observe(video);
                 }
             }
 
-            // Like toggle
+            // Like toggle with active initial state emulation
             const likeBtn = tweetEl.querySelector('.x-action-like');
             if (likeBtn) {
-                let liked = false;
+                let liked = (idx === 0 || idx === 2);
+                if (liked) {
+                    likeBtn.classList.add('liked');
+                    const heart = likeBtn.querySelector('.x-like-heart');
+                    if (heart) {
+                        heart.setAttribute('fill', '#f43f5e');
+                        heart.setAttribute('stroke', '#f43f5e');
+                    }
+                }
                 likeBtn.addEventListener('click', e => {
                     e.stopPropagation(); liked = !liked;
                     const countEl = likeBtn.querySelector('.x-like-count');

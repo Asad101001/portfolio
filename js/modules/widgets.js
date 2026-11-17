@@ -327,6 +327,7 @@ function _starsHTML(starsStr) {
         if (!items || !items.length) return null;
         var item = items[0];
         var title       = item.querySelector('title')    ? item.querySelector('title').textContent    : '';
+        var link        = item.querySelector('link')     ? item.querySelector('link').textContent.trim() : '';
         var pubDate     = item.querySelector('pubDate')  ? item.querySelector('pubDate').textContent  : '';
         var wEl = item.getElementsByTagName('letterboxd:watchedDate')[0] || item.querySelector('watchedDate');
         var watchedDate = wEl ? wEl.textContent.trim() : '';
@@ -334,7 +335,7 @@ function _starsHTML(starsStr) {
         // Extract thumbnail from <description> HTML
         var imgMatch = description.match(/<img[^>]+src=["']([^"']+)["']/i);
         var thumbnail = imgMatch ? imgMatch[1] : '';
-        return { title: title, pubDate: pubDate, watchedDate: watchedDate, thumbnail: thumbnail, description: description };
+        return { title: title, link: link, pubDate: pubDate, watchedDate: watchedDate, thumbnail: thumbnail, description: description };
       } catch (e) {
         return null;
       }
@@ -346,8 +347,9 @@ function _starsHTML(starsStr) {
      */
     function _fetchLbRss() {
       var rssUrl = 'https://letterboxd.com/' + LB_USER + '/rss/';
-      sessionStorage.removeItem('asad_lb_cache'); // Clear legacy unexpiring cache
-      var cache = sessionStorage.getItem('asad_lb_cache_v2');
+      sessionStorage.removeItem('asad_lb_cache');
+      sessionStorage.removeItem('asad_lb_cache_v2');
+      var cache = sessionStorage.getItem('asad_lb_cache_v3');
       if (cache) {
         try {
           var parsedCache = JSON.parse(cache);
@@ -360,7 +362,7 @@ function _starsHTML(starsStr) {
       function _saveCache(data) {
         if (data) {
           try {
-            sessionStorage.setItem('asad_lb_cache_v2', JSON.stringify({ timestamp: Date.now(), data: data }));
+            sessionStorage.setItem('asad_lb_cache_v3', JSON.stringify({ timestamp: Date.now(), data: data }));
           } catch(_) {}
         }
         return data;
@@ -420,7 +422,7 @@ function _starsHTML(starsStr) {
                 if (rawPub && /^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}$/.test(rawPub.trim())) {
                   rawPub = rawPub.trim().replace(' ', 'T') + 'Z';
                 }
-                var result = { title: item.title, pubDate: rawPub, thumbnail: thumb };
+                var result = { title: item.title, link: item.link || '', pubDate: rawPub, thumbnail: thumb };
                 return _saveCache(result);
               }
               return null;
@@ -460,7 +462,7 @@ function _starsHTML(starsStr) {
           if (movieTitle && latest.title) {
             var parsed = _parseLetterboxd(latest.title);
             // Make title a clickable Letterboxd link
-            var filmUrl = latest.link || ('https://letterboxd.com/search/films/' + encodeURIComponent(parsed.title) + '/');
+            var filmUrl = latest.link || ('https://letterboxd.com/search/' + encodeURIComponent(parsed.title) + '/');
             movieTitle.innerHTML = '<a href="' + filmUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Open on Letterboxd">' + parsed.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
 
             var starsEl = document.getElementById('movie-rating-stars');
@@ -549,8 +551,8 @@ function _starsHTML(starsStr) {
 
       // Format title and add smaller season/episode subtitle
       if (tvTitle) {
-        var simklSearchUrl = 'https://simkl.com/search/?q=' + encodeURIComponent(tvConf.title);
-        tvTitle.innerHTML = '<a href="' + simklSearchUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + tvConf.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+        var showSearchUrl = 'https://www.imdb.com/find/?q=' + encodeURIComponent(tvConf.title) + '&s=tt';
+        tvTitle.innerHTML = '<a href="' + showSearchUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="View on IMDb">' + tvConf.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
       }
       
       var metaEl = document.getElementById('tv-tracking-meta');
@@ -597,6 +599,13 @@ function _starsHTML(starsStr) {
             };
             tvPoster.style.display = 'block';
             if (tvPlaceholder) tvPlaceholder.style.display = 'none';
+          }
+
+          var imdbUrl = (showData.externals && showData.externals.imdb)
+            ? ('https://www.imdb.com/title/' + showData.externals.imdb + '/')
+            : ('https://www.imdb.com/find/?q=' + encodeURIComponent(tvConf.title) + '&s=tt');
+          if (tvTitle) {
+            tvTitle.innerHTML = '<a href="' + imdbUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="View on IMDb">' + tvConf.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
           }
           
           var episodes = (showData._embedded && showData._embedded.episodes) || [];
@@ -656,8 +665,8 @@ function _starsHTML(starsStr) {
           }
 
           if (tvTitle) {
-            var simklShowUrl = data.simklUrl || ('https://simkl.com/search/?q=' + encodeURIComponent(data.title));
-            tvTitle.innerHTML = '<a href="' + simklShowUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + data.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+            var showUrl = (data.imdb ? ('https://www.imdb.com/title/' + data.imdb + '/') : ('https://www.imdb.com/find/?q=' + encodeURIComponent(data.title) + '&s=tt'));
+            tvTitle.innerHTML = '<a href="' + showUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="View on IMDb">' + data.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
           }
           
           var metaEl = document.getElementById('tv-tracking-meta');
@@ -731,7 +740,7 @@ function _starsHTML(starsStr) {
   }
 
   /* ── FC Barcelona Scorecard ── */
-  var barcaItem = document.querySelector('.rotating-item[data-index="3"]');
+  var barcaItem = document.querySelector('.rotating-item.barca-slot') || document.querySelector('.rotating-item[data-index="2"]');
   if (barcaItem) barcaItem.classList.add('barca-slot');
   if (!barcaItem) return;
 
@@ -903,26 +912,23 @@ function _starsHTML(starsStr) {
 
     var barcaScore = getScoreValue(barca);
     var oppScore   = getScoreValue(opp);
-    var emotion = '⚽';
     var resultBadgeClass = '';
     var resultBadgeText = '';
     
     if (state === 'post') {
       if (barcaScore > oppScore) {
-        emotion = '🎉';
-        resultBadgeClass = 'barca-result-win';
-        resultBadgeText = 'W · VAMOS! 🎉';
+        resultBadgeClass = 'barca-win';
+        resultBadgeText = '<span class="result-dot"></span>W 🏆';
       } else if (barcaScore < oppScore) {
-        emotion = '😤';
-        resultBadgeClass = 'barca-result-loss';
-        resultBadgeText = 'L · Next one 💪';
+        resultBadgeClass = 'barca-loss';
+        resultBadgeText = '<span class="result-dot"></span>L 💔';
       } else {
-        emotion = '🤝';
-        resultBadgeClass = 'barca-result-draw';
-        resultBadgeText = 'D · Fair enough';
+        resultBadgeClass = 'barca-draw';
+        resultBadgeText = '<span class="result-dot"></span>D 🤝';
       }
     } else if (state === 'in') {
-      emotion = '🔥';
+      resultBadgeClass = 'barca-live-dot';
+      resultBadgeText = '<span class="result-dot"></span>LIVE ⚽';
     }
 
     var barcaLogo = 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png';
@@ -1025,10 +1031,8 @@ function _starsHTML(starsStr) {
 
     // Result badge HTML
     var resultBadgeHtml = '';
-    if (state === 'post' && resultBadgeClass) {
-      resultBadgeHtml = '<span class="barca-result-badge ' + resultBadgeClass + '">' + resultBadgeText + '</span>';
-    } else if (state === 'in') {
-      resultBadgeHtml = '<span class="barca-result-badge barca-result-live">🔴 LIVE</span>';
+    if (resultBadgeClass) {
+      resultBadgeHtml = '<span class="barca-result-pill ' + resultBadgeClass + '">' + resultBadgeText + '</span>';
     }
     
     // Identity column layout: logo + name + slogan + clean unclipped SUPPORTING pill badge
@@ -1037,6 +1041,7 @@ function _starsHTML(starsStr) {
         '<div class="barca-top-row">' +
           '<span class="rotating-label currently-into-label">' + headerLabel + '</span>' +
           (subInfoLine ? '<span class="match-timeframe">' + subInfoLine + '</span>' : '') +
+          (resultBadgeHtml ? resultBadgeHtml : '') +
         '</div>' +
         '<div class="barca-content-layout-hybrid">' +
           '<div class="barca-identity-side">' +
@@ -1068,7 +1073,6 @@ function _starsHTML(starsStr) {
               (red2 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +
               '<span class="score-num">' + (state === 'pre' ? '-' : score2) + '</span>' +
             '</div>' +
-            (resultBadgeHtml ? '<div class="barca-result-row">' + resultBadgeHtml + '</div>' : '') +
           '</div>' +
         '</div>' +
       '</div>';
@@ -1959,16 +1963,20 @@ function _starsHTML(starsStr) {
   function renderSeries(seriesItems) {
     if (!seriesEl) return;
 
-    // Render series titles as clickable Simkl search links
+    // Render series titles as clickable IMDb links
     var titles = (seriesItems || []).slice(0, 4).map(function(i) { return i && i.title; }).filter(Boolean);
     var overflow = seriesItems && seriesItems.length > 4 ? ' +' + (seriesItems.length - 4) : '';
     if (!titles.length) {
       seriesEl.textContent = 'No items synced';
     } else {
-      seriesEl.innerHTML = titles.map(function(t) {
-        var href = 'https://simkl.com/search/?q=' + encodeURIComponent(t);
-        return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
-      }).join(', ') + overflow;
+      seriesEl.innerHTML = (seriesItems || []).slice(0, 4).map(function(s) {
+        var t = s && s.title ? s.title : '';
+        if (!t) return '';
+        var href = (s && s.imdb)
+          ? ('https://www.imdb.com/title/' + s.imdb + '/')
+          : ('https://www.imdb.com/find/?q=' + encodeURIComponent(t) + '&s=tt');
+        return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="View on IMDb">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+      }).filter(Boolean).join(', ') + overflow;
     }
 
     var seriesThumbsEl = document.getElementById('big3-series-thumbs');
@@ -2032,7 +2040,7 @@ function _starsHTML(starsStr) {
     var uniqueTitles = Array.from(new Set(duneList.map(function(m) { return m.title; })));
     // Render as clickable Letterboxd search links
     watchlistEl.innerHTML = uniqueTitles.map(function(t) {
-      var href = 'https://letterboxd.com/search/films/' + encodeURIComponent(t) + '/';
+      var href = 'https://letterboxd.com/search/' + encodeURIComponent(t) + '/';
       return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Letterboxd">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
     }).join(', ');
 

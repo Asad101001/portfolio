@@ -119,10 +119,6 @@
                                 <div id="tv-progress-fill" style="height: 100%; background: #F59E0B; width: 0%; border-radius: 99px; transition: width 0.5s ease;"></div>
                             </div>
                         </div>
-                        <div class="currently-into-meta" style="margin-top: 6px;">
-                            <span class="currently-into-pill">Simkl Tracker</span>
-                            <span class="currently-into-sub">Active Binge</span>
-                        </div>
                     </div>
                     <div class="currently-into-action desktop-only">
                         <a href="https://simkl.com/8343435/dashboard/" target="_blank" rel="noopener noreferrer" class="activity-link-btn" title="View Simkl Tracker">
@@ -132,25 +128,8 @@
                     </div>
                 </div>
 
-                <!-- Reading -->
-                <div class="rotating-item currently-into-item" data-index="2">
-                    <div class="currently-into-media">
-                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover" style="display:none" />
-                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
-                    </div>
-                    <div class="currently-into-text">
-                        <span class="rotating-label currently-into-label">Currently Reading</span>
-                        <h3 class="rotating-value currently-into-value" id="reading-title">Checking Library...</h3>
-                        <div class="currently-into-meta">
-                        </div>
-                    </div>
-                    <div class="currently-into-action desktop-only">
-                        <span class="activity-status-tag">In Progress</span>
-                    </div>
-                </div>
-
-                <!-- Football -->
-                <div class="rotating-item currently-into-item" data-index="3">
+                <!-- Football (FC Barcelona) -->
+                <div class="rotating-item currently-into-item barca-slot" data-index="2">
                     <div class="currently-into-media">
                         <div class="currently-into-thumb-placeholder" style="background:rgba(218,41,28,0.08);border-color:rgba(218,41,28,0.25);font-size:2.4rem;">⚽</div>
                     </div>
@@ -167,13 +146,30 @@
                     </div>
                 </div>
 
+                <!-- Reading -->
+                <div class="rotating-item currently-into-item" data-index="3">
+                    <div class="currently-into-media">
+                        <img id="reading-cover" class="currently-into-thumb" src="" alt="Book cover" style="display:none" />
+                        <div id="reading-placeholder" class="currently-into-thumb-placeholder">📖</div>
+                    </div>
+                    <div class="currently-into-text">
+                        <span class="rotating-label currently-into-label">Currently Reading</span>
+                        <h3 class="rotating-value currently-into-value" id="reading-title">Checking Library...</h3>
+                        <div class="currently-into-meta">
+                        </div>
+                    </div>
+                    <div class="currently-into-action desktop-only">
+                        <span class="activity-status-tag">In Progress</span>
+                    </div>
+                </div>
+
             </div>
 
             <div class="rotating-dots" id="rotating-dots">
                 <button class="r-dot active" data-i="0" aria-label="View Movie Activity"></button>
                 <button class="r-dot" data-i="1" aria-label="View TV Show Activity"></button>
-                <button class="r-dot" data-i="2" aria-label="View Reading Activity"></button>
-                <button class="r-dot" data-i="3" aria-label="View Football Activity"></button>
+                <button class="r-dot" data-i="2" aria-label="View Football Activity"></button>
+                <button class="r-dot" data-i="3" aria-label="View Reading Activity"></button>
             </div>
         </div><!-- /#activity-hub-card -->
 

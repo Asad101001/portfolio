@@ -162,6 +162,16 @@ function parseRSS(xml, username) {
       }
     }
 
+    // Convert Twitter animated gif thumbnails to genuine looping MP4 videos
+    if (mediaUrl && (mediaUrl.includes('tweet_video_thumb') || mediaUrl.includes('tweet_video'))) {
+      const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i) ||
+                       mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
+      if (vidMatch) {
+        mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
+        mediaType = 'video';
+      }
+    }
+
     if (mediaUrl && mediaUrl.startsWith('http://')) {
       mediaUrl = mediaUrl.replace('http://', 'https://');
     }
@@ -226,6 +236,21 @@ async function trySyndication(username) {
       const m = target.entities.media[0];
       mediaUrl = m.media_url_https || m.media_url;
       mediaType = m.type === 'video' || m.type === 'animated_gif' ? 'video' : 'image';
+
+      const vInfo = m.video_info || target.video_info;
+      if (vInfo && Array.isArray(vInfo.variants)) {
+        const mp4 = vInfo.variants.find(v => v.content_type === 'video/mp4' && v.url);
+        if (mp4) {
+          mediaUrl = mp4.url;
+          mediaType = 'video';
+        }
+      } else if (m.type === 'animated_gif' || (mediaUrl && mediaUrl.includes('tweet_video_thumb'))) {
+        const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
+        if (vidMatch) {
+          mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
+          mediaType = 'video';
+        }
+      }
     }
 
     items.push({

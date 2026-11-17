@@ -507,7 +507,7 @@
       current = idx;
       
       if (widgetId === 'rotating-widget') {
-         if (idx === 3) { dotsWrap.classList.add('barca-active'); widget.classList.add('football-active'); }
+         if (items[idx] && (items[idx].classList.contains('barca-slot') || idx === 2)) { dotsWrap.classList.add('barca-active'); widget.classList.add('football-active'); }
          else { dotsWrap.classList.remove('barca-active'); widget.classList.remove('football-active'); }
       }
     }

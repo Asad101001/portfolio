@@ -89,8 +89,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  min-width: 90px;
+  gap: 4px;
+  min-width: 120px;
   flex-shrink: 0;
   position: relative;
 }
@@ -102,13 +102,13 @@
 }
 
 .barca-main-logo {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  min-height: 52px !important;
   object-fit: contain !important;
   display: block;
-  filter: drop-shadow(1.5px 2px 0px #1F2328) !important;
+  filter: drop-shadow(2px 2.5px 0px #1F2328) !important;
 }
 
 /* Clean, unclipped SUPPORTING pill badge below club identity */
@@ -117,15 +117,15 @@
   align-items: center;
   justify-content: center;
   font-family: 'DM Mono', 'JetBrains Mono', monospace !important;
-  font-size: 0.52rem !important;
+  font-size: 0.60rem !important;
   font-weight: 900 !important;
-  padding: 2px 7px !important;
+  padding: 2.5px 9px !important;
   border-radius: 4px !important;
   background: #FFC700 !important;
   border: 1.5px solid #1F2328 !important;
   color: #1F2328 !important;
   box-shadow: 1.5px 1.5px 0px #1F2328 !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.07em !important;
   text-transform: uppercase !important;
   line-height: 1.1;
   margin-top: 3px;
@@ -138,16 +138,16 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .barca-name-pink {
   color: #A50044 !important;
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.74rem !important;
+  font-size: 0.90rem !important;
   font-weight: 900 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.05em !important;
   text-shadow: none !important;
   text-align: center !important;
   white-space: nowrap;
@@ -157,10 +157,10 @@
 .barca-slogan-cyan {
   color: #004D98 !important;
   font-family: 'DM Mono', 'JetBrains Mono', monospace !important;
-  font-size: 0.44rem !important;
+  font-size: 0.54rem !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.08em !important;
   text-shadow: none !important;
   white-space: nowrap;
   text-align: center;
@@ -354,28 +354,28 @@
   }
 
   .barca-identity-side {
-    min-width: 68px;
-    gap: 2px;
+    min-width: 82px;
+    gap: 3px;
   }
 
   .barca-main-logo {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
   }
 
   .barca-name-pink {
-    font-size: 0.58rem !important;
+    font-size: 0.72rem !important;
   }
 
   .barca-slogan-cyan {
-    font-size: 0.36rem !important;
+    font-size: 0.44rem !important;
   }
 
   .barca-supporter-badge {
-    font-size: 0.46rem !important;
-    padding: 1.5px 5px !important;
+    font-size: 0.50rem !important;
+    padding: 1.5px 6px !important;
   }
 
   .score-row-mini {
@@ -416,22 +416,22 @@
   }
 
   .barca-identity-side {
-    min-width: 60px;
+    min-width: 72px;
   }
 
   .barca-main-logo {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
   }
 
   .barca-name-pink {
-    font-size: 0.54rem !important;
+    font-size: 0.64rem !important;
   }
 
   .barca-slogan-cyan {
-    font-size: 0.34rem !important;
+    font-size: 0.40rem !important;
   }
 
   .score-team-info {
@@ -464,60 +464,65 @@
   }
 }
 
-/* ── Result Badge (W/D/L fun styled pill) ── */
-.barca-result-row {
-  display: flex;
-  align-items: center;
-  margin-top: 6px;
-  padding-top: 4px;
-  border-top: 1px solid rgba(31,35,40,0.12);
-}
-
-.barca-result-badge {
+/* ── Result Pill (Color Indicator & Accompanying Emojis) ── */
+.barca-result-pill {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  font-family: 'Bangers', 'DM Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  padding: 2px 10px;
-  border-radius: 999px;
-  border: 1.5px solid currentColor;
-  line-height: 1.4;
-  white-space: nowrap;
+  gap: 4.5px;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace !important;
+  font-size: 0.54rem !important;
+  font-weight: 900 !important;
+  padding: 1px 6px !important;
+  border-radius: 3px !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.15;
+  text-transform: uppercase !important;
 }
 
-.barca-result-win {
-  background: #d4f5d4;
-  color: #166534;
-  border-color: #166534;
-  box-shadow: 1.5px 1.5px 0 #166534;
+.barca-result-pill .result-dot {
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.barca-result-loss {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #991b1b;
-  box-shadow: 1.5px 1.5px 0 #991b1b;
+.barca-result-pill.barca-win {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  border: 1.5px solid #15803d !important;
+  box-shadow: 1px 1px 0px #15803d !important;
+}
+.barca-result-pill.barca-win .result-dot {
+  background: #16a34a;
 }
 
-.barca-result-draw {
-  background: #fef9c3;
-  color: #92400e;
-  border-color: #92400e;
-  box-shadow: 1.5px 1.5px 0 #92400e;
+.barca-result-pill.barca-loss {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border: 1.5px solid #b91c1c !important;
+  box-shadow: 1px 1px 0px #b91c1c !important;
+}
+.barca-result-pill.barca-loss .result-dot {
+  background: #dc2626;
 }
 
-.barca-result-live {
-  background: #fff1f2;
-  color: #be123c;
-  border-color: #be123c;
-  box-shadow: 1.5px 1.5px 0 #be123c;
-  animation: barca-live-pulse 1.5s ease-in-out infinite;
+.barca-result-pill.barca-draw {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  border: 1.5px solid #b45309 !important;
+  box-shadow: 1px 1px 0px #b45309 !important;
+}
+.barca-result-pill.barca-draw .result-dot {
+  background: #d97706;
 }
 
-@keyframes barca-live-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.65; }
+.barca-result-pill.barca-live-dot {
+  background: #ffe4e6 !important;
+  color: #be123c !important;
+  border: 1.5px solid #be123c !important;
+  box-shadow: 1px 1px 0px #be123c !important;
+}
+.barca-result-pill.barca-live-dot .result-dot {
+  background: #e11d48;
+  animation: barca-dot-blink 1s step-end infinite;
 }
