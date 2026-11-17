@@ -137,16 +137,17 @@ import { CONFIG, escHtml } from './config.js';
                     </div>
                 </div>`;
         }
+        const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated') || mediaUrl.includes('tweet_video_thumb');
         return `
             <div class="x-card-media x-media-image-wrap" onclick="event.stopPropagation()">
-                <img src="${mediaUrl}" alt="Post media" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
-                ${(mediaUrl.endsWith('.gif') || mediaUrl.includes('animated')) ? '<span class="x-gif-badge">GIF</span>' : ''}
+                <img src="${mediaUrl}" alt="Post media" ${isGif ? '' : 'loading="lazy"'} decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
+                ${isGif ? '<span class="x-gif-badge">GIF</span>' : ''}
             </div>`;
     }
 
     function render(items) {
         container.innerHTML = '';
-        items.slice(0, 4).forEach((item, idx) => {
+        items.slice(0, 5).forEach((item, idx) => {
             const isRetweet = /^RT by|^RT @/.test(item.title || '');
             let retweetAuthor = null;
             if (isRetweet) {
@@ -154,11 +155,22 @@ import { CONFIG, escHtml } from './config.js';
                 if (rtMatch) retweetAuthor = rtMatch[1];
             }
 
-            const rawClean  = (item.title || '')
+            // Strip RT prefix, HTML tags
+            const titleClean = (item.title || '')
                 .replace(/^RT by @[a-zA-Z0-9_]+: /, '')
                 .replace(/^RT @[a-zA-Z0-9_]+: /, '')
                 .replace(/<[^>]*>/g, '')
                 .trim();
+
+            // Try description for more text (strip HTML, pick longer one)
+            const descClean = (item.description || '')
+                .replace(/<[^>]*>/g, '')
+                .replace(/^RT by @[a-zA-Z0-9_]+: /, '')
+                .replace(/^RT @[a-zA-Z0-9_]+: /, '')
+                .trim();
+
+            // Use whichever source gives more content, capped at 280 chars
+            const rawClean = (descClean.length > titleClean.length ? descClean : titleClean).slice(0, 280);
 
             let twitterLink = item.link || `https://x.com/${USER}`;
             if (!twitterLink.startsWith('https://x.com') && twitterLink.includes('/status/')) {

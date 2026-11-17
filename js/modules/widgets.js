@@ -459,7 +459,9 @@ function _starsHTML(starsStr) {
 
           if (movieTitle && latest.title) {
             var parsed = _parseLetterboxd(latest.title);
-            movieTitle.textContent = parsed.title;
+            // Make title a clickable Letterboxd link
+            var filmUrl = latest.link || ('https://letterboxd.com/search/films/' + encodeURIComponent(parsed.title) + '/');
+            movieTitle.innerHTML = '<a href="' + filmUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Open on Letterboxd">' + parsed.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
 
             var starsEl = document.getElementById('movie-rating-stars');
             if (!starsEl) {
@@ -546,7 +548,10 @@ function _starsHTML(starsStr) {
       }
 
       // Format title and add smaller season/episode subtitle
-      if (tvTitle) tvTitle.textContent = tvConf.title;
+      if (tvTitle) {
+        var simklSearchUrl = 'https://simkl.com/search/?q=' + encodeURIComponent(tvConf.title);
+        tvTitle.innerHTML = '<a href="' + simklSearchUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + tvConf.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+      }
       
       var metaEl = document.getElementById('tv-tracking-meta');
       if (!metaEl) {
@@ -650,7 +655,10 @@ function _starsHTML(starsStr) {
             tvStatus.textContent = statusText;
           }
 
-          if (tvTitle) tvTitle.textContent = data.title;
+          if (tvTitle) {
+            var simklShowUrl = data.simklUrl || ('https://simkl.com/search/?q=' + encodeURIComponent(data.title));
+            tvTitle.innerHTML = '<a href="' + simklShowUrl + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + data.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+          }
           
           var metaEl = document.getElementById('tv-tracking-meta');
           if (!metaEl) {
@@ -896,9 +904,23 @@ function _starsHTML(starsStr) {
     var barcaScore = getScoreValue(barca);
     var oppScore   = getScoreValue(opp);
     var emotion = '⚽';
+    var resultBadgeClass = '';
+    var resultBadgeText = '';
     
     if (state === 'post') {
-      emotion = barcaScore > oppScore ? '🎉' : barcaScore < oppScore ? '😢' : '😕';
+      if (barcaScore > oppScore) {
+        emotion = '🎉';
+        resultBadgeClass = 'barca-result-win';
+        resultBadgeText = 'W · VAMOS! 🎉';
+      } else if (barcaScore < oppScore) {
+        emotion = '😤';
+        resultBadgeClass = 'barca-result-loss';
+        resultBadgeText = 'L · Next one 💪';
+      } else {
+        emotion = '🤝';
+        resultBadgeClass = 'barca-result-draw';
+        resultBadgeText = 'D · Fair enough';
+      }
     } else if (state === 'in') {
       emotion = '🔥';
     }
@@ -939,21 +961,52 @@ function _starsHTML(starsStr) {
     
     var leagueName = (data.event && data.event.league && data.event.league.name) || '';
     var isGenericLeague = !leagueName || leagueName.toLowerCase() === 'football' || leagueName.toLowerCase() === 'soccer';
+
+    // Try to extract round / matchday info from the event
+    var roundLabel = '';
+    var ev = data.event;
+    var comp2 = data.comp;
+    if (ev) {
+      // ESPN event name often includes round info e.g. "FC Barcelona vs Real Madrid - LaLiga - Round 15"
+      var evName = ev.name || ev.shortName || '';
+      var roundMatch = evName.match(/round\s*(\d+)/i) || evName.match(/matchday\s*(\d+)/i) || evName.match(/jornada\s*(\d+)/i);
+      if (roundMatch) roundLabel = 'MD ' + roundMatch[1];
+      // Try notes from competition
+      if (!roundLabel && comp2 && comp2.notes && comp2.notes.length) {
+        var noteText = comp2.notes[0].text || '';
+        var noteRound = noteText.match(/round\s*of\s*(\d+)/i) || noteText.match(/round\s*(\d+)/i) || noteText.match(/matchday\s*(\d+)/i);
+        if (noteRound) roundLabel = noteText.replace(/\s+/g,' ').trim().slice(0, 20);
+        else if (noteText) roundLabel = noteText.trim().slice(0, 24);
+      }
+      // Check season info
+      if (!roundLabel && ev.season && ev.season.type && ev.season.type.name) {
+        roundLabel = ev.season.type.name.slice(0, 20);
+      }
+    }
+
+    // Aggregate / two-leg info (knockout ties)
+    var aggregateLabel = '';
+    if (comp2 && comp2.series) {
+      var seriesSum = comp2.series.summary || comp2.series.text || '';
+      if (seriesSum) aggregateLabel = 'Agg: ' + seriesSum;
+    }
+    if (comp2 && comp2.type && comp2.type.name) {
+      var cTypeName = comp2.type.name.toLowerCase();
+      if (cTypeName.indexOf('1st') !== -1 || cTypeName.indexOf('first') !== -1) aggregateLabel = (aggregateLabel ? aggregateLabel + ' · ' : '') + '1st Leg';
+      else if (cTypeName.indexOf('2nd') !== -1 || cTypeName.indexOf('second') !== -1) aggregateLabel = (aggregateLabel ? aggregateLabel + ' · ' : '') + '2nd Leg';
+    }
+
     var headerLabel = 'MATCHDAY';
     if (state === 'in') {
       headerLabel = 'LIVE MATCH';
     } else if (state === 'post') {
-      if (diff === 0) {
-        headerLabel = 'MATCHDAY · FULL TIME';
-      } else if (!isGenericLeague) {
+      if (!isGenericLeague) {
         headerLabel = leagueName.toUpperCase() + ' · FULL TIME';
       } else {
         headerLabel = 'LAST MATCH · FULL TIME';
       }
     } else if (state === 'pre') {
-      if (diff === 0) {
-        headerLabel = 'MATCHDAY · FIXTURE';
-      } else if (!isGenericLeague) {
+      if (!isGenericLeague) {
         headerLabel = leagueName.toUpperCase() + ' · FIXTURE';
       } else {
         headerLabel = 'UPCOMING FIXTURE';
@@ -962,13 +1015,28 @@ function _starsHTML(starsStr) {
 
     // Suppress "Today" if header is "Matchday", or if it is "Live Now"
     if (state === 'in' || timeframe === 'Today') timeframe = '';
+
+    // Sub-info line: round + timeframe + aggregate
+    var subInfoParts = [];
+    if (roundLabel) subInfoParts.push(roundLabel);
+    if (timeframe) subInfoParts.push(timeframe);
+    if (aggregateLabel) subInfoParts.push(aggregateLabel);
+    var subInfoLine = subInfoParts.join(' · ');
+
+    // Result badge HTML
+    var resultBadgeHtml = '';
+    if (state === 'post' && resultBadgeClass) {
+      resultBadgeHtml = '<span class="barca-result-badge ' + resultBadgeClass + '">' + resultBadgeText + '</span>';
+    } else if (state === 'in') {
+      resultBadgeHtml = '<span class="barca-result-badge barca-result-live">🔴 LIVE</span>';
+    }
     
     // Identity column layout: logo + name + slogan + clean unclipped SUPPORTING pill badge
     barcaItem.innerHTML =
       '<div class="barca-scorecard-wrap">' +
         '<div class="barca-top-row">' +
           '<span class="rotating-label currently-into-label">' + headerLabel + '</span>' +
-          (state !== 'in' && timeframe ? '<span class="match-timeframe">' + timeframe + '</span>' : '') +
+          (subInfoLine ? '<span class="match-timeframe">' + subInfoLine + '</span>' : '') +
         '</div>' +
         '<div class="barca-content-layout-hybrid">' +
           '<div class="barca-identity-side">' +
@@ -1000,9 +1068,9 @@ function _starsHTML(starsStr) {
               (red2 ? '<span class="score-row-card" title="Red cards"><span class="red-card-box"></span>' + (red2 > 1 ? ' x' + red2 : '') + '</span>' : '') +
               '<span class="score-num">' + (state === 'pre' ? '-' : score2) + '</span>' +
             '</div>' +
+            (resultBadgeHtml ? '<div class="barca-result-row">' + resultBadgeHtml + '</div>' : '') +
           '</div>' +
         '</div>' +
-        (state !== 'in' ? '<div class="barca-emotion-badge">' + emotion + '</div>' : '') +
       '</div>';
 
     var oldBadge = barcaItem.querySelector('.barca-live-badge');
@@ -1105,7 +1173,9 @@ function _starsHTML(starsStr) {
           barcaScorers: (res.scorers && res.scorers[BARCA_ID]) || [],
           oppScorers:   opp ? ((res.scorers && res.scorers[String(opp.team.id)]) || []) : [],
           barcaRedCards: (res.redCards && res.redCards[BARCA_ID]) || 0,
-          oppRedCards: opp ? ((res.redCards && res.redCards[String(opp.team.id)]) || 0) : 0
+          oppRedCards: opp ? ((res.redCards && res.redCards[String(opp.team.id)]) || 0) : 0,
+          event:        ev,
+          comp:         comp
         });
       });
     }).catch(function(e){
@@ -1889,7 +1959,17 @@ function _starsHTML(starsStr) {
   function renderSeries(seriesItems) {
     if (!seriesEl) return;
 
-    seriesEl.textContent = compactTitles(seriesItems, 4);
+    // Render series titles as clickable Simkl search links
+    var titles = (seriesItems || []).slice(0, 4).map(function(i) { return i && i.title; }).filter(Boolean);
+    var overflow = seriesItems && seriesItems.length > 4 ? ' +' + (seriesItems.length - 4) : '';
+    if (!titles.length) {
+      seriesEl.textContent = 'No items synced';
+    } else {
+      seriesEl.innerHTML = titles.map(function(t) {
+        var href = 'https://simkl.com/search/?q=' + encodeURIComponent(t);
+        return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Simkl">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+      }).join(', ') + overflow;
+    }
 
     var seriesThumbsEl = document.getElementById('big3-series-thumbs');
     if (!seriesThumbsEl) return;
@@ -1950,7 +2030,11 @@ function _starsHTML(starsStr) {
 
     // Deduplicate titles for clean display without redundant repeats
     var uniqueTitles = Array.from(new Set(duneList.map(function(m) { return m.title; })));
-    watchlistEl.textContent = uniqueTitles.join(', ');
+    // Render as clickable Letterboxd search links
+    watchlistEl.innerHTML = uniqueTitles.map(function(t) {
+      var href = 'https://letterboxd.com/search/films/' + encodeURIComponent(t) + '/';
+      return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(245,158,11,0.4);text-underline-offset:2px;" title="Search on Letterboxd">' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</a>';
+    }).join(', ');
 
     var movieThumbsEl = document.getElementById('big3-movie-thumbs');
     if (!movieThumbsEl) return;
