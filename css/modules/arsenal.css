@@ -53,27 +53,28 @@
 .af-btn {
   padding: 6px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(18, 18, 18, 0.12);
-  background: rgba(255, 255, 255, 0.85);
-  color: rgba(18, 18, 18, 0.65);
-  font-size: 0.72rem;
+  border: 1.5px solid rgba(18, 18, 18, 0.14);
+  background: #FFFFFF;
+  color: rgba(18, 18, 18, 0.70);
+  font-size: 0.74rem;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.25s;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .af-btn:hover {
   border-color: #F59E0B;
   color: #121212;
   background: rgba(245, 158, 11, 0.12);
+  transform: translateY(-1px);
 }
 .af-btn.active {
-  border-color: #D97706;
-  color: #121212;
-  background: #F59E0B;
-  box-shadow: 2px 2px 0px rgba(18, 18, 18, 0.15);
+  border-color: #121212;
+  color: #FFFFFF;
+  background: #121212;
+  box-shadow: 2.5px 2.5px 0px #F59E0B;
 }
 
 /* Arsenal Grid — Narrowed for centering */
@@ -203,13 +204,12 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .acard:hover {
-    max-width: fit-content; /* Fit exactly to content rather than 200px */
+    max-width: fit-content;
     gap: 10px;
     padding: 9px 12px;
-    border-color: var(--ac, rgba(16,185,129,0.45));
-    background: var(--ag, rgba(16,185,129,0.1));
-    box-shadow: 0 0 18px var(--ag, rgba(16,185,129,0.2)),
-                0 4px 16px rgba(0,0,0,0.4);
+    border-color: var(--ac, rgba(245, 158, 11, 0.65));
+    background: var(--ag, rgba(245, 158, 11, 0.08));
+    box-shadow: 2.5px 2.5px 0px var(--ac, #F59E0B), 0 4px 14px var(--ag, rgba(245, 158, 11, 0.15));
     transform: translateY(-2px);
   }
 }
@@ -217,10 +217,9 @@
   max-width: fit-content;
   gap: 10px;
   padding: 9px 12px;
-  border-color: var(--ac, rgba(16,185,129,0.45));
-  background: var(--ag, rgba(16,185,129,0.1));
-  box-shadow: 0 0 18px var(--ag, rgba(16,185,129,0.2)),
-              0 4px 16px rgba(0,0,0,0.4);
+  border-color: var(--ac, rgba(245, 158, 11, 0.65));
+  background: var(--ag, rgba(245, 158, 11, 0.08));
+  box-shadow: 2.5px 2.5px 0px var(--ac, #F59E0B), 0 4px 14px var(--ag, rgba(245, 158, 11, 0.15));
   transform: translateY(-2px);
 }
 

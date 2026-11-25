@@ -80,7 +80,7 @@
 /* Hover Personality */
 #spotify-widget:hover {
     border-color: #1DB954 !important;
-    box-shadow: 5px 5px 0px rgba(29, 185, 84, 0.35) !important;
+    box-shadow: 4px 4px 0px #1DB954, 0 16px 36px -8px rgba(29, 185, 84, 0.18) !important;
     transform: translate(-1px, -2px);
 }
 #spotify-widget:hover .spotify-widget-header span { color: var(--spotify-clr, #1DB954) !important; transition: color 0.3s; }
