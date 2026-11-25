@@ -1,5 +1,14 @@
-/* All UI interactions â€” Section Nav, Keyboard, Arsenal Grid */
+/* All UI interactions — Section Nav, Keyboard, Arsenal Grid */
 'use strict';
+
+import { initHeroMatrix } from './matrix-hero.js';
+
+// Initialize Hero Matrix Generative Art
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeroMatrix);
+} else {
+  initHeroMatrix();
+}
 
 // Ensure smoothTransition helper exists as a fallback
 // window.smoothTransition is handled by animations.js
@@ -54,17 +63,17 @@
 
 /* â”€â”€ Sections & Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 (function () {
-  var sections = ['hero','about','projects','demo','tech','education','contact'];
+  var sections = ['hero', 'projects', 'about', 'credentials', 'education', 'contact', 'off-the-clock'];
   var icons = {
-    hero:      '<svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-    about:     '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>',
-    projects:  '<svg viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>',
-    demo:      '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-    tech:      '<svg viewBox="0 0 24 24"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>',
-    education: '<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
-    contact:   '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+    hero:          '<svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+    projects:      '<svg viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>',
+    about:         '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>',
+    credentials:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>',
+    education:     '<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+    contact:       '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    'off-the-clock':'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>'
   };
-  var labels = { hero:'Home', about:'About', projects:'Projects', demo:'Experience', tech:'Stack', education:'Education', contact:'Contact' };
+  var labels = { hero:'Home', projects:'Work', about:'About', credentials:'Creds', education:'Trajectory', contact:'Contact', 'off-the-clock':'Activity' };
   
   var nav = document.getElementById('section-dots') || document.createElement('div');
   nav.id = 'section-dots';
@@ -161,7 +170,7 @@
   function getActiveSectionId() {
     var certsDrawer = document.getElementById('certs-drawer');
     if (certsDrawer && certsDrawer.classList.contains('open')) {
-      return 'certifications';
+      return 'credentials';
     }
 
     var scrollY = window.scrollY || window.pageYOffset || 0;
@@ -169,7 +178,7 @@
 
     var docH = document.documentElement.scrollHeight || document.body.scrollHeight || 0;
     var winH = window.innerHeight || 800;
-    if (scrollY + winH >= docH - 80) return 'contact';
+    if (scrollY + winH >= docH - 80) return sections[sections.length - 1];
 
     var focalLine = winH * 0.38;
     var current = 'hero';
@@ -195,30 +204,23 @@
       if (activeSection === lastActiveSection) return;
       lastActiveSection = activeSection;
 
-      var isCerts = (activeSection === 'certifications');
+      var isCerts = (activeSection === 'certifications' || activeSection === 'credentials');
 
       /* Desktop side dots */
-      if (isCerts) {
-        dotEls.forEach(function(d) { d.classList.remove('active', 'nearby'); });
-      } else {
-        var idx = sections.indexOf(activeSection);
-        if (idx !== -1) updateDots(idx);
-      }
+      var idx = sections.indexOf(activeSection);
+      if (idx !== -1) updateDots(idx);
 
       /* Determine target navigation link */
       var targetHref = '#' + activeSection;
-      if (activeSection === 'demo' || activeSection === 'tech' || activeSection === 'education') {
-        targetHref = '#projects';
-      }
 
       /* Desktop top-nav link highlights */
       if (!navLinksCache) navLinksCache = document.querySelectorAll('.nav-links a');
       navLinksCache.forEach(function(link) {
         var href = link.getAttribute('href') || '';
         if (isCerts) {
-          link.classList.toggle('active', href === '#certifications');
+          link.classList.toggle('active', href === '#credentials' || href === '#certifications');
         } else {
-          link.classList.toggle('active', href === targetHref && href !== '#certifications');
+          link.classList.toggle('active', href === targetHref);
         }
       });
 
@@ -230,7 +232,7 @@
         }
         var href = item.getAttribute('href') || '';
         if (isCerts) {
-          item.classList.toggle('active', href === '#certifications');
+          item.classList.toggle('active', href === '#credentials' || href === '#certifications');
         } else {
           item.classList.toggle('active', href === targetHref);
         }

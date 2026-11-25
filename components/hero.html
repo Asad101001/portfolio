@@ -1,118 +1,138 @@
 <!-- ════════════════════════════════════════════
-         HERO SECTION
-         components/hero.html
-    ════════════════════════════════════════════ -->
-    <section id="hero">
-        <div class="hero-grid">
+     HERO SECTION
+     components/hero.html
+     Primary Focus: Muhammad Asad Khan + Pure Generative 3D Holographic Mesh Art
+     Design Language: Neo-Brutalist Paper & Warm Amber (#F59E0B)
+════════════════════════════════════════════ -->
+<section id="hero">
+    <div class="ambient-glow" aria-hidden="true"></div>
 
-            <!-- Left Column: Main Hero Card (65%) -->
-            <div class="card hero-main glass-card reveal" style="--delay:0ms">
-                <header class="hero-header">
-                    <div class="hero-status-tag">
-                        <span class="hero-status-pulse"></span>
-                        Available for High-Impact Projects
-                    </div>
-                    <h1 class="hero-name">Muhammad<br />Asad Khan</h1>
-                    <p class="hero-desc hero-statement">
-                        Full-stack software engineer &amp; CS student @ UBIT building distributed systems and agentic AI pipelines.
-                    </p>
-                </header>
+    <div class="hero-container">
+        
+        <!-- ── Left Column: Primary Author Name, Statement & Actions ── -->
+        <div class="hero-left-col reveal">
+            
+            <!-- Status Eyebrow Pill + Section Number -->
+            <div class="hero-meta-row">
+                <span class="hero-status-pill">
+                    <span class="hsp-dot"></span>
+                    CS @ UBIT '28 &middot; Karachi, PK
+                </span>
+                <span class="hero-section-num desktop-only">01 / INTRODUCTION</span>
+            </div>
+
+            <!-- PRIMARY HERO TITLE: Muhammad Asad Khan -->
+            <div class="hero-title-wrap">
+                <h1 class="hero-name-primary" id="hero-name-primary">
+                    <span class="hnp-eyebrow">SOFTWARE ENGINEER &amp; ARCHITECT</span>
+                    <span class="hnp-full-name">
+                        <span class="hnp-first">Muhammad Asad</span>
+                        <span class="hnp-last">Khan</span>
+                    </span>
+                </h1>
+            </div>
+
+            <!-- Crisp Core Specialty Statement -->
+            <p class="hero-statement">
+                Engineering <span class="hh-highlight">distributed systems</span> from <span class="hh-accent">first principles.</span>
+            </p>
+
+            <!-- Minimal, High-Signal Lead Paragraph -->
+            <p class="hero-lead">
+                Full-stack engineer building resilient backend infrastructure, cloud architectures, and autonomous AI pipelines.
+            </p>
+
+            <!-- Actions: One Message, Two Actions -->
+            <div class="hero-action-buttons">
+                <a href="#projects" class="btn-primary magnetic hero-cta-work">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect width="7" height="7" x="3" y="3" rx="1"/>
+                        <rect width="7" height="7" x="14" y="3" rx="1"/>
+                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                        <rect width="7" height="7" x="14" y="14" rx="1"/>
+                    </svg>
+                    View selected work
+                </a>
+
+                <a href="https://drive.google.com/file/d/1gvB1-w130_q4dpVpGDjcB8WKm5Kd4qkq/view"
+                    target="_blank" rel="noopener noreferrer" class="btn-secondary magnetic resume-btn hero-cta-resume" data-action="resume">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                    </svg>
+                    Resume
+                </a>
+            </div>
+
+            <!-- Sublinks: GitHub · LinkedIn · Email with custom SVGs -->
+            <div class="hero-social-sublinks">
+                <a href="https://github.com/Asad101001" target="_blank" rel="noopener noreferrer" class="h-sublink" title="GitHub Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                        <path d="M9 18c-4.51 2-5-2-7-2" />
+                    </svg>
+                    GitHub
+                </a>
+                <span class="h-sublink-dot" aria-hidden="true">&bull;</span>
+                <a href="https://www.linkedin.com/in/muhammadasadk/" target="_blank" rel="noopener noreferrer" class="h-sublink" title="LinkedIn Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+                <span class="h-sublink-dot" aria-hidden="true">&bull;</span>
+                <a href="mailto:muhammadasadk42@gmail.com" class="h-sublink" title="Send Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    Email
+                </a>
+            </div>
+
+        </div><!-- /.hero-left-col -->
+
+        <!-- ── Right Column: Pure 3D Holographic Mesh Art (Visuals First) ── -->
+        <div class="hero-right-col reveal">
+            <div class="hero-matrix-card glass-card" id="hero-matrix-card">
                 
-                <div class="hero-actions">
-                    <a href="https://github.com/Asad101001" target="_blank" rel="noopener noreferrer" class="btn-primary magnetic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                            <path d="M9 18c-4.51 2-5-2-7-2" />
-                        </svg>
-                        GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/muhammadasadk/" target="_blank" rel="noopener noreferrer"
-                        class="btn-linkedin magnetic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                            <rect width="4" height="12" x="2" y="9" />
-                            <circle cx="4" cy="4" r="2" />
-                        </svg>
-                        LinkedIn
-                    </a>
-                    <a href="mailto:muhammadasadk42@gmail.com" class="btn-secondary magnetic" title="Contact me via email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                        </svg>
-                        Contact Me
-                    </a>
-                </div>
-            </div>
-
-            <!-- Right Column: Sidebar Stack (35%) -->
-            <div class="hero-sidebar">
-
-                <!-- Card 1: At a Glance Stats -->
-                <div class="card hero-glance-card glass-card reveal" style="--delay:150ms">
-                    <p class="card-label">At a Glance</p>
-                    <div class="glance-list">
-                        <div class="glance-item">
-                            <span class="glance-metric">4+</span>
-                            <span class="glance-label">Shipped Systems</span>
-                        </div>
-                        <div class="glance-item glance-item--interactive" data-action="certs" role="button" tabindex="0" title="View Certifications Drawer" style="cursor: pointer;">
-                            <span class="glance-metric">8+</span>
-                            <span class="glance-label">Certifications ↗</span>
-                        </div>
-                        <div class="glance-item">
-                            <span class="glance-metric">20+</span>
-                            <span class="glance-label">Core Technologies</span>
-                        </div>
+                <!-- Terminal Header Bar -->
+                <div class="hmc-header">
+                    <div class="hmc-controls">
+                        <span class="hmc-dot hmc-dot-red" aria-hidden="true"></span>
+                        <span class="hmc-dot hmc-dot-yellow" aria-hidden="true"></span>
+                        <span class="hmc-dot hmc-dot-green" aria-hidden="true"></span>
+                        <span class="hmc-file-label">hologram_cluster // generative_3d</span>
+                    </div>
+                    <div class="hmc-status-pill">
+                        <span class="hmc-pulse-dot" aria-hidden="true"></span>
+                        <span class="hmc-status-text">INTERACTIVE 3D &middot; LIVE</span>
                     </div>
                 </div>
 
-                <!-- Card 2: PKT Local Time Clock Widget -->
-                <div class="clock-widget glass-card reveal" id="coding-clock" style="--delay:250ms">
-                    <div class="clock-face">
-                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Outer ring: Day progress -->
-                            <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                            <circle id="clock-arc" cx="32" cy="32" r="30" stroke="var(--cyan)" stroke-width="2"
-                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"
-                                transform="rotate(-90 32 32)" />
-                            
-                            <!-- Inner ring: Rotating scanner -->
-                            <circle id="clock-scanner" cx="32" cy="32" r="24" stroke="rgba(245,158,11,0.45)" stroke-width="1.5"
-                                stroke-dasharray="10 40" transform="rotate(0 32 32)">
-                                 <animateTransform attributeName="transform" type="rotate" from="0 32 32" to="360 32 32" dur="4s" repeatCount="indefinite" />
-                            </circle>
+                <!-- Matrix Generative Canvas Viewport (Pure visual art, minimal text) -->
+                <div class="hmc-canvas-wrap" id="hmc-canvas-wrap">
+                    <canvas id="hero-matrix-canvas" aria-label="Interactive Three.js 3D Holographic Mesh Art"></canvas>
 
-                            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-family="Space Grotesk, sans-serif"
-                                font-size="14" font-weight="800" id="clock-hour-text">--</text>
-                        </svg>
-                        <div class="clock-label">PKT</div>
-                    </div>
-                    <div class="clock-info">
-                        <div class="clock-time-label">Current local time</div>
-                        <div class="clock-prime-time" id="clock-display">--:-- --</div>
-                        <div class="clock-sub" id="clock-status">Checking...</div>
-                        <div class="clock-bar-row" id="clock-bars">
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                            <div class="clock-bar-seg" style="--clr:#f59e0b"></div>
-                        </div>
+                    <!-- HUD Corner Crosshairs Overlay -->
+                    <div class="hmc-hud-overlay" aria-hidden="true">
+                        <div class="hmc-hud-corner top-left"></div>
+                        <div class="hmc-hud-corner top-right"></div>
+                        <div class="hmc-hud-corner bottom-left"></div>
+                        <div class="hmc-hud-corner bottom-right"></div>
                     </div>
                 </div>
 
-            </div>
+            </div><!-- /.hero-matrix-card -->
+        </div><!-- /.hero-right-col -->
 
-        </div>
+    </div><!-- /.hero-container -->
 
-        <div class="scroll-indicator" id="scroll-indicator">
-            <span class="scroll-indicator-text">scroll</span>
-            <div class="scroll-indicator-line"></div>
-        </div>
-    </section>
+    <div class="scroll-indicator" id="scroll-indicator">
+        <span class="scroll-indicator-text">scroll</span>
+        <div class="scroll-indicator-line"></div>
+    </div>
+</section>
