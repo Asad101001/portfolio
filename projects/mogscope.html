@@ -25,7 +25,7 @@
         @media (max-width: 768px) { .proj-content-grid { grid-template-columns: 1fr; } }
         .feature-list { list-style: none; padding: 0; }
         .feature-list li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
-        .feature-list li:before { content: '⚡'; color: #6366f1; font-size: 0.9em; margin-top: 2px; }
+        .feature-list li:before { content: '▸'; color: #6366f1; font-size: 0.9em; margin-top: 2px; }
         .tech-list span { display: inline-block; padding: 4px 10px; border-radius: 4px; background: rgba(255,255,255,0.05); margin: 0 8px 8px 0; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
@@ -46,7 +46,7 @@
                 <div class="intro-cube-face front">{ }</div>
                 <div class="intro-cube-face back">&lt;/&gt;</div>
                 <div class="intro-cube-face left">λ</div>
-                <div class="intro-cube-face right">⚡</div>
+                <div class="intro-cube-face right">&gt;_</div>
                 <div class="intro-cube-face top">#</div>
                 <div class="intro-cube-face bottom">∞</div>
                 <div class="intro-ring"></div>
@@ -98,18 +98,18 @@
                     <div class="mermaid-container glass-card reveal">
                         <pre class="mermaid">
 graph LR
-    subgraph Client [Browser Environment 🖥️]
-        Webcam[HD Webcam Array] -->|Video Feed| FaceAPI(FaceAPI.js Model🧠)
+    subgraph Client [Browser Environment]
+        Webcam[HD Webcam Array] -->|Video Feed| FaceAPI(FaceAPI.js Model)
         FaceAPI -->|68-point Vector Maps| UI[React 18 Engine]
-        UI -->|Geometry Bindings| Three(Three.js Visuals 💀)
+        UI -->|Geometry Bindings| Three(Three.js Visuals)
     end
-    subgraph Cloud [Edge Serverless 🌧️]
+    subgraph Cloud [Edge Serverless]
         UI -->|Anatomical Data| Vercel(Vercel Edge Functions)
         Vercel -->|Llama 3 Prompting| Groq[(Groq High-Speed API)]
         Groq -->|Satirical Script| Vercel
         Vercel -->|JSON Insights| UI
     end
-    UI -->|Text-to-Speech| Voice((Browser Web Audio API 🗣️))
+    UI -->|Text-to-Speech| Voice((Browser Web Audio API))
                         </pre>
                     </div>
 

@@ -184,7 +184,7 @@ export default async function handler(req, res) {
   
   ${albumArtImageTag}
 
-  <text x="110" y="32" class="status">⚡ NOW PLAYING ON SPOTIFY</text>
+  <text x="110" y="32" class="status">NOW PLAYING ON SPOTIFY</text>
   <text x="110" y="52" class="title">${escapeXml(truncate(track.name, 35))}</text>
   <text x="110" y="70" class="artist">${escapeXml(truncate(track.artist, 40))}</text>
 
@@ -235,7 +235,7 @@ export default async function handler(req, res) {
   
   ${albumArtImageTag}
 
-  <text x="110" y="32" class="status">💤 OFFLINE / PAUSED</text>
+  <text x="110" y="32" class="status">OFFLINE / PAUSED</text>
   <text x="110" y="52" class="title">Not listening to Spotify</text>
   <text x="110" y="70" class="artist">${escapeXml(lastPlayedText)}</text>
 </svg>`;

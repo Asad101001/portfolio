@@ -636,3 +636,45 @@
   object-fit: cover;
   display: block;
 }
+
+@media (max-width: 540px) {
+  .x-post-container {
+    padding: 12px 10px !important;
+    gap: 8px !important;
+  }
+  .x-avatar {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .x-name {
+    font-size: 0.8rem !important;
+  }
+  .x-handle,
+  .x-time {
+    font-size: 0.68rem !important;
+  }
+  .x-text {
+    font-size: 0.82rem !important;
+    line-height: 1.45 !important;
+  }
+  .x-quote-container,
+  .x-quoted-box {
+    padding: 8px 10px !important;
+    margin-top: 6px !important;
+  }
+  .x-quoted-text {
+    font-size: 0.76rem !important;
+  }
+  .x-post-actions {
+    padding-top: 4px !important;
+  }
+  .x-action {
+    padding: 3px 4px !important;
+    font-size: 0.68rem !important;
+    gap: 3px !important;
+  }
+  .x-action svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}

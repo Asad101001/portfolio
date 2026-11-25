@@ -918,17 +918,17 @@ function _starsHTML(starsStr) {
     if (state === 'post') {
       if (barcaScore > oppScore) {
         resultBadgeClass = 'barca-win';
-        resultBadgeText = '<span class="result-dot"></span>W 🏆';
+        resultBadgeText = '<span class="result-dot"></span>WIN';
       } else if (barcaScore < oppScore) {
         resultBadgeClass = 'barca-loss';
-        resultBadgeText = '<span class="result-dot"></span>L 💔';
+        resultBadgeText = '<span class="result-dot"></span>LOSS';
       } else {
         resultBadgeClass = 'barca-draw';
-        resultBadgeText = '<span class="result-dot"></span>D 🤝';
+        resultBadgeText = '<span class="result-dot"></span>DRAW';
       }
     } else if (state === 'in') {
       resultBadgeClass = 'barca-live-dot';
-      resultBadgeText = '<span class="result-dot"></span>LIVE ⚽';
+      resultBadgeText = '<span class="result-dot"></span>LIVE';
     }
 
     var barcaLogo = 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png';
@@ -1214,7 +1214,7 @@ function _starsHTML(starsStr) {
             '</div>' +
           '</div>' +
           '<div class="barca-score-rows-side" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;">' +
-            '<span style="font-size:1.5rem;">⚽</span>' +
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24m5.66 0 4.24-4.24m0 14.14-4.24-4.24m-5.66 0-4.24 4.24"/></svg>' +
             '<span style="color:var(--text-secondary,#a1a1aa);font-size:0.78rem;text-align:center;">No upcoming matches</span>' +
             '<span style="color:var(--cyan,#10b981);font-size:0.68rem;opacity:0.7;">' + seasonLabel + '</span>' +
           '</div>' +
@@ -1270,7 +1270,7 @@ function _starsHTML(starsStr) {
       if (art) {
         imgContainer.innerHTML = '<img class="lastfm-track-art" src="' + art + '" alt="" crossorigin="anonymous" loading="lazy" decoding="async" fetchpriority="low" />';
       } else {
-        imgContainer.innerHTML = '<div class="lastfm-track-art lastfm-track-art--placeholder">🎵</div>';
+        imgContainer.innerHTML = '<div class="lastfm-track-art lastfm-track-art--placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>';
         // Fallback to Spotify API for artist picture
         _artistImage(t.artist && t.artist['#text'] ? t.artist['#text'] : '').then(function(u) {
             var img = document.createElement('img');
@@ -1319,7 +1319,7 @@ function _starsHTML(starsStr) {
     })
     .catch(function() {
       if (!localStorage.getItem('asad_lastfm_cache')) {
-        container.innerHTML = '<p class="lastfm-error">⚠ Could not load scrobbles.</p>';
+        container.innerHTML = '<p class="lastfm-error">Could not load scrobbles.</p>';
       }
     });
 })();
@@ -1450,23 +1450,23 @@ function _starsHTML(starsStr) {
   
   var CIRC = 188.5;
   var zones = [
-    { start: 0,  end: 6,  label: '🌙 Asleep (probably)',      color: '#a855f7' },
-    { start: 6,  end: 9,  label: '☕ Morning grind',           color: '#f97316' },
-    { start: 9,  end: 13, label: '💻 Peak coding hours',       color: '#22c55e' },
-    { start: 13, end: 15, label: '🍜 Lunch / break',           color: '#10b981' },
-    { start: 15, end: 19, label: '⚡ Deep work mode',          color: '#22c55e' },
-    { start: 19, end: 22, label: '🎧 Side projects / music',   color: '#a855f7' },
-    { start: 22, end: 24, label: '🌙 Late night hacking',      color: '#f97316' }
+    { start: 0,  end: 6,  label: 'Asleep (offline)',        color: '#a855f7' },
+    { start: 6,  end: 9,  label: 'Morning routine',         color: '#f97316' },
+    { start: 9,  end: 13, label: 'Peak engineering hours',  color: '#22c55e' },
+    { start: 13, end: 15, label: 'Break / recharge',        color: '#10b981' },
+    { start: 15, end: 19, label: 'Deep work & systems',     color: '#22c55e' },
+    { start: 19, end: 22, label: 'Side projects / research',color: '#a855f7' },
+    { start: 22, end: 24, label: 'Late night development',  color: '#f97316' }
   ];
 
   function getWeatherIcon(code) {
-    if (code === 0) return '☀️'; // Clear
-    if (code >= 1 && code <= 3) return '☁️'; // Cloudy
-    if (code === 45 || code === 48) return '🌫️'; // Fog
-    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return '🌧️'; // Rain
-    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return '❄️'; // Snow
-    if (code >= 95 && code <= 99) return '⛈️'; // Thunderstorm
-    return '🌡️';
+    if (code === 0) return 'Clear';
+    if (code >= 1 && code <= 3) return 'Cloudy';
+    if (code === 45 || code === 48) return 'Fog';
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'Rain';
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'Snow';
+    if (code >= 95 && code <= 99) return 'Storm';
+    return 'Fair';
   }
 
   function fetchWeather() {
@@ -1795,7 +1795,7 @@ function _starsHTML(starsStr) {
 
         var avatarEl = document.createElement('div');
         avatarEl.className   = 'footballer-emoji-avatar';
-        avatarEl.textContent = p.fallback || '⚽';
+        avatarEl.textContent = p.fallback || (p.shortName ? p.shortName.slice(0, 2) : 'FB');
         podiumWrap.appendChild(avatarEl);
 
         // FIXED: TheSportsDB + Wikipedia fallback with direct object pass
@@ -1987,7 +1987,7 @@ function _starsHTML(starsStr) {
       var wrap = document.createElement('div');
       wrap.className = 'media-thumb-card';
       wrap.title = s.title;
-      wrap.innerHTML = '<div class="media-thumb-emoji">📺</div>';
+      wrap.innerHTML = '<div class="media-thumb-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg></div>';
 
       var directPoster = s.poster || null;
       var searchStr = s.searchQuery || s.title;
@@ -2072,7 +2072,7 @@ function _starsHTML(starsStr) {
       var wrap = document.createElement('div');
       wrap.className = 'media-thumb-card';
       wrap.title = m.title;
-      wrap.innerHTML = '<div class="media-thumb-emoji">🎬</div>';
+      wrap.innerHTML = '<div class="media-thumb-emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></div>';
 
       var directPoster = m.poster || m.fallback || null;
       var searchStr = m.searchQuery || m.title;

@@ -19,9 +19,9 @@ export const CONFIG = {
   },
   big3: {
     players: [
-      { name: 'Lamine Yamal', shortName: 'LAMINE', fallback: '⚽', image: '/images/footballers/lamine_barca.png' },
-      { name: 'Pedri',        shortName: 'PEDRI',  fallback: '⚽', image: '/images/footballers/pedri_barca.png' },
-      { name: 'Désiré Doué',  shortName: 'DOUÉ',   fallback: '⚽', image: '/images/footballers/doue.png' }
+      { name: 'Lamine Yamal', shortName: 'LAMINE', fallback: '19', image: '/images/footballers/lamine_barca.png' },
+      { name: 'Pedri',        shortName: 'PEDRI',  fallback: '8',  image: '/images/footballers/pedri_barca.png' },
+      { name: 'Désiré Doué',  shortName: 'DOUÉ',   fallback: '14', image: '/images/footballers/doue.png' }
     ],
     watchlist: [
       { title: 'Dune: Part Two', searchQuery: 'Dune: Part Two' },

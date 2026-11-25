@@ -306,7 +306,7 @@ function bootTerminal() {
                         <p><span style="color: var(--cyan);">Uptime:</span> ${uptime}</p>
                         <p><span style="color: var(--cyan);">Shell:</span> Interactive-Term v1.1</p>
                         <p><span style="color: var(--cyan);">Theme:</span> ${theme}</p>
-                        <p><span style="color: var(--cyan);">Status:</span> <span style="color:#22c55e;">🟢 Active (Internship Ready)</span></p>
+                        <p><span style="color: var(--cyan);">Status:</span> <span style="color:#22c55e;">[ONLINE] Active (Internship Ready)</span></p>
                         <p style="margin-top: 4px;"><span style="color: var(--cyan);">Commit:</span> ${latestCommit.slice(0, 32)}...</p>
                     </div>
                 </div>
@@ -421,9 +421,9 @@ function bootTerminal() {
             appendHistory(`
                 <div class="t-line t-out t-visible" style="line-height: 1.7;">
                     <p style="color: var(--cyan); font-weight: bold; margin-bottom: 6px;">CONTACT INFORMATION:</p>
-                    <p>📧 Email:    <a href="mailto:muhammadasadk42@gmail.com" style="color: var(--cyan); text-decoration: underline;">muhammadasadk42@gmail.com</a></p>
-                    <p>🐙 GitHub:   <a href="https://github.com/Asad101001" target="_blank" style="color: var(--cyan); text-decoration: underline;">github.com/Asad101001</a></p>
-                    <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/muhammadasadk/" target="_blank" style="color: var(--cyan); text-decoration: underline;">linkedin.com/in/muhammadasadk/</a></p>
+                    <p>[MAIL] Email:    <a href="mailto:muhammadasadk42@gmail.com" style="color: var(--cyan); text-decoration: underline;">muhammadasadk42@gmail.com</a></p>
+                    <p>[GIT]  GitHub:   <a href="https://github.com/Asad101001" target="_blank" style="color: var(--cyan); text-decoration: underline;">github.com/Asad101001</a></p>
+                    <p>[LINK] LinkedIn: <a href="https://www.linkedin.com/in/muhammadasadk/" target="_blank" style="color: var(--cyan); text-decoration: underline;">linkedin.com/in/muhammadasadk/</a></p>
                     <p style="margin-top: 4px; font-size: 0.72rem; opacity: 0.85;">Click the links or type mailto in browser to reach out!</p>
                 </div>
             `);
@@ -452,7 +452,7 @@ function bootTerminal() {
 
             appendHistory(`
                 <div class="t-line t-out t-visible" style="line-height: 1.6; color:#a855f7; border-left: 2px solid #a855f7; padding-left: 10px; margin: 6px 0;">
-                    <p style="font-weight: bold;">🎮 GUESSING GAME MODE ACTIVATED</p>
+                    <p style="font-weight: bold;">[GAME] GUESSING GAME MODE ACTIVATED</p>
                     <p>I have selected a secret number between 1 and 50.</p>
                     <p>Type your guess, or type <span style="color:#f87171;font-weight:bold;">exit</span> to quit.</p>
                 </div>
@@ -481,7 +481,7 @@ function bootTerminal() {
             if (guess === gameNumber) {
                 appendHistory(`
                     <div class="t-line t-out t-visible" style="color: #22c55e; font-weight: bold; margin: 4px 0;">
-                        🎉 CORRECT! The secret number was ${gameNumber}.
+                        SUCCESS! The secret number was ${gameNumber}.
                         <p style="font-weight: normal; font-size: 0.72rem; color:#a1a1aa; margin-top:2px;">You completed the game in ${gameAttempts} attempts. Exiting Game Mode.</p>
                     </div>
                 `);

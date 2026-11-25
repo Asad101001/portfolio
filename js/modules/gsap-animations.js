@@ -38,22 +38,29 @@ function disableCSSReveal() {
 
 /* ─── Hero Entrance ─────────────────────────────────────────────── */
 function heroEntrance() {
-  // Guard — elements must exist
-  if (!document.querySelector('.hero-name')) return;
+  const heroEl = document.getElementById('hero');
+  if (!heroEl) return;
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out', force3D: true } });
 
-  tl.from('.status-pill',         { opacity: 0, y: -14, duration: 0.45, ease: 'back.out(2)' })
-    .from('.hero-name',           { opacity: 0, y: 36, duration: 0.7, skewY: 1.5 }, '-=0.25')
-    .from('.typewriter-wrap',     { opacity: 0, y: 12, duration: 0.4 }, '-=0.3')
-    .from(['.hero-sub', '.hero-desc'], { opacity: 0, y: 18, stagger: 0.1, duration: 0.45, clearProps: 'all' }, '-=0.25')
-    .from('.hero-actions > *',    { opacity: 0, scale: 0.9, y: 12, stagger: 0.08, duration: 0.45, ease: 'back.out(2)', clearProps: 'all' }, '-=0.2');
+  // Eyebrow and metadata
+  tl.from('.hero-status-pill, .status-pill', { opacity: 0, y: -16, duration: 0.5, ease: 'back.out(2)' })
+    // Author name & headline staggered reveal
+    .from('.hero-author-name', { opacity: 0, y: 16, duration: 0.5 }, '-=0.25')
+    .from('.hero-name-primary, .hero-headline, .hero-name', { opacity: 0, y: 28, duration: 0.75, ease: 'power3.out' }, '-=0.3')
+    // Lead paragraph / descriptor
+    .from('.hero-lead, .hero-statement, .hero-desc', { opacity: 0, y: 18, duration: 0.5, clearProps: 'all' }, '-=0.3')
+    // Actions / CTAs
+    .from('.hero-action-buttons > *, .hero-actions > *', { opacity: 0, scale: 0.92, y: 14, stagger: 0.1, duration: 0.45, ease: 'back.out(2)', clearProps: 'all' }, '-=0.2')
+    // Sublinks
+    .from('.hero-social-sublinks, .hero-sublinks', { opacity: 0, y: 10, duration: 0.4, clearProps: 'all' }, '-=0.15');
 
+  // Right column visual card reveal
   if (!isMobile()) {
-    tl.from('.hero-side',         { opacity: 0, x: 40, duration: 0.7, clearProps: 'all' }, 0.5)
-      .from('.hero-grid .glass-card:nth-child(n+3)', { opacity: 0, y: 28, stagger: 0.09, duration: 0.6, clearProps: 'all' }, 0.8);
+    tl.from('.hero-matrix-card, .hero-visual-card', { opacity: 0, x: 36, scale: 0.98, duration: 0.8, ease: 'power3.out', clearProps: 'all' }, 0.4)
+      .from('.hpn-node', { opacity: 0, y: 10, stagger: 0.08, duration: 0.4, ease: 'back.out(1.5)', clearProps: 'all' }, 0.85);
   } else {
-    tl.from('.hero-side', { opacity: 0, y: 24, duration: 0.6, clearProps: 'all' }, 0.6);
+    tl.from('.hero-matrix-card, .hero-visual-card', { opacity: 0, y: 24, duration: 0.6, clearProps: 'all' }, 0.6);
   }
 }
 
@@ -215,6 +222,53 @@ function scrollReveals() {
       },
     });
   }
+
+  // Hero to Section Transition (Subtle parallax depth — card stays 100% visible)
+  const heroMatrixCard = document.getElementById('hero-matrix-card');
+  const heroLeftCol = document.querySelector('.hero-left-col');
+  const heroEl = document.getElementById('hero');
+
+  if (heroMatrixCard && heroEl && !isMobile()) {
+    gsap.to(heroMatrixCard, {
+      y: 35,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroEl,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5
+      }
+    });
+
+    if (heroLeftCol) {
+      gsap.to(heroLeftCol, {
+        y: 25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroEl,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.5
+        }
+      });
+    }
+  }
+
+  // Section Dividers: Architectural Transition Entrance
+  document.querySelectorAll('.section-divider').forEach(divider => {
+    gsap.from(divider, {
+      scaleX: 0.8,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power2.out',
+      clearProps: 'all',
+      scrollTrigger: {
+        trigger: divider,
+        start: 'top 92%',
+        once: true
+      }
+    });
+  });
 }
 
 /* ─── Subtle Mouse Parallax on Hero Cards (desktop only) ─────────── */

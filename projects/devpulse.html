@@ -25,7 +25,7 @@
         @media (max-width: 768px) { .proj-content-grid { grid-template-columns: 1fr; } }
         .feature-list { list-style: none; padding: 0; }
         .feature-list li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
-        .feature-list li:before { content: '⚡'; color: #FFD600; font-size: 0.9em; margin-top: 2px; }
+        .feature-list li:before { content: '▸'; color: #FFD600; font-size: 0.9em; margin-top: 2px; }
         .tech-list span { display: inline-block; padding: 4px 10px; border-radius: 4px; background: rgba(255,255,255,0.05); margin: 0 8px 8px 0; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
@@ -46,7 +46,7 @@
                 <div class="intro-cube-face front">{ }</div>
                 <div class="intro-cube-face back">&lt;/&gt;</div>
                 <div class="intro-cube-face left">λ</div>
-                <div class="intro-cube-face right">⚡</div>
+                <div class="intro-cube-face right">&gt;_</div>
                 <div class="intro-cube-face top">#</div>
                 <div class="intro-cube-face bottom">∞</div>
                 <div class="intro-ring"></div>
@@ -98,11 +98,11 @@
                     <div class="mermaid-container glass-card reveal">
                         <pre class="mermaid">
 sequenceDiagram
-    participant UI as React UI 🖥️
-    participant Server as Express Backend 💻
-    participant Github as GitHub API 🐱
-    participant AI as Groq (Llama 3) 🧠
-    participant DB as MongoDB Atlas 🗄️
+    participant UI as React UI
+    participant Server as Express Backend
+    participant Github as GitHub API
+    participant AI as Groq (Llama 3)
+    participant DB as MongoDB Atlas
 
     UI->>Server: Request Telemetry (Token)
     Server->>Github: OAuth Session / Fetch Commits

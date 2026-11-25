@@ -1,39 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>LegalEaseAI - Detail View</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x26A1;</text></svg>" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x26A1;</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" /></noscript>
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"></noscript>
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    </noscript>
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    </noscript>
     <link rel="stylesheet" href="../css/style.css" />
     <style>
-        .social-sidebar, .scroll-indicator, #experience-accordion { display: none !important; }
-        body { padding-top: 100px; }
-        .hero-backdrop, .ambient-glow { display: none !important; }
-        .submodule-return { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan); text-decoration: none; padding: 10px 0; transition: transform 0.2s; }
-        .submodule-return:hover { transform: translateX(-5px); color: var(--lime); }
-        .proj-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
-        .proj-card { background: rgba(10, 10, 10, 0.4); border: 1px solid rgba(0, 255, 65, 0.1); border-radius: 12px; padding: 24px; }
-        @media (max-width: 768px) { .proj-content-grid { grid-template-columns: 1fr; } }
-        .feature-list { list-style: none; padding: 0; }
-        .feature-list li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
-        .feature-list li:before { content: '⚡'; color: var(--cyan); font-size: 0.9em; margin-top: 2px; }
-        .tech-list span { display: inline-block; padding: 4px 10px; border-radius: 4px; background: rgba(255,255,255,0.05); margin: 0 8px 8px 0; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
+        .social-sidebar,
+        .scroll-indicator,
+        #experience-accordion {
+            display: none !important;
+        }
+
+        body {
+            padding-top: 100px;
+        }
+
+        .hero-backdrop,
+        .ambient-glow {
+            display: none !important;
+        }
+
+        .submodule-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-decoration: none;
+            padding: 10px 0;
+            transition: transform 0.2s;
+        }
+
+        .submodule-return:hover {
+            transform: translateX(-5px);
+            color: var(--lime);
+        }
+
+        .proj-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .proj-card {
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .proj-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .feature-list li:before {
+            content: '▸';
+            color: var(--cyan);
+            font-size: 0.9em;
+            margin-top: 2px;
+        }
+
+        .tech-list span {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 0 8px 8px 0;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
+
 <body class="project-body">
     <div class="hero-backdrop" style="opacity: 0.15;">
-        <div class="hero-backdrop-inner" style="background-image: url('/images/projects/legaleaseai/legalease.webp');"></div>
+        <div class="hero-backdrop-inner" style="background-image: url('/images/projects/legaleaseai/legalease.webp');">
+        </div>
     </div>
-    <div class="ambient-glow" style="position: fixed; inset: 0; z-index: -1; background: var(--spotlight-gradient); opacity: 0.6;"></div>
+    <div class="ambient-glow"
+        style="position: fixed; inset: 0; z-index: -1; background: var(--spotlight-gradient); opacity: 0.6;"></div>
     <nav>
         <div class="nav-inner" style="justify-content: space-between; padding: 12px 24px;">
             <a href="/#projects" class="submodule-return">&larr; Return to Projects</a>
@@ -46,7 +128,7 @@
                 <div class="intro-cube-face front">{ }</div>
                 <div class="intro-cube-face back">&lt;/&gt;</div>
                 <div class="intro-cube-face left">λ</div>
-                <div class="intro-cube-face right">⚡</div>
+                <div class="intro-cube-face right">&gt;_</div>
                 <div class="intro-cube-face top">#</div>
                 <div class="intro-cube-face bottom">∞</div>
                 <div class="intro-ring"></div>
@@ -61,13 +143,17 @@
     </div>
     <main id="main-content" style="max-width: 1000px; margin: 0 auto; padding: 40px 20px; position: relative;">
         <div class="glass-card reveal" style="padding: 40px; border-top: 2px solid #00ff41;">
-            
+
             <div style="text-align: center;">
-                <h1 class="section-title">LegalEaseAI <span class="status-offline"><span class="status-offline-dot"></span> Offline</span></h1>
-                <p style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; margin-top: 8px;">اردو قانونی معاون — Urdu Legal Assistant</p>
-                
+                <h1 class="section-title">LegalEaseAI <span class="status-offline"><span
+                            class="status-offline-dot"></span> Offline</span></h1>
+                <p
+                    style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; margin-top: 8px;">
+                    اردو قانونی معاون — Urdu Legal Assistant</p>
+
                 <div style="margin: 40px auto 0 auto; max-width: 800px;">
-                    <img src="/images/projects/legaleaseai/legalease.webp" alt="LegalEaseAI Interface" style="width:100%; border-radius:12px; border:1px solid rgba(0,255,65,0.2); box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+                    <img src="/images/projects/legaleaseai/legalease.webp" alt="LegalEaseAI Interface"
+                        style="width:100%; border-radius:12px; border:1px solid rgba(0,255,65,0.2); box-shadow:0 10px 30px rgba(0,0,0,0.5);">
                 </div>
             </div>
 
@@ -75,31 +161,46 @@
                 <div class="proj-card">
                     <h3 style="color: #00ff41; margin-bottom: 16px;">The Problem & Solution</h3>
                     <p style="color: var(--text-dim); line-height: 1.6;">
-                        Millions sign contracts written in dense English legalese they cannot understand, leading to exploitation. LegalEaseAI bridges this gap by allowing users to upload any legal document and receive instant, plain-Urdu explanations of every clause, color-coded risk ratings, and a full Q&A chatbot that answers questions directly from the document itself.
+                        Millions sign contracts written in dense English legalese they cannot understand, leading to
+                        exploitation. LegalEaseAI bridges this gap by allowing users to upload any legal document and
+                        receive instant, plain-Urdu explanations of every clause, color-coded risk ratings, and a full
+                        Q&A chatbot that answers questions directly from the document itself.
                     </p>
                 </div>
-                
+
                 <div class="proj-card">
                     <h3 style="color: #00ff41; margin-bottom: 16px;">Key Features</h3>
                     <ul class="feature-list" style="color: var(--text-muted); font-size: 0.95rem;">
                         <li><strong>Risk Detection:</strong> Clauses auto-classified as High, Medium, or Safe.</li>
                         <li><strong>Urdu Explanations:</strong> Plain, culturally appropriate Urdu.</li>
-                        <li><strong>RAG Chatbot:</strong> Ask anything in Urdu or English, grounded only in your document.</li>
+                        <li><strong>RAG Chatbot:</strong> Ask anything in Urdu or English, grounded only in your
+                            document.</li>
                         <li><strong>PDF Reports:</strong> Downloadable color-coded risk report.</li>
-                        <li><strong>Concurrent Processing:</strong> Heavy AI calls fire simultaneously using asyncio.</li>
+                        <li><strong>Concurrent Processing:</strong> Heavy AI calls fire simultaneously using asyncio.
+                        </li>
                     </ul>
                 </div>
 
                 <div class="proj-card" style="grid-column: 1 / -1;">
                     <h3 style="color: #00ff41; margin-bottom: 24px;">System Execution Previews</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start;">
-                        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(0,255,65,0.15); padding: 16px; border-radius: 12px;">
-                            <p style="color: var(--cyan); margin-bottom: 16px; font-weight: 600; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">Urdu Retrieval-Augmented Generation (RAG) Chatbot</p>
-                            <img src="/images/projects/legaleaseai/legalease-qa.webp" alt="QA Chatbot Interface" style="width: 100%; border-radius: 8px; border: 1px solid rgba(0,255,65,0.2);">
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start;">
+                        <div
+                            style="background: rgba(0,0,0,0.3); border: 1px solid rgba(0,255,65,0.15); padding: 16px; border-radius: 12px;">
+                            <p
+                                style="color: var(--cyan); margin-bottom: 16px; font-weight: 600; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                                Urdu Retrieval-Augmented Generation (RAG) Chatbot</p>
+                            <img src="/images/projects/legaleaseai/legalease-qa.webp" alt="QA Chatbot Interface"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(0,255,65,0.2);">
                         </div>
-                        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(0,255,65,0.15); padding: 16px; border-radius: 12px;">
-                            <p style="color: var(--cyan); margin-bottom: 16px; font-weight: 600; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">Automated Contract Risk Audit Report Engine</p>
-                            <img src="/images/projects/legaleaseai/legalease-report.webp" alt="Risk Assessment Report Outline" style="width: 100%; border-radius: 8px; border: 1px solid rgba(0,255,65,0.2);">
+                        <div
+                            style="background: rgba(0,0,0,0.3); border: 1px solid rgba(0,255,65,0.15); padding: 16px; border-radius: 12px;">
+                            <p
+                                style="color: var(--cyan); margin-bottom: 16px; font-weight: 600; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                                Automated Contract Risk Audit Report Engine</p>
+                            <img src="/images/projects/legaleaseai/legalease-report.webp"
+                                alt="Risk Assessment Report Outline"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(0,255,65,0.2);">
                         </div>
                     </div>
                 </div>
@@ -107,10 +208,17 @@
                 <div class="proj-card" style="grid-column: 1 / -1;">
                     <h3 style="color: #00ff41; margin-bottom: 16px;">Technical Architecture</h3>
                     <div style="margin-bottom: 20px; text-align: center;">
-                        <img src="/images/projects/legaleaseai/legalease-arch.webp" alt="Architecture Diagram" onerror="this.style.display='none'" style="max-width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="/images/projects/legaleaseai/legalease-arch.webp" alt="Architecture Diagram"
+                            onerror="this.style.display='none'"
+                            style="max-width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
                     </div>
                     <p style="color: var(--text-dim); margin-bottom: 16px; font-size: 0.95rem;">
-                        The backend extracts text via <code style="color: var(--cyan);">pdfplumber</code> and <code style="color: var(--cyan);">python-docx</code>, parses it using a LangChain <code style="color: var(--cyan);">RecursiveCharacterTextSplitter</code>, and indexes it with <code style="color: var(--cyan);">sentence-transformers</code> into a <code style="color: var(--cyan);">FAISS</code> vector space. It processes the text concurrently through Gemini/Groq APIs to generate Urdu insights and serve a RAG pipeline.
+                        The backend extracts text via <code style="color: var(--cyan);">pdfplumber</code> and <code
+                            style="color: var(--cyan);">python-docx</code>, parses it using a LangChain <code
+                            style="color: var(--cyan);">RecursiveCharacterTextSplitter</code>, and indexes it with <code
+                            style="color: var(--cyan);">sentence-transformers</code> into a <code
+                            style="color: var(--cyan);">FAISS</code> vector space. It processes the text concurrently
+                        through Gemini/Groq APIs to generate Urdu insights and serve a RAG pipeline.
                     </p>
                     <div class="proj-tags" style="margin-bottom: 20px; justify-content: center;">
                         <span class="acard" style="--ac:#05998B;--ag:rgba(5,153,139,0.2)">
@@ -118,15 +226,26 @@
                             <span class="acard-name">FastAPI</span>
                         </span>
                         <span class="acard" style="--ac:#10B981;--ag:rgba(16,185,129,0.2)">
-                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.334 9.873c.26-1.02.236-1.99-.067-2.799-.303-.81-.876-1.448-1.73-1.903l.022-.081c.166-.614.1-1.274-.185-1.889A3.214 3.214 0 0 0 17.8 1.938c-.6-.343-1.312-.497-2.073-.45a3.46 3.46 0 0 0-.613-.735C14.54.26 13.784 0 12.988 0c-.822 0-1.604.28-2.23.81a4.17 4.17 0 0 0-1.296 2.031 3.397 3.397 0 0 0-1.87.495A3.562 3.562 0 0 0 6.2 4.824c-.338.728-.428 1.561-.258 2.366a4.084 4.084 0 0 0-1.545 1.103c-.509.612-.806 1.365-.848 2.155-.04.77.168 1.54.591 2.198.15.231.32.447.51.642a4.047 4.047 0 0 0-.263 2.765c.303.81.876 1.447 1.73 1.902l-.022.082c-.166.614-.1 1.274.185 1.888.284.614.79 1.14 1.474 1.517.6.343 1.311.497 2.073.45.185.265.4.507.643.72.574.493 1.33.752 2.126.752.822 0 1.604-.28 2.23-.81a4.17 4.17 0 0 0 1.297-2.031 3.397 3.397 0 0 0 1.869-.495 3.562 3.562 0 0 0 1.392-1.488c.338-.728.428-1.56.258-2.366a4.084 4.084 0 0 0-1.545 1.103c.509-.612.806-1.365.848-2.155.04-.77-.168-1.54-.591-2.198a4.19 4.19 0 0 0-.51-.642z" /></svg></span>
+                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M21.334 9.873c.26-1.02.236-1.99-.067-2.799-.303-.81-.876-1.448-1.73-1.903l.022-.081c.166-.614.1-1.274-.185-1.889A3.214 3.214 0 0 0 17.8 1.938c-.6-.343-1.312-.497-2.073-.45a3.46 3.46 0 0 0-.613-.735C14.54.26 13.784 0 12.988 0c-.822 0-1.604.28-2.23.81a4.17 4.17 0 0 0-1.296 2.031 3.397 3.397 0 0 0-1.87.495A3.562 3.562 0 0 0 6.2 4.824c-.338.728-.428 1.561-.258 2.366a4.084 4.084 0 0 0-1.545 1.103c-.509.612-.806 1.365-.848 2.155-.04.77.168 1.54.591 2.198.15.231.32.447.51.642a4.047 4.047 0 0 0-.263 2.765c.303.81.876 1.447 1.73 1.902l-.022.082c-.166.614-.1 1.274.185 1.888.284.614.79 1.14 1.474 1.517.6.343 1.311.497 2.073.45.185.265.4.507.643.72.574.493 1.33.752 2.126.752.822 0 1.604-.28 2.23-.81a4.17 4.17 0 0 0 1.297-2.031 3.397 3.397 0 0 0 1.869-.495 3.562 3.562 0 0 0 1.392-1.488c.338-.728.428-1.56.258-2.366a4.084 4.084 0 0 0-1.545 1.103c.509-.612.806-1.365.848-2.155.04-.77-.168-1.54-.591-2.198a4.19 4.19 0 0 0-.51-.642z" />
+                                </svg></span>
                             <span class="acard-name">LangChain</span>
                         </span>
                         <span class="acard" style="--ac:#00c3ff;--ag:rgba(0,195,255,0.2)">
-                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45l8.15 14.1H3.85L12 5.45z" /></svg></span>
+                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L1 21h22L12 2zm0 3.45l8.15 14.1H3.85L12 5.45z" />
+                                </svg></span>
                             <span class="acard-name">FAISS</span>
                         </span>
                         <span class="acard" style="--ac:#00C3FF;--ag:rgba(0,195,255,0.2)">
-                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-check"><path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                            <span class="acard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-search-check">
+                                    <path d="m8 11 2 2 4-4" />
+                                    <circle cx="11" cy="11" r="8" />
+                                    <path d="m21 21-4.3-4.3" />
+                                </svg></span>
                             <span class="acard-name">RAG / Groq</span>
                         </span>
                         <span class="acard" style="--ac:#F7DF1E;--ag:rgba(247,223,30,0.2)">
@@ -138,12 +257,15 @@
             </div>
 
             <div style="margin-top: 40px; text-align: center; display: flex; gap: 16px; justify-content: center;">
-                <a href="https://legal-ease-ai-iota.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: rgba(0,255,65,0.1); border-color: #00ff41; color: #00ff41;">View Live App ↗</a>
-                <a href="https://github.com/Asad101001/LegalEaseAI" target="_blank" rel="noopener noreferrer" class="btn-secondary">GitHub Repo ↗</a>
+                <a href="https://legal-ease-ai-iota.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="btn-primary"
+                    style="background: rgba(0,255,65,0.1); border-color: #00ff41; color: #00ff41;">View Live App ↗</a>
+                <a href="https://github.com/Asad101001/LegalEaseAI" target="_blank" rel="noopener noreferrer"
+                    class="btn-secondary">GitHub Repo ↗</a>
             </div>
         </div>
     </main>
     <script type="module" src="/js/projects.js"></script>
 </body>
-</html>
 
+</html>

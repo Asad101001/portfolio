@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Asaaniyat - Detail View</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23121212'/><path d='M25 30 L50 50 L25 70 M52 70 L75 70' stroke='%2310B981' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
@@ -28,7 +28,7 @@
         }
         .feature-list { list-style: none; padding: 0; }
         .feature-list li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
-        .feature-list li:before { content: '🌿'; color: #10B981; font-size: 0.9em; margin-top: 2px; }
+        .feature-list li:before { content: '▸'; color: #10B981; font-size: 0.9em; margin-top: 2px; }
         .tech-list span { display: inline-block; padding: 4px 10px; border-radius: 4px; background: rgba(255,255,255,0.05); margin: 0 8px 8px 0; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
         
         /* Compact Mermaid styling */
@@ -64,7 +64,7 @@
                 <div class="intro-cube-face front">{ }</div>
                 <div class="intro-cube-face back">&lt;/&gt;</div>
                 <div class="intro-cube-face left">λ</div>
-                <div class="intro-cube-face right">⚡</div>
+                <div class="intro-cube-face right">&gt;_</div>
                 <div class="intro-cube-face top">#</div>
                 <div class="intro-cube-face bottom">∞</div>
                 <div class="intro-ring"></div>
@@ -129,15 +129,15 @@
                     <div class="mermaid-container reveal">
                         <pre class="mermaid">
 graph TD
-    Client[Client Voice/Text 🗣️] -->|API Request| Parser[1. IntentParser 🧠]
-    Parser -->|Service & Intent| Resolver[2. LocationResolver 🗺️]
-    Resolver -->|Coordinates| Discoverer[3. ProviderDiscoverer 🔍]
-    Discoverer -->|Provider Pool| Ranker[4. ProviderRanker 📊]
-    Ranker -->|Ranked Pros| Decision[5. DecisionMaker ⚖️]
-    Decision -->|Elected Provider| Pricing[6. DynamicPricing 💰]
-    Pricing -->|Final Quotation| Executor[7. BookingExecutor ⚙️]
-    Executor -->|Unique Booking ID| FollowUp[8. FollowUpManager 📡]
-    FollowUp -->|Surveys & FCM Triggers| Success[Success Confirmation 🎉]
+    Client[Client Voice/Text] -->|API Request| Parser[1. IntentParser]
+    Parser -->|Service & Intent| Resolver[2. LocationResolver]
+    Resolver -->|Coordinates| Discoverer[3. ProviderDiscoverer]
+    Discoverer -->|Provider Pool| Ranker[4. ProviderRanker]
+    Ranker -->|Ranked Pros| Decision[5. DecisionMaker]
+    Decision -->|Elected Provider| Pricing[6. DynamicPricing]
+    Pricing -->|Final Quotation| Executor[7. BookingExecutor]
+    Executor -->|Unique Booking ID| FollowUp[8. FollowUpManager]
+    FollowUp -->|Surveys & FCM Triggers| Success[Success Confirmation]
                         </pre>
                     </div>
 
@@ -186,15 +186,15 @@ graph TD
                     <h4 style="color: #10B981; margin-bottom: 24px; font-size: 1.2rem; text-align: center; margin-top: 60px;">Team & Contributions</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 60px;">
                         <div style="background: linear-gradient(145deg, rgba(16,185,129,0.05), rgba(0,0,0,0.4)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">👑 Asad <span style="background: rgba(16,185,129,0.1); color: #10B981; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">Team Lead</span></h5>
+                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">Asad <span style="background: rgba(16,185,129,0.1); color: #10B981; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">Team Lead</span></h5>
                             <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin: 0;">Architected the system, managed version control, and drove the core AI agent pipeline development.</p>
                         </div>
                         <div style="background: linear-gradient(145deg, rgba(16,185,129,0.05), rgba(0,0,0,0.4)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">⚙️ Rizwan Saeed Ellahi <span style="background: rgba(59,130,246,0.1); color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">Backend Lead</span></h5>
+                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">Rizwan Saeed Ellahi <span style="background: rgba(59,130,246,0.1); color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">Backend Lead</span></h5>
                             <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin: 0;">Anchored the robust backend infrastructure and integrated the Antigravity 8-agent dynamic logic.</p>
                         </div>
                         <div style="background: linear-gradient(145deg, rgba(16,185,129,0.05), rgba(0,0,0,0.4)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">🎨 Aun, Ahmed, & Aazmeer <span style="background: rgba(168,85,247,0.1); color: #a855f7; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">QA & UI/UX</span></h5>
+                            <h5 style="color: #fff; margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">Aun, Ahmed, & Aazmeer <span style="background: rgba(168,85,247,0.1); color: #a855f7; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">QA & UI/UX</span></h5>
                             <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin: 0;">Led rigorous QA testing, flawless deployment, UI/UX design, and provided crucial team support.</p>
                         </div>
                     </div>
