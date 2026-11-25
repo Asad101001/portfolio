@@ -89,15 +89,13 @@ section::before {
   letter-spacing: -0.04em;
 }
 
-/* Alternating section padding */
-#about .section-inner    { padding-left: 2vw; }
-#projects .section-inner { padding-right: 2vw; }
-#tech .section-inner     { padding-left: 1.5vw; }
-#contact .section-inner  { padding-right: 1.5vw; }
+/* Alternating section padding removed for normalized grid alignment */
+#about .section-inner, #projects .section-inner,
+#tech .section-inner, #contact .section-inner { padding-left: 0; padding-right: 0; }
 
-/* label-xs stamp tilt */
+/* label-xs stamp tilt reset */
 #about .label-xs, #projects .label-xs, #education .label-xs {
-  transform: rotate(-1deg); transform-origin: left; display: inline-flex;
+  transform: none; display: inline-flex;
 }
 
 /* Project cards rotation offsets removed in favor of tactile shadows */

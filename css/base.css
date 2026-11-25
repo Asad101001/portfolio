@@ -60,7 +60,7 @@ html.lenis body {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #F7F6F3 !important;
   background: #F7F6F3 !important;
   background-image: none !important;
@@ -73,7 +73,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .hero-name, .section-title, .drawer-title {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.025em;
 }
 
 /* Guard: Prevent external tools or overlay classes from permanently freezing page scroll */

@@ -36,12 +36,23 @@
     box-shadow: 0 0 10px var(--lime);
   }
 
-  /* ── Section Desktop Tuning ── */
+  /* ── Normalized Section Grid Alignment ── */
   section {
-    padding: 100px 0;
-    max-width: 1200px;
+    padding: 88px 0 76px;
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
-    width: 90%;
+    box-sizing: border-box;
+  }
+
+  .section-inner,
+  .hero-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 28px;
+    padding-right: 28px;
+    box-sizing: border-box;
   }
 
   /* ── Hero Desktop Adjustments ── */
@@ -93,8 +104,9 @@
 
 /* Extra large screens */
 @media (min-width: 1400px) {
-  section {
-    max-width: 1400px;
+  .section-inner,
+  .hero-container {
+    max-width: 1240px;
   }
   
   .hero-name {

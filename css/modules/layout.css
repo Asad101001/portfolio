@@ -1,14 +1,266 @@
-/* ── Sections & Layout ────────────────────────────────────── */
-section { padding: 80px 16px; position: relative; content-visibility: auto; contain-intrinsic-size: auto 800px; background: transparent; z-index: 2; }
-section:not(#hero) { position: relative; z-index: 2; background: transparent; }
-#hero { content-visibility: visible; contain-intrinsic-size: auto; background: transparent; z-index: 1; position: relative; }
-.section-inner { max-width: 1100px; margin: 0 auto; }
-.section-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 48px; }
-.section-header.centered { flex-direction: column; align-items: center; margin-bottom: 40px; }
-.label-xs { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: var(--cyan); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; gap: 14px; }
-.label-xs::before { content: ''; display: inline-block; width: 32px; height: 1.5px; background: #F59E0B; flex-shrink: 0; }
-.section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: var(--text, #121212); text-shadow: none; }
-.section-sub { color: var(--text-muted); font-size: 0.95rem; margin-top: 8px; text-align: center; }
-.section-num { display: none; }
-.view-all-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #B45309; font-weight: 700; padding: 7px 16px; border: 1.5px solid rgba(245, 158, 11, 0.40); border-radius: 999px; background: rgba(245, 158, 11, 0.08); transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
-.view-all-link:hover { background: #F59E0B; color: #121212; border-color: #D97706; transform: translateY(-1px); }
+/* ════════════════════════════════════════════════════════════════
+   css/modules/layout.css
+   Normalized Layout Architecture, Architectural Section Dividers
+   70-20-10 Color Pop System & Section Header Typography
+════════════════════════════════════════════════════════════════ */
+
+/* ── Universal Normalized Layout Grid ──────────────────────── */
+section {
+  width: 100%;
+  padding: 88px 0 76px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  overflow-x: clip;
+}
+
+#hero {
+  padding: 120px 0 60px;
+}
+
+.hero-container,
+.section-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: clamp(20px, 4vw, 36px);
+  padding-right: clamp(20px, 4vw, 36px);
+  box-sizing: border-box;
+}
+
+main {
+  position: relative;
+  z-index: 2;
+  overflow-x: clip;
+  width: 100%;
+}
+
+/* ── Section Dividers: Textured Architectural Datum Bridge ── */
+.section-divider { 
+  width: 100%;
+  height: 56px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; 
+  z-index: 5; 
+  margin: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 23px,
+    rgba(18, 18, 18, 0.025) 24px
+  );
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  left: clamp(20px, 5vw, 48px);
+  right: clamp(20px, 5vw, 48px);
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(18, 18, 18, 0.06) 12%, 
+    rgba(245, 158, 11, 0.50) 50%, 
+    rgba(18, 18, 18, 0.06) 88%, 
+    transparent 100%
+  );
+}
+
+.section-divider::after {
+  content: '❖';
+  font-size: 11px;
+  color: #D97706;
+  background: #F7F6F3;
+  padding: 3px 12px;
+  border: 1.5px solid rgba(245, 158, 11, 0.55);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.30);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  z-index: 2;
+}
+
+/* ── Section Header Architecture & 70-20-10 Color Pop ───────── */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 38px;
+  position: relative;
+}
+
+.section-header.centered {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Section Eyebrow: Technical Bracketed Pop Badges */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  width: fit-content;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.section-eyebrow.eyebrow-purple {
+  background: rgba(139, 92, 246, 0.10);
+  border: 1.5px solid rgba(139, 92, 246, 0.40);
+  color: #7C3AED;
+}
+.section-eyebrow.eyebrow-lime {
+  background: rgba(163, 230, 53, 0.14);
+  border: 1.5px solid rgba(163, 230, 53, 0.50);
+  color: #4D7C0F;
+}
+.section-eyebrow.eyebrow-cyan {
+  background: rgba(6, 182, 212, 0.10);
+  border: 1.5px solid rgba(6, 182, 212, 0.40);
+  color: #0284C7;
+}
+.section-eyebrow.eyebrow-pink {
+  background: rgba(236, 72, 153, 0.10);
+  border: 1.5px solid rgba(236, 72, 153, 0.40);
+  color: #DB2777;
+}
+.section-eyebrow.eyebrow-amber {
+  background: rgba(245, 158, 11, 0.10);
+  border: 1.5px solid rgba(245, 158, 11, 0.40);
+  color: #B45309;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* Main Section Title */
+.section-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.0rem, 3.8vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: #121212;
+  margin: 0;
+}
+
+/* Accurate High-Signal Section Descriptors */
+.section-desc {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  line-height: 1.62;
+  color: rgba(18, 18, 18, 0.72);
+  max-width: 680px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 10% Pop Inline Spans (The 70-20-10 Rule) */
+.sh-pop {
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.sh-pop.pop-purple {
+  background: rgba(139, 92, 246, 0.12);
+  color: #6D28D9;
+  border: 1px solid rgba(139, 92, 246, 0.30);
+}
+.sh-pop.pop-lime {
+  background: rgba(163, 230, 53, 0.18);
+  color: #3F6212;
+  border: 1px solid rgba(163, 230, 53, 0.45);
+}
+.sh-pop.pop-cyan {
+  background: rgba(6, 182, 212, 0.12);
+  color: #0369A1;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+.sh-pop.pop-pink {
+  background: rgba(236, 72, 153, 0.12);
+  color: #BE185D;
+  border: 1px solid rgba(236, 72, 153, 0.35);
+}
+.sh-pop.pop-amber {
+  background: rgba(245, 158, 11, 0.14);
+  color: #B45309;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+/* Action Links in Section Header */
+.view-all-link { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  font-size: 0.75rem; 
+  color: #7C3AED; 
+  font-weight: 700; 
+  padding: 7px 16px; 
+  border: 1.5px solid rgba(139, 92, 246, 0.40); 
+  border-radius: 999px; 
+  background: rgba(139, 92, 246, 0.08); 
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1); 
+  white-space: nowrap; 
+  font-family: 'JetBrains Mono', monospace; 
+  text-transform: uppercase; 
+  letter-spacing: 0.06em; 
+}
+.view-all-link:hover { 
+  background: #7C3AED; 
+  color: #FFFFFF; 
+  border-color: #6D28D9; 
+  transform: translateY(-1px); 
+}
+
+.section-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.section-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(18, 18, 18, 0.45);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-meta-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

@@ -22,15 +22,14 @@
     -webkit-backdrop-filter: none !important;
   }
 
-  /* ── MOBILE PERFORMANCE: content-visibility for below-fold sections ── */
-  /* Allows browser to skip rendering off-screen sections entirely */
+  /* ── MOBILE PERFORMANCE: clean rendering without jumping ── */
   #about,
   #projects,
-  #social,
-  #arsenal,
+  #contact,
+  #tech,
+  #credentials,
   #education {
-    content-visibility: auto;
-    contain-intrinsic-size: 0 800px;
+    content-visibility: visible !important;
   }
 
   /* ── Reduce glass-card hover spring animation on mobile ── */
@@ -69,7 +68,7 @@
   }
 
   section {
-    padding: 70px 16px max(120px, calc(env(safe-area-inset-bottom, 0px) + 100px)) !important;
+    padding: 60px 16px 50px !important;
     width: 100%;
     max-width: 100vw;
     margin: 0;
@@ -110,13 +109,79 @@
 
   /* ── Hero Overhaul ─────────────────────────────────────── */
   #hero {
-    /* Top nav is hidden on mobile, so less padding needed */
-    padding: 48px 0 max(140px, calc(env(safe-area-inset-bottom, 0px) + 120px)) !important;
-    min-height: 100dvh;
+    padding: 84px 16px 40px !important;
+    min-height: auto !important;
     overflow: visible !important;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-left-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-name-primary {
+    font-size: clamp(1.85rem, 7.2vw, 2.5rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.03em !important;
+    word-break: break-word !important;
+  }
+
+  .hero-statement {
+    font-size: clamp(1.05rem, 4.2vw, 1.25rem) !important;
+    line-height: 1.4 !important;
+  }
+
+  .hero-lead {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .hero-headline {
+    font-size: clamp(1.6rem, 6vw, 2.1rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  .hero-right-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-matrix-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 3px 3px 0px rgba(245, 158, 11, 0.25) !important;
+  }
+
+  .hmc-canvas-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 280px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-matrix-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 280px !important;
     box-sizing: border-box !important;
   }
 
@@ -130,7 +195,6 @@
     box-sizing: border-box !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    /* Force alignment — prevent any desktop max-width from shrinking this */
     align-self: stretch;
   }
 
@@ -313,8 +377,18 @@
   }
 
   /* ── Social Cards ─────────────────────────────────────── */
+  .social-summary-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .social-top-split-grid,
   .social-cards-grid-v2 {
     grid-template-columns: 1fr !important;
+    gap: 16px !important;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
