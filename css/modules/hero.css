@@ -36,7 +36,8 @@
   text-align: left;
 }
 
-.hero-meta-row {
+.hero-meta-row,
+.hero-eyebrow-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,16 +52,17 @@
   padding: 6px 14px;
   border-radius: 999px;
   background: rgba(245, 158, 11, 0.10);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 1.5px solid rgba(245, 158, 11, 0.38);
   color: #B45309;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.hsp-dot {
+.hsp-dot,
+.hero-status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -78,23 +80,15 @@
 }
 
 /* ── Primary Hero Name (Prominent Focus) ── */
-.hero-title-wrap {
+.hero-title-wrap,
+.hero-author-name {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
-.hero-name-primary {
-  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(2.8rem, 5.4vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: #121212;
-  margin: 0;
-}
-
-.hnp-eyebrow {
+.hnp-eyebrow,
+.hero-role-tag {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -102,9 +96,25 @@
   font-size: 0.74rem;
   font-weight: 800;
   color: #B45309;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 4px;
+}
+
+.hnp-eyebrow::before,
+.hero-role-tag::before {
+  content: '—';
+  color: #F59E0B;
+  font-weight: 900;
+}
+
+.hero-name-primary {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #121212;
+  margin: 0;
 }
 
 .hnp-full-name {
@@ -118,15 +128,57 @@
   color: #121212;
 }
 
-.hnp-last {
+.hnp-last,
+.hero-surname {
   color: #D97706;
+  display: inline-block;
   position: relative;
+  text-shadow: 0 0 24px rgba(245, 158, 11, 0.22);
+}
+
+/* Hologram Status Pill */
+.hero-holo-meta {
+  display: flex;
+  margin-top: 2px;
+}
+
+.hero-holo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px dashed rgba(245, 158, 11, 0.45);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #B45309;
+}
+
+.hhp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.hhp-coords {
+  color: rgba(18, 18, 18, 0.48);
+  font-weight: 500;
 }
 
 /* Hero Statement (Sub-headline) */
+.hero-statement-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .hero-statement {
   font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.42rem);
   font-weight: 700;
   line-height: 1.35;
   color: #121212;
@@ -140,58 +192,111 @@
   display: inline-block;
 }
 
-.hh-accent {
+.hh-accent,
+.hero-statement-accent {
   color: #D97706;
-  position: relative;
-  display: inline-block;
+  font-weight: 800;
 }
 
 .hero-lead {
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  line-height: 1.62;
+  font-size: clamp(0.92rem, 1.2vw, 1.02rem);
+  line-height: 1.6;
   color: rgba(18, 18, 18, 0.72);
   font-weight: 500;
-  max-width: 580px;
+  max-width: 540px;
   margin: 0;
 }
 
 .hero-action-buttons {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
   margin-top: 6px;
 }
 
-.hero-social-sublinks {
+.btn-primary.hero-cta-work,
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: #121212;
+  color: #FFFFFF !important;
+  border: 1.5px solid #F59E0B;
+  box-shadow: 3px 3px 0px #F59E0B;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-primary.hero-cta-work:hover,
+.hero-btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #F59E0B;
+}
+
+.btn-secondary.hero-cta-resume,
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #121212 !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.20);
+  box-shadow: 3px 3px 0px rgba(18, 18, 18, 0.12);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.btn-secondary.hero-cta-resume:hover,
+.hero-btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px rgba(18, 18, 18, 0.25);
+  border-color: #121212;
+}
+
+.hero-social-sublinks,
+.hero-sublinks {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 10px;
-  padding-top: 14px;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid rgba(18, 18, 18, 0.10);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: rgba(18, 18, 18, 0.65);
 }
 
-.h-sublink {
+.h-sublink,
+.hero-sublink {
   color: rgba(18, 18, 18, 0.7);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  font-size: 0.76rem;
+  transition: color 0.18s ease, transform 0.18s ease;
 }
 
-.h-sublink:hover {
+.h-sublink:hover,
+.hero-sublink:hover {
   color: #B45309;
   transform: translateY(-1px);
 }
 
-.h-sublink-dot {
+.h-sublink-dot,
+.hero-sublink-sep {
   color: rgba(18, 18, 18, 0.25);
   font-size: 0.7rem;
 }
