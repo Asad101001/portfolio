@@ -1,81 +1,133 @@
 <!-- ════════════════════════════════════════════
-         EDUCATION SECTION
-         components/education.html
-    ════════════════════════════════════════════ -->
-    <div class="section-divider"></div>
-    <section id="education" class="section-in">
-        <div class="ambient-glow"></div>
-        <div class="section-inner">
-            <div class="section-header">
-                <div>
-                    <p class="label-xs">Background</p>
-                    <h2 class="section-title">Education</h2>
+     EDUCATION SECTION
+     components/education.html
+     Staircase / Staggered Timeline with Semester Progress
+════════════════════════════════════════════ -->
+<div class="section-divider"></div>
+<section id="education" class="section-in">
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="section-inner">
+        
+        <div class="section-header">
+            <div class="section-header-left">
+                <span class="section-eyebrow eyebrow-amber">
+                    <span class="eyebrow-dot"></span>
+                    [ 06 // ACADEMIC_TRAJECTORY ]
+                </span>
+                <h2 class="section-title">Academic Progression</h2>
+                <p class="section-desc">
+                    Formal Computer Science foundations @ UBIT &middot; <span class="sh-pop pop-amber">Semester IV Completed (50% Milestone)</span> with high focus on systems &amp; algorithms.
+                </p>
+            </div>
+        </div>
+
+        <!-- ── Staircase / Staggered Timeline ── -->
+        <div class="education-staircase reveal">
+            
+            <!-- 1. UBIT BS CS (Starts at x=0) -->
+            <div class="edu-stair-item">
+                <div class="edu-stair-dot current" aria-hidden="true"></div>
+                <div class="edu-stair-card glass-card">
+                    <div class="edu-card-top">
+                        <time class="edu-year" datetime="2025/2028">2025 &ndash; Present</time>
+                        <span class="edu-status-badge in-progress">IN PROGRESS (50%)</span>
+                    </div>
+                    <h3 class="edu-degree">B.S Computer Science</h3>
+                    <div class="edu-inst-row">
+                        <span class="edu-logo-wrap" title="UBIT">
+                            <img src="/images/institutions/ubit.webp" alt="UBIT Logo" width="24" height="24" loading="lazy" decoding="async" />
+                        </span>
+                        <p class="edu-inst-name">Department of Computer Science UBIT, University of Karachi</p>
+                    </div>
+                    <div class="edu-progress-bar-wrap">
+                        <div class="edu-progress-bar-fill active" style="width: 50%;"></div>
+                    </div>
                 </div>
             </div>
-            <div class="timeline reveal">
-                <div class="timeline-item">
-                    <div class="tl-dot"></div>
-                    <div class="tl-card glass-card">
-                        <div class="tl-progress-wrap">
-                            <time class="tl-year" datetime="2025/2028">2025 – Present</time>
-                            <span class="tl-status-tag">In Progress (25%)</span>
-                        </div>
-                        <h3 class="tl-degree">B.S Computer Science</h3>
-                        <div class="tl-inst-row">
-                            <span class="tl-logo" style="background:rgba(0,255,65,0.1);color:var(--cyan)"
-                                title="University of Karachi / UBIT">
-                                <img src="./images/institutions/ubit.webp" alt="UBIT" loading="lazy" decoding="async" width="24" height="24"
-                                    style="width:24px;height:24px;border-radius:4px;object-fit:cover;" />
-                            </span>
-                            <p class="tl-inst">Department of Computer Science UBIT, University of Karachi</p>
-                        </div>
-                        <div class="tl-mini-progress">
-                            <div class="tl-mini-progress-fill" style="width: 25%"></div>
-                        </div>
+
+            <!-- 2. Intermediate (Staggered Right) -->
+            <div class="edu-stair-item">
+                <div class="edu-stair-dot completed" aria-hidden="true"></div>
+                <div class="edu-stair-card glass-card">
+                    <div class="edu-card-top">
+                        <time class="edu-year" datetime="2023/2024">2023 &ndash; 2024</time>
+                        <span class="edu-status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="edu-degree">Intermediate (Pre-Engineering)</h3>
+                    <div class="edu-inst-row">
+                        <span class="edu-logo-wrap" title="Govt. Degree College">
+                            <img src="/images/institutions/college.webp" alt="College Logo" width="24" height="24" loading="lazy" decoding="async" />
+                        </span>
+                        <p class="edu-inst-name">Govt. Degree Science/Commerce College, Gulshan Block 7</p>
+                    </div>
+                    <div class="edu-progress-bar-wrap">
+                        <div class="edu-progress-bar-fill completed" style="width: 100%;"></div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="tl-dot"></div>
-                    <div class="tl-card glass-card">
-                        <div class="tl-progress-wrap">
-                            <time class="tl-year" datetime="2023/2024">2023 – 2024</time>
-                            <!-- <span class="tl-status-tag completed">Completed</span> -->
-                        </div>
-                        <h3 class="tl-degree">Intermediate (Pre-Engineering)</h3>
-                        <div class="tl-inst-row">
-                            <span class="tl-logo" style="background:rgba(168,85,247,0.1);color:#a855f7"
-                                title="Govt. Degree College">
-                                <img src="./images/institutions/college.webp" alt="College" loading="lazy" decoding="async" width="24" height="24"
-                                    style="width:24px;height:24px;border-radius:4px;object-fit:cover;" />
-                            </span>
-                            <p class="tl-inst">Govt. Degree Science/Commerce College, Gulshan Block 7</p>
-                        </div>
-                        <div class="tl-mini-progress">
-                            <div class="tl-mini-progress-fill completed" style="width: 100%"></div>
-                        </div>
+            </div>
+
+            <!-- 3. Matric (Staggered Further Right) -->
+            <div class="edu-stair-item">
+                <div class="edu-stair-dot completed" aria-hidden="true"></div>
+                <div class="edu-stair-card glass-card">
+                    <div class="edu-card-top">
+                        <time class="edu-year" datetime="2009/2022">2009 &ndash; 2022</time>
+                        <span class="edu-status-badge completed">COMPLETED</span>
+                    </div>
+                    <h3 class="edu-degree">Matric (SSC)</h3>
+                    <div class="edu-inst-row">
+                        <span class="edu-logo-wrap" title="Karachi Public School">
+                            <img src="/images/institutions/kps.webp" alt="KPS Logo" width="24" height="24" loading="lazy" decoding="async" />
+                        </span>
+                        <p class="edu-inst-name">Karachi Public School</p>
+                    </div>
+                    <div class="edu-progress-bar-wrap">
+                        <div class="edu-progress-bar-fill completed" style="width: 100%;"></div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="tl-dot"></div>
-                    <div class="tl-card glass-card">
-                        <div class="tl-progress-wrap">
-                            <time class="tl-year" datetime="2009/2022">2009 – 2022</time>
-                            <!-- <span class="tl-status-tag completed">Completed</span> -->
-                        </div>
-                        <h3 class="tl-degree">Matric (SSC)</h3>
-                        <div class="tl-inst-row">
-                            <span class="tl-logo" style="background:rgba(249,115,22,0.1);color:#f97316"
-                                title="Karachi Public School">
-                                <img src="./images/institutions/kps.webp" alt="KPS" loading="lazy" decoding="async" width="24" height="24"
-                                    style="width:24px;height:24px;border-radius:4px;object-fit:cover;" />
-                            </span>
-                            <p class="tl-inst">Karachi Public School</p>
-                        </div>
-                        <div class="tl-mini-progress">
-                            <div class="tl-mini-progress-fill completed" style="width: 100%"></div>
-                        </div>
+            </div>
+
+        </div><!-- /.education-staircase -->
+
+        <!-- ── Current Focus & Active Engineering ── -->
+        <div class="edu-focus-strip reveal">
+            <div class="focus-strip-header">
+                <div class="fsh-title-wrap">
+                    <span class="fsh-pulse"></span>
+                    <h4 class="fsh-title">Concurrent Engineering Focus</h4>
+                </div>
+                <span class="fsh-tag">SEMESTER 4 COMPLETED &middot; ACTIVE LABS</span>
+            </div>
+            <div class="focus-strip-grid">
+                <div class="focus-mini-card">
+                    <div class="fmc-icon" style="color: #F59E0B; background: rgba(245, 158, 11, 0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4v1H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2v1a4 4 0 0 0 8 0v-1h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4Z"/></svg>
+                    </div>
+                    <div class="fmc-text">
+                        <strong class="fmc-name">LLM Pipeline v2</strong>
+                        <p class="fmc-desc">Hybrid RAG chunking &amp; multi-agent dispatch</p>
+                    </div>
+                </div>
+                <div class="focus-mini-card">
+                    <div class="fmc-icon" style="color: #10B981; background: rgba(16, 185, 129, 0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9.9 7.7-2.8 8.6M14.1 7.7l2.8 8.6"/></svg>
+                    </div>
+                    <div class="fmc-text">
+                        <strong class="fmc-name">Advanced DSA in C++</strong>
+                        <p class="fmc-desc">Graph algorithms &amp; amortized time complexity</p>
+                    </div>
+                </div>
+                <div class="focus-mini-card">
+                    <div class="fmc-icon" style="color: #8B5CF6; background: rgba(139, 92, 246, 0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <div class="fmc-text">
+                        <strong class="fmc-name">Queuing Systems (C#)</strong>
+                        <p class="fmc-desc">Multi-server queues &amp; stochastic simulations</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+    </div><!-- /.section-inner -->
+</section>

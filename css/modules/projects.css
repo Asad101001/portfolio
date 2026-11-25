@@ -92,12 +92,212 @@
 .risk-yellow { color: #fbbf24; font-weight: 700; }
 .risk-green  { color: #4ade80; font-weight: 700; }
 
-@media (min-width: 721px) {
-  .projects-grid .project-card:nth-child(5) {
-    grid-column: 1 / -1;
-    width: calc(50% - 10px);
-    margin: 0 auto;
-    max-width: none;
-    justify-self: center;
+/* ── Alternating Case Studies ───────────────────────────────── */
+.case-studies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-bottom: 48px;
+}
+
+.case-study-card {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: center;
+  padding: 24px;
+  border-radius: var(--radius-lg, 16px);
+  background: var(--surface, #FFFFFF);
+  border: 1.5px solid var(--border, rgba(18, 18, 18, 0.12));
+  box-shadow: 4px 4px 0px rgba(245, 158, 11, 0.25);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.case-study-card:hover {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 5px 5px 0px #F59E0B;
+  transform: translate(-1px, -1px);
+}
+
+.case-study-card.reverse {
+  grid-template-columns: 1fr 1.15fr;
+}
+
+.case-study-card .cs-img-col {
+  width: 100%;
+}
+
+.case-study-card .cs-img-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 280px;
+  border: 1px solid var(--border, rgba(18, 18, 18, 0.10));
+}
+
+.case-study-card .cs-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.case-study-card:hover .cs-img {
+  transform: scale(1.03);
+}
+
+.case-study-card .cs-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cs-header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cs-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #F59E0B;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cs-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text, #121212);
+  line-height: 1.2;
+}
+
+.cs-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, rgba(18, 18, 18, 0.72));
+  line-height: 1.65;
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border, rgba(18, 18, 18, 0.10));
+}
+
+/* Compact Projects Table */
+.compact-projects-wrap {
+  margin-top: 36px;
+}
+
+.compact-projects-heading {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted, rgba(18, 18, 18, 0.65));
+  margin-bottom: 12px;
+}
+
+.compact-projects-table {
+  border-radius: var(--radius-lg, 16px);
+  border: 1.5px solid var(--border, rgba(18, 18, 18, 0.12));
+  box-shadow: 3px 3px 0px rgba(245, 158, 11, 0.2);
+  background: var(--surface, #FFFFFF);
+  overflow: hidden;
+}
+
+.cp-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1.1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border, rgba(18, 18, 18, 0.10));
+  transition: background 0.2s ease;
+}
+
+.cp-row:last-child {
+  border-bottom: none;
+}
+
+.cp-row:hover {
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.cp-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.cp-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text, #121212);
+}
+
+.cp-badge-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6366f1;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.cp-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(18, 18, 18, 0.65));
+  line-height: 1.45;
+}
+
+.cp-col-tech {
+  font-size: 0.78rem;
+  color: var(--text-muted, rgba(18, 18, 18, 0.65));
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cp-col-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .case-study-card,
+  .case-study-card.reverse {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+  .case-study-card .cs-img-wrap {
+    height: 190px;
+  }
+  .case-study-card.reverse .cs-body {
+    order: 2;
+  }
+  .case-study-card.reverse .cs-img-col {
+    order: 1;
+  }
+  .cp-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
   }
 }

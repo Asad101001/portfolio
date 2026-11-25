@@ -349,6 +349,66 @@ i[class*="devicon-"].colored {
   .arsenal-stats { gap: 18px; padding: 14px 20px; }
 }
 
+@media (max-width: 680px) {
+  .arsenal-filter-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding: 6px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    margin-top: 4px;
+    gap: 6px;
+  }
+  .arsenal-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .af-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    font-size: 0.68rem;
+  }
+  .arsenal-domain-header {
+    padding: 12px 14px;
+  }
+  .adom-tag {
+    font-size: 0.74rem;
+    padding: 2px 7px;
+  }
+  .adom-count {
+    font-size: 0.65rem;
+  }
+  .arsenal-row {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+  .acard {
+    padding: 7px 8px;
+    min-width: 38px;
+  }
+  .acard-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .acard-icon i {
+    font-size: 1.25rem !important;
+  }
+  .arsenal-stats {
+    gap: 12px;
+    padding: 10px 14px;
+  }
+  .astat-num {
+    font-size: 1.1rem;
+  }
+  .astat-lbl {
+    font-size: 0.58rem;
+  }
+}
+
 /* Organic Floating Animation */
 @keyframes skill-float {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }

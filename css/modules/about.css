@@ -20,3 +20,143 @@
 /* GPU-composited: scaleX avoids layout triggers vs width animation */
 .wip-bar { height: 100%; border-radius: 99px; background: var(--clr, var(--cyan)); width: var(--pct, 0%); box-shadow: 0 0 6px var(--clr, var(--cyan)); transform: scaleX(0); transform-origin: left; will-change: transform; animation: wip-fill 1.4s cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 0.5s; }
 @keyframes wip-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ── Section 03: About & Skills 2-Column Layout ────────────────── */
+.about-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.about-col,
+.skills-col {
+  padding: 32px 28px;
+  border-radius: var(--radius-lg, 16px);
+  background: var(--surface, #FFFFFF);
+  border: 1.5px solid var(--border, rgba(18, 18, 18, 0.12));
+  box-shadow: var(--card-shadow, 4px 4px 0px #F59E0B);
+  display: flex;
+  flex-direction: column;
+}
+
+.about-col-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text, #121212);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.about-lead {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--text, #121212);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.about-body-p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-muted, rgba(18, 18, 18, 0.72));
+  margin-bottom: 24px;
+}
+
+.about-stats-inline {
+  display: flex;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border, rgba(18, 18, 18, 0.12));
+  margin-top: auto;
+}
+
+.asi-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cyan, #F59E0B);
+  display: block;
+}
+
+.asi-lbl {
+  font-size: 0.75rem;
+  color: var(--text-dim, rgba(18, 18, 18, 0.42));
+}
+
+.skills-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.skill-category-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted, rgba(18, 18, 18, 0.65));
+}
+
+.sc-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 860px) {
+  .about-skills-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-col,
+  .skills-col {
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+  .about-lead {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+  .about-body-p {
+    font-size: 0.86rem;
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .about-stats-inline {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 16px;
+  }
+  .currently-into-card {
+    padding: 18px 16px !important;
+  }
+  .currently-into-thumb,
+  .currently-into-thumb-placeholder {
+    width: 68px !important;
+    height: 96px !important;
+  }
+  .currently-into-value {
+    font-size: 0.96rem !important;
+  }
+  .github-widget-header {
+    padding: 12px 16px !important;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .commit-grid-footer {
+    padding: 10px 16px !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+}

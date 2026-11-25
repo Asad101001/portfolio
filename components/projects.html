@@ -1,16 +1,24 @@
 <!-- ════════════════════════════════════════════
-         PROJECTS SECTION
-         components/projects.html
-    ════════════════════════════════════════════ -->
-    <div class="section-divider"></div>
-    <section id="projects" class="section-in">
-        <div class="ambient-glow"></div>
-        <div class="section-inner">
-            <div class="section-header">
-                <div>
-                    <p class="label-xs">Work</p>
-                    <h2 class="section-title">Projects</h2>
-                </div>
+     PROJECTS / SELECTED WORK SECTION
+     components/projects.html
+     3 case studies, then a compact list
+════════════════════════════════════════════ -->
+<div class="section-divider"></div>
+<section id="projects" class="section-in">
+    <div class="ambient-glow"></div>
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-header-left">
+                <span class="section-eyebrow eyebrow-purple">
+                    <span class="eyebrow-dot"></span>
+                    [ 02 // PRODUCTION_SYSTEMS ]
+                </span>
+                <h2 class="section-title">Featured Architectures</h2>
+                <p class="section-desc">
+                    Engineered from ground up: <span class="sh-pop pop-purple">autonomous multi-agent orchestration</span>, <span class="sh-pop pop-lime">distributed vector pipelines</span>, and resilient cloud architectures.
+                </p>
+            </div>
+            <div class="section-meta-right">
                 <a href="https://github.com/Asad101001?tab=repositories" target="_blank" rel="noopener noreferrer"
                     class="view-all-link">
                     All Repositories
@@ -22,13 +30,16 @@
                     </svg>
                 </a>
             </div>
+        </div>
 
-            <div class="projects-grid stagger">
+        <!-- ── 3 Featured Case Studies (Alternating Layout) ── -->
+        <div class="case-studies-list">
 
-                <!-- Asaaniyat -->
-                <article class="project-card glass-card reveal">
-                    <div class="proj-img-wrap" style="background:linear-gradient(135deg,#10B98118,#18181b)">
-                        <img src="/images/projects/asaaniyat/asaaniyat.webp" alt="Asaaniyat screenshot" class="proj-img" width="600" height="340" loading="lazy" decoding="async"
+            <!-- Case Study 1: Asaaniyat (Image Left, Content Right) -->
+            <article class="case-study-card glass-card reveal">
+                <div class="cs-img-col">
+                    <div class="cs-img-wrap" style="background:linear-gradient(135deg,#10B98118,#18181b)">
+                        <img src="/images/projects/asaaniyat/asaaniyat.webp" alt="Asaaniyat screenshot" class="cs-img" width="600" height="340" loading="lazy" decoding="async"
                             onerror="this.style.display='none';var p=this.parentNode.querySelector('.proj-img-placeholder');if(p)p.style.display='flex'" />
                         <div class="proj-img-placeholder" style="display:none">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
@@ -36,154 +47,103 @@
                                 <path d="M12 2v20M2 12h20M12 5l-7 7 7 7M12 5l7 7-7 7" />
                             </svg>
                         </div>
-                        <div class="proj-img-overlay"></div>
                     </div>
-                    <a href="/projects/asaaniyat.html" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(90deg, rgba(16,185,129,0.15), transparent); padding: 8px 16px; border-bottom: 1px solid rgba(16,185,129,0.1); border-top: 1px solid rgba(16,185,129,0.05); color: #10B981; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='linear-gradient(90deg, rgba(16,185,129,0.25), transparent)'" onmouseout="this.style.background='linear-gradient(90deg, rgba(16,185,129,0.15), transparent)'">
-                        <span style="font-size: 1rem;">🔍</span> View More Details
-                    </a>
-                    <div class="proj-body">
-                        <div class="proj-head">
-                            <div class="proj-icon"
-                                style="background:linear-gradient(135deg,#10B98130,#10B98110);color:#10B981">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu"><rect class="draw-path" pathLength="1" x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect class="draw-path-slow" pathLength="1" x="9" y="9" width="6" height="6"/><path class="draw-path" pathLength="1" d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="proj-title">Asaaniyat</h3>
-                                <p class="proj-live"><span style="opacity:0.55; cursor:not-allowed; display:inline-flex; align-items:center; gap:5px;" title="Backend currently offline">asaaniyat-admin.vercel.app <span style="font-size:0.65rem; background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); border-radius:3px; padding:1px 5px; font-weight:700;">OFFLINE</span></span></p>
-                            </div>
-                        </div>
-                        <p class="proj-desc">
-                            An agentic AI mobile orchestrator organizing Pakistan's informal economy. Features a custom 8-agent pipeline automating intent parsing from Roman Urdu voice inputs, provider discovery, and dynamic pricing.
-                        </p>
-                        <div class="proj-tags">
-                            <span class="acard" style="--ac:#61DAFB;--ag:rgba(97,218,251,0.2)">
-                                <span class="acard-icon"><i class="devicon-react-original colored"></i></span>
-                                <span class="acard-name">React Native</span>
-                            </span>
-                            <span class="acard" style="--ac:#339933;--ag:rgba(51,153,51,0.2)">
-                                <span class="acard-icon"><i class="devicon-nodejs-plain colored"></i></span>
-                                <span class="acard-name">Express API</span>
-                            </span>
-                            <span class="acard" style="--ac:#47A248;--ag:rgba(71,162,72,0.2)">
-                                <span class="acard-icon"><i class="devicon-mongodb-plain colored"></i></span>
-                                <span class="acard-name">MongoDB</span>
-                            </span>
-                            <span class="acard" style="--ac:#F75049;--ag:rgba(247,80,73,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#F75049" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot" style="width: 14px; height: 14px; vertical-align: middle;"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
-                                <span class="acard-name">Llama 3.3 / Gemini</span>
-                            </span>
-                            <span class="acard" style="--ac:#f500ff;--ag:rgba(245,0,255,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#f500ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard" style="width: 14px; height: 14px; vertical-align: middle;"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
-                                <span class="acard-name">Vite Admin</span>
-                            </span>
-                            <span class="acard" style="--ac:#4285F4;--ag:rgba(66,133,244,0.2)">
-                                <span class="acard-icon"><i class="devicon-googlecloud-plain colored"></i></span>
-                                <span class="acard-name">Google Cloud Run</span>
-                            </span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/Asad101001/Asaaniyat" target="_blank" rel="noopener noreferrer" class="proj-link-code">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
-                                Code
-                            </a>
-                            <span class="proj-link-demo" style="opacity:0.45; cursor:not-allowed; pointer-events:none; filter:grayscale(1);" title="Backend currently offline">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
-                                Dashboard (Offline)
-                            </span>
-                            <a href="https://github.com/Asad101001/Asaaniyat/releases" target="_blank" rel="noopener noreferrer" class="proj-link-demo">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                Download APK
-                            </a>
-                        </div>
+                </div>
+                <div class="cs-body">
+                    <div class="cs-header-meta">
+                        <span class="cs-number">01 &middot; Featured Case Study</span>
+                        <span class="status-offline" style="margin:0;"><span class="status-offline-dot"></span> Backend Offline</span>
                     </div>
-                </article>
+                    <h3 class="cs-title">Asaaniyat</h3>
+                    <p class="cs-desc">
+                        An agentic AI mobile orchestrator organizing Pakistan's informal economy. Features a custom 8-agent pipeline automating intent parsing from Roman Urdu voice inputs, provider discovery, and dynamic pricing.
+                    </p>
+                    <div class="cs-tags">
+                        <span class="acard" style="--ac:#61DAFB;--ag:rgba(97,218,251,0.2)">
+                            <span class="acard-icon"><i class="devicon-react-original colored"></i></span>
+                            <span class="acard-name">React Native</span>
+                        </span>
+                        <span class="acard" style="--ac:#F75049;--ag:rgba(247,80,73,0.2)">
+                            <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#F75049" stroke-width="2" width="14" height="14"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/></svg></span>
+                            <span class="acard-name">Llama 3.3</span>
+                        </span>
+                        <span class="acard" style="--ac:#4285F4;--ag:rgba(66,133,244,0.2)">
+                            <span class="acard-icon"><i class="devicon-googlecloud-plain colored"></i></span>
+                            <span class="acard-name">Cloud Run</span>
+                        </span>
+                        <span class="acard" style="--ac:#339933;--ag:rgba(51,153,51,0.2)">
+                            <span class="acard-icon"><i class="devicon-nodejs-plain colored"></i></span>
+                            <span class="acard-name">Express API</span>
+                        </span>
+                        <span class="acard" style="--ac:#47A248;--ag:rgba(71,162,72,0.2)">
+                            <span class="acard-icon"><i class="devicon-mongodb-plain colored"></i></span>
+                            <span class="acard-name">MongoDB</span>
+                        </span>
+                    </div>
+                    <div class="cs-actions">
+                        <a href="/projects/asaaniyat.html" target="_blank" rel="noopener noreferrer" class="proj-link-demo">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            View Details
+                        </a>
+                        <a href="https://github.com/Asad101001/Asaaniyat" target="_blank" rel="noopener noreferrer" class="proj-link-code">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+                            Code
+                        </a>
+                        <a href="https://github.com/Asad101001/Asaaniyat/releases" target="_blank" rel="noopener noreferrer" class="proj-link-code">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Download APK
+                        </a>
+                    </div>
+                </div>
+            </article>
 
-                <!-- Mogscope -->
-                <article class="project-card glass-card reveal">
-                    <div class="proj-img-wrap" style="background:linear-gradient(135deg,#6366f118,#18181b)">
-                        <img src="/images/projects/mogscope/mogscope.webp" alt="Mogscope screenshot" class="proj-img" width="600" height="340" loading="lazy" decoding="async"
-                            onerror="this.style.display='none';var p=this.parentNode.querySelector('.proj-img-placeholder');if(p)p.style.display='flex'" />
-                        <div class="proj-img-placeholder" style="display:none">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.45">
-                                <path d="M12 2v20M2 12h20M12 5l-7 7 7 7M12 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                        <div class="proj-img-overlay"></div>
+            <!-- Case Study 2: LegalEaseAI (Content Left, Image Right) -->
+            <article class="case-study-card reverse glass-card reveal">
+                <div class="cs-body">
+                    <div class="cs-header-meta">
+                        <span class="cs-number">02 &middot; Featured Case Study</span>
+                        <span class="status-tag-active" style="font-size:0.65rem; background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.3); border-radius:4px; padding:2px 8px; font-weight:700;">Demo Available</span>
                     </div>
-                    <a href="/projects/mogscope.html" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(90deg, rgba(99,102,241,0.15), transparent); padding: 8px 16px; border-bottom: 1px solid rgba(99,102,241,0.1); border-top: 1px solid rgba(99,102,241,0.05); color: #818cf8; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='linear-gradient(90deg, rgba(99,102,241,0.25), transparent)'" onmouseout="this.style.background='linear-gradient(90deg, rgba(99,102,241,0.15), transparent)'">
-                        <span style="font-size: 1rem;">🔍</span> View More Details
-                    </a>
-                    <div class="proj-body">
-                        <div class="proj-head">
-                            <div class="proj-icon"
-                                style="background:linear-gradient(135deg,#6366f130,#6366f110);color:#818cf8">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="draw-path" pathLength="1" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle class="draw-path-slow" pathLength="1" cx="12" cy="12" r="3"></circle></svg>
-                            </div>
-                            <div>
-                                <h3 class="proj-title">Mogscope</h3>
-                                <p class="proj-live"><a href="https://mogscope.vercel.app/" target="_blank"
-                                        rel="noopener noreferrer">mogscope.vercel.app ↗</a></p>
-                            </div>
-                        </div>
-                        <p class="proj-desc">
-                            Facial analytics platform using face-api.js for 68-point landmark detection. Combines ML insights with LLM-generated satirical analysis and voice synthesis.
-                        </p>
-                        <div class="proj-tags">
-                            <span class="acard" style="--ac:#61DAFB;--ag:rgba(97,218,251,0.2)">
-                                <span class="acard-icon"><i class="devicon-react-original colored"></i></span>
-                                <span class="acard-name">React</span>
-                            </span>
-                            <span class="acard" style="--ac:#06B6D4;--ag:rgba(6,182,212,0.2)">
-                                <span class="acard-icon"><i class="devicon-tailwindcss-original colored"></i></span>
-                                <span class="acard-name">Tailwind</span>
-                            </span>
-                            <span class="acard" style="--ac:#ffffff;--ag:rgba(255,255,255,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L2.1 5.7v12.6L12 24l9.9-5.7V5.7L12 0zm0 3.2L18.8 7v10L12 20.8 5.2 17V7L12 3.2z"/></svg></span>
-                                <span class="acard-name">Three.js</span>
-                            </span>
-                            <span class="acard" style="--ac:#f75049;--ag:rgba(247,80,73,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M14.4 7.2l4.8 4.8-4.8 4.8-1.4-1.4 3.4-3.4-3.4-3.4 1.4-1.4zm-4.8 0l1.4 1.4-3.4 3.4 3.4 3.4-1.4 1.4-4.8-4.8 4.8-4.8zM0 12l12-12 12 12-12 12L0 12z"/></svg></span>
-                                <span class="acard-name">Groq AI</span>
-                            </span>
-                            <span class="acard" style="--ac:#FF6F00;--ag:rgba(255,111,0,0.2)">
-                                <span class="acard-icon"><i class="devicon-tensorflow-original colored"></i></span>
-                                <span class="acard-name">TensorFlow</span>
-                            </span>
-                            <span class="acard" style="--ac:#f500ff;--ag:rgba(245,0,255,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l12 12-12 12L0 12 12 0z"/></svg></span>
-                                <span class="acard-name">Framer</span>
-                            </span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/Asad101001/mogscope" target="_blank" rel="noopener noreferrer"
-                                class="proj-link-code">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                                </svg>
-                                Code
-                            </a>
-                            <a href="https://mogscope.vercel.app/" target="_blank" rel="noopener noreferrer"
-                                class="proj-link-demo">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M15 3h6v6" />
-                                    <path d="M10 14 21 3" />
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                </svg>
-                                Live Demo
-                            </a>
-                        </div>
+                    <h3 class="cs-title">LegalEaseAI</h3>
+                    <p class="cs-desc">
+                        Upload contracts for rapid AI risk-rating. Provides plain Urdu explanations, a RAG-powered document chatbot, and downloadable PDF reports. Powered by FastAPI and LangChain.
+                    </p>
+                    <div class="cs-tags">
+                        <span class="acard" style="--ac:#05998B;--ag:rgba(5,153,139,0.2)">
+                            <span class="acard-icon"><i class="devicon-fastapi-plain colored"></i></span>
+                            <span class="acard-name">FastAPI</span>
+                        </span>
+                        <span class="acard" style="--ac:#10B981;--ag:rgba(16,185,129,0.2)">
+                            <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M21.334 9.873c.26-1.02.236-1.99-.067-2.799-.303-.81-.876-1.448-1.73-1.903l.022-.081c.166-.614.1-1.274-.185-1.889A3.214 3.214 0 0 0 17.8 1.938c-.6-.343-1.312-.497-2.073-.45a3.46 3.46 0 0 0-.613-.735C14.54.26 13.784 0 12.988 0c-.822 0-1.604.28-2.23.81a4.17 4.17 0 0 0-1.296 2.031 3.397 3.397 0 0 0-1.87.495A3.562 3.562 0 0 0 6.2 4.824c-.338.728-.428 1.561-.258 2.366a4.084 4.084 0 0 0-1.545 1.103c-.509.612-.806 1.365-.848 2.155-.04.77.168 1.54.591 2.198.15.231.32.447.51.642a4.047 4.047 0 0 0-.263 2.765c.303.81.876 1.447 1.73 1.902l-.022.082c-.166.614-.1 1.274.185 1.888.284.614.79 1.14 1.474 1.517.6.343 1.311.497 2.073.45.185.265.4.507.643.72.574.493 1.33.752 2.126.752.822 0 1.604-.28 2.23-.81a4.17 4.17 0 0 0 1.297-2.031 3.397 3.397 0 0 0 1.869-.495 3.562 3.562 0 0 0 1.392-1.488c.338-.728.428-1.56.258-2.366a4.084 4.084 0 0 0-1.545 1.103c.509-.612.806-1.365.848-2.155.04-.77-.168-1.54-.591-2.198a4.19 4.19 0 0 0-.51-.642z" /></svg></span>
+                            <span class="acard-name">LangChain</span>
+                        </span>
+                        <span class="acard" style="--ac:#00c3ff;--ag:rgba(0,195,255,0.2)">
+                            <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2L1 21h22L12 2zm0 3.45l8.15 14.1H3.85L12 5.45z" /></svg></span>
+                            <span class="acard-name">FAISS</span>
+                        </span>
+                        <span class="acard" style="--ac:#3776AB;--ag:rgba(55,118,171,0.2)">
+                            <span class="acard-icon"><i class="devicon-python-plain colored"></i></span>
+                            <span class="acard-name">Python</span>
+                        </span>
                     </div>
-                </article>
-
-                <!-- LegalEaseAI -->
-                <article class="project-card glass-card reveal">
-                    <div class="proj-img-wrap" style="background:linear-gradient(135deg,#00ff4118,#18181b)">
-                        <img src="/images/projects/legaleaseai/legalease.webp" alt="LegalEaseAI screenshot" class="proj-img" width="600" height="340" loading="lazy" decoding="async"
+                    <div class="cs-actions">
+                        <a href="/projects/legaleaseai.html" target="_blank" rel="noopener noreferrer" class="proj-link-demo">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            View Details
+                        </a>
+                        <a href="/demo.html?p=LegalEaseAI&v=legaleaseai/legalease-demo.gif" target="_blank" rel="noopener noreferrer" class="proj-link-demo" style="background:#10B981; border-color:#059669; color:#FFFFFF;">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Watch Demo
+                        </a>
+                        <a href="https://github.com/Asad101001/LegalEaseAI" target="_blank" rel="noopener noreferrer" class="proj-link-code">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+                            Code
+                        </a>
+                    </div>
+                </div>
+                <div class="cs-img-col">
+                    <div class="cs-img-wrap" style="background:linear-gradient(135deg,#00ff4118,#18181b)">
+                        <img src="/images/projects/legaleaseai/legalease.webp" alt="LegalEaseAI screenshot" class="cs-img" width="600" height="340" loading="lazy" decoding="async"
                             onerror="this.style.display='none';var p=this.parentNode.querySelector('.proj-img-placeholder');if(p)p.style.display='flex'" />
                         <div class="proj-img-placeholder" style="display:none">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
@@ -194,79 +154,15 @@
                                 <line x1="16" y1="17" x2="8" y2="17" />
                             </svg>
                         </div>
-                        <div class="proj-img-overlay"></div>
                     </div>
-                    <a href="/projects/legaleaseai.html" target="_blank" rel="noopener noreferrer" data-no-swup="true" style="background: linear-gradient(90deg, rgba(0,255,65,0.15), transparent); padding: 8px 16px; border-bottom: 1px solid rgba(0,255,65,0.1); border-top: 1px solid rgba(0,255,65,0.05); color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='linear-gradient(90deg, rgba(0,255,65,0.25), transparent)'" onmouseout="this.style.background='linear-gradient(90deg, rgba(0,255,65,0.15), transparent)'">
-                        <span style="font-size: 1rem;">🔍</span> View More Details
-                    </a>
-                    <div class="proj-body">
-                        <div class="proj-head">
-                            <div class="proj-icon"
-                                style="background:linear-gradient(135deg,#00ff4130,#00ff4110);color:var(--cyan)">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gavel"><path class="draw-path" pathLength="1" d="m14 13-5-5"/><path class="draw-path" pathLength="1" d="m3 21 9-9"/><path class="draw-path" pathLength="1" d="m16 10 5 5-3 3-5-5Z"/><path class="draw-path" pathLength="1" d="m7 16 5 5-3 3-5-5Z"/><path class="draw-path" pathLength="1" d="m2 2 5 5"/><path class="draw-path" pathLength="1" d="m22 22-5-5"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="proj-title">LegalEaseAI</h3>
-                                <p class="proj-live"><a href="/demo.html?p=LegalEaseAI&v=legaleaseai/legalease-demo.gif" target="_blank" data-no-swup="true"
-                                        rel="noopener noreferrer">Demo Available ↗</a></p>
-                            </div>
-                        </div>
-                        <p class="proj-desc">
-                            Upload contracts for rapid AI risk-rating. Provides plain Urdu explanations, a RAG-powered document chatbot, and downloadable PDF reports. Powered by FastAPI and LangChain.
-                        </p>
-                        <div class="proj-tags">
-                            <span class="acard" style="--ac:#F7DF1E;--ag:rgba(247,223,30,0.2)">
-                                <span class="acard-icon"><i class="devicon-javascript-plain colored"></i></span>
-                                <span class="acard-name">Vanilla JS</span>
-                            </span>
-                            <span class="acard" style="--ac:#10B981;--ag:rgba(16,185,129,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M21.334 9.873c.26-1.02.236-1.99-.067-2.799-.303-.81-.876-1.448-1.73-1.903l.022-.081c.166-.614.1-1.274-.185-1.889A3.214 3.214 0 0 0 17.8 1.938c-.6-.343-1.312-.497-2.073-.45a3.46 3.46 0 0 0-.613-.735C14.54.26 13.784 0 12.988 0c-.822 0-1.604.28-2.23.81a4.17 4.17 0 0 0-1.296 2.031 3.397 3.397 0 0 0-1.87.495A3.562 3.562 0 0 0 6.2 4.824c-.338.728-.428 1.561-.258 2.366a4.084 4.084 0 0 0-1.545 1.103c-.509.612-.806 1.365-.848 2.155-.04.77.168 1.54.591 2.198.15.231.32.447.51.642a4.047 4.047 0 0 0-.263 2.765c.303.81.876 1.447 1.73 1.902l-.022.082c-.166.614-.1 1.274.185 1.888.284.614.79 1.14 1.474 1.517.6.343 1.311.497 2.073.45.185.265.4.507.643.72.574.493 1.33.752 2.126.752.822 0 1.604-.28 2.23-.81a4.17 4.17 0 0 0 1.297-2.031 3.397 3.397 0 0 0 1.869-.495 3.562 3.562 0 0 0 1.392-1.488c.338-.728.428-1.56.258-2.366a4.084 4.084 0 0 0-1.545 1.103c.509-.612.806-1.365.848-2.155.04-.77-.168-1.54-.591-2.198a4.19 4.19 0 0 0-.51-.642z" /></svg></span>
-                                <span class="acard-name">LangChain</span>
-                            </span>
-                            <span class="acard" style="--ac:#00c3ff;--ag:rgba(0,195,255,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45l8.15 14.1H3.85L12 5.45z" /></svg></span>
-                                <span class="acard-name">FAISS</span>
-                            </span>
-                            <span class="acard" style="--ac:#00C3FF;--ag:rgba(0,195,255,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-check"><path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
-                                <span class="acard-name">RAG</span>
-                            </span>
-                            <span class="acard" style="--ac:#05998B;--ag:rgba(5,153,139,0.2)">
-                                <span class="acard-icon"><i class="devicon-fastapi-plain colored"></i></span>
-                                <span class="acard-name">FastAPI</span>
-                            </span>
-                            <span class="acard" style="--ac:#3776AB;--ag:rgba(55,118,171,0.2)">
-                                <span class="acard-icon"><i class="devicon-python-plain colored"></i></span>
-                                <span class="acard-name">Python</span>
-                            </span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/Asad101001/LegalEaseAI" target="_blank" rel="noopener noreferrer"
-                                class="proj-link-code">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                                </svg>
-                                Code
-                            </a>
-                            <a href="/demo.html?p=LegalEaseAI&v=legaleaseai/legalease-demo.gif" target="_blank" rel="noopener noreferrer" data-no-swup="true"
-                                class="proj-link-demo">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                </svg>
-                                Watch Demo
-                            </a>
-                        </div>
-                    </div>
-                </article>
+                </div>
+            </article>
 
-                <!-- PollPulse -->
-                <article class="project-card glass-card reveal">
-                    <div class="proj-img-wrap" style="background:linear-gradient(135deg,#a855f720,#18181b)">
-                        <img src="/images/projects/pollpulse/pollpulse.webp" alt="PollPulse screenshot" class="proj-img" width="600" height="340" loading="lazy" decoding="async"
+            <!-- Case Study 3: PollPulse (Image Left, Content Right) -->
+            <article class="case-study-card glass-card reveal">
+                <div class="cs-img-col">
+                    <div class="cs-img-wrap" style="background:linear-gradient(135deg,#a855f720,#18181b)">
+                        <img src="/images/projects/pollpulse/pollpulse.webp" alt="PollPulse screenshot" class="cs-img" width="600" height="340" loading="lazy" decoding="async"
                             onerror="this.style.display='none';var p=this.parentNode.querySelector('.proj-img-placeholder');if(p)p.style.display='flex'" />
                         <div class="proj-img-placeholder" style="display:none">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
@@ -275,161 +171,98 @@
                                 <path d="m19 9-5 5-4-4-3 3" />
                             </svg>
                         </div>
-                        <div class="proj-img-overlay"></div>
                     </div>
-                    <a href="/projects/pollpulse.html" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(90deg, rgba(168,85,247,0.15), transparent); padding: 8px 16px; border-bottom: 1px solid rgba(168,85,247,0.1); border-top: 1px solid rgba(168,85,247,0.05); color: #a855f7; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='linear-gradient(90deg, rgba(168,85,247,0.25), transparent)'" onmouseout="this.style.background='linear-gradient(90deg, rgba(168,85,247,0.15), transparent)'">
-                        <span style="font-size: 1rem;">🔍</span> View More Details
-                    </a>
-                    <div class="proj-body">
-                        <div class="proj-head">
-                            <div class="proj-icon"
-                                style="background:linear-gradient(135deg,#a855f730,#a855f710);color:#a855f7">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-bar"><path class="draw-path" pathLength="1" d="M3 3v18h18"/><path class="draw-path" pathLength="1" d="M7 16h3V8H7v8z"/><path class="draw-path" pathLength="1" d="M11 16h3V4h-3v12z"/><path class="draw-path" pathLength="1" d="M15 16h3v-4h-3v4z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="proj-title">PollPulse</h3>
-                                <p class="proj-live" style="color:#71717a">Cloud-Deployed Capstone</p>
-                            </div>
-                        </div>
-                        <p class="proj-desc">
-                            Real-time polling platform built on AWS. Features a custom VPC with EC2 and RDS MySQL isolation. Delivers live data visualization via Chart.js and secure Node.js authentication.
-                        </p>
-                        <div class="proj-tags">
-                            <span class="acard" style="--ac:#339933;--ag:rgba(51,153,51,0.2)">
-                                <span class="acard-icon"><i class="devicon-nodejs-plain colored"></i></span>
-                                <span class="acard-name">Node.js</span>
-                            </span>
-                            <span class="acard" style="--ac:#ffffff;--ag:rgba(255,255,255,0.2)">
-                                <span class="acard-icon"><i class="devicon-express-original"></i></span>
-                                <span class="acard-name">Express</span>
-                            </span>
-                            <span class="acard" style="--ac:#FF9900;--ag:rgba(255,153,0,0.2)">
-                                <span class="acard-icon"><i class="devicon-amazonwebservices-plain colored"></i></span>
-                                <span class="acard-name">AWS</span>
-                            </span>
-                            <span class="acard" style="--ac:#4479A1;--ag:rgba(68,121,161,0.2)">
-                                <span class="acard-icon"><i class="devicon-mysql-plain colored"></i></span>
-                                <span class="acard-name">MySQL</span>
-                            </span>
-                            <span class="acard" style="--ac:#ff6384;--ag:rgba(255,99,132,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8L18.5 7.5 12 10.2 5.5 7.5 12 4.8zM5.5 15.5V9.3l6.5 2.7v6.2l-6.5-2.7zm13 0l-6.5 2.7v-6.2l6.5-2.7v6.2z"/></svg></span>
-                                <span class="acard-name">Chart.js</span>
-                            </span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/Asad101001/pollpulse" target="_blank" rel="noopener noreferrer"
-                                class="proj-link-code">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                                </svg>
-                                Code
-                            </a>
-                            <a href="/demo.html?p=PollPulse&v=pollpulse/pollpulse-demo.mp4" target="_blank" rel="noopener noreferrer" data-no-swup="true"
-                                class="proj-link-demo">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                </svg>
-                                Watch Demo
-                            </a>
-                        </div>
+                </div>
+                <div class="cs-body">
+                    <div class="cs-header-meta">
+                        <span class="cs-number">03 &middot; Featured Case Study</span>
+                        <span class="status-tag-active" style="font-size:0.65rem; background:rgba(168,85,247,0.12); color:#a855f7; border:1px solid rgba(168,85,247,0.3); border-radius:4px; padding:2px 8px; font-weight:700;">AWS Capstone</span>
                     </div>
-                </article>
+                    <h3 class="cs-title">PollPulse</h3>
+                    <p class="cs-desc">
+                        Real-time polling platform built on AWS. Features a custom VPC with EC2 and RDS MySQL isolation. Delivers live data visualization via Chart.js and secure Node.js authentication.
+                    </p>
+                    <div class="cs-tags">
+                        <span class="acard" style="--ac:#FF9900;--ag:rgba(255,153,0,0.2)">
+                            <span class="acard-icon"><i class="devicon-amazonwebservices-plain colored"></i></span>
+                            <span class="acard-name">AWS VPC</span>
+                        </span>
+                        <span class="acard" style="--ac:#4479A1;--ag:rgba(68,121,161,0.2)">
+                            <span class="acard-icon"><i class="devicon-mysql-plain colored"></i></span>
+                            <span class="acard-name">EC2 / RDS</span>
+                        </span>
+                        <span class="acard" style="--ac:#339933;--ag:rgba(51,153,51,0.2)">
+                            <span class="acard-icon"><i class="devicon-nodejs-plain colored"></i></span>
+                            <span class="acard-name">Node.js</span>
+                        </span>
+                        <span class="acard" style="--ac:#ff6384;--ag:rgba(255,99,132,0.2)">
+                            <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8L18.5 7.5 12 10.2 5.5 7.5 12 4.8zM5.5 15.5V9.3l6.5 2.7v6.2l-6.5-2.7zm13 0l-6.5 2.7v-6.2l6.5-2.7v6.2z"/></svg></span>
+                            <span class="acard-name">Chart.js</span>
+                        </span>
+                    </div>
+                    <div class="cs-actions">
+                        <a href="/projects/pollpulse.html" target="_blank" rel="noopener noreferrer" class="proj-link-demo">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            View Details
+                        </a>
+                        <a href="/demo.html?p=PollPulse&v=pollpulse/pollpulse-demo.mp4" target="_blank" rel="noopener noreferrer" class="proj-link-demo" style="background:#8B5CF6; border-color:#7C3AED; color:#FFFFFF;">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Watch Demo
+                        </a>
+                        <a href="https://github.com/Asad101001/pollpulse" target="_blank" rel="noopener noreferrer" class="proj-link-code">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+                            Code
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- ── Compact List for Remaining Projects ── -->
+        <div class="compact-projects-wrap reveal">
+            <h3 class="compact-projects-heading">Additional Projects</h3>
+            <div class="compact-projects-table glass-card">
+                
+                <!-- Mogscope -->
+                <div class="cp-row">
+                    <div class="cp-col-info">
+                        <div class="cp-title-wrap">
+                            <h4 class="cp-title">Mogscope</h4>
+                            <span class="cp-badge-pill">Vision AI</span>
+                        </div>
+                        <p class="cp-desc">Facial analytics platform using face-api.js for 68-point landmark detection and satirical LLM analysis.</p>
+                    </div>
+                    <div class="cp-col-tech">
+                        React &bull; Three.js &bull; Groq &bull; TensorFlow
+                    </div>
+                    <div class="cp-col-actions">
+                        <a href="https://mogscope.vercel.app/" target="_blank" rel="noopener noreferrer" class="proj-link-demo">Live demo ↗</a>
+                        <a href="https://github.com/Asad101001/mogscope" target="_blank" rel="noopener noreferrer" class="proj-link-code">Code</a>
+                        <a href="/projects/mogscope.html" target="_blank" rel="noopener noreferrer" class="proj-link-code">Details</a>
+                    </div>
+                </div>
 
                 <!-- DevPulse -->
-                <article class="project-card glass-card reveal">
-                    <div class="proj-img-wrap" style="background:linear-gradient(135deg,#FFD60018,#18181b)">
-                        <img src="/images/projects/devpulse/devpulse.webp" alt="DevPulse screenshot" class="proj-img" width="600" height="340" loading="lazy" decoding="async"
-                            onerror="this.style.display='none';var p=this.parentNode.querySelector('.proj-img-placeholder');if(p)p.style.display='flex'" />
-                        <div class="proj-img-placeholder" style="display:none">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                fill="none" stroke="#FFD600" stroke-width="1.2" opacity="0.45">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                            </svg>
+                <div class="cp-row">
+                    <div class="cp-col-info">
+                        <div class="cp-title-wrap">
+                            <h4 class="cp-title">DevPulse</h4>
+                            <span class="status-offline" style="margin-left:0;"><span class="status-offline-dot"></span> Offline</span>
                         </div>
-                        <div class="proj-img-overlay"></div>
+                        <p class="cp-desc">Developer telemetry dashboard analyzing commit narratives to calculate cognitive load using Llama 3.3.</p>
                     </div>
-                    <a href="/projects/devpulse.html" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(90deg, rgba(255,214,0,0.15), transparent); padding: 8px 16px; border-bottom: 1px solid rgba(255,214,0,0.1); border-top: 1px solid rgba(255,214,0,0.05); color: #FFD600; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='linear-gradient(90deg, rgba(255,214,0,0.25), transparent)'" onmouseout="this.style.background='linear-gradient(90deg, rgba(255,214,0,0.15), transparent)'">
-                        <span style="font-size: 1rem;">🔍</span> View More Details
-                    </a>
-                    <div class="proj-body">
-                        <div class="proj-head">
-                            <div class="proj-icon"
-                                style="background:linear-gradient(135deg,#FFD60030,#FFD60010);color:#FFD600">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="draw-path" pathLength="1" d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                            </div>
-                            <div>
-                                <h3 class="proj-title">DevPulse <span class="status-offline"><span class="status-offline-dot"></span> Offline</span></h3>
-                                <p class="proj-live"><a href="#" class="proj-link-offline">Offline</a></p>
-                            </div>
-                        </div>
-                        <p class="proj-desc">
-                            A developer telemetry dashboard. Analyzes commit narratives to calculate cognitive load using Llama 3.3. Built with a technical aesthetic using React, Express, and MongoDB Atlas.
-                        </p>
-                        <div class="proj-tags">
-                            <span class="acard" style="--ac:#61DAFB;--ag:rgba(97,218,251,0.2)">
-                                <span class="acard-icon"><i class="devicon-react-original colored"></i></span>
-                                <span class="acard-name">React</span>
-                            </span>
-                            <span class="acard" style="--ac:#ffffff;--ag:rgba(255,255,255,0.2)">
-                                <span class="acard-icon"><i class="devicon-express-original"></i></span>
-                                <span class="acard-name">Express 5</span>
-                            </span>
-                            <span class="acard" style="--ac:#f75049;--ag:rgba(247,80,73,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
-                                <span class="acard-name">Llama 3.3</span>
-                            </span>
-                            <span class="acard" style="--ac:#47A248;--ag:rgba(71,162,72,0.2)">
-                                <span class="acard-icon"><i class="devicon-mongodb-plain colored"></i></span>
-                                <span class="acard-name">MongoDB</span>
-                            </span>
-                            <span class="acard" style="--ac:#3b82f6;--ag:rgba(59,130,246,0.2)">
-                                <span class="acard-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8L18.5 7.5 12 10.2 5.5 7.5 12 4.8z"/></svg></span>
-                                <span class="acard-name">Recharts</span>
-                            </span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/Asad101001/devpulse" target="_blank" rel="noopener noreferrer"
-                                class="proj-link-code">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                                </svg>
-                                Code
-                            </a>
-                            <a href="#" class="proj-link-demo proj-link-offline">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M15 3h6v6" />
-                                    <path d="M10 14 21 3" />
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                </svg>
-                                Offline
-                            </a>
-                        </div>
+                    <div class="cp-col-tech">
+                        React &bull; Express 5 &bull; MongoDB &bull; Llama 3.3
                     </div>
-                </article>
+                    <div class="cp-col-actions">
+                        <a href="https://github.com/Asad101001/devpulse" target="_blank" rel="noopener noreferrer" class="proj-link-code">Code</a>
+                        <a href="/projects/devpulse.html" target="_blank" rel="noopener noreferrer" class="proj-link-code">Details</a>
+                    </div>
+                </div>
 
             </div>
         </div>
-        <script>
-            // Support for "clicked" state on tech tags (especially for mobile)
-            document.querySelectorAll('.proj-tags .tag').forEach(tag => {
-                tag.addEventListener('click', (e) => {
-                    // Toggle active class
-                    const isActive = tag.classList.contains('active');
-                    document.querySelectorAll('.proj-tags .tag').forEach(t => t.classList.remove('active'));
-                    if (!isActive) tag.classList.add('active');
-                    e.stopPropagation();
-                });
-            });
-            document.addEventListener('click', () => {
-                document.querySelectorAll('.proj-tags .tag').forEach(t => t.classList.remove('active'));
-            });
-        </script>
-    </section>
+
+    </div>
+</section>

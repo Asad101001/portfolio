@@ -1,36 +1,321 @@
-/* ── Education Timeline ───────────────────────────────────── */
-.timeline { display: flex; flex-direction: column; gap: 0; padding-right: 12px; }
-.timeline-item { display: flex; gap: 24px; position: relative; padding-left: 38px; }
-.timeline-item:nth-child(1) { padding-bottom: 64px; }
-.timeline-item:nth-child(2) { padding-bottom: 48px; }
-.timeline-item:nth-child(3) { padding-bottom: 0; }
+/* ════════════════════════════════════════════════════════════
+   EDUCATION STAIRCASE & TIMELINE
+   css/modules/education-timeline.css
+   Elevated neo-brutalist staircase staggered timeline layout
+════════════════════════════════════════════════════════════ */
 
-.timeline-item:nth-child(1) .tl-card { max-width: 100%; }
-.timeline-item:nth-child(2) .tl-card { max-width: 92%; }
-.timeline-item:nth-child(3) .tl-card { max-width: 84%; }
-.timeline-item::before { content: ''; position: absolute; left: 7px; top: 28px; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--cyan), transparent); opacity: 0.3; }
-.timeline-item:last-child::before { display: none; }
-.tl-dot { position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--cyan); background: var(--bg); box-shadow: 0 0 12px rgba(245, 158, 11, 0.45); z-index: 2; }
-.tl-card { flex: 1; padding: 18px 22px; }
-.tl-year   { font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
-.tl-degree { font-size: 1.05rem; font-weight: 700; color: #121212; margin-top: 4px; }
-.tl-inst-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-.tl-logo { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(18, 18, 18, 0.10); background: rgba(255, 255, 255, 0.90); overflow: hidden; }
-.tl-inst { font-size: 0.82rem; color: rgba(18, 18, 18, 0.65); margin: 0; }
+.education-staircase {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 28px auto 0;
+  padding-left: 38px;
+  box-sizing: border-box;
+}
 
-/* Subliminal Progress Indicators */
-.tl-progress-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.tl-status-tag { font-size: 0.6rem; font-family: 'JetBrains Mono', monospace; color: #B45309; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
-.tl-status-tag.completed { color: #15803d; }
-.tl-mini-progress { width: 100%; height: 3px; background: rgba(18, 18, 18, 0.08); margin-top: 12px; border-radius: 99px; overflow: hidden; }
-.tl-mini-progress-fill { height: 100%; background: var(--cyan); border-radius: 1px; transition: width 1s ease-in-out; }
-.tl-mini-progress-fill.completed { background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.3); }
+/* Continuous vertical timeline guide line */
+.education-staircase::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 28px;
+  bottom: 28px;
+  width: 2px;
+  background: rgba(245, 158, 11, 0.35);
+  border-radius: 99px;
+}
 
-@media (max-width: 480px) {
-  .timeline-item { gap: 12px; padding-left: 32px; padding-bottom: 24px; }
-  .tl-dot { left: 0; width: 12px; height: 12px; top: 8px; }
-  .timeline-item::before { left: 5px; top: 24px; }
-  .tl-card { padding: 14px 16px; }
-  .tl-degree { font-size: 0.92rem; }
-  .tl-inst { font-size: 0.75rem; }
+/* Each stair item */
+.edu-stair-item {
+  position: relative;
+  margin-bottom: 24px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), margin-left 0.25s ease;
+}
+
+.edu-stair-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Staggered offsets for desktop creating the staircase effect (as in reference Image 2) */
+@media (min-width: 769px) {
+  .edu-stair-item:nth-child(1) {
+    margin-left: 0;
+    width: 100%;
+  }
+  .edu-stair-item:nth-child(2) {
+    margin-left: 44px;
+    width: calc(100% - 44px);
+  }
+  .edu-stair-item:nth-child(3) {
+    margin-left: 88px;
+    width: calc(100% - 88px);
+  }
+}
+
+@media (max-width: 768px) {
+  .education-staircase {
+    padding-left: 28px;
+  }
+  .education-staircase::before {
+    left: 7px;
+  }
+  .edu-stair-item {
+    margin-left: 0 !important;
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+}
+
+/* Node circle on the vertical timeline */
+.edu-stair-dot {
+  position: absolute;
+  left: -37px;
+  top: 26px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #F7F6F3;
+  border: 2.5px solid #F59E0B;
+  box-shadow: 0 0 0 3px #F7F6F3, 0 0 10px rgba(245, 158, 11, 0.45);
+  z-index: 2;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+@media (max-width: 768px) {
+  .edu-stair-dot {
+    left: -28px;
+    width: 14px;
+    height: 14px;
+    top: 22px;
+  }
+}
+
+.edu-stair-item:hover .edu-stair-dot {
+  transform: scale(1.2);
+  background: #F59E0B;
+}
+
+.edu-stair-dot.current {
+  background: #F59E0B;
+  box-shadow: 0 0 0 4px #F7F6F3, 0 0 14px rgba(245, 158, 11, 0.7);
+}
+
+/* Stair Card */
+.edu-stair-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0px #F59E0B;
+  padding: 20px 26px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-sizing: border-box;
+}
+
+.edu-stair-card:hover {
+  transform: translate(-1px, -2px);
+  box-shadow: 5px 5px 0px #F59E0B;
+  border-color: #F59E0B !important;
+}
+
+.edu-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.edu-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: rgba(18, 18, 18, 0.55);
+  letter-spacing: 0.04em;
+}
+
+.edu-status-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.edu-status-badge.in-progress {
+  color: #B45309;
+}
+
+.edu-status-badge.completed {
+  color: #10B981;
+}
+
+.edu-degree {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #121212;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.edu-inst-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.edu-logo-wrap {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #F7F6F3;
+  border: 1px solid rgba(18, 18, 18, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.edu-logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edu-inst-name {
+  font-size: 0.82rem;
+  color: rgba(18, 18, 18, 0.68);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Progress track and fill */
+.edu-progress-bar-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(18, 18, 18, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.edu-progress-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.edu-progress-bar-fill.active {
+  background: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.edu-progress-bar-fill.completed {
+  background: #10B981;
+}
+
+/* ── Focus Strip below Education ── */
+.edu-focus-strip {
+  margin-top: 36px;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  box-shadow: 3px 3px 0px rgba(18, 18, 18, 0.08);
+}
+
+.focus-strip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.fsh-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fsh-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.fsh-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #121212;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.fsh-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #B45309;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.focus-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .focus-strip-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.focus-mini-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(18, 18, 18, 0.02);
+  border: 1px solid rgba(18, 18, 18, 0.08);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.focus-mini-card:hover {
+  transform: translateY(-2px);
+  border-color: #F59E0B;
+}
+
+.fmc-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fmc-text strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #121212;
+  margin-bottom: 2px;
+}
+
+.fmc-text p {
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: rgba(18, 18, 18, 0.62);
+  margin: 0;
 }
