@@ -180,7 +180,7 @@ import { CONFIG, escHtml } from './config.js';
 
     function render(items) {
         container.innerHTML = '';
-        items.slice(0, 5).forEach((item, idx) => {
+        items.slice(0, 2).forEach((item, idx) => {
             const isRetweet = /^RT by|^RT @/i.test(item.title || '') || !!item.isRetweet;
             let retweetAuthor = (item.retweetAuthor && item.retweetAuthor.toLowerCase() !== USER.toLowerCase()) ? item.retweetAuthor : null;
             if (!retweetAuthor) {

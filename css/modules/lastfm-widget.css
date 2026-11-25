@@ -1,12 +1,18 @@
 /* ── Last.fm Widget ───────────────────────────────────────── */
-.lastfm-widget { border-radius: var(--radius); border: 1px solid var(--lastfm-br, rgba(213,16,7,0.2)); background: var(--lastfm-bg, rgba(213,16,7,0.02)); box-shadow: var(--card-shadow); overflow: hidden; }
-.lastfm-widget-header { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid var(--lastfm-br, rgba(213,16,7,0.1)); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.lastfm-user { margin-left: auto; font-family: 'JetBrains Mono', monospace; color: var(--lastfm-clr, #D51007); font-size: 0.7rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.lastfm-widget { 
+  border-radius: var(--radius); 
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important; 
+  background: #FFFFFF !important; 
+  box-shadow: 4px 4px 0px #D51007 !important; 
+  overflow: hidden; 
+}
+.lastfm-widget-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid rgba(18, 18, 18, 0.08); font-size: 0.68rem; font-weight: 700; color: #121212; text-transform: uppercase; letter-spacing: 0.08em; }
+.lastfm-user { margin-left: auto; font-family: 'JetBrains Mono', monospace; color: var(--lastfm-clr, #D51007); font-size: 0.65rem; font-weight: 700; text-transform: none; letter-spacing: 0; }
 .lastfm-tracks { 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 16px 18px;
+  gap: 8px;
+  padding: 10px 14px;
   overflow-y: visible;
 }
 
@@ -19,64 +25,64 @@
 @media (max-width: 600px) {
   .lastfm-tracks {
     grid-template-columns: 1fr;
-    gap: 8px;
-    padding: 12px 14px;
+    gap: 6px;
+    padding: 8px 10px;
   }
 }
 
 .lastfm-track { 
   display: flex; 
   align-items: center; 
-  gap: 12px; 
-  padding: 10px 14px; 
+  gap: 8px; 
+  padding: 6px 10px; 
   text-decoration: none; 
   color: inherit; 
   transition: all 0.22s cubic-bezier(0.16,1,0.3,1); 
   position: relative; 
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid rgba(18, 18, 18, 0.10);
   background: rgba(255, 255, 255, 0.90);
-  box-shadow: 0 1px 3px rgba(18, 18, 18, 0.04);
+  box-shadow: 0 1px 2px rgba(18, 18, 18, 0.04);
   box-sizing: border-box;
-  min-height: 64px;
+  min-height: 48px;
 }
 .lastfm-track:hover { 
   background: rgba(255, 255, 255, 0.98); 
   border-color: rgba(213, 16, 7, 0.35); 
   box-shadow: 2px 2px 0px rgba(213, 16, 7, 0.2); 
-  transform: translateY(-2px); 
+  transform: translateY(-1px); 
 }
-.lastfm-track-art-wrap { width: 44px; height: 44px; flex-shrink: 0; border-radius: 6px; overflow: hidden; border: 1px solid rgba(18, 18, 18, 0.10); background: rgba(18, 18, 18, 0.05); display: flex; align-items: center; justify-content: center; }
+.lastfm-track-art-wrap { width: 32px; height: 32px; flex-shrink: 0; border-radius: 4px; overflow: hidden; border: 1px solid rgba(18, 18, 18, 0.10); background: rgba(18, 18, 18, 0.05); display: flex; align-items: center; justify-content: center; }
 .lastfm-track-art { width: 100%; height: 100%; object-fit: cover; }
-.lastfm-track-art--placeholder { font-size: 1.2rem; opacity: 0.5; color: #121212; }
+.lastfm-track-art--placeholder { font-size: 1rem; opacity: 0.5; color: #121212; }
 
 .lastfm-track-info { flex: 1; min-width: 0; }
-.lastfm-track-name { font-size: 0.82rem; font-weight: 600; color: #121212; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lastfm-track-artist { font-size: 0.71rem; color: rgba(18, 18, 18, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-.lastfm-track-time { font-size: 0.65rem; color: rgba(18, 18, 18, 0.50); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; text-align: right; }
-.lastfm-now-playing { display: inline-flex; align-items: center; gap: 4px; font-size: 0.62rem; font-weight: 700; color: var(--lastfm-clr, #D51007); text-transform: uppercase; letter-spacing: 0.06em; }
-.lastfm-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.lastfm-track-name { font-size: 0.76rem; font-weight: 700; color: #121212; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lastfm-track-artist { font-size: 0.66rem; color: rgba(18, 18, 18, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.lastfm-track-time { font-size: 0.58rem; color: rgba(18, 18, 18, 0.50); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; text-align: right; }
+.lastfm-now-playing { display: inline-flex; align-items: center; gap: 4px; font-size: 0.60rem; font-weight: 700; color: var(--lastfm-clr, #D51007); text-transform: uppercase; letter-spacing: 0.06em; }
+.lastfm-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
 .lastfm-eq span { display: inline-block; width: 2px; background: var(--lastfm-clr, #D51007); border-radius: 1px; animation: eq-bounce 0.8s ease-in-out infinite; }
 .lastfm-eq span:nth-child(1) { animation-delay: 0s;    height: 40%; }
 .lastfm-eq span:nth-child(2) { animation-delay: 0.15s; height: 80%; }
 .lastfm-eq span:nth-child(3) { animation-delay: 0.3s;  height: 60%; }
 .lastfm-eq span:nth-child(4) { animation-delay: 0.1s;  height: 90%; }
 @keyframes eq-bounce { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
-.lastfm-loading { display: flex; align-items: center; gap: 12px; padding: 20px 18px; font-size: 0.78rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
-.lastfm-bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 16px; }
-.lastfm-bars span { display: inline-block; width: 3px; background: #D51007; border-radius: 2px; opacity: 0.6; animation: eq-bounce 0.7s ease-in-out infinite; }
+.lastfm-loading { display: flex; align-items: center; gap: 10px; padding: 14px 14px; font-size: 0.74rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+.lastfm-bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; }
+.lastfm-bars span { display: inline-block; width: 2.5px; background: #D51007; border-radius: 2px; opacity: 0.6; animation: eq-bounce 0.7s ease-in-out infinite; }
 .lastfm-bars span:nth-child(1) { animation-delay: 0s; }
 .lastfm-bars span:nth-child(2) { animation-delay: 0.18s; }
 .lastfm-bars span:nth-child(3) { animation-delay: 0.36s; }
 .lastfm-bars span:nth-child(4) { animation-delay: 0.12s; }
-.lastfm-error { padding: 16px 18px; font-size: 0.75rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+.lastfm-error { padding: 12px 14px; font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
 
 /* Unique Hover Personalities */
 .lastfm-widget:hover {
-    border-color: var(--lastfm-clr, #D51007) !important;
-    background: linear-gradient(180deg, var(--lastfm-bg, rgba(213, 16, 7, 0.05)) 0%, rgba(8, 11, 20, 0.9) 100%);
-    box-shadow: 0 0 30px var(--lastfm-bg, rgba(213, 16, 7, 0.15)), 0 12px 40px rgba(0, 0, 0, 0.6);
-    transform: translateY(-6px) scale(1.01);
+    border-color: #D51007 !important;
+    background: #FFFFFF !important;
+    box-shadow: 4px 4px 0px #D51007, 0 12px 28px rgba(213, 16, 7, 0.12) !important;
+    transform: translateY(-2px);
 }
 .lastfm-widget:hover .lastfm-widget-header span { color: var(--lastfm-clr, #D51007) !important; transition: color 0.3s; }
 .lastfm-widget:hover .lastfm-user { color: var(--lastfm-clr, #D51007); }

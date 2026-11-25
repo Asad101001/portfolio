@@ -34,7 +34,7 @@
 
             <!-- Crisp Core Specialty Statement -->
             <p class="hero-statement">
-                Engineering <span class="hh-highlight">distributed systems</span> from <span class="hh-accent">first principles.</span>
+                Building <span class="hh-highlight">distributed systems</span> and <span class="hh-accent">autonomous AI pipelines.</span>
             </p>
 
             <!-- Minimal, High-Signal Lead Paragraph -->
@@ -95,35 +95,43 @@
 
         </div><!-- /.hero-left-col -->
 
-        <!-- ── Right Column: Pure 3D Holographic Mesh Art (Visuals First) ── -->
+        <!-- ── Right Column: Interactive 3D Holographic Stage (Directly Useful) ── -->
         <div class="hero-right-col reveal">
             <div class="hero-matrix-card glass-card" id="hero-matrix-card">
                 
-                <!-- Terminal Header Bar -->
+                <!-- HUD Stage Header Bar -->
                 <div class="hmc-header">
-                    <div class="hmc-controls">
-                        <span class="hmc-dot hmc-dot-red" aria-hidden="true"></span>
-                        <span class="hmc-dot hmc-dot-yellow" aria-hidden="true"></span>
-                        <span class="hmc-dot hmc-dot-green" aria-hidden="true"></span>
-                        <span class="hmc-file-label">hologram_cluster // generative_3d</span>
+                    <div class="hmc-stage-meta">
+                        <span class="hmc-dot-amber" aria-hidden="true"></span>
+                        <span class="hmc-stage-tag">SPATIAL_PROJECTION // THREE.JS</span>
                     </div>
-                    <div class="hmc-status-pill">
-                        <span class="hmc-pulse-dot" aria-hidden="true"></span>
-                        <span class="hmc-status-text">INTERACTIVE 3D &middot; LIVE</span>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <button id="hmc-morph-trigger" class="hmc-action-btn" title="Click to morph 3D formation">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            Morph Next
+                        </button>
+                        <div class="hmc-status-pill">
+                            <span class="hmc-pulse-dot" aria-hidden="true"></span>
+                            <span class="hmc-status-text">60 FPS &middot; LIVE</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Matrix Generative Canvas Viewport (Pure visual art, minimal text) -->
+                <!-- Matrix Generative Canvas Viewport -->
                 <div class="hmc-canvas-wrap" id="hmc-canvas-wrap">
-                    <canvas id="hero-matrix-canvas" aria-label="Interactive Three.js 3D Holographic Mesh Art"></canvas>
+                    <canvas id="hero-matrix-canvas" aria-label="Interactive Three.js 3D Holographic Spatial Art"></canvas>
 
-                    <!-- HUD Corner Crosshairs Overlay -->
+                    <!-- HUD Corner Crosshairs & Real-time Telemetry Overlay -->
                     <div class="hmc-hud-overlay" aria-hidden="true">
                         <div class="hmc-hud-corner top-left"></div>
                         <div class="hmc-hud-corner top-right"></div>
                         <div class="hmc-hud-corner bottom-left"></div>
                         <div class="hmc-hud-corner bottom-right"></div>
-                        <span class="hmc-hud-telemetry">16_FORMATIONS // THREE.JS 3D</span>
+                        
+                        <div class="hmc-bottom-telemetry">
+                            <span class="hmc-active-formation" id="hmc-formation-name">01 // 4D HYPERCUBE TESSERACT</span>
+                            <span class="hmc-hint-text">DRAG TO ROTATE &middot; CLICK TO MORPH</span>
+                        </div>
                     </div>
                 </div>
 

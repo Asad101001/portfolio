@@ -325,10 +325,10 @@
   box-shadow: 8px 8px 0px #F59E0B, 0 20px 48px rgba(0, 0, 0, 0.24);
 }
 
-/* Terminal Header */
+/* Stage Header */
 .hmc-header {
-  padding: 12px 18px;
-  background: #18181B;
+  padding: 10px 16px;
+  background: #141416;
   border-bottom: 1px solid rgba(245, 158, 11, 0.20);
   display: flex;
   align-items: center;
@@ -336,39 +336,84 @@
   gap: 12px;
 }
 
-.hmc-controls {
+.hmc-stage-meta {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.hmc-dot {
-  width: 10px;
-  height: 10px;
+.hmc-dot-amber {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
+  background: #F59E0B;
+  box-shadow: 0 0 8px #F59E0B;
   display: inline-block;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
-}
-.hmc-dot-red {
-  background: radial-gradient(circle at 35% 35%, #ff857e, #FF5F56);
-  box-shadow: 0 0 5px rgba(255, 95, 86, 0.45);
-}
-.hmc-dot-yellow {
-  background: radial-gradient(circle at 35% 35%, #ffe67d, #FFBD2E);
-  box-shadow: 0 0 5px rgba(255, 189, 46, 0.45);
-}
-.hmc-dot-green {
-  background: radial-gradient(circle at 35% 35%, #5ce470, #27C93F);
-  box-shadow: 0 0 5px rgba(39, 201, 63, 0.45);
 }
 
-.hmc-file-label {
+.hmc-stage-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #A1A1AA;
-  margin-left: 6px;
-  letter-spacing: 0.02em;
+  font-size: 0.70rem;
+  font-weight: 700;
+  color: #D4D4D8;
+  letter-spacing: 0.06em;
+}
+
+.hmc-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #F59E0B;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hmc-action-btn:hover {
+  background: #F59E0B;
+  color: #121212;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+.hmc-action-btn:active {
+  transform: translateY(1px);
+}
+
+.hmc-bottom-telemetry {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  background: rgba(11, 11, 12, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(245, 158, 11, 0.20);
+}
+
+.hmc-active-formation {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #F59E0B;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hmc-hint-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(255, 255, 255, 0.50);
+  letter-spacing: 0.06em;
 }
 
 .hmc-status-pill {

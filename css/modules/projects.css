@@ -159,6 +159,39 @@
   gap: 12px;
 }
 
+/* Status Chip Links (Demo / APK releases in header) */
+.status-chip-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.05);
+  border: 1px solid rgba(18, 18, 18, 0.15);
+  color: #121212;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.status-chip-link:hover {
+  background: #F59E0B;
+  color: #121212;
+  border-color: #D97706;
+  transform: translateY(-1px);
+}
+.status-chip-link.status-chip-demo {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #065F46;
+}
+.status-chip-link.status-chip-demo:hover {
+  background: #10B981;
+  color: #FFFFFF;
+  border-color: #059669;
+}
+
 .cs-number {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;

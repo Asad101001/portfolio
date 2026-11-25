@@ -759,6 +759,32 @@ export function initHeroMatrix() {
   const targetArrays = generators.map(() => new Float32Array(PARTICLE_COUNT * 3));
   generators.forEach((gen, idx) => gen(targetArrays[idx]));
 
+  const FORMATION_NAMES = [
+    "01 // 4D HYPERCUBE TESSERACT",
+    "02 // QUANTUM SINGULARITY",
+    "03 // BIONIC ROBOTIC HAND",
+    "04 // CYBER HUMANOID SKULL",
+    "05 // LE MANS CYBER HYPERCAR",
+    "06 // SOARING CYBER EAGLE",
+    "07 // ROBOTIC CHEETAH",
+    "08 // DNA DOUBLE HELIX",
+    "09 // ORBITAL TELECOM SATELLITE",
+    "10 // 3D NEURAL CORTICAL BRAIN",
+    "11 // PLANETARY DATA NETWORK",
+    "12 // MÖBIUS NON-ORIENTABLE LOOP",
+    "13 // QUANTUM PROCESSOR CORE",
+    "14 // MECHA CYBER DRAGON",
+    "15 // FIBONACCI GOLDEN GALAXY",
+    "16 // HEXACOPTER AUTONOMOUS DRONE"
+  ];
+
+  function updateFormationLabel(idx) {
+    const el = document.getElementById('hmc-formation-name');
+    if (el && FORMATION_NAMES[idx]) {
+      el.textContent = FORMATION_NAMES[idx];
+    }
+  }
+
   // Start with a random formation
   let currentIdx = Math.floor(Math.random() * generators.length);
   for (let i = 0; i < PARTICLE_COUNT * 3; i++) {
@@ -766,6 +792,7 @@ export function initHeroMatrix() {
     sourcePositions[i] = targetArrays[currentIdx][i];
     targetPositions[i] = targetArrays[currentIdx][i];
   }
+  updateFormationLabel(currentIdx);
 
   // ── 5. Autonomous Random Morphing Controller ──────────────────────────────
   const HOLD_DURATION = 5000;  // 5 seconds hold per formation
@@ -781,6 +808,7 @@ export function initHeroMatrix() {
       nextIdx = Math.floor(Math.random() * generators.length);
     }
     currentIdx = nextIdx;
+    updateFormationLabel(currentIdx);
 
     const targetSrc = targetArrays[currentIdx];
     const posArr = particleGeometry.attributes.position.array;
@@ -792,20 +820,23 @@ export function initHeroMatrix() {
 
     isMorphing = true;
     morphStartTime = performance.now();
+    lastCycleTime = performance.now();
   }
 
   function smoothStep(t) {
     return t * t * (3 - 2 * t);
   }
 
-  // ── 6. Interactive Inertia Drag-to-Rotate & Ambient Parallax ──────────────
+  // ── 6. Interactive Inertia Drag-to-Rotate & Click Morphing ────────────────
   let isDragging = false;
+  let dragDelta = 0;
   let previousMousePosition = { x: 0, y: 0 };
   let targetRotation = { x: 0.12, y: 0.25 };
   let currentRotation = { x: 0.12, y: 0.25 };
 
   canvas.addEventListener('pointerdown', (e) => {
     isDragging = true;
+    dragDelta = 0;
     previousMousePosition = { x: e.clientX, y: e.clientY };
   });
 
@@ -817,6 +848,7 @@ export function initHeroMatrix() {
     if (isDragging) {
       const deltaX = e.clientX - previousMousePosition.x;
       const deltaY = e.clientY - previousMousePosition.y;
+      dragDelta += Math.abs(deltaX) + Math.abs(deltaY);
       targetRotation.y += deltaX * 0.007;
       targetRotation.x += deltaY * 0.007;
       previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -829,6 +861,20 @@ export function initHeroMatrix() {
   window.addEventListener('pointerup', () => {
     isDragging = false;
   });
+
+  canvas.addEventListener('click', () => {
+    if (dragDelta < 8) {
+      triggerNextRandomFormation();
+    }
+  });
+
+  const morphBtn = document.getElementById('hmc-morph-trigger');
+  if (morphBtn) {
+    morphBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerNextRandomFormation();
+    });
+  }
 
   // ── 7. Responsive Resize Handler ─────────────────────────────────────────
   function onResize() {

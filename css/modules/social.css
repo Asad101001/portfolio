@@ -20,8 +20,8 @@
 .social-platform-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
+  gap: 7px;
+  padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid rgba(18, 18, 18, 0.12);
   background: rgba(255, 255, 255, 0.90);
@@ -37,14 +37,14 @@
   box-shadow: 3px 3px 0px #F59E0B;
 }
 .social-platform-card .spc-icon {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.22s;
 }
-.social-platform-card .spc-icon i { font-size: 1.3rem; }
+.social-platform-card .spc-icon i { font-size: 1.05rem; }
 .social-platform-card:hover .spc-icon {
   transform: scale(1.15);
 }
@@ -54,7 +54,7 @@
   min-width: 0;
 }
 .social-platform-card .spc-label {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
   color: #121212;
   transition: color 0.22s;
@@ -64,12 +64,12 @@
   text-overflow: ellipsis;
 }
 .social-platform-card .spc-handle {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: rgba(18, 18, 18, 0.60);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 130px;
+  max-width: 120px;
 }
 .social-platform-card:hover .spc-label { color: #121212; }
 
@@ -77,18 +77,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px 32px;
+  gap: 8px;
+  padding: 8px 22px;
   border-radius: 999px;
   background: #F59E0B;
   color: #121212;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 800;
   border: 1.5px solid #121212;
-  box-shadow: 3.5px 3.5px 0px #121212, inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 3px 3px 0px #121212, inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   letter-spacing: 0.02em;
 }
 /* LinkedIn Activity Widget Theming */
@@ -126,8 +126,8 @@
 .social-top-split-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  max-width: 920px;
+  gap: 16px;
+  max-width: 800px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
@@ -140,7 +140,7 @@
 }
 .social-split-left #spotify-widget {
   height: 100%;
-  min-height: 440px;
+  min-height: 290px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -148,22 +148,22 @@
 .social-split-right {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   justify-content: space-between;
 }
 .social-fullwidth-wrap {
-  max-width: 920px;
+  max-width: 800px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 2-Column Grid for widgets below Activity Hub (uniform 920px width) */
+/* 2-Column Grid for widgets below Activity Hub (uniform 800px width) */
 .social-cards-grid-v2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  max-width: 920px;
+  gap: 16px;
+  max-width: 800px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
