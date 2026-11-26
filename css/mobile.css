@@ -370,55 +370,37 @@
   .hero-right-col {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important;
+    min-height: 260px !important;
+    height: 260px !important;
+    margin: 8px auto !important;
     box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
+  .hero-stage-container,
   .hero-matrix-card {
     width: 100% !important;
     max-width: 100% !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    box-shadow: 4px 4px 0px #F59E0B !important;
-  }
-
-  .hmc-header {
-    padding: 8px 12px !important;
-    gap: 8px !important;
-  }
-
-  .hmc-dot {
-    width: 8px !important;
-    height: 8px !important;
-  }
-
-  .hmc-file-label {
-    font-size: 0.62rem !important;
-  }
-
-  .hmc-status-pill {
-    padding: 2px 6px !important;
-    font-size: 0.58rem !important;
-    gap: 4px !important;
-  }
-
-  .hmc-pulse-dot {
-    width: 4px !important;
-    height: 4px !important;
+    height: 260px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .hmc-canvas-wrap {
     width: 100% !important;
     max-width: 100% !important;
-    height: 220px !important;
+    height: 260px !important;
+    background: transparent !important;
     box-sizing: border-box !important;
   }
 
-  .hero-matrix-box {
+  #hero-matrix-canvas {
     width: 100% !important;
-    max-width: 100% !important;
-    height: 220px !important;
-    box-sizing: border-box !important;
+    height: 100% !important;
+    background: transparent !important;
   }
 
   /* ── Universal Section Typography & Spacing (Mobile Scale) ─ */
