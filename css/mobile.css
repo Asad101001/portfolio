@@ -250,7 +250,7 @@
 
   .hnp-last,
   .hero-surname {
-    color: #D97706 !important;
+    color: var(--name-accent-color, #D97706);
   }
 
   .hero-holo-meta {
@@ -370,8 +370,8 @@
   .hero-right-col {
     width: 100% !important;
     max-width: 100% !important;
-    min-height: 260px !important;
-    height: 260px !important;
+    min-height: 280px !important;
+    height: 280px !important;
     margin: 8px auto !important;
     box-sizing: border-box !important;
     display: flex !important;
@@ -383,16 +383,22 @@
   .hero-matrix-card {
     width: 100% !important;
     max-width: 100% !important;
-    height: 260px !important;
+    min-height: 280px !important;
+    height: 280px !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
   }
 
   .hmc-canvas-wrap {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    right: auto !important;
+    left: auto !important;
     width: 100% !important;
     max-width: 100% !important;
-    height: 260px !important;
+    height: 280px !important;
     background: transparent !important;
     box-sizing: border-box !important;
   }
