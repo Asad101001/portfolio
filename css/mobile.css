@@ -534,6 +534,23 @@
     border-radius: 6px !important;
     gap: 5px !important;
   }
+  .cs-tags .acard .acard-icon {
+    width: 14px !important;
+    height: 14px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  .cs-tags .acard .acard-icon i {
+    font-size: 13px !important;
+    line-height: 1 !important;
+  }
+  .cs-tags .acard .acard-icon svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
   .cs-tags .acard .acard-name {
     opacity: 1 !important;
     width: auto !important;
