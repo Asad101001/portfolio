@@ -80,8 +80,8 @@ export function initHeroMatrix() {
   }
 
   // ── 4. Pre-existing 16 Mathematical 3D Formation Generators ───────────────
-  const BASE_COUNT = 1800;
-  const AURA_COUNT = 420;
+  const BASE_COUNT = 1920;
+  const AURA_COUNT = 120;
   const PARTICLE_COUNT = BASE_COUNT + AURA_COUNT;
 
   function putLine(arr, startIdx, count, x1, y1, z1, x2, y2, z2) {
@@ -656,22 +656,22 @@ export function initHeroMatrix() {
   // Optimal default tilt per formation so flat shapes (Galaxy, Singularity, Hexacopter)
   // always showcase rich 3D depth instead of collapsing edge-on
   const FORMATIONS = [
-    { gen: buildTesseract, tiltX: 0.34, tiltY: 0.48 },
-    { gen: buildSingularity, tiltX: 0.52, tiltY: 0.25 },
-    { gen: buildCyberHand, tiltX: 0.18, tiltY: -0.32 },
-    { gen: buildCyberSkull, tiltX: 0.14, tiltY: -0.28 },
-    { gen: buildHypercar, tiltX: 0.36, tiltY: -0.75 },
-    { gen: buildCyberEagle, tiltX: 0.44, tiltY: -0.42 },
-    { gen: buildCyberCheetah, tiltX: 0.22, tiltY: -0.85 },
-    { gen: buildDNAHelix, tiltX: 0.20, tiltY: 0.30 },
-    { gen: buildOrbitalSatellite, tiltX: 0.38, tiltY: -0.48 },
-    { gen: buildNeuralCortex, tiltX: 0.24, tiltY: 0.40 },
-    { gen: buildPlanetaryNetwork, tiltX: 0.30, tiltY: 0.25 },
-    { gen: buildMobiusStrip, tiltX: 0.46, tiltY: 0.32 },
-    { gen: buildQuantumProcessor, tiltX: 0.48, tiltY: 0.28 },
-    { gen: buildCyberDragon, tiltX: 0.30, tiltY: -0.62 },
-    { gen: buildFibonacciGalaxy, tiltX: 0.68, tiltY: 0.22 },
-    { gen: buildHexacopter, tiltX: 0.58, tiltY: 0.25 }
+    { name: '4D Tesseract', gen: buildTesseract, tiltX: 0.34, tiltY: 0.48 },
+    { name: 'Singularity', gen: buildSingularity, tiltX: 0.52, tiltY: 0.25 },
+    { name: 'Cyber Hand', gen: buildCyberHand, tiltX: 0.18, tiltY: -0.32 },
+    { name: 'Cyber Skull', gen: buildCyberSkull, tiltX: 0.14, tiltY: -0.28 },
+    { name: 'Hypercar', gen: buildHypercar, tiltX: 0.36, tiltY: -0.75 },
+    { name: 'Soaring Eagle', gen: buildCyberEagle, tiltX: 0.44, tiltY: -0.42 },
+    { name: 'Cheetah', gen: buildCyberCheetah, tiltX: 0.22, tiltY: -0.85 },
+    { name: 'DNA Double Helix', gen: buildDNAHelix, tiltX: 0.20, tiltY: 0.30 },
+    { name: 'Orbital Satellite', gen: buildOrbitalSatellite, tiltX: 0.38, tiltY: -0.48 },
+    { name: 'Neural Cortex', gen: buildNeuralCortex, tiltX: 0.24, tiltY: 0.40 },
+    { name: 'Planetary Network', gen: buildPlanetaryNetwork, tiltX: 0.30, tiltY: 0.25 },
+    { name: 'Mobius Strip', gen: buildMobiusStrip, tiltX: 0.46, tiltY: 0.32 },
+    { name: 'Quantum Processor', gen: buildQuantumProcessor, tiltX: 0.48, tiltY: 0.28 },
+    { name: 'Cyber Dragon', gen: buildCyberDragon, tiltX: 0.30, tiltY: -0.62 },
+    { name: 'Fibonacci Galaxy', gen: buildFibonacciGalaxy, tiltX: 0.68, tiltY: 0.22 },
+    { name: 'Hexacopter Drone', gen: buildHexacopter, tiltX: 0.58, tiltY: 0.25 }
   ];
 
   const targetArrays = FORMATIONS.map((f, fIdx) => {
@@ -679,10 +679,10 @@ export function initHeroMatrix() {
     const rand = makeRng(4201 + fIdx * 97);
     f.gen(arr, rand);
 
-    // Populate the extra 420 stipple aura dots right around the sculpture surface
+    // Keep subtle tight aura dots close to the sculpture edges so silhouettes stay crisp
     for (let i = BASE_COUNT; i < PARTICLE_COUNT; i++) {
       const srcIdx = Math.floor(rand() * BASE_COUNT) * 3;
-      const spread = 0.08 + rand() * 0.26;
+      const spread = 0.03 + rand() * 0.09;
       const ang1 = rand() * Math.PI * 2;
       const ang2 = (rand() - 0.5) * Math.PI;
       arr[i * 3] = arr[srcIdx] + Math.cos(ang1) * Math.cos(ang2) * spread;
@@ -710,28 +710,35 @@ export function initHeroMatrix() {
     // 72% Obsidian / Charcoal Ink · 20% Warm Amber / Gold · 8% Burnt Terracotta
     const roll = stippleRand();
     if (roll < 0.72) {
-      const shade = 0.06 + stippleRand() * 0.14;
+      const shade = 0.06 + stippleRand() * 0.12;
       colors[i * 3] = shade;
       colors[i * 3 + 1] = shade * 0.96;
       colors[i * 3 + 2] = shade * 0.92;
-      sizes[i] = 0.65 + stippleRand() * 0.85;
+      sizes[i] = 0.58 + stippleRand() * 0.48;
     } else if (roll < 0.92) {
       // Warm Amber / Radiant Gold
       const goldMix = stippleRand();
       colors[i * 3] = 0.85 + goldMix * 0.13;
       colors[i * 3 + 1] = 0.47 + goldMix * 0.24;
       colors[i * 3 + 2] = 0.03 + goldMix * 0.08;
-      sizes[i] = 0.78 + stippleRand() * 1.05;
+      sizes[i] = 0.65 + stippleRand() * 0.55;
     } else {
       // Terracotta / Rust Copper
       colors[i * 3] = 0.76;
       colors[i * 3 + 1] = 0.26;
       colors[i * 3 + 2] = 0.06;
-      sizes[i] = 0.70 + stippleRand() * 0.90;
+      sizes[i] = 0.60 + stippleRand() * 0.50;
     }
   }
 
-  let currentIdx = Math.floor(Math.random() * FORMATIONS.length);
+  let currentIdx = 0; // Start on the iconic 4D Tesseract silhouette
+  const shapeLabelEl = document.getElementById('hmc-shape-label');
+  const updateShapeLabel = (idx) => {
+    if (!shapeLabelEl || !FORMATIONS[idx]) return;
+    const num = String(idx + 1).padStart(2, '0');
+    shapeLabelEl.textContent = `${num} / ${FORMATIONS[idx].name.toUpperCase()} · CLICK TO MORPH`;
+  };
+  updateShapeLabel(currentIdx);
   const sourcePositions = new Float32Array(targetArrays[currentIdx]);
   const targetPositions = new Float32Array(targetArrays[currentIdx]);
   positions.set(targetPositions);
@@ -845,7 +852,7 @@ export function initHeroMatrix() {
       typeIdx,
       localIdx,
       anchorParticle: Math.floor((i / TOTAL_SHARDS) * BASE_COUNT),
-      restScale: isHaloOrbiter ? 0.24 + shardRand() * 0.20 : 0.16 + shardRand() * 0.15,
+      restScale: isHaloOrbiter ? 0.15 + shardRand() * 0.10 : 0.10 + shardRand() * 0.08,
       swirlScale: 0.60 + shardRand() * 0.55,
       isHaloOrbiter,
       orbitRadius: 1.50 + shardRand() * 0.65,
@@ -1095,6 +1102,7 @@ export function initHeroMatrix() {
 
     targetTilt.x = FORMATIONS[currentIdx].tiltX;
     targetTilt.y = FORMATIONS[currentIdx].tiltY;
+    updateShapeLabel(currentIdx);
 
     phaseState = 'SWIRL';
     stateStartTime = performance.now();
@@ -1157,14 +1165,14 @@ export function initHeroMatrix() {
     isDesktopStage = window.innerWidth > 960;
 
     if (width < 480) {
-      camera.position.z = 6.35;
-      particleUniforms.uPointScale.value = 23.0;
+      camera.position.z = 6.0;
+      particleUniforms.uPointScale.value = 14.5;
     } else if (width < 960) {
-      camera.position.z = 6.65;
-      particleUniforms.uPointScale.value = 24.5;
+      camera.position.z = 6.25;
+      particleUniforms.uPointScale.value = 15.5;
     } else {
-      camera.position.z = 6.95;
-      particleUniforms.uPointScale.value = 26.5;
+      camera.position.z = 6.45;
+      particleUniforms.uPointScale.value = 16.5;
     }
 
     // Center camera frustum optically on #hero-matrix-card (right column)

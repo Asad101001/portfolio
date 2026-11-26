@@ -576,37 +576,38 @@ export default async function handler(req, res) {
     ...NITTER_INSTANCES.map(h => `${h}/${username}/rss`),
   ];
 
-  let liveItems = null;
-  try {
-    liveItems = await Promise.any([
-      ...rssUrls.map(u => tryRSSUrl(u, username)),
-      trySyndication(username),
-    ]);
-  } catch (_) {
-    liveItems = null;
-  }
+  // Fetch RSS/Syndication AND curated verified FxTwitter Retweets IN PARALLEL for fast <1.5s response
+  const rtPromise = VERIFIED_RETWEET_REFS[username]
+    ? Promise.all(
+        VERIFIED_RETWEET_REFS[username].map(async ref => {
+          try {
+            const t = await fetchFxTweet(ref.handle, ref.id);
+            return t ? fxToFeedItem(t, { isRetweet: true, retweetAuthor: ref.handle, pubDateOverride: ref.pubDate }) : null;
+          } catch (_) {
+            return null;
+          }
+        })
+      )
+    : Promise.resolve([]);
+
+  const rssPromise = Promise.any([
+    ...rssUrls.map(u => tryRSSUrl(u, username)),
+    trySyndication(username),
+  ]).catch(() => null);
+
+  const [liveItems, rtHydrated] = await Promise.all([rssPromise, rtPromise]);
 
   let items = Array.isArray(liveItems) ? liveItems.filter(isCleanPost) : [];
 
   // Hydrate top clean RSS items via live FxTwitter so quote cards, media & counts are exact
   if (items.length > 0) {
-    items = await Promise.all(items.slice(0, 4).map(hydrateItemWithFx));
+    items = await Promise.all(items.slice(0, 3).map(hydrateItemWithFx));
     items = items.filter(isCleanPost);
   }
 
-  // Unauthenticated RSSHub/Syndication omits Retweets; blend verified RTs hydrated live from FxTwitter
-  if (!items.some(i => i.isRetweet) && VERIFIED_RETWEET_REFS[username]) {
-    const rtHydrated = await Promise.all(
-      VERIFIED_RETWEET_REFS[username].map(async ref => {
-        try {
-          const t = await fetchFxTweet(ref.handle, ref.id);
-          return t ? fxToFeedItem(t, { isRetweet: true, retweetAuthor: ref.handle, pubDateOverride: ref.pubDate }) : null;
-        } catch (_) {
-          return null;
-        }
-      })
-    );
-    const validRts = rtHydrated.filter(i => i && isCleanPost(i));
+  // Blend verified RTs when unauthenticated RSSHub/Syndication omits Retweets
+  if (!items.some(i => i.isRetweet)) {
+    const validRts = (rtHydrated || []).filter(i => i && isCleanPost(i));
     if (validRts.length > 0) {
       items = [...validRts, ...items];
     }

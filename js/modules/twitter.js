@@ -563,8 +563,13 @@ import { CONFIG, escHtml } from './config.js';
         });
     }
 
+    let lastRenderedSig = '';
+
     function applyPayload(data) {
         if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+            const sig = data.items.slice(0, 2).map(i => i.link + ':' + (i.metrics?.likes ?? '')).join('|');
+            if (sig === lastRenderedSig) return;
+            lastRenderedSig = sig;
             render(data.items);
         } else {
             renderEmptyState();
