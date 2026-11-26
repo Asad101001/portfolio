@@ -43,9 +43,28 @@ import { CONFIG, escHtml } from './config.js';
 
     function renderLoadingState() {
         container.innerHTML = `
-            <div style="padding:32px 16px;text-align:center;color:var(--text-dim);font-size:0.8rem;display:flex;align-items:center;justify-content:center;gap:8px;">
-                <span class="lastfm-bars"><span></span><span></span><span></span><span></span></span>
-                Connecting to X…
+            <div class="x-skeleton-list" style="display:flex; flex-direction:column; gap:12px; width:100%;">
+                <div class="x-post-container" style="pointer-events:none; padding:14px 16px;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                        <div class="skeleton-box" style="width:36px; height:36px; border-radius:50%; flex-shrink:0;"></div>
+                        <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                            <div class="skeleton-box" style="width:110px; height:12px;"></div>
+                            <div class="skeleton-box" style="width:70px; height:10px;"></div>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:7px; margin-bottom:12px;">
+                        <div class="skeleton-box" style="width:96%; height:12px;"></div>
+                        <div class="skeleton-box" style="width:80%; height:12px;"></div>
+                        <div class="skeleton-box" style="width:55%; height:12px;"></div>
+                    </div>
+                    <div class="skeleton-box" style="width:100%; height:90px; border-radius:8px; margin-bottom:12px;"></div>
+                    <div style="display:flex; justify-content:space-between; padding:0 8px;">
+                        <div class="skeleton-box" style="width:32px; height:10px;"></div>
+                        <div class="skeleton-box" style="width:32px; height:10px;"></div>
+                        <div class="skeleton-box" style="width:32px; height:10px;"></div>
+                        <div class="skeleton-box" style="width:16px; height:10px;"></div>
+                    </div>
+                </div>
             </div>`;
     }
 
@@ -321,7 +340,7 @@ import { CONFIG, escHtml } from './config.js';
                     <div class="x-author-info">
                         <div class="x-names">
                             <span class="x-display-name" title="${postAuthorDisplay}">${postAuthorDisplay}</span>
-                            <svg class="x-verified-icon" viewBox="0 0 24 24" width="14" height="14" fill="var(--cyan,#00f2ff)" aria-label="Verified">
+                            <svg class="x-verified-icon" viewBox="0 0 24 24" width="14" height="14" fill="#1D9BF0" aria-label="Verified">
                                 <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.79-4-4-4-.495 0-.965.084-1.4.238C14.55 2.475 13.18 1.6 11.6 1.6c-1.58 0-2.95.875-3.6 2.148-.435-.154-.905-.238-1.4-.238-2.21 0-4 1.79-4 4 0 .495.084.965.238 1.4C1.575 9.55.7 10.92.7 12.5c0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.79 4 4 4 .495 0 .965-.084 1.4-.238 1.4-1.273 2.77-2.148 4.35-2.148 1.58 0 2.95-.875 3.6-2.148.435.154.905.238 1.4.238 2.21 0 4-1.79 4-4 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.79 4.39l-4.24-4.24 1.41-1.41 2.83 2.83 6.36-6.36 1.41 1.41-7.77 7.77z"/>
                             </svg>
                             <span class="x-handle">@${postAuthorHandle}</span>
@@ -337,7 +356,7 @@ import { CONFIG, escHtml } from './config.js';
                     ${rawClean ? `<p class="x-post-text">${formatTweetText(rawClean)}</p>` : ''}
                     ${rawClean ? `
                     <div class="x-translate-wrap" style="margin:4px 0 6px 0;">
-                        <button type="button" class="x-translate-btn" style="background:none;border:none;color:var(--cyan,#00f2ff);font-size:0.73rem;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;opacity:0.85;font-weight:600;font-family:inherit;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+                        <button type="button" class="x-translate-btn" style="background:none;border:none;color:#B45309;font-size:0.73rem;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;opacity:0.85;font-weight:600;font-family:inherit;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
                             Translate post
                         </button>

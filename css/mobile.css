@@ -1377,13 +1377,14 @@
     margin-bottom: 20px !important;
   }
 
-  /* ── Contact & Footer: extra bottom clearance for floating nav ─── */
+  /* ── Contact & Footer: compact clearance for floating nav ─── */
   #contact {
-    padding-bottom: max(140px, calc(env(safe-area-inset-bottom, 0px) + 120px)) !important;
+    padding-bottom: 32px !important;
   }
 
   .main-footer {
-    padding-bottom: calc(125px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-top: 24px !important;
+    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
   /* ── Mobile Ink Reveal: Touch Ripple System ──────────────── */

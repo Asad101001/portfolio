@@ -676,3 +676,59 @@
   }
 }
 
+/* ── Neo-Brutalist Animated Skeletons ──────────────────────── */
+.skeleton-box {
+  position: relative;
+  overflow: hidden;
+  background: rgba(18, 18, 18, 0.06);
+  border-radius: 6px;
+  display: block;
+}
+.skeleton-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.spotify-skeleton-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 8px;
+  box-sizing: border-box;
+}
+
+.lastfm-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 680px) {
+  .lastfm-skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+}
+
+

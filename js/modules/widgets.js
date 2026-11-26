@@ -1303,7 +1303,12 @@ function _starsHTML(starsStr) {
     });
   }
 
-  container.innerHTML = '<div class="lastfm-loading"><span class="lastfm-bars"><span></span><span></span><span></span><span></span></span> Loading scrobbles...</div>';
+  container.innerHTML = '<div class="lastfm-tracks lastfm-skeleton-grid">' +
+    '<div class="lastfm-track" style="pointer-events:none;"><div class="skeleton-box" style="width:38px;height:38px;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;display:flex;flex-direction:column;gap:6px;"><div class="skeleton-box" style="width:75%;height:12px;"></div><div class="skeleton-box" style="width:50%;height:10px;"></div></div></div>' +
+    '<div class="lastfm-track" style="pointer-events:none;"><div class="skeleton-box" style="width:38px;height:38px;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;display:flex;flex-direction:column;gap:6px;"><div class="skeleton-box" style="width:70%;height:12px;"></div><div class="skeleton-box" style="width:45%;height:10px;"></div></div></div>' +
+    '<div class="lastfm-track" style="pointer-events:none;"><div class="skeleton-box" style="width:38px;height:38px;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;display:flex;flex-direction:column;gap:6px;"><div class="skeleton-box" style="width:80%;height:12px;"></div><div class="skeleton-box" style="width:55%;height:10px;"></div></div></div>' +
+    '<div class="lastfm-track" style="pointer-events:none;"><div class="skeleton-box" style="width:38px;height:38px;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;display:flex;flex-direction:column;gap:6px;"><div class="skeleton-box" style="width:65%;height:12px;"></div><div class="skeleton-box" style="width:40%;height:10px;"></div></div></div>' +
+  '</div>';
 
   var cached = localStorage.getItem('asad_lastfm_cache');
   if (cached) { try { render(JSON.parse(cached)); } catch(e) {} }

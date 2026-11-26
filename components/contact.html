@@ -78,9 +78,20 @@
                         <span class="spotify-live-dot" id="spotify-live-dot" style="margin-left:auto;"></span>
                     </div>
                     <div class="spotify-track-wrap" id="spotify-track-wrap">
-                        <div class="spotify-loading">
-                            <span class="spotify-bars"><span></span><span></span><span></span><span></span></span>
-                            Connecting...
+                        <div class="spotify-skeleton-wrap">
+                            <div class="skeleton-box" style="width:min(210px, 58vw); height:min(210px, 58vw); border-radius:12px; border:1.5px solid rgba(18,18,18,0.08);"></div>
+                            <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:8px; margin:16px 0 10px;">
+                                <div class="skeleton-box" style="width:65%; height:16px;"></div>
+                                <div class="skeleton-box" style="width:40%; height:12px;"></div>
+                            </div>
+                            <div class="skeleton-box" style="width:100%; height:6px; border-radius:99px; margin-bottom:14px;"></div>
+                            <div style="width:100%; display:flex; align-items:center; justify-content:space-around; padding:0 8px;">
+                                <div class="skeleton-box" style="width:18px; height:18px; border-radius:4px;"></div>
+                                <div class="skeleton-box" style="width:20px; height:20px; border-radius:4px;"></div>
+                                <div class="skeleton-box" style="width:46px; height:46px; border-radius:50%;"></div>
+                                <div class="skeleton-box" style="width:20px; height:20px; border-radius:4px;"></div>
+                                <div class="skeleton-box" style="width:18px; height:18px; border-radius:4px;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

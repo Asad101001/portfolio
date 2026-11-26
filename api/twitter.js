@@ -23,49 +23,124 @@ const NITTER_INSTANCES = [
 ];
 
 const RSSHUB_INSTANCES = [
+  'https://hub.slarker.me/twitter/user/',
   'https://rsshub.app/twitter/user/',
   'https://rsshub.rss.plus/twitter/user/',
-  'https://hub.slarker.me/twitter/user/',
 ];
 
 /** Profile curated post backup for @As4d_41 */
 const PROFILE_POST_FALLBACKS = {
   As4d_41: [
     {
-      title: 'RT by @As4d_41: Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy, and I just wanna thank you for giving me the privilege to experience that so many times cause of how awful you were, because nothing will ever replicate it',
-      link: 'https://x.com/notrefinx/status/2118351629720092750',
-      pubDate: '2026-11-05T14:36:00.000Z',
-      description: 'Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy, and I just wanna thank you for giving me the privilege to experience that so many times.',
-      mediaUrl: null,
-      mediaType: null,
-      metrics: { replies: 5, retweets: 11, likes: 78 },
+      title: 'RT @fwflacko: I didn\'t watch the video but you can\'t convince me these aren\'t two Key & Peele characters',
+      link: 'https://x.com/fwflacko/status/1884618290125066494',
+      pubDate: '2026-11-20T14:30:00.000Z',
+      description: 'I didn\'t watch the video but you can\'t convince me these aren\'t two Key & Peele characters',
+      mediaUrl: 'https://pbs.twimg.com/media/GismfK3XkAAkY5F?format=jpg&name=orig',
+      mediaType: 'image',
+      isRetweet: true,
+      retweetAuthor: 'fwflacko',
+      authorName: 'flacko',
+      authorAvatar: 'https://unavatar.io/twitter/fwflacko',
+      quote: {
+        author: 'HotSpotHotSpot',
+        name: '@HotSpotHotSpot',
+        avatar: 'https://unavatar.io/twitter/HotSpotHotSpot',
+        text: 'Rep. Cory Booker refused to endorse either Chuck Schumer or Van Hollen for House Speaker Video Community note: Cory Booker is a U.S. Senator, not a Representative.',
+        link: 'https://x.com/HotSpotHotSpot',
+        mediaUrl: 'https://pbs.twimg.com/media/Girm9oDXkAA_6aD?format=jpg&name=orig',
+      },
+      metrics: { replies: 11, retweets: 38, likes: 112 },
     },
     {
-      title: 'RT by @As4d_41: they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      title: 'D1 pessi glazer didn\'t deny the comparisons completely like his usual self',
+      link: 'https://x.com/As4d_41/status/1929499342634688718',
+      pubDate: '2026-11-14T11:24:26.000Z',
+      description: 'D1 pessi glazer didn\'t deny the comparisons completely like his usual self',
+      mediaUrl: 'https://pbs.twimg.com/media/Gsb1bTWXIAEc87e?format=jpg&name=orig',
+      mediaType: 'image',
+      isRetweet: false,
+      retweetAuthor: null,
+      authorName: 'Asad',
+      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
+      quote: {
+        author: 'Yamal_Xtra',
+        name: 'Lamine Xtra',
+        avatar: 'https://unavatar.io/twitter/Yamal_Xtra',
+        text: '🎙️ Pep Guardiola: "Lamine Yamal & Messi comparison? I have no idea whether he should play more centrally or not. I think he can do it, but he\'s also very good on the wing. Let\'s let him build his career, and we\'ll compare him with the greats when the time comes."',
+        link: 'https://x.com/Yamal_Xtra/status/1929488982234021996',
+        mediaUrl: 'https://pbs.twimg.com/media/Gsbr_zHXkAAwYjF?format=jpg&name=orig',
+      },
+      metrics: { replies: 6, retweets: 18, likes: 85 },
+    },
+    {
+      title: '- Didn\'t attend Di Maria\'s farewell - Didn\'t attend Pique\'s retirement or Busquets farewell - Didn\'t attend Aguero\'s retirement - Not attending the 125th anniversary of the club that gave him HGH to allow him to be where he is. Mr.NICE GUY ??🐍🐀',
+      link: 'https://x.com/As4d_41/status/1859985617112981650',
+      pubDate: '2026-11-10T15:41:42.000Z',
+      description: '- Didn\'t attend Di Maria\'s farewell\n- Didn\'t attend Pique\'s retirement or Busquets farewell\n- Didn\'t attend Aguero\'s retirement\n- Not attending the 125th anniversary of the club that gave him HGH to allow him to be where he is\n\nMr.NICE GUY ??🐍🐀',
+      mediaUrl: 'https://pbs.twimg.com/media/Gc__D7Ua4AARS_C?format=jpg&name=orig',
+      mediaType: 'image',
+      isRetweet: false,
+      retweetAuthor: null,
+      authorName: 'Asad',
+      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
+      quote: {
+        author: 'BarcaTimes',
+        name: 'BarçaTimes',
+        avatar: 'https://unavatar.io/twitter/BarcaTimes',
+        text: '🚨| BREAKING: Leo Messi will NOT attend Barcelona\'s 125th anniversary gala. [@ffpolo] #fcblive ❌',
+        link: 'https://x.com/BarcaTimes/status/1859977141087056089',
+        mediaUrl: 'https://pbs.twimg.com/media/Gc_3WoTWgAA4-Q5?format=jpg&name=orig',
+      },
+      metrics: { replies: 14, retweets: 29, likes: 94 },
+    },
+    {
+      title: 'RT @rhaenyrcs: they’ll open up a kababjees branch in ur ass if ur not careful enough',
       link: 'https://x.com/rhaenyrcs/status/2117942401163841666',
       pubDate: '2026-11-04T11:29:52.000Z',
       description: 'they’ll open up a kababjees branch in ur ass if ur not careful enough',
       mediaUrl: null,
       mediaType: null,
+      isRetweet: true,
+      retweetAuthor: 'rhaenyrcs',
+      authorName: 'rhaenyra',
+      authorAvatar: 'https://unavatar.io/twitter/rhaenyrcs',
+      quote: null,
       metrics: { replies: 9, retweets: 20, likes: 49 },
     },
     {
-      title: 'RT by @As4d_41: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      title: 'RT @alterna76: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
       link: 'https://x.com/alterna76/status/2117365931915587980',
       pubDate: '2026-11-02T21:19:11.000Z',
       description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
       mediaUrl: null,
       mediaType: null,
+      isRetweet: true,
+      retweetAuthor: 'alterna76',
+      authorName: 'alterna',
+      authorAvatar: 'https://unavatar.io/twitter/alterna76',
+      quote: null,
       metrics: { replies: 5, retweets: 8, likes: 63 },
     },
     {
-      title: 'Built & optimized a high-performance personal portfolio v2 with live data integrations, single-loop rAF animation architecture & custom theme engine.',
-      link: 'https://x.com/As4d_41/status/1848041530965000192',
-      pubDate: '2026-10-20T12:00:00.000Z',
-      description: 'Built & optimized a personal portfolio v2 with live widgets, custom theme engine, and zero frame drops.',
+      title: 'No watermark just pure hate easily the greatest servant of football',
+      link: 'https://x.com/As4d_41/status/1841514830223544545',
+      pubDate: '2026-10-02T16:25:23.000Z',
+      description: 'No watermark just pure hate easily the greatest servant of football',
       mediaUrl: null,
       mediaType: null,
-      metrics: { replies: 8, retweets: 14, likes: 62 },
+      isRetweet: false,
+      retweetAuthor: null,
+      authorName: 'Asad',
+      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
+      quote: {
+        author: 'MagicalXavi',
+        name: '🕊️',
+        avatar: 'https://unavatar.io/twitter/MagicalXavi',
+        text: 'take your time @mterstegen1 there\'s no hurry to return quickly ❤️ have a safe and slow recovery we are all with you 👊',
+        link: 'https://x.com/MagicalXavi/status/1841509962721456368',
+      },
+      metrics: { replies: 8, retweets: 17, likes: 72 },
     },
   ],
 };
@@ -150,16 +225,83 @@ function parseRSS(xml, username) {
       cleanLink = `https://x.com/${username}`;
     }
 
+    // Extract quoted tweet if available in RSS description
+    let quote = null;
+    let mainDescription = description;
+    const quoteBlockMatch = description.match(/<div class="rsshub-quote"[^>]*>([\s\S]*?)<\/div>/i) ||
+                            description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
+    if (quoteBlockMatch) {
+      const qContent = quoteBlockMatch[1];
+      let qAuthor = '';
+      let qName = '';
+      const aMatch = qContent.match(/<a[^>]+href="https?:\/\/(?:x|twitter)\.com\/([a-zA-Z0-9_]+)"[^>]*>([\s\S]*?)<\/a>/i);
+      if (aMatch) {
+        qAuthor = aMatch[1];
+        qName = aMatch[2].replace(/<[^>]*>/g, '').trim();
+      } else {
+        const qAuthorMatch = qContent.match(/@([a-zA-Z0-9_]+)/i);
+        if (qAuthorMatch) {
+          qAuthor = qAuthorMatch[1];
+          qName = `@${qAuthor}`;
+        }
+      }
+
+      let qMediaUrl = null;
+      const qImgMatch = qContent.match(/<img[^>]+src="([^"]+)"/i);
+      if (qImgMatch && !qImgMatch[1].includes('profile_images')) {
+        qMediaUrl = qImgMatch[1];
+      }
+
+      let qLink = null;
+      const qLinkMatch = qContent.match(/Link:\s*<a[^>]+href="([^"]+)"/i) ||
+                         qContent.match(/<a[^>]+href="(https?:\/\/(?:x|twitter)\.com\/[^"]+)"/i);
+      if (qLinkMatch) {
+        qLink = qLinkMatch[1].replace(/https?:\/\/(?:mobile\.)?twitter\.com/, 'https://x.com');
+      } else if (qAuthor) {
+        qLink = `https://x.com/${qAuthor}`;
+      }
+
+      let qText = qContent
+        .replace(/<small>Link:[\s\S]*?<\/small>/gi, '')
+        .replace(/<img[^>]*>/gi, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/^[^(@\n]*\(@[a-zA-Z0-9_]+\):?\s*/i, '')
+        .replace(/—\s*nitter\.[^\s]+$/i, '')
+        .trim();
+
+      if (qName && qText.startsWith(qName + ':')) {
+        qText = qText.slice(qName.length + 1).trim();
+      } else if (qAuthor && qText.startsWith(qAuthor + ':')) {
+        qText = qText.slice(qAuthor.length + 1).trim();
+      }
+
+      if (qAuthor || qText) {
+        quote = {
+          author: qAuthor || 'x',
+          name: qName || (qAuthor ? `@${qAuthor}` : 'X'),
+          avatar: qAuthor ? `https://unavatar.io/twitter/${qAuthor}` : null,
+          text: qText,
+          link: qLink,
+          mediaUrl: qMediaUrl,
+        };
+      }
+      mainDescription = description
+        .replace(/<div class="rsshub-quote"[\s\S]*?<\/div>/gi, '')
+        .replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '')
+        .trim();
+    }
+
     let mediaUrl = null;
     let mediaType = null;
 
-    const videoSrcMatch = description.match(/<video[^>]+src="([^"]+)"/i) ||
-                          description.match(/<source[^>]+src="([^"]+)"/i);
+    const descForMedia = mainDescription;
+    const videoSrcMatch = descForMedia.match(/<video[^>]+src="([^"]+)"/i) ||
+                          descForMedia.match(/<source[^>]+src="([^"]+)"/i);
     if (videoSrcMatch) {
       mediaUrl  = videoSrcMatch[1];
       mediaType = 'video';
     } else {
-      const imgMatch = description.match(/<img[^>]+src="([^"]+)"/i);
+      const imgMatch = descForMedia.match(/<img[^>]+src="([^"]+)"/i);
       if (imgMatch) {
         const candidate = imgMatch[1];
         if (!candidate.includes('profile_images') && !candidate.includes('_normal.')) {
@@ -204,26 +346,6 @@ function parseRSS(xml, username) {
 
     if (mediaUrl && mediaUrl.startsWith('http://')) {
       mediaUrl = mediaUrl.replace('http://', 'https://');
-    }
-
-    // Extract quoted tweet if available in RSS description
-    let quote = null;
-    let mainDescription = description;
-    const bqMatch = description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
-    if (bqMatch) {
-      const bqContent = bqMatch[1];
-      const qAuthorMatch = bqContent.match(/@([a-zA-Z0-9_]+)/i);
-      const qAuthor = qAuthorMatch ? qAuthorMatch[1] : '';
-      let qText = bqContent.replace(/<[^>]*>/g, '').trim();
-      qText = qText.replace(/^[^(@\n]*\(@[a-zA-Z0-9_]+\):?\s*/i, '').trim();
-      qText = qText.replace(/—\s*nitter\.[^\s]+$/i, '').trim();
-      quote = {
-        author: qAuthor,
-        name: qAuthor ? `@${qAuthor}` : 'x',
-        text: qText,
-        link: qAuthor ? `https://x.com/${qAuthor}` : null
-      };
-      mainDescription = description.replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '').trim();
     }
 
     // Determine retweet status and original author
@@ -391,8 +513,9 @@ export default async function handler(req, res) {
 
   // Gather RSS & syndication sources
   const rssUrls = [
-    ...NITTER_INSTANCES.map(h => `${h}/${username}/rss`),
+    ...RSSHUB_INSTANCES.map(b => `${b}${username}/readable=1`),
     ...RSSHUB_INSTANCES.map(b => `${b}${username}`),
+    ...NITTER_INSTANCES.map(h => `${h}/${username}/rss`),
   ];
 
   let liveItems = null;
@@ -409,6 +532,18 @@ export default async function handler(req, res) {
 
   let payload;
   if (liveItems && liveItems.length > 0) {
+    // Prioritize substantive quotes, retweets, and recent posts over stale anniversary pins
+    liveItems.sort((a, b) => {
+      const aAnniv = (a.title || '').includes('#MyXAnniversary');
+      const bAnniv = (b.title || '').includes('#MyXAnniversary');
+      if (aAnniv && !bAnniv) return 1;
+      if (!aAnniv && bAnniv) return -1;
+      const aHasQuoteOrRt = !!(a.quote || a.isRetweet);
+      const bHasQuoteOrRt = !!(b.quote || b.isRetweet);
+      if (aHasQuoteOrRt && !bHasQuoteOrRt) return -1;
+      if (!aHasQuoteOrRt && bHasQuoteOrRt) return 1;
+      return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+    });
     payload = { status: 'ok', items: liveItems, source: 'live-rss' };
     lastKnownGood.set(username, payload);
     memoryCache.set(username, { timestamp: Date.now(), payload });

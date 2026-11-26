@@ -301,7 +301,7 @@ nav.nav-hidden {
 
   /* .nav-links and .nav-actions are hidden below */
 
-  /* ── The Floating iOS Dynamic Liquid Glass Navigation Island ─ */
+  /* ── The Floating Navigation Island ─────────────────────── */
   .mobile-bottom-nav {
     display: flex;
     align-items: center;
@@ -315,58 +315,19 @@ nav.nav-hidden {
     pointer-events: auto !important;
     padding: 6px 8px;
     border-radius: 9999px;
-    /* iOS Liquid Glass multi-layer stack */
-    background:
-      linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.03) 40%,
-        rgba(255, 255, 255, 0.08) 100%
-      ),
-      rgba(10, 15, 28, 0.72);
-    backdrop-filter: blur(28px) saturate(210%) brightness(1.12);
-    -webkit-backdrop-filter: blur(28px) saturate(210%) brightness(1.12);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-top: 1px solid rgba(255, 255, 255, 0.38);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-      0 20px 40px -6px rgba(0, 0, 0, 0.65),
-      0 4px 16px -2px rgba(0, 0, 0, 0.4),
-      inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.35),
-      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
-      0 0 25px rgba(0, 242, 255, 0.08);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1.5px solid #121212;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 3px 3px 0px #F59E0B;
     gap: 4px;
     overflow: visible;
     isolation: isolate;
   }
 
-  /* Inner liquid glass specular sheen */
-  .mobile-bottom-nav::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0.03) 45%,
-      transparent 100%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Subtle noise texture */
+  .mobile-bottom-nav::before,
   .mobile-bottom-nav::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    mix-blend-mode: soft-light;
-    pointer-events: none;
-    z-index: 0;
+    display: none !important;
   }
 
   /* ── Each nav item ──────────────────────────────────────── */
@@ -378,7 +339,7 @@ nav.nav-hidden {
     gap: 3px;
     padding: 7px 4px;
     border-radius: 9999px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(18, 18, 18, 0.58);
     flex: 1;
     min-width: 0;
     text-decoration: none;
@@ -401,12 +362,12 @@ nav.nav-hidden {
   }
 
   .mbn-item:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
+    color: #121212;
+    background: rgba(18, 18, 18, 0.05);
   }
 
   .mbn-item:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
   }
 
   /* ── Icon ───────────────────────────────────────────────── */
@@ -414,7 +375,7 @@ nav.nav-hidden {
     width: 20px; height: 20px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 1.6;
+    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
     flex-shrink: 0;
@@ -439,24 +400,22 @@ nav.nav-hidden {
     line-height: 1.1;
   }
 
-  /* ── ACTIVE STATE: Dynamic Liquid Glass Bubble ───────────── */
+  /* ── ACTIVE STATE: Amber Accent Capsule ─────────────────── */
   .mbn-item.active {
-    color: var(--cyan, #00f2ff);
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.25),
-      0 2px 10px rgba(0, 0, 0, 0.35);
+    color: #121212;
+    background: rgba(245, 158, 11, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35);
   }
 
   .mbn-item.active svg {
-    transform: scale(1.1) translateY(-1px);
-    stroke: var(--cyan, #00f2ff);
-    filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.7));
+    transform: scale(1.08) translateY(-1px);
+    stroke: #121212;
+    filter: none;
   }
 
   .mbn-item.active span {
-    color: var(--cyan, #00f2ff);
-    font-weight: 700;
+    color: #121212;
+    font-weight: 800;
   }
 
   /* Glowing micro indicator */
@@ -466,13 +425,11 @@ nav.nav-hidden {
     top: 4px;
     left: 50%;
     transform: translateX(-50%) scaleX(1);
-    width: 18px;
+    width: 16px;
     height: 3px;
     border-radius: 9999px;
-    background: linear-gradient(90deg, var(--cyan, #00f2ff), rgba(0, 242, 255, 0.6));
-    box-shadow:
-      0 0 10px rgba(0, 242, 255, 0.9),
-      0 0 20px rgba(0, 242, 255, 0.5);
+    background: #F59E0B;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.7);
     animation: mbn-indicator-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     will-change: transform, opacity;
   }
@@ -481,16 +438,14 @@ nav.nav-hidden {
     to   { opacity: 1; transform: translateX(-50%) scaleX(1); }
   }
 
-  /* ── Resume CTA item: Liquid Accent Capsule ─────────────── */
+  /* ── Resume CTA item: Warm Amber Capsule ────────────────── */
   .mbn-item.mbn-cta {
-    color: #ffffff;
-    background: linear-gradient(135deg, rgba(0, 242, 255, 0.32), rgba(0, 242, 255, 0.12));
-    border: 1px solid rgba(0, 242, 255, 0.45);
+    color: #121212;
+    background: #F59E0B;
+    border: 1.5px solid #121212;
     border-radius: 9999px;
-    box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.35),
-      0 0 16px rgba(0, 242, 255, 0.22);
-    padding: 7px 8px;
+    box-shadow: 2px 2px 0px #121212;
+    padding: 6px 12px;
   }
 
   .mbn-item.mbn-cta::before {
@@ -498,22 +453,23 @@ nav.nav-hidden {
   }
 
   .mbn-item.mbn-cta:active {
-    background: rgba(0, 242, 255, 0.35);
-    transform: scale(0.9);
+    background: #D97706;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #121212;
   }
 
   .mbn-item.mbn-cta svg {
-    stroke: var(--cyan, #00f2ff);
+    stroke: #121212;
   }
 
   .mbn-item.mbn-cta span {
-    color: #ffffff;
-    font-weight: 700;
+    color: #121212;
+    font-weight: 800;
   }
 
   /* ── Safe area + content padding ───────────────────────── */
   body {
-    padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px));
   }
 
   /* ── Desktop leftovers: hide ────────────────────────────── */
