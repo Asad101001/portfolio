@@ -175,7 +175,7 @@ import { CONFIG, escHtml } from './config.js';
         if (mediaType === 'video' || (mediaUrl && mediaUrl.endsWith('.mp4'))) {
             return `
                 <div class="x-card-media x-media-video-wrap" onclick="event.stopPropagation()">
-                    <video class="x-video-player" src="${mediaUrl}" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="x-video-player" src="${mediaUrl}" autoplay loop muted playsinline webkit-playsinline preload="metadata" referrerpolicy="no-referrer" width="600" height="340" onerror="this.closest('.x-card-media').style.display='none'"><track kind="captions" src="data:text/vtt,WEBVTT" default></video>
                     <span class="x-gif-badge">GIF</span>
                     <div class="x-video-controls">
                         <button type="button" class="x-video-play-btn is-playing" aria-label="Play or pause video">
