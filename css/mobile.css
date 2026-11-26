@@ -46,13 +46,21 @@
     display: none !important;
   }
 
-  html, body {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+  html {
+    overflow-x: clip !important;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overflow-x: clip !important;
+    overflow-y: visible !important;
     width: 100%;
     min-height: 100%;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y !important;
+    touch-action: pan-y;
   }
 
   /* Professional theme is allowed to stay white on mobile */
@@ -513,14 +521,26 @@
     margin-bottom: 4px !important;
   }
   .cs-tags {
-    gap: 5px !important;
+    gap: 6px !important;
     margin-bottom: 6px !important;
   }
   .cs-tags .acard {
-    padding: 3px 7px !important;
-    font-size: 0.66rem !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    padding: 4px 8px !important;
+    font-size: 0.68rem !important;
     border-radius: 6px !important;
-    gap: 4px !important;
+    gap: 5px !important;
+  }
+  .cs-tags .acard .acard-name {
+    opacity: 1 !important;
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+    font-size: 0.68rem !important;
   }
   .cs-actions {
     display: flex !important;

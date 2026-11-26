@@ -10,8 +10,8 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Asad';
-    const CACHE_KEYS = ['asad_twitter_cache_v10'];
-    const CACHE_KEY = 'asad_twitter_cache_v10';
+    const CACHE_KEYS = ['asad_twitter_cache_v13'];
+    const CACHE_KEY = 'asad_twitter_cache_v13';
     const CACHE_TTL = 30 * 60 * 1000; // 30 mins fresh
 
     function getLocalCache(allowStale = true) {
@@ -23,10 +23,10 @@ import { CONFIG, escHtml } from './config.js';
                 if (!parsed || !parsed.data) continue;
                 if (!allowStale && Date.now() - parsed.timestamp > CACHE_TTL) continue;
                 if (key !== CACHE_KEY) {
-                    try { localStorage.setItem(CACHE_KEY, raw); } catch (_) {}
+                    try { localStorage.setItem(CACHE_KEY, raw); } catch (_) { }
                 }
                 return parsed.data;
-            } catch (_) {}
+            } catch (_) { }
         }
         return null;
     }
@@ -38,7 +38,7 @@ import { CONFIG, escHtml } from './config.js';
                 const ageOffset = data.source === 'profile-fallback' ? (CACHE_TTL - 2 * 60 * 1000) : 0;
                 localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now() - ageOffset, data }));
             }
-        } catch (_) {}
+        } catch (_) { }
     }
 
     function renderLoadingState() {
@@ -129,11 +129,11 @@ import { CONFIG, escHtml } from './config.js';
 
     function renderMediaElement(item) {
         let mediaType = item.mediaType || null;
-        let mediaUrl  = item.mediaUrl  || null;
+        let mediaUrl = item.mediaUrl || null;
 
         if (!mediaUrl && item.description) {
             const videoMatch = item.description.match(/<video[^>]*>[\s\S]*?<source[^>]+src="([^"]+)"/i)
-                                        || item.description.match(/<video[^>]+src="([^"]+)"/i);
+                || item.description.match(/<video[^>]+src="([^"]+)"/i);
             if (videoMatch) { mediaType = 'video'; mediaUrl = videoMatch[1]; }
             else {
                 const imgMatch = item.description.match(/<img[^>]*src="([^"]+)"/i);
@@ -148,7 +148,7 @@ import { CONFIG, escHtml } from './config.js';
         if (!mediaUrl) return '';
 
         if (mediaUrl.startsWith('/') && !mediaUrl.startsWith('//')) {
-            try { mediaUrl = new URL(item.link || '').origin.replace('http://', 'https://') + mediaUrl; } catch (_) {}
+            try { mediaUrl = new URL(item.link || '').origin.replace('http://', 'https://') + mediaUrl; } catch (_) { }
         }
         if (mediaUrl.includes('/pic/')) {
             const decoded = decodeURIComponent(mediaUrl.split('/pic/').pop());
@@ -165,7 +165,7 @@ import { CONFIG, escHtml } from './config.js';
         // Convert any Twitter animated gif thumbnails to genuine looping MP4 videos
         if (mediaUrl && (mediaUrl.includes('tweet_video_thumb') || mediaUrl.includes('tweet_video'))) {
             const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i) ||
-                                          mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
+                mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
             if (vidMatch) {
                 mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
                 mediaType = 'video';
@@ -204,12 +204,14 @@ import { CONFIG, escHtml } from './config.js';
             return;
         }
 
-        // Strictly prioritize retweets and quote tweets over plain tweets
-        const prioritized = [...items].sort((a, b) => {
-            const aScore = (a.isRetweet ? 3 : (a.quote ? 2 : 1));
-            const bScore = (b.isRetweet ? 3 : (b.quote ? 2 : 1));
-            return bScore - aScore;
-        });
+        // Blend top Retweet + top Quote Tweet cleanly so both appear
+        const rts = items.filter(i => i.isRetweet || /^RT\s+(by|@)/i.test(i.title || ''));
+        const qts = items.filter(i => !i.isRetweet && !/^RT\s+(by|@)/i.test(i.title || '') && i.quote);
+        const rest = items.filter(i => !rts.includes(i) && !qts.includes(i));
+        const prioritized = [];
+        if (rts[0]) prioritized.push(rts[0]);
+        if (qts[0]) prioritized.push(qts[0]);
+        prioritized.push(...rts.slice(1), ...qts.slice(1), ...rest);
 
         prioritized.slice(0, 2).forEach((item, idx) => {
             const isRetweet = /^RT by|^RT @/i.test(item.title || '') || !!item.isRetweet;
@@ -234,8 +236,11 @@ import { CONFIG, escHtml } from './config.js';
                 ? (item.authorAvatar || `https://unavatar.io/twitter/${retweetAuthor}`)
                 : `https://unavatar.io/twitter/${USER}`;
 
-            // Clean description and title: strip out blockquote first to prevent repetition
-            const descWithoutBq = (item.description || '').replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '');
+            // Clean description and title: strip out blockquote / rsshub-quote first to prevent repetition
+            const descWithoutBq = (item.description || '')
+                .replace(/<div class="rsshub-quote"[\s\S]*$/gi, '')
+                .replace(/<hr[^>]*>\s*$/gi, '')
+                .replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '');
             const descClean = descWithoutBq
                 .replace(/^RT by @[a-zA-Z0-9_]+:\s*/i, '')
                 .replace(/^RT @[a-zA-Z0-9_]+:\s*/i, '')
@@ -308,7 +313,7 @@ import { CONFIG, escHtml } from './config.js';
                             ${quoteData.pubDate ? `<span class="x-dot">·</span><time class="x-quoted-time">${timeAgo(quoteData.pubDate)}</time>` : ''}
                         </div>
                         <p class="x-quoted-text">${formatTweetText(qClean)}</p>
-                        ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy" width="500" height="280"></div>` : ''}
+                        ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy" referrerpolicy="no-referrer" width="500" height="280" onerror="this.parentElement.style.display='none'"></div>` : ''}
                     </div>`;
             }
 
@@ -320,14 +325,14 @@ import { CONFIG, escHtml } from './config.js';
             if (!twitterLink.includes('/status/')) twitterLink = `https://x.com/${postAuthorHandle}`;
 
             const metrics = item.metrics || {
-                replies:  Math.max(2, 4  + idx * 2),
+                replies: Math.max(2, 4 + idx * 2),
                 retweets: Math.max(5, 10 + idx * 3),
-                likes:    Math.max(18, 38 + idx * 11)
+                likes: Math.max(18, 38 + idx * 11)
             };
 
             const tweetEl = document.createElement('article');
             tweetEl.className = 'x-post-container';
-            tweetEl.tabIndex  = 0;
+            tweetEl.tabIndex = 0;
             tweetEl.setAttribute('role', 'article');
             tweetEl.setAttribute('aria-label', `Post by @${postAuthorHandle}`);
             tweetEl.addEventListener('click', e => {
@@ -397,7 +402,7 @@ import { CONFIG, escHtml } from './config.js';
             // Video controls
             // Translate post inline toggle
             const postTextEl = tweetEl.querySelector('.x-post-text');
-            const transBtn     = tweetEl.querySelector('.x-translate-btn');
+            const transBtn = tweetEl.querySelector('.x-translate-btn');
             if (transBtn && postTextEl) {
                 let isTranslated = false;
                 let originalHtml = postTextEl.innerHTML;
@@ -457,17 +462,17 @@ import { CONFIG, escHtml } from './config.js';
             // Video controls & auto-play
             const videoWrap = tweetEl.querySelector('.x-media-video-wrap');
             if (videoWrap) {
-                const video         = videoWrap.querySelector('.x-video-player');
-                const playBtn     = videoWrap.querySelector('.x-video-play-btn');
-                const muteBtn     = videoWrap.querySelector('.x-video-mute-btn');
-                const playIcon   = playBtn.querySelector('.x-play-icon');
+                const video = videoWrap.querySelector('.x-video-player');
+                const playBtn = videoWrap.querySelector('.x-video-play-btn');
+                const muteBtn = videoWrap.querySelector('.x-video-mute-btn');
+                const playIcon = playBtn.querySelector('.x-play-icon');
                 const pauseIcon = playBtn.querySelector('.x-pause-icon');
-                const muteIcon   = muteBtn.querySelector('.x-mute-icon');
+                const muteIcon = muteBtn.querySelector('.x-mute-icon');
                 const unmuteIcon = muteBtn.querySelector('.x-unmute-icon');
 
                 if (video) {
                     video.muted = true;
-                    video.play().catch(() => {});
+                    video.play().catch(() => { });
                 }
 
                 const togglePlay = e => {
@@ -476,7 +481,7 @@ import { CONFIG, escHtml } from './config.js';
                         video.play().then(() => {
                             playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
                             playBtn.classList.add('is-playing');
-                        }).catch(() => {});
+                        }).catch(() => { });
                     } else {
                         video.pause();
                         playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
@@ -486,8 +491,8 @@ import { CONFIG, escHtml } from './config.js';
                 const toggleMute = e => {
                     if (e) e.stopPropagation();
                     video.muted = !video.muted;
-                    muteIcon.style.display     = video.muted ? 'block' : 'none';
-                    unmuteIcon.style.display = video.muted ? 'none'   : 'block';
+                    muteIcon.style.display = video.muted ? 'block' : 'none';
+                    unmuteIcon.style.display = video.muted ? 'none' : 'block';
                 };
                 playBtn.addEventListener('click', togglePlay);
                 video.addEventListener('click', togglePlay);
@@ -503,7 +508,7 @@ import { CONFIG, escHtml } from './config.js';
                                 video.play().then(() => {
                                     playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
                                     playBtn.classList.add('is-playing');
-                                }).catch(() => {});
+                                }).catch(() => { });
                             }
                         });
                     }, { threshold: 0.3 }).observe(video);
@@ -525,7 +530,7 @@ import { CONFIG, escHtml } from './config.js';
                 likeBtn.addEventListener('click', e => {
                     e.stopPropagation(); liked = !liked;
                     const countEl = likeBtn.querySelector('.x-like-count');
-                    const heart     = likeBtn.querySelector('.x-like-heart');
+                    const heart = likeBtn.querySelector('.x-like-heart');
                     const n = parseInt(countEl.textContent, 10) || 0;
                     likeBtn.classList.toggle('liked', liked);
                     heart.setAttribute('fill', liked ? '#f43f5e' : 'none');
@@ -550,7 +555,7 @@ import { CONFIG, escHtml } from './config.js';
                                 toast.style.transform = 'translateX(-50%) translateY(20px)';
                             }, 2200);
                         }
-                    }).catch(() => {});
+                    }).catch(() => { });
                 });
             }
 

@@ -221,6 +221,62 @@
   gap: 8px;
 }
 
+.cs-tags .acard {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  overflow: visible !important;
+  padding: 5px 10px !important;
+  gap: 6px !important;
+}
+
+.cs-tags .acard .acard-icon {
+  width: 15px !important;
+  height: 15px !important;
+  overflow: visible !important;
+  flex-shrink: 0;
+}
+
+.cs-tags .acard .acard-name {
+  opacity: 1 !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  font-size: 0.72rem !important;
+}
+
+.cs-tags .acard {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  overflow: visible !important;
+  padding: 5px 10px !important;
+  gap: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.cs-tags .acard-icon {
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.cs-tags .acard .acard-name {
+  opacity: 1 !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+}
+
 .cs-actions {
   display: flex;
   flex-wrap: wrap;

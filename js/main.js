@@ -11,6 +11,10 @@ import './modules/desktop.js';
 // Fast native fallback for smoothScrollTo before any deferred libraries load
 if (!window.smoothScrollTo) {
   window.smoothScrollTo = (target, offset = -30) => {
+    if (typeof target === 'number') {
+      window.scrollTo({ top: target, behavior: 'smooth' });
+      return;
+    }
     const el = typeof target === 'string' ? document.querySelector(target) : target;
     if (el) {
       const top = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) + offset;

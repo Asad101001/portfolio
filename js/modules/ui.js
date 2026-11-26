@@ -479,11 +479,20 @@ if (document.readyState === 'loading') {
   var btt = document.getElementById('back-to-top'), ring = document.getElementById('scroll-ring');
   if (btt) {
     var CIRC = 119.4;
+    var showRing = ring && !window._isMobile;
     window._scrollTasks.push(() => {
-      btt.classList.toggle('visible', window._scrollY > 400);
-      if (ring && window._docH > 0) ring.style.strokeDashoffset = (CIRC * (1 - window._scrollY / window._docH)).toFixed(1);
+      var visible = window._scrollY > 400;
+      if (btt.classList.contains('visible') !== visible) {
+        btt.classList.toggle('visible', visible);
+      }
+      if (showRing && window._docH > 0) {
+        ring.style.strokeDashoffset = (CIRC * (1 - Math.min(1, window._scrollY / window._docH))).toFixed(1);
+      }
     });
-    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    btt.addEventListener('click', () => {
+      if (!window._isMobile && typeof window.smoothScrollTo === 'function') window.smoothScrollTo(0);
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   document.addEventListener('click', e => {
@@ -576,12 +585,18 @@ if (document.readyState === 'loading') {
   }
 })();
 
-/* â”€â”€ Section Reveal Stagger (section-in only â€” .reveal handled by GSAP) â”€â”€ */
+/* ── Section Reveal Stagger & Inter-Section Transitions ─────── */
 (function () {
-  var staggerParents = document.querySelectorAll('.projects-grid, .working-on-grid, .social-cards-grid, .demo-grid, .about-stats-col');
+  var staggerParents = document.querySelectorAll(
+    '.case-studies-list, .about-skills-grid, .arsenal-grid, .education-staircase, .social-platforms-row, .social-split-grid, .projects-grid, .working-on-grid, .social-cards-grid, .demo-grid, .about-stats-col'
+  );
   staggerParents.forEach(p => Array.prototype.forEach.call(p.children, c => c.classList.add('s-child')));
+  document.querySelectorAll('.credentials-table-wrap, .github-heatmap-card, .social-fullwidth-wrap').forEach(el => {
+    el.classList.add('s-child');
+  });
+
   if (!window.IntersectionObserver) {
-    document.querySelectorAll('.section-in').forEach(s => s.classList.add('in-view'));
+    document.querySelectorAll('.section-in, .section-divider').forEach(s => s.classList.add('in-view'));
     return;
   }
   var obs = new IntersectionObserver(entries => {
@@ -590,15 +605,15 @@ if (document.readyState === 'loading') {
         e.target.classList.add('in-view');
         e.target.querySelectorAll('.acard').forEach((c, i) => {
           if (!c.classList.contains('in-view')) {
-            setTimeout(() => c.classList.add('in-view'), i * 35);
+            setTimeout(() => c.classList.add('in-view'), Math.min(i, 10) * 28);
           }
         });
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-  // Only observe .section-in â€” GSAP handles .reveal
-  document.querySelectorAll('.section-in, .proj-tags').forEach(s => obs.observe(s));
+  }, { threshold: 0.02, rootMargin: '0px 0px 45px 0px' });
+
+  document.querySelectorAll('.section-in, .section-divider, .proj-tags').forEach(s => obs.observe(s));
 })();
 
 

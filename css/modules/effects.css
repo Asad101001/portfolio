@@ -85,9 +85,7 @@ section::before {
   letter-spacing: -0.04em;
 }
 
-/* Alternating section padding removed for normalized grid alignment */
-#about .section-inner, #projects .section-inner,
-#tech .section-inner, #contact .section-inner { padding-left: 0; padding-right: 0; }
+/* Alternating section padding removed; unified layout padding lives in layout.css */
 
 /* label-xs stamp tilt reset */
 #about .label-xs, #projects .label-xs, #education .label-xs {

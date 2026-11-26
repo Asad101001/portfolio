@@ -8,7 +8,7 @@ window._isMobile   = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || wi
 window._lerpY    = 0;
 window._scrollTasks = [];
 
-/* ── Passive scroll listener ─────────────────────────────── */
+/* ── Passive scroll listener & Cached Doc Height ───────────── */
 (function () {
   var prevY = 0;
   function onScroll() {
@@ -18,35 +18,40 @@ window._scrollTasks = [];
     prevY = y;
   }
   function calcDocH() {
-    window._docH = Math.max(
+    window._docH = Math.max(1, Math.max(
       document.body.scrollHeight,
       document.documentElement.scrollHeight
-    ) - window.innerHeight;
+    ) - window.innerHeight);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', calcDocH, { passive: true });
+  window.addEventListener('load', calcDocH, { once: true });
+  window._calcDocH = calcDocH;
   calcDocH();
   onScroll();
 })();
 
 /* ── Master rAF Loop ─────────────────────────────────────── */
 if (window._isMobile) {
-  // On mobile, native scrolling is fine; run tasks directly on scroll to save CPU
-  window.addEventListener('scroll', function(e) {
+  // Batch mobile scroll callbacks into at most 1 rAF per frame for zero scroll jank
+  var mobileRafPending = false;
+  function flushMobileScroll(timestamp) {
+    mobileRafPending = false;
     window._lerpY = window._scrollY;
     var len = window._scrollTasks.length;
     for (var i = 0; i < len; i++) {
-      try { window._scrollTasks[i](e.timeStamp); } catch (e) {}
+      try { window._scrollTasks[i](timestamp); } catch (err) {}
+    }
+  }
+  window.addEventListener('scroll', function() {
+    if (!mobileRafPending) {
+      mobileRafPending = true;
+      requestAnimationFrame(flushMobileScroll);
     }
   }, { passive: true });
-  
-  // Run once on init
+
   setTimeout(function() {
-    window._lerpY = window._scrollY;
-    var len = window._scrollTasks.length;
-    for (var i = 0; i < len; i++) {
-      try { window._scrollTasks[i](0); } catch (e) {}
-    }
+    flushMobileScroll(0);
   }, 100);
 } else {
   var lastScrollY = -1;

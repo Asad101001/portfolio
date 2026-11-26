@@ -53,7 +53,7 @@ function apiMiddlewarePlugin() {
             const handlerFile = path.resolve(process.cwd(), `api/${route}.js`);
             if (fs.existsSync(handlerFile)) {
               const { default: handler } = await import(`file://${handlerFile}?t=${Date.now()}`);
-              const mockReq = { query, url: req.url, headers: req.headers };
+              const mockReq = { method: req.method || 'GET', query, url: req.url, headers: req.headers };
               const mockRes = {
                 setHeader: (k, v) => res.setHeader(k, v),
                 json: (data) => {

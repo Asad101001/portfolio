@@ -12,28 +12,36 @@ nav {
 
 .section-in { 
   opacity: 0; 
-  transform: translateY(30px) scale(0.98); 
-  transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); 
+  transform: translate3d(0, 18px, 0); 
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1); 
 }
 .section-in.in-view { 
   opacity: 1; 
-  transform: translateY(0) scale(1); 
+  transform: translate3d(0, 0, 0); 
 }
 .section-in .s-child { 
   opacity: 0; 
-  transform: translateY(15px) scale(0.98); 
-  transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); 
+  transform: translate3d(0, 14px, 0); 
+  transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1); 
 }
 .section-in.in-view .s-child {
   opacity: 1;
-  transform: none;
+  transform: translate3d(0, 0, 0);
 }
-.section-in.in-view .s-child:nth-child(1)  { opacity:1; transform:none; transition-delay:0.08s; }
-.section-in.in-view .s-child:nth-child(2)  { opacity:1; transform:none; transition-delay:0.16s; }
-.section-in.in-view .s-child:nth-child(3)  { opacity:1; transform:none; transition-delay:0.24s; }
-.section-in.in-view .s-child:nth-child(4)  { opacity:1; transform:none; transition-delay:0.32s; }
-.section-in.in-view .s-child:nth-child(5)  { opacity:1; transform:none; transition-delay:0.40s; }
-.section-in.in-view .s-child:nth-child(n+6){ opacity:1; transform:none; transition-delay:0.48s; }
+.section-in.in-view .s-child:nth-child(1)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.05s; }
+.section-in.in-view .s-child:nth-child(2)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.11s; }
+.section-in.in-view .s-child:nth-child(3)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.17s; }
+.section-in.in-view .s-child:nth-child(4)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.23s; }
+.section-in.in-view .s-child:nth-child(5)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.29s; }
+.section-in.in-view .s-child:nth-child(n+6){ opacity:1; transform:translate3d(0,0,0); transition-delay:0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-in, .section-in .s-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 
 /*  Whimsy Elements  */
 .faller { position: fixed; top: -2rem; pointer-events: none; z-index: 9999; font-family: 'JetBrains Mono', monospace; font-weight: 600; opacity: 0; animation: fall-down linear forwards; user-select: none; }

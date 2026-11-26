@@ -474,6 +474,11 @@ function _starsHTML(starsStr) {
               }
             }
             starsEl.innerHTML = _starsHTML(parsed.starsStr);
+            var movieYearEl = document.getElementById('movie-year');
+            if (movieYearEl) {
+              movieYearEl.style.display = 'none';
+              movieYearEl.textContent = '';
+            }
 
             var pubDate = latest.pubDate;
             var watchedDate = latest.watchedDate;

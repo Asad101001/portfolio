@@ -91,8 +91,35 @@ body::after {
   contain: layout style paint;
 }
 
+.x-post-container {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.14) !important;
+  box-shadow: 4px 4px 0px #F59E0B !important;
+  color: #121212 !important;
+}
+
+.x-quoted-card {
+  background: #F9F8F5 !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  color: #121212 !important;
+}
+.x-quoted-card:hover {
+  background: #FFFFFF !important;
+  border-color: #F59E0B !important;
+}
+.x-quoted-name {
+  color: #121212 !important;
+}
+.x-quoted-text {
+  color: rgba(18, 18, 18, 0.85) !important;
+}
+.x-quoted-handle,
+.x-quoted-time {
+  color: rgba(18, 18, 18, 0.56) !important;
+}
+
 section {
-  contain: layout style;
+  contain: style;
 }
 
 /* ── 5. SCROLL-ANCHOR & OVERSCROLL ─────────────────────────── */
@@ -192,22 +219,17 @@ html {
   }
 }
 
-/* ── 9. CONTENT-VISIBILITY (PERF) ───────────────────────────── */
-#about      { content-visibility: auto; contain-intrinsic-size: 0 600px; }
-#projects   { content-visibility: auto; contain-intrinsic-size: 0 800px; }
-#demo       { content-visibility: auto; contain-intrinsic-size: 0 500px; }
-#tech       { content-visibility: auto; contain-intrinsic-size: 0 600px; }
-#education  { content-visibility: auto; contain-intrinsic-size: 0 500px; }
-#contact    { content-visibility: auto; contain-intrinsic-size: 0 400px; }
-#hero       { content-visibility: visible !important; }
-
-@media (max-width: 768px) {
-  #about      { contain-intrinsic-size: 0 400px; }
-  #projects   { contain-intrinsic-size: 0 600px; }
-  #demo       { contain-intrinsic-size: 0 400px; }
-  #tech       { contain-intrinsic-size: 0 500px; }
-  #education  { contain-intrinsic-size: 0 400px; }
-  #contact    { contain-intrinsic-size: 0 300px; }
+/* ── 9. SMOOTH NATIVE SCROLL HEIGHTS (NO CONTENT-VISIBILITY JUMPS) ─ */
+#about,
+#projects,
+#demo,
+#tech,
+#credentials,
+#education,
+#contact,
+#hero {
+  content-visibility: visible !important;
+  contain-intrinsic-size: auto !important;
 }
 
 /* ── 10. TOUCH-ACTION ──────────────────────────────────────── */
@@ -233,9 +255,5 @@ a, button, [role="button"], .mbn-item {
   .intro-ring-2 {
     animation: none !important;
     display: none !important;
-  }
-
-  html, body {
-    overscroll-behavior-y: auto;
   }
 }

@@ -28,90 +28,61 @@ const RSSHUB_INSTANCES = [
   'https://rsshub.rss.plus/twitter/user/',
 ];
 
-/** Profile curated post backup for @As4d_41 */
+/** Curated verified retweets & backup feed for @As4d_41 */
+const VERIFIED_RETWEET_REFS = {
+  As4d_41: [
+    { handle: 'notrefinx', id: '2118351629720092750', pubDate: '2026-11-22T15:10:00.000Z' },
+    { handle: 'alterna76', id: '2117365931915587980', pubDate: '2026-11-16T21:19:11.000Z' },
+  ],
+};
+
+const BLOCKED_POST_RE = /\b(n-word|nigga|nigger|fag|faggot|retard|retarded|ur ass|bitch)\b/i;
+const BLOCKED_IDS_OR_MEDIA = /(1876635762864914656|1929499342634688718|1859985617112981650|Gsb1bTWXIAEc87e|Gc__D7Ua4AARS_C|GgsmR87WoAAsfyD)/i;
+
+function isCleanPost(item) {
+  if (!item) return false;
+  if (BLOCKED_IDS_OR_MEDIA.test(`${item.link || ''} ${item.mediaUrl || ''}`)) return false;
+  const combined = `${item.title || ''} ${item.description || ''} ${item.quote?.text || ''}`.replace(/<[^>]*>/g, ' ').trim();
+  if (!combined) return false;
+  if (BLOCKED_POST_RE.test(combined)) return false;
+  // Filter standalone automated X anniversary cards with no real post body
+  if (/^#?myxanniversary$/i.test((item.title || '').trim()) || /^#?myxanniversary$/i.test(combined)) return false;
+  return true;
+}
+
 const PROFILE_POST_FALLBACKS = {
   As4d_41: [
     {
-      title: 'RT @fwflacko: I didn\'t watch the video but you can\'t convince me these aren\'t two Key & Peele characters',
-      link: 'https://x.com/fwflacko/status/1884618290125066494',
-      pubDate: '2026-11-20T14:30:00.000Z',
-      description: 'I didn\'t watch the video but you can\'t convince me these aren\'t two Key & Peele characters',
-      mediaUrl: 'https://pbs.twimg.com/media/GismfK3XkAAkY5F?format=jpg&name=orig',
-      mediaType: 'image',
-      isRetweet: true,
-      retweetAuthor: 'fwflacko',
-      authorName: 'flacko',
-      authorAvatar: 'https://unavatar.io/twitter/fwflacko',
-      quote: {
-        author: 'HotSpotHotSpot',
-        name: '@HotSpotHotSpot',
-        avatar: 'https://unavatar.io/twitter/HotSpotHotSpot',
-        text: 'Rep. Cory Booker refused to endorse either Chuck Schumer or Van Hollen for House Speaker Video Community note: Cory Booker is a U.S. Senator, not a Representative.',
-        link: 'https://x.com/HotSpotHotSpot',
-        mediaUrl: 'https://pbs.twimg.com/media/Girm9oDXkAA_6aD?format=jpg&name=orig',
-      },
-      metrics: { replies: 11, retweets: 38, likes: 112 },
-    },
-    {
-      title: 'RT @rhaenyrcs: they’ll open up a kababjees branch in ur ass if ur not careful enough',
-      link: 'https://x.com/rhaenyrcs/status/2117942401163841666',
-      pubDate: '2026-11-18T11:29:52.000Z',
-      description: 'they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      title: 'RT @notrefinx: Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy...',
+      link: 'https://x.com/notrefinx/status/2118351629720092750',
+      pubDate: '2026-11-22T15:10:00.000Z',
+      description: 'Every failure, every tear, all the misery you experienced, gave me joy. Watching you fail was my therapy, and I just wanna thank you for giving me the privilege to experience that so many times cause of how awful you were, because nothing will ever replicate it',
       mediaUrl: null,
       mediaType: null,
       isRetweet: true,
-      retweetAuthor: 'rhaenyrcs',
-      authorName: 'rhaenyra',
-      authorAvatar: 'https://unavatar.io/twitter/rhaenyrcs',
-      quote: null,
-      metrics: { replies: 9, retweets: 20, likes: 49 },
-    },
-    {
-      title: 'RT @alterna76: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
-      link: 'https://x.com/alterna76/status/2117365931915587980',
-      pubDate: '2026-11-16T21:19:11.000Z',
-      description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
-      mediaUrl: null,
-      mediaType: null,
-      isRetweet: true,
-      retweetAuthor: 'alterna76',
-      authorName: 'alterna',
-      authorAvatar: 'https://unavatar.io/twitter/alterna76',
-      quote: null,
-      metrics: { replies: 5, retweets: 8, likes: 63 },
-    },
-    {
-      title: 'D1 pessi glazer didn\'t deny the comparisons completely like his usual self',
-      link: 'https://x.com/As4d_41/status/1929499342634688718',
-      pubDate: '2026-11-14T11:24:26.000Z',
-      description: 'D1 pessi glazer didn\'t deny the comparisons completely like his usual self',
-      mediaUrl: 'https://pbs.twimg.com/media/Gsb1bTWXIAEc87e?format=jpg&name=orig',
-      mediaType: 'image',
-      isRetweet: false,
-      retweetAuthor: null,
-      authorName: 'Asad',
-      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
+      retweetAuthor: 'notrefinx',
+      authorName: '🦇',
+      authorAvatar: 'https://unavatar.io/twitter/notrefinx',
       quote: {
-        author: 'Yamal_Xtra',
-        name: 'Lamine Xtra',
-        avatar: 'https://unavatar.io/twitter/Yamal_Xtra',
-        text: '🎙️ Pep Guardiola: "Lamine Yamal & Messi comparison? I have no idea whether he should play more centrally or not. I think he can do it, but he\'s also very good on the wing. Let\'s let him build his career, and we\'ll compare him with the greats when the time comes."',
-        link: 'https://x.com/Yamal_Xtra/status/1929488982234021996',
-        mediaUrl: 'https://pbs.twimg.com/media/Gsbr_zHXkAAwYjF?format=jpg&name=orig',
+        author: 'Cristiano',
+        name: 'Cristiano Ronaldo',
+        avatar: 'https://unavatar.io/twitter/Cristiano',
+        text: 'Portugal estará sempre em mim',
+        link: 'https://x.com/Cristiano',
       },
-      metrics: { replies: 6, retweets: 18, likes: 85 },
+      metrics: { replies: 78, retweets: 983, likes: 5292 },
     },
     {
       title: 'No watermark just pure hate easily the greatest servant of football',
       link: 'https://x.com/As4d_41/status/1841514830223544545',
-      pubDate: '2026-10-02T16:25:23.000Z',
+      pubDate: '2024-10-02T16:25:23.000Z',
       description: 'No watermark just pure hate easily the greatest servant of football',
       mediaUrl: null,
       mediaType: null,
       isRetweet: false,
       retweetAuthor: null,
       authorName: 'Asad',
-      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
+      authorAvatar: 'https://pbs.twimg.com/profile_images/1833138840820756480/CWF7-j8O_200x200.jpg',
       quote: {
         author: 'MagicalXavi',
         name: '🕊️',
@@ -119,7 +90,21 @@ const PROFILE_POST_FALLBACKS = {
         text: 'take your time @mterstegen1 there\'s no hurry to return quickly ❤️ have a safe and slow recovery we are all with you 👊',
         link: 'https://x.com/MagicalXavi/status/1841509962721456368',
       },
-      metrics: { replies: 8, retweets: 17, likes: 72 },
+      metrics: { replies: 0, retweets: 4, likes: 49 },
+    },
+    {
+      title: 'RT @alterna76: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      link: 'https://x.com/alterna76/status/2117365931915587980',
+      pubDate: '2026-11-02T21:19:11.000Z',
+      description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      mediaUrl: null,
+      mediaType: null,
+      isRetweet: true,
+      retweetAuthor: 'alterna76',
+      authorName: 'Veiller',
+      authorAvatar: 'https://unavatar.io/twitter/alterna76',
+      quote: null,
+      metrics: { replies: 16, retweets: 1568, likes: 13732 },
     },
   ],
 };
@@ -173,6 +158,12 @@ function decodeEntities(str) {
     .replace(/&uacute;/g, 'ú')
     .replace(/&iacute;/g, 'í')
     .replace(/&nbsp;/g, ' ')
+    .replace(/&ensp;|&emsp;/g, ' ')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–')
+    .replace(/&hellip;/g, '…')
+    .replace(/&rsquo;|&lsquo;/g, "'")
+    .replace(/&ldquo;|&rdquo;/g, '"')
     .replace(/&#(\d+);/g, (_, code) => {
       try { return String.fromCharCode(Number(code)); } catch (_) { return _; }
     })
@@ -207,21 +198,34 @@ function parseRSS(xml, username) {
     // Extract quoted tweet if available in RSS description
     let quote = null;
     let mainDescription = description;
-    const quoteBlockMatch = description.match(/<div class="rsshub-quote"[^>]*>([\s\S]*?)<\/div>/i) ||
-                            description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
-    if (quoteBlockMatch) {
-      const qContent = quoteBlockMatch[1];
+    const rsshubQuoteIdx = description.search(/<div class="rsshub-quote"[^>]*>/i);
+    const bqMatch = description.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
+    let qContent = null;
+
+    if (rsshubQuoteIdx !== -1) {
+      qContent = description.slice(rsshubQuoteIdx)
+        .replace(/^<div class="rsshub-quote"[^>]*>/i, '')
+        .replace(/<\/div>\s*$/i, '');
+      mainDescription = description.slice(0, rsshubQuoteIdx).replace(/<hr[^>]*>\s*$/i, '').trim();
+    } else if (bqMatch) {
+      qContent = bqMatch[1];
+      mainDescription = description.replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '').trim();
+    }
+
+    if (qContent) {
       let qAuthor = '';
       let qName = '';
-      const aMatch = qContent.match(/<a[^>]+href="https?:\/\/(?:x|twitter)\.com\/([a-zA-Z0-9_]+)"[^>]*>([\s\S]*?)<\/a>/i);
+      const aMatch = qContent.match(/<a[^>]+href="https?:\/\/(?:x|twitter)\.com\/([a-zA-Z0-9_]+)(?:\/status\/\d+)?"[^>]*>([\s\S]*?)<\/a>/i);
       if (aMatch) {
         qAuthor = aMatch[1];
-        qName = aMatch[2].replace(/<[^>]*>/g, '').trim();
+        const linkInner = aMatch[2].replace(/<[^>]*>/g, '').trim();
+        if (linkInner && !/^https?:\/\//i.test(linkInner)) {
+          qName = linkInner;
+        }
       } else {
         const qAuthorMatch = qContent.match(/@([a-zA-Z0-9_]+)/i);
         if (qAuthorMatch) {
           qAuthor = qAuthorMatch[1];
-          qName = `@${qAuthor}`;
         }
       }
 
@@ -241,14 +245,20 @@ function parseRSS(xml, username) {
       }
 
       let qText = qContent
-        .replace(/<small>Link:[\s\S]*?<\/small>/gi, '')
+        .replace(/<small>\s*Link:[\s\S]*?<\/small>/gi, '')
         .replace(/<img[^>]*>/gi, '')
+        .replace(/<br\s*\/?>/gi, ' ')
         .replace(/<[^>]*>/g, '')
         .replace(/^[^(@\n]*\(@[a-zA-Z0-9_]+\):?\s*/i, '')
         .replace(/—\s*nitter\.[^\s]+$/i, '')
         .trim();
 
-      if (qName && qText.startsWith(qName + ':')) {
+      // RSSHub quotes start with "<DisplayName>:\u2002<quote text>"
+      const rssPrefixMatch = qText.match(/^([^:\n]{1,50}):[\u2002\u2003\s]+([\s\S]+)$/);
+      if (rssPrefixMatch) {
+        if (!qName) qName = rssPrefixMatch[1].trim();
+        qText = rssPrefixMatch[2].trim();
+      } else if (qName && qText.startsWith(qName + ':')) {
         qText = qText.slice(qName.length + 1).trim();
       } else if (qAuthor && qText.startsWith(qAuthor + ':')) {
         qText = qText.slice(qAuthor.length + 1).trim();
@@ -264,10 +274,6 @@ function parseRSS(xml, username) {
           mediaUrl: qMediaUrl,
         };
       }
-      mainDescription = description
-        .replace(/<div class="rsshub-quote"[\s\S]*?<\/div>/gi, '')
-        .replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '')
-        .trim();
     }
 
     let mediaUrl = null;
@@ -481,6 +487,73 @@ async function trySyndication(username) {
   return items;
 }
 
+/** Fetch live post details via FxTwitter API */
+async function fetchFxTweet(handle, statusId) {
+  const url = `https://api.fxtwitter.com/${handle}/status/${statusId}`;
+  const r = await fetchWithTimeout(url, 3200);
+  if (!r.ok) return null;
+  const data = await r.json();
+  return data?.tweet || null;
+}
+
+function fxToFeedItem(tweet, { isRetweet = false, retweetAuthor = null, pubDateOverride = null } = {}) {
+  const handle = tweet.author?.screen_name || retweetAuthor || 'As4d_41';
+  const m = tweet.media?.all?.[0] || null;
+  const mediaUrl = m ? (m.url || null) : null;
+  const mediaType = m ? (m.type === 'video' || m.type === 'gif' ? 'video' : 'image') : null;
+
+  let quote = null;
+  if (tweet.quote) {
+    const q = tweet.quote;
+    const qm = q.media?.all?.[0] || null;
+    quote = {
+      author: q.author?.screen_name || 'x',
+      name: q.author?.name || `@${q.author?.screen_name || 'x'}`,
+      avatar: q.author?.avatar_url || null,
+      text: q.text || '',
+      link: q.url || `https://x.com/${q.author?.screen_name || ''}`,
+      mediaUrl: qm && qm.type !== 'video' ? qm.url : null,
+      pubDate: q.created_at ? new Date(q.created_at).toISOString() : null,
+    };
+  }
+
+  return {
+    title: isRetweet ? `RT @${handle}: ${tweet.text || ''}` : (tweet.text || ''),
+    link: tweet.url || `https://x.com/${handle}/status/${tweet.id}`,
+    pubDate: pubDateOverride || (tweet.created_at ? new Date(tweet.created_at).toISOString() : null),
+    description: tweet.text || '',
+    mediaUrl,
+    mediaType,
+    isRetweet,
+    retweetAuthor: isRetweet ? handle : null,
+    authorName: tweet.author?.name || handle,
+    authorAvatar: tweet.author?.avatar_url || `https://unavatar.io/twitter/${handle}`,
+    quote,
+    metrics: {
+      replies: tweet.replies ?? 0,
+      retweets: tweet.retweets ?? 0,
+      likes: tweet.likes ?? 0,
+    },
+  };
+}
+
+/** Enrich RSS item via live FxTwitter lookup when possible */
+async function hydrateItemWithFx(item) {
+  const match = (item.link || '').match(/x\.com\/([a-zA-Z0-9_]+)\/status\/(\d+)/i);
+  if (!match) return item;
+  try {
+    const tweet = await fetchFxTweet(match[1], match[2]);
+    if (!tweet) return item;
+    return fxToFeedItem(tweet, {
+      isRetweet: item.isRetweet,
+      retweetAuthor: item.retweetAuthor,
+      pubDateOverride: item.pubDate,
+    });
+  } catch (_) {
+    return item;
+  }
+}
+
 const lastKnownGood = new Map();
 
 export default async function handler(req, res) {
@@ -490,14 +563,13 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Content-Type', 'application/json');
-  // Check in-memory cache first
+
   const cached = memoryCache.get(username);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     res.setHeader('Cache-Control', 'public, s-maxage=900, stale-while-revalidate=1800');
     return res.status(200).json(cached.payload);
   }
 
-  // Gather RSS & syndication sources
   const rssUrls = [
     ...RSSHUB_INSTANCES.map(b => `${b}${username}/readable=1`),
     ...RSSHUB_INSTANCES.map(b => `${b}${username}`),
@@ -505,8 +577,6 @@ export default async function handler(req, res) {
   ];
 
   let liveItems = null;
-
-  // Race RSS sources
   try {
     liveItems = await Promise.any([
       ...rssUrls.map(u => tryRSSUrl(u, username)),
@@ -516,21 +586,51 @@ export default async function handler(req, res) {
     liveItems = null;
   }
 
+  let items = Array.isArray(liveItems) ? liveItems.filter(isCleanPost) : [];
+
+  // Hydrate top clean RSS items via live FxTwitter so quote cards, media & counts are exact
+  if (items.length > 0) {
+    items = await Promise.all(items.slice(0, 4).map(hydrateItemWithFx));
+    items = items.filter(isCleanPost);
+  }
+
+  // Unauthenticated RSSHub/Syndication omits Retweets; blend verified RTs hydrated live from FxTwitter
+  if (!items.some(i => i.isRetweet) && VERIFIED_RETWEET_REFS[username]) {
+    const rtHydrated = await Promise.all(
+      VERIFIED_RETWEET_REFS[username].map(async ref => {
+        try {
+          const t = await fetchFxTweet(ref.handle, ref.id);
+          return t ? fxToFeedItem(t, { isRetweet: true, retweetAuthor: ref.handle, pubDateOverride: ref.pubDate }) : null;
+        } catch (_) {
+          return null;
+        }
+      })
+    );
+    const validRts = rtHydrated.filter(i => i && isCleanPost(i));
+    if (validRts.length > 0) {
+      items = [...validRts, ...items];
+    }
+  }
+
   let payload;
-  if (liveItems && liveItems.length > 0) {
-    // Prioritize substantive quotes, retweets, and recent posts over stale anniversary pins
-    liveItems.sort((a, b) => {
-      const aAnniv = (a.title || '').includes('#MyXAnniversary');
-      const bAnniv = (b.title || '').includes('#MyXAnniversary');
-      if (aAnniv && !bAnniv) return 1;
-      if (!aAnniv && bAnniv) return -1;
-      const aHasQuoteOrRt = !!(a.quote || a.isRetweet);
-      const bHasQuoteOrRt = !!(b.quote || b.isRetweet);
-      if (aHasQuoteOrRt && !bHasQuoteOrRt) return -1;
-      if (!aHasQuoteOrRt && bHasQuoteOrRt) return 1;
-      return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
-    });
-    payload = { status: 'ok', items: liveItems, source: 'live-rss' };
+  if (items.length > 0) {
+    // Interleave cleanly so top RT AND top Quote Tweet both appear
+    const rts = items.filter(i => i.isRetweet);
+    const qts = items.filter(i => !i.isRetweet && i.quote);
+    const others = items.filter(i => !i.isRetweet && !i.quote);
+    const ordered = [];
+    if (rts[0]) ordered.push(rts[0]);
+    if (qts[0]) ordered.push(qts[0]);
+    ordered.push(...rts.slice(1), ...qts.slice(1), ...others);
+    const deduped = [];
+    const seenLinks = new Set();
+    for (const it of ordered) {
+      if (it.link && seenLinks.has(it.link)) continue;
+      if (it.link) seenLinks.add(it.link);
+      deduped.push(it);
+    }
+
+    payload = { status: 'ok', items: deduped.slice(0, 5), source: 'live-fx-hybrid' };
     lastKnownGood.set(username, payload);
     memoryCache.set(username, { timestamp: Date.now(), payload });
     res.setHeader('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=3600');

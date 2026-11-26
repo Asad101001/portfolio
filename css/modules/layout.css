@@ -29,6 +29,14 @@ section {
   box-sizing: border-box;
 }
 
+@media (min-width: 769px) and (max-width: 1380px) {
+  .hero-container,
+  .section-inner {
+    padding-left: 28px;
+    padding-right: 72px;
+  }
+}
+
 main {
   position: relative;
   z-index: 2;
@@ -64,10 +72,13 @@ main {
   background: linear-gradient(90deg, 
     transparent 0%, 
     rgba(18, 18, 18, 0.06) 12%, 
-    rgba(245, 158, 11, 0.50) 50%, 
+    rgba(245, 158, 11, 0.55) 50%, 
     rgba(18, 18, 18, 0.06) 88%, 
     transparent 100%
   );
+  transform: scaleX(0.35);
+  opacity: 0;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
 }
 
 .section-divider::after {
@@ -82,6 +93,19 @@ main {
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.1em;
   z-index: 2;
+  transform: scale(0.75) rotate(-45deg);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s, opacity 0.4s ease 0.1s;
+}
+
+.section-divider.in-view::before {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.section-divider.in-view::after {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
 }
 
 /* ── Section Header Architecture & 70-20-10 Color Pop ───────── */
@@ -250,6 +274,13 @@ main {
   font-size: 0.75rem;
   color: rgba(18, 18, 18, 0.45);
   letter-spacing: 0.04em;
+}
+
+@media (min-width: 901px) and (max-width: 1380px) {
+  .hero-container,
+  .section-inner {
+    padding-right: 64px;
+  }
 }
 
 @media (max-width: 768px) {
