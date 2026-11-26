@@ -1530,24 +1530,30 @@ function _starsHTML(starsStr) {
     return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
   }
 
+  var DEFAULT_SPOTIFY_TRACK = {
+    name: "Right Now (feat. Pi'erre Bourne)",
+    artist: "Playboi Carti, Pi'erre Bourne",
+    album: "Die Lit",
+    albumArt: "/images/spotify/die_lit.jpg",
+    url: "https://open.spotify.com/track/4jV6C898wVdC0c4kH1Jz42",
+    duration: 207000,
+    progress: 8000
+  };
+
   function render(data) {
     wrap.innerHTML = '';
-    if (!data || !data.track) {
-      wrap.innerHTML = '<p class="spotify-offline">&#x1F3B5; Nothing playing right now</p>';
-      if (dotEl) { dotEl.style.background = '#ef4444'; dotEl.style.boxShadow = '0 0 10px rgba(239,68,68,0.4)'; }
-      return;
-    }
-    var t         = data.track;
-    var pct       = t.duration > 0 ? Math.min((t.progress / t.duration) * 100, 100) : 0;
-    var isPlaying = data.isPlaying;
+    var hasLiveTrack = data && data.track;
+    var t = hasLiveTrack ? data.track : DEFAULT_SPOTIFY_TRACK;
+    var isPlaying = hasLiveTrack ? !!data.isPlaying : false;
+    var pct = t.duration > 0 ? Math.min((t.progress / t.duration) * 100, 100) : 0;
 
     if (dotEl) {
-      dotEl.style.background = isPlaying ? '#1DB954' : '#ef4444';
-      dotEl.style.boxShadow  = isPlaying ? '0 0 12px #1DB954' : '0 0 12px rgba(239,68,68,0.6)';
+      dotEl.style.background = isPlaying ? '#1DB954' : '#F59E0B';
+      dotEl.style.boxShadow  = isPlaying ? '0 0 12px #1DB954' : '0 0 8px rgba(245,158,11,0.5)';
     }
 
     var artInner = t.albumArt
-      ? '<img class="spotify-art-expanded" src="' + t.albumArt + '" alt="" crossorigin="anonymous" />'
+      ? '<img class="spotify-art-expanded" src="' + t.albumArt + '" alt="' + escHtml(t.name) + '" crossorigin="anonymous" />'
       : '<div class="spotify-art-expanded spotify-art--empty-expanded"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></div>';
 
     var eqOrPause = isPlaying
@@ -1595,12 +1601,12 @@ function _starsHTML(starsStr) {
       .catch(function() {
         var cached = localStorage.getItem('asad_spotify_cache');
         if (cached) { try { render(JSON.parse(cached)); return; } catch(e) {} }
-        wrap.innerHTML = '<p class="spotify-offline">&#x26A0; Could not reach Spotify</p>';
+        render({ track: DEFAULT_SPOTIFY_TRACK, isPlaying: false });
       });
   }
 
   var cached = localStorage.getItem('asad_spotify_cache');
-  if (cached) { try { render(JSON.parse(cached)); } catch(e) {} }
+  if (cached) { try { render(JSON.parse(cached)); } catch(e) {} } else { render({ track: DEFAULT_SPOTIFY_TRACK, isPlaying: false }); }
 
   load();
   setInterval(load, 30000);

@@ -44,24 +44,108 @@
                 </div>
             </div>
 
-            <!-- Right Column: Core Engineering Focus Areas -->
+            <!-- Right Column: Core Engineering Focus Areas (8 Items) -->
             <div class="skills-col glass-card reveal">
-                <h3 class="about-col-title">Core Focus Areas</h3>
-                <div class="skills-category-list">
-                    
-                    <div class="skill-category-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="sc-label" style="min-width: unset; color: #B45309;">01 / Distributed Systems &amp; Concurrency</span>
-                        <p style="font-size: 0.82rem; line-height: 1.45; color: rgba(18, 18, 18, 0.72); margin: 0;">Multi-agent orchestration, async messaging queues, and fault-tolerant background workers.</p>
+                <div class="focus-header">
+                    <h3 class="about-col-title" style="margin-bottom: 4px;">Core Focus Areas</h3>
+                    <span class="focus-subtitle" style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; color:#B45309; text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:14px;">08 Key Engineering Domains</span>
+                </div>
+                <div class="focus-areas-grid">
+
+                    <!-- 01: Distributed Systems -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">01</span>
+                            <div class="fc-icon-wrap" style="background:rgba(245,158,11,0.12); color:#B45309;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/><path d="M12 13v3"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Distributed Systems</h4>
+                        <p class="fc-desc">Fault-tolerant swarms, async task queues &amp; actor concurrency.</p>
                     </div>
 
-                    <div class="skill-category-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="sc-label" style="min-width: unset; color: #B45309;">02 / Cloud Architecture &amp; DevOps</span>
-                        <p style="font-size: 0.82rem; line-height: 1.45; color: rgba(18, 18, 18, 0.72); margin: 0;">Isolated AWS VPC networks, Docker containers, Cloud Run deployments, and CI/CD automation.</p>
+                    <!-- 02: Cloud Architecture -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">02</span>
+                            <div class="fc-icon-wrap" style="background:rgba(14,165,233,0.12); color:#0284C7;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Cloud &amp; DevOps</h4>
+                        <p class="fc-desc">Isolated AWS VPC networks, Docker containers &amp; CI/CD automation.</p>
                     </div>
 
-                    <div class="skill-category-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="sc-label" style="min-width: unset; color: #B45309;">03 / Databases &amp; Vector Search</span>
-                        <p style="font-size: 0.82rem; line-height: 1.45; color: rgba(18, 18, 18, 0.72); margin: 0;">Strict SQL schemas, transactional integrity, FAISS vector embeddings, and MongoDB document indexing.</p>
+                    <!-- 03: Autonomous AI -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">03</span>
+                            <div class="fc-icon-wrap" style="background:rgba(139,92,246,0.12); color:#7C3AED;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Autonomous AI</h4>
+                        <p class="fc-desc">Multi-agent pipelines, tool use &amp; self-correcting logic.</p>
+                    </div>
+
+                    <!-- 04: High-Throughput APIs -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">04</span>
+                            <div class="fc-icon-wrap" style="background:rgba(16,185,129,0.12); color:#059669;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">High-Throughput APIs</h4>
+                        <p class="fc-desc">Low-latency REST &amp; gRPC services, caching &amp; rate limiting.</p>
+                    </div>
+
+                    <!-- 05: Vector Search & RAG -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">05</span>
+                            <div class="fc-icon-wrap" style="background:rgba(244,63,94,0.12); color:#E11D48;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Vector Search &amp; RAG</h4>
+                        <p class="fc-desc">FAISS vector indexing, hybrid BM25 dense retrieval &amp; re-ranking.</p>
+                    </div>
+
+                    <!-- 06: Data Stores & ACID -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">06</span>
+                            <div class="fc-icon-wrap" style="background:rgba(16,185,129,0.12); color:#047857;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Data Stores &amp; ACID</h4>
+                        <p class="fc-desc">Strict SQL schemas, transactional safety &amp; Redis key-value caching.</p>
+                    </div>
+
+                    <!-- 07: Systems & Performance -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">07</span>
+                            <div class="fc-icon-wrap" style="background:rgba(99,102,241,0.12); color:#4F46E5;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Systems &amp; Low-Latency</h4>
+                        <p class="fc-desc">Memory safety, zero-alloc patterns &amp; native performance profiling.</p>
+                    </div>
+
+                    <!-- 08: Telemetry & Observability -->
+                    <div class="focus-card">
+                        <div class="fc-top">
+                            <span class="fc-idx">08</span>
+                            <div class="fc-icon-wrap" style="background:rgba(234,88,12,0.12); color:#C2410C;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            </div>
+                        </div>
+                        <h4 class="fc-title">Real-Time Telemetry</h4>
+                        <p class="fc-desc">Structured logs, OpenTelemetry traces &amp; health telemetry.</p>
                     </div>
 
                 </div>

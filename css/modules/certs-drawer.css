@@ -77,3 +77,23 @@
   border-radius: 8px;
   letter-spacing: 0.08em;
 }
+
+/* Specific Target Highlight when opened from credentials row */
+.cert-card.highlight-target-cert {
+  border-color: #F59E0B !important;
+  background: #FFFDF9 !important;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.40), 6px 6px 0px #F59E0B !important;
+  transform: translateY(-3px) scale(1.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: cert-target-pulse 1.8s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes cert-target-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.45), 6px 6px 0px #F59E0B;
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0.20), 8px 8px 0px #F59E0B;
+  }
+}

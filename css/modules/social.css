@@ -126,8 +126,8 @@
 .social-top-split-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  max-width: 800px;
+  gap: 18px;
+  max-width: 880px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
@@ -140,7 +140,7 @@
 }
 .social-split-left #spotify-widget {
   height: 100%;
-  min-height: 290px;
+  min-height: 440px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -148,22 +148,44 @@
 .social-split-right {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   justify-content: space-between;
+  height: 100%;
 }
 .social-fullwidth-wrap {
-  max-width: 800px;
+  max-width: 880px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 2-Column Grid for widgets below Activity Hub (uniform 800px width) */
+/* Ensure Dynamic Activity Bar items stay horizontal with zero letter wrapping */
+.activity-bar-fullwidth .rotating-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.activity-bar-fullwidth .currently-into-text {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+.activity-bar-fullwidth .currently-into-value {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+/* 2-Column Grid for widgets below Activity Hub (uniform 880px width) */
 .social-cards-grid-v2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  max-width: 800px;
+  max-width: 880px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;

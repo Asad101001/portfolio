@@ -39,15 +39,15 @@ export default async function handler(req, res) {
   // Graceful fallback for local development or when credentials are not yet configured
   if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
     return res.status(200).json({
-      isPlaying: true,
+      isPlaying: false,
       track: {
         name: "Right Now (feat. Pi'erre Bourne)",
         artist: "Playboi Carti, Pi'erre Bourne",
         album: "Die Lit",
-        albumArt: "https://i.scdn.co/image/ab67616d0000b273b0f592328ba6a31f13b63b27",
+        albumArt: "/images/spotify/die_lit.jpg",
         url: "https://open.spotify.com/track/4jV6C898wVdC0c4kH1Jz42",
         duration: 207000,
-        progress: 118000
+        progress: 8000
       }
     });
   }

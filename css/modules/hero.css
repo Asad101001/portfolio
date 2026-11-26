@@ -359,63 +359,6 @@
   letter-spacing: 0.06em;
 }
 
-.hmc-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  color: #F59E0B;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hmc-action-btn:hover {
-  background: #F59E0B;
-  color: #121212;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
-}
-.hmc-action-btn:active {
-  transform: translateY(1px);
-}
-
-.hmc-bottom-telemetry {
-  position: absolute;
-  bottom: 12px;
-  left: 14px;
-  right: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-  background: rgba(11, 11, 12, 0.75);
-  backdrop-filter: blur(8px);
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(245, 158, 11, 0.20);
-}
-
-.hmc-active-formation {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #F59E0B;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.hmc-hint-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  color: rgba(255, 255, 255, 0.50);
-  letter-spacing: 0.06em;
-}
-
 .hmc-status-pill {
   display: inline-flex;
   align-items: center;
