@@ -133,14 +133,15 @@
 /* Unconstrained, wrap-friendly, high-contrast title */
 .currently-into-value {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: 1.45rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
   font-weight: 800;
   color: #121212;
   line-height: 1.25;
   letter-spacing: -0.02em;
   display: block;
-  overflow: visible;
-  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   word-break: normal;
   max-width: 100%;
   text-shadow: none;
@@ -152,6 +153,7 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  white-space: nowrap;
   margin-top: 4px;
 }
 
@@ -166,6 +168,7 @@
   border: 1px solid rgba(245, 158, 11, 0.30);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .currently-into-sub {
@@ -173,6 +176,7 @@
   font-weight: 500;
   color: rgba(18, 18, 18, 0.60);
   font-family: 'Inter', sans-serif;
+  white-space: nowrap;
 }
 
 .movie-timeline-label {
