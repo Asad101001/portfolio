@@ -205,10 +205,11 @@ main {
 /* 10% Pop Inline Spans (The 70-20-10 Rule) */
 .sh-pop {
   font-weight: 700;
-  padding: 1px 7px;
+  padding: 1px 6px;
   border-radius: 4px;
-  display: inline-block;
-  white-space: nowrap;
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .sh-pop.pop-purple {
