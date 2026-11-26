@@ -53,6 +53,34 @@ const PROFILE_POST_FALLBACKS = {
       metrics: { replies: 11, retweets: 38, likes: 112 },
     },
     {
+      title: 'RT @rhaenyrcs: they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      link: 'https://x.com/rhaenyrcs/status/2117942401163841666',
+      pubDate: '2026-11-18T11:29:52.000Z',
+      description: 'they’ll open up a kababjees branch in ur ass if ur not careful enough',
+      mediaUrl: null,
+      mediaType: null,
+      isRetweet: true,
+      retweetAuthor: 'rhaenyrcs',
+      authorName: 'rhaenyra',
+      authorAvatar: 'https://unavatar.io/twitter/rhaenyrcs',
+      quote: null,
+      metrics: { replies: 9, retweets: 20, likes: 49 },
+    },
+    {
+      title: 'RT @alterna76: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      link: 'https://x.com/alterna76/status/2117365931915587980',
+      pubDate: '2026-11-16T21:19:11.000Z',
+      description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
+      mediaUrl: null,
+      mediaType: null,
+      isRetweet: true,
+      retweetAuthor: 'alterna76',
+      authorName: 'alterna',
+      authorAvatar: 'https://unavatar.io/twitter/alterna76',
+      quote: null,
+      metrics: { replies: 5, retweets: 8, likes: 63 },
+    },
+    {
       title: 'D1 pessi glazer didn\'t deny the comparisons completely like his usual self',
       link: 'https://x.com/As4d_41/status/1929499342634688718',
       pubDate: '2026-11-14T11:24:26.000Z',
@@ -72,55 +100,6 @@ const PROFILE_POST_FALLBACKS = {
         mediaUrl: 'https://pbs.twimg.com/media/Gsbr_zHXkAAwYjF?format=jpg&name=orig',
       },
       metrics: { replies: 6, retweets: 18, likes: 85 },
-    },
-    {
-      title: '- Didn\'t attend Di Maria\'s farewell - Didn\'t attend Pique\'s retirement or Busquets farewell - Didn\'t attend Aguero\'s retirement - Not attending the 125th anniversary of the club that gave him HGH to allow him to be where he is. Mr.NICE GUY ??🐍🐀',
-      link: 'https://x.com/As4d_41/status/1859985617112981650',
-      pubDate: '2026-11-10T15:41:42.000Z',
-      description: '- Didn\'t attend Di Maria\'s farewell\n- Didn\'t attend Pique\'s retirement or Busquets farewell\n- Didn\'t attend Aguero\'s retirement\n- Not attending the 125th anniversary of the club that gave him HGH to allow him to be where he is\n\nMr.NICE GUY ??🐍🐀',
-      mediaUrl: 'https://pbs.twimg.com/media/Gc__D7Ua4AARS_C?format=jpg&name=orig',
-      mediaType: 'image',
-      isRetweet: false,
-      retweetAuthor: null,
-      authorName: 'Asad',
-      authorAvatar: 'https://unavatar.io/twitter/As4d_41',
-      quote: {
-        author: 'BarcaTimes',
-        name: 'BarçaTimes',
-        avatar: 'https://unavatar.io/twitter/BarcaTimes',
-        text: '🚨| BREAKING: Leo Messi will NOT attend Barcelona\'s 125th anniversary gala. [@ffpolo] #fcblive ❌',
-        link: 'https://x.com/BarcaTimes/status/1859977141087056089',
-        mediaUrl: 'https://pbs.twimg.com/media/Gc_3WoTWgAA4-Q5?format=jpg&name=orig',
-      },
-      metrics: { replies: 14, retweets: 29, likes: 94 },
-    },
-    {
-      title: 'RT @rhaenyrcs: they’ll open up a kababjees branch in ur ass if ur not careful enough',
-      link: 'https://x.com/rhaenyrcs/status/2117942401163841666',
-      pubDate: '2026-11-04T11:29:52.000Z',
-      description: 'they’ll open up a kababjees branch in ur ass if ur not careful enough',
-      mediaUrl: null,
-      mediaType: null,
-      isRetweet: true,
-      retweetAuthor: 'rhaenyrcs',
-      authorName: 'rhaenyra',
-      authorAvatar: 'https://unavatar.io/twitter/rhaenyrcs',
-      quote: null,
-      metrics: { replies: 9, retweets: 20, likes: 49 },
-    },
-    {
-      title: 'RT @alterna76: “Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
-      link: 'https://x.com/alterna76/status/2117365931915587980',
-      pubDate: '2026-11-02T21:19:11.000Z',
-      description: '“Dad I’m gay” ok “Dad I’m lesbian” ok “Dad I’m trans” ok “Dad I don’t like Dune and think it’s boring”',
-      mediaUrl: null,
-      mediaType: null,
-      isRetweet: true,
-      retweetAuthor: 'alterna76',
-      authorName: 'alterna',
-      authorAvatar: 'https://unavatar.io/twitter/alterna76',
-      quote: null,
-      metrics: { replies: 5, retweets: 8, likes: 63 },
     },
     {
       title: 'No watermark just pure hate easily the greatest servant of football',
@@ -383,6 +362,13 @@ function parseRSS(xml, username) {
       },
     });
   }
+
+  // Prioritize retweets and quote tweets first
+  items.sort((a, b) => {
+    const aScore = (a.isRetweet ? 3 : (a.quote ? 2 : 1));
+    const bScore = (b.isRetweet ? 3 : (b.quote ? 2 : 1));
+    return bScore - aScore;
+  });
 
   return items;
 }

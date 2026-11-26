@@ -85,12 +85,75 @@
     display: none !important;
   }
 
-  #back-to-top {
-    bottom: max(160px, calc(env(safe-area-inset-bottom) + 140px)) !important;
-    right: 16px !important;
-    transform: scale(0.85) !important;
+  #back-to-top,
+  body #back-to-top {
+    position: fixed !important;
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
     width: 38px !important;
     height: 38px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #121212 !important;
+    box-shadow: 3px 3px 0px #F59E0B !important;
+    border-radius: 10px !important;
+    color: #121212 !important;
+    z-index: 999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  #back-to-top svg,
+  body #back-to-top svg {
+    color: #121212 !important;
+    stroke: #121212 !important;
+  }
+  #back-to-top .progress-ring,
+  body #back-to-top .progress-ring {
+    display: none !important;
+  }
+
+  /* ── Themed Mobile Floating Nav Bar ────────────────────────── */
+  .mobile-bottom-nav,
+  body .mobile-bottom-nav {
+    background: #FFFFFF !important;
+    border: 1.5px solid #121212 !important;
+    box-shadow: 3px 3px 0px #F59E0B !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  }
+  .mbn-item,
+  body .mbn-item {
+    color: rgba(18, 18, 18, 0.65) !important;
+  }
+  .mbn-item.active,
+  body .mbn-item.active {
+    color: #121212 !important;
+    background: rgba(245, 158, 11, 0.16) !important;
+  }
+  .mbn-item.active svg,
+  body .mbn-item.active svg {
+    stroke: #B45309 !important;
+  }
+  .mbn-item.active span,
+  body .mbn-item.active span {
+    color: #B45309 !important;
+    font-weight: 800 !important;
+  }
+  .mbn-item.mbn-cta,
+  body .mbn-item.mbn-cta {
+    background: #F59E0B !important;
+    border: 1.5px solid #121212 !important;
+    box-shadow: 2px 2px 0px #121212 !important;
+    color: #121212 !important;
+  }
+  .mbn-item.mbn-cta svg,
+  body .mbn-item.mbn-cta svg {
+    stroke: #121212 !important;
+  }
+  .mbn-item.mbn-cta span,
+  body .mbn-item.mbn-cta span {
+    color: #121212 !important;
+    font-weight: 800 !important;
   }
 
   /* ── Universal Card/Glow Scaling ─────────────────────────── */
@@ -548,39 +611,32 @@
     font-size: 0.68rem !important;
   }
 
-  /* ── 8 Core Focus Areas Grid (Mobile) ─────────────────────── */
-  .focus-areas-grid {
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
+  /* ── Concurrent Engineering Focus (Mobile) ─────────────────── */
+  .about-col,
+  .concurrent-focus-col {
+    padding: 20px 18px !important;
   }
-  .focus-card {
-    display: grid !important;
-    grid-template-columns: auto 1fr !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 10px 14px !important;
-    border-radius: 10px !important;
-  }
-  .focus-card .fc-top {
-    margin-bottom: 0 !important;
+  .cef-list {
     display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
-  .focus-card .fc-idx {
-    font-size: 0.65rem !important;
+  .cef-card {
+    padding: 12px 14px !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
-  .focus-card .fc-icon-wrap {
-    width: 28px !important;
-    height: 28px !important;
+  .cef-icon {
+    width: 32px !important;
+    height: 32px !important;
   }
-  .focus-card .fc-name {
+  .cef-name {
     font-size: 0.84rem !important;
-    margin-bottom: 2px !important;
   }
-  .focus-card .fc-desc {
-    font-size: 0.72rem !important;
-    line-height: 1.3 !important;
+  .cef-desc {
+    font-size: 0.74rem !important;
   }
 
   /* ── Tech Arsenal (Mobile Scale) ────────────────────────── */
@@ -732,17 +788,40 @@
     margin-top: 8px !important;
   }
   .edu-focus-strip {
-    padding: 8px 12px !important;
+    padding: 14px 14px !important;
+    border-radius: 12px !important;
+    margin-top: 16px !important;
+    margin-left: 28px !important;
+    width: calc(100% - 28px) !important;
+    border: 1.5px solid #121212 !important;
+    box-shadow: 3px 3px 0px #F59E0B !important;
+    box-sizing: border-box !important;
+  }
+  .focus-strip-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 12px !important;
+    gap: 8px !important;
+  }
+  .focus-strip-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .focus-mini-card {
+    padding: 10px 12px !important;
+    gap: 10px !important;
     border-radius: 8px !important;
-    margin-top: 10px !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
+    background: rgba(18, 18, 18, 0.02) !important;
+    border: 1px solid rgba(18, 18, 18, 0.08) !important;
   }
   .fsh-title {
-    font-size: 0.72rem !important;
+    font-size: 0.74rem !important;
   }
   .fsh-tag {
-    font-size: 0.6rem !important;
+    font-size: 0.60rem !important;
+    padding: 2px 6px !important;
   }
 
   /* ── Contact & Socials (Mobile Scale) ───────────────────── */
@@ -1379,12 +1458,28 @@
 
   /* ── Contact & Footer: compact clearance for floating nav ─── */
   #contact {
-    padding-bottom: 32px !important;
+    padding-bottom: 20px !important;
   }
 
   .main-footer {
-    padding-top: 24px !important;
-    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-top: 18px !important;
+    padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
+    border-top: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+    background: #F7F6F3 !important;
+  }
+
+  .footer-bottom {
+    padding-top: 8px !important;
+    border-top: none !important;
+    gap: 8px !important;
+  }
+
+  .footer-stack-info {
+    margin-bottom: 2px !important;
+  }
+
+  .footer-center-fun {
+    margin: 4px 0 !important;
   }
 
   /* ── Mobile Ink Reveal: Touch Ripple System ──────────────── */

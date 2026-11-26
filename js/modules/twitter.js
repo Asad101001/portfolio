@@ -10,8 +10,8 @@ import { CONFIG, escHtml } from './config.js';
 
     const USER = CONFIG.usernames.twitter || 'As4d_41';
     const DISPLAY_NAME = 'Asad';
-    const CACHE_KEYS = ['asad_twitter_cache_v8'];
-    const CACHE_KEY = 'asad_twitter_cache_v8';
+    const CACHE_KEYS = ['asad_twitter_cache_v10'];
+    const CACHE_KEY = 'asad_twitter_cache_v10';
     const CACHE_TTL = 30 * 60 * 1000; // 30 mins fresh
 
     function getLocalCache(allowStale = true) {
@@ -199,7 +199,19 @@ import { CONFIG, escHtml } from './config.js';
 
     function render(items) {
         container.innerHTML = '';
-        items.slice(0, 2).forEach((item, idx) => {
+        if (!Array.isArray(items) || items.length === 0) {
+            renderEmptyState();
+            return;
+        }
+
+        // Strictly prioritize retweets and quote tweets over plain tweets
+        const prioritized = [...items].sort((a, b) => {
+            const aScore = (a.isRetweet ? 3 : (a.quote ? 2 : 1));
+            const bScore = (b.isRetweet ? 3 : (b.quote ? 2 : 1));
+            return bScore - aScore;
+        });
+
+        prioritized.slice(0, 2).forEach((item, idx) => {
             const isRetweet = /^RT by|^RT @/i.test(item.title || '') || !!item.isRetweet;
             let retweetAuthor = (item.retweetAuthor && item.retweetAuthor.toLowerCase() !== USER.toLowerCase()) ? item.retweetAuthor : null;
             if (!retweetAuthor) {

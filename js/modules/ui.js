@@ -674,35 +674,4 @@ if (document.readyState === 'loading') {
     }
   })();
 
-  /* ── Core Focus Areas Accordion ────────────────────────────── */
-  (function () {
-    const accordion = document.getElementById('focus-accordion');
-    if (!accordion) return;
-
-    accordion.addEventListener('click', (e) => {
-      const header = e.target.closest('.fc-header');
-      if (!header) return;
-
-      const card = header.closest('.focus-card');
-      if (!card) return;
-
-      const isAlreadyActive = card.classList.contains('active');
-
-      // Keep section compact: collapse siblings when expanding a card
-      accordion.querySelectorAll('.focus-card').forEach((c) => {
-        if (c !== card) {
-          c.classList.remove('active');
-          const btn = c.querySelector('.fc-header');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      if (isAlreadyActive) {
-        card.classList.remove('active');
-        header.setAttribute('aria-expanded', 'false');
-      } else {
-        card.classList.add('active');
-        header.setAttribute('aria-expanded', 'true');
-      }
-    });
-  })();
+  /* ── Core Focus Areas (Consolidated into About section) ──── */

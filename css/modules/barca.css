@@ -206,9 +206,9 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  flex-shrink: 0;
+  flex: 1 1 auto;
   min-width: 0;
-  max-width: 150px;
+  max-width: none;
 }
 
 .tiny-logo {
@@ -382,28 +382,36 @@
   }
 
   .score-row-mini {
-    padding: 4px 8px !important;
+    padding: 5px 10px !important;
     gap: 6px !important;
-    min-height: 30px !important;
+    min-height: 32px !important;
   }
 
   .score-team-info {
-    max-width: 100px;
-    gap: 4px;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    gap: 5px !important;
   }
 
   .score-team-abbr {
-    font-size: 0.62rem !important;
+    font-size: 0.68rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .score-row-scorer {
-    font-size: 0.46rem !important;
-    max-width: 110px;
+    font-size: 0.48rem !important;
+    max-width: 75px !important;
+    flex-shrink: 1 !important;
   }
 
   .score-num,
   .barca-score-num {
     font-size: 1.15rem !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
   }
 
   .barca-emotion-badge {

@@ -218,12 +218,13 @@
 
 /* ── Focus Strip below Education ── */
 .edu-focus-strip {
-  margin-top: 36px;
-  padding: 22px 24px;
+  margin-top: 28px;
+  padding: 20px 22px;
   border-radius: 14px;
   background: #FFFFFF !important;
-  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
-  box-shadow: 3px 3px 0px rgba(18, 18, 18, 0.08);
+  border: 1.5px solid #121212 !important;
+  box-shadow: 3px 3px 0px #F59E0B !important;
+  box-sizing: border-box;
 }
 
 .focus-strip-header {
