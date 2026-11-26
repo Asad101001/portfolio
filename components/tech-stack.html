@@ -24,13 +24,13 @@
 
         <!-- Filter Bar -->
         <div class="arsenal-filter-bar" id="arsenal-filter" role="tablist" aria-label="Filter Arsenal by Domain">
-            <button class="af-btn active" data-filter="all">All (38)</button>
-            <button class="af-btn" data-filter="lang">Languages</button>
-            <button class="af-btn" data-filter="web">Web &amp; Mobile</button>
-            <button class="af-btn" data-filter="cloud">Cloud &amp; DevOps</button>
-            <button class="af-btn" data-filter="ai">AI &amp; LLMs</button>
-            <button class="af-btn" data-filter="data">Data Science</button>
-            <button class="af-btn" data-filter="backend">Backend &amp; DBs</button>
+            <button class="af-btn active" data-filter="all" role="tab" aria-selected="true" aria-controls="arsenal-grid" id="af-tab-all">All</button>
+            <button class="af-btn" data-filter="lang" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-lang">Languages</button>
+            <button class="af-btn" data-filter="web" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-web">Web &amp; Mobile</button>
+            <button class="af-btn" data-filter="cloud" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-cloud">Cloud &amp; DevOps</button>
+            <button class="af-btn" data-filter="ai" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-ai">AI &amp; LLMs</button>
+            <button class="af-btn" data-filter="data" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-data">Data Science</button>
+            <button class="af-btn" data-filter="backend" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-backend">Backend &amp; DBs</button>
         </div>
 
         <div class="arsenal-grid" id="arsenal-grid">

@@ -845,15 +845,15 @@ export function initHeroMatrix() {
       typeIdx,
       localIdx,
       anchorParticle: Math.floor((i / TOTAL_SHARDS) * BASE_COUNT),
-      restScale: isHaloOrbiter ? 0.48 + shardRand() * 0.42 : 0.32 + shardRand() * 0.35,
-      swirlScale: 0.72 + shardRand() * 0.85,
+      restScale: isHaloOrbiter ? 0.24 + shardRand() * 0.20 : 0.16 + shardRand() * 0.15,
+      swirlScale: 0.60 + shardRand() * 0.55,
       isHaloOrbiter,
-      orbitRadius: 1.55 + shardRand() * 0.85,
+      orbitRadius: 1.50 + shardRand() * 0.65,
       orbitSpeed: (0.28 + shardRand() * 0.35) * (i % 2 === 0 ? 1 : -1),
-      orbitTilt: (shardRand() - 0.5) * 1.4,
+      orbitTilt: (shardRand() - 0.5) * 1.1,
       phase: shardRand() * Math.PI * 2,
       streamT: i / TOTAL_SHARDS,
-      radialSpread: (shardRand() - 0.5) * 1.4,
+      radialSpread: (shardRand() - 0.5) * 1.1,
       spinRate: new THREE.Vector3(
         (shardRand() - 0.5) * 0.04,
         (shardRand() - 0.5) * 0.05,
@@ -871,12 +871,12 @@ export function initHeroMatrix() {
   const ribbonGroup = new THREE.Group();
   scene.add(ribbonGroup);
 
-  const RIBBON_SEGMENTS = 92;
+  const RIBBON_SEGMENTS = 96;
   const RIBBON_CONFIGS = [
-    { width: 0.24, colorA: 0xf59e0b, colorB: 0xfde68a, opacity: 0.52, speed: 1.0, phase: 0.0, arcOffset: 0.0 },
-    { width: 0.14, colorA: 0xd97706, colorB: 0xfbbf24, opacity: 0.68, speed: 1.12, phase: 0.55, arcOffset: 0.22 },
-    { width: 0.07, colorA: 0xfef08a, colorB: 0xffffff, opacity: 0.78, speed: 1.24, phase: 1.15, arcOffset: -0.18 },
-    { width: 0.11, colorA: 0x92400e, colorB: 0xd97706, opacity: 0.44, speed: 0.92, phase: 2.10, arcOffset: 0.34 }
+    { width: 0.28, colorA: 0xd97706, colorB: 0xfde68a, opacity: 0.68, speed: 1.0, phase: 0.0, arcOffset: 0.0 },
+    { width: 0.16, colorA: 0x92400e, colorB: 0xf59e0b, opacity: 0.78, speed: 1.12, phase: 0.55, arcOffset: 0.24 },
+    { width: 0.08, colorA: 0xf59e0b, colorB: 0xfffbeb, opacity: 0.85, speed: 1.24, phase: 1.15, arcOffset: -0.18 },
+    { width: 0.12, colorA: 0x451a03, colorB: 0xb45309, opacity: 0.58, speed: 0.92, phase: 2.10, arcOffset: 0.36 }
   ];
 
   const ribbons = RIBBON_CONFIGS.map((cfg) => {
@@ -965,28 +965,38 @@ export function initHeroMatrix() {
   let isDesktopStage = window.innerWidth > 960;
 
   /**
-   * Evaluates a sweeping 3D calligraphic vortex curve for particles, shards & ribbons.
-   * On desktop, sweeps organically leftward into x ∈ [-4.4, -0.5] near "Muhammad Asad Khan"
-   * and arcs cleanly back into the right column (0, 0, 0).
+   * Evaluates a 3D calligraphic vortex curve:
+   * - On Desktop: gracefully arcs leftward behind the hero headline crest (without dumping heavy elements low over CTAs)
+   * - On Mobile (`compactMode`): stays strictly symmetrical around (0, 0, 0) in a concentric 3D spiral
    */
-  function evalSwirlCurve(u, swirlProg, phaseAdvance, offsetAngle, spread, compactMode, outVec) {
-    // u in [0, 1] along stream; swirlProg in [0, 1] keeps all ribbons closing cleanly at 0 & 1
+  function evalSwirlCurve(u, swirlProg, phaseAdvance, offsetAngle, spread, compactMode, maxLeftShift, outVec) {
     const clampedProg = Math.min(1, Math.max(0, swirlProg));
-    const reachLeft = compactMode ? 1.85 : 4.55;
     const sweepBell = Math.sin(clampedProg * Math.PI);
-    const sAngle = u * Math.PI * 2.1 + phaseAdvance * Math.PI * 2.8 + offsetAngle;
+    const sAngle = u * Math.PI * 2.2 + phaseAdvance * Math.PI * 2.6 + offsetAngle;
 
-    // Leftward excursion strongest through the middle of the swirl loop
+    if (compactMode) {
+      // Strictly centered symmetrical 3D orbital vortex for mobile portrait viewport
+      const rad = (0.75 + 0.85 * Math.sin(u * Math.PI) + spread * 0.22) * (0.45 + 0.65 * sweepBell);
+      const x = Math.cos(sAngle) * rad;
+      const y = Math.sin(sAngle) * rad * 0.78 + Math.cos(u * Math.PI * 3.0 + offsetAngle) * 0.24 * sweepBell;
+      const z = Math.sin(sAngle * 0.85 + u * Math.PI) * (0.82 + Math.abs(spread) * 0.18);
+      outVec.set(x, y, z);
+      return outVec;
+    }
+
+    const reachLeft = maxLeftShift;
     const arcFactor = Math.sin(u * Math.PI);
-    const sweepX = -reachLeft * sweepBell * Math.pow(arcFactor, 0.72);
-    const curlX = Math.cos(sAngle) * (0.85 + spread * 0.25) * (0.45 + 0.55 * sweepBell);
+    const sweepX = -reachLeft * sweepBell * Math.pow(arcFactor, 0.85);
+    const curlX = Math.cos(sAngle) * (0.78 + spread * 0.18) * (0.52 + 0.48 * sweepBell);
 
     const x = sweepX + curlX;
+    // Gently elevate left-reaching arcs into clean airspace above lower subheadlines
+    const archY = Math.pow(arcFactor, 0.9) * sweepBell * 0.72;
     const y =
-      Math.sin(sAngle * 1.15) * (0.72 + spread * 0.22) +
-      Math.sin(u * Math.PI * 2.0 + offsetAngle) * 0.42 +
-      sweepBell * 0.35; // Slight upward crest across the name level
-    const z = Math.sin(sAngle * 0.95) * (0.95 + Math.abs(spread) * 0.2);
+      archY +
+      Math.sin(sAngle * 1.05) * (0.64 + spread * 0.16) +
+      Math.sin(u * Math.PI * 2.0 + offsetAngle) * 0.24;
+    const z = Math.sin(sAngle * 0.9) * (0.85 + Math.abs(spread) * 0.16);
 
     outVec.set(x, y, z);
     return outVec;
@@ -1147,13 +1157,13 @@ export function initHeroMatrix() {
     isDesktopStage = window.innerWidth > 960;
 
     if (width < 480) {
-      camera.position.z = 8.4;
-      particleUniforms.uPointScale.value = 22.0;
+      camera.position.z = 6.35;
+      particleUniforms.uPointScale.value = 23.0;
     } else if (width < 960) {
-      camera.position.z = 7.6;
+      camera.position.z = 6.65;
       particleUniforms.uPointScale.value = 24.5;
     } else {
-      camera.position.z = 6.9;
+      camera.position.z = 6.95;
       particleUniforms.uPointScale.value = 26.5;
     }
 
@@ -1316,10 +1326,11 @@ export function initHeroMatrix() {
           phases[i] * 0.16,
           particleRadialBias[i],
           compactMode,
+          1.45,
           _p0
         );
 
-        // Convert world sweep into local sculptureGroup space cleanly so leftward sweep always heads toward the name!
+        // Convert world sweep into local sculptureGroup space cleanly so leftward sweep frames the gap without muddying left text
         sculptureGroup.worldToLocal(_p0);
 
         const localPull = Math.min(
@@ -1354,6 +1365,7 @@ export function initHeroMatrix() {
           m.phase * 0.22,
           m.radialSpread,
           compactMode,
+          1.20,
           _p1
         );
         sculptureGroup.worldToLocal(_p1);
@@ -1416,6 +1428,7 @@ export function initHeroMatrix() {
             rb.cfg.phase + Math.sin(u * 4.0) * 0.25,
             rb.cfg.arcOffset,
             compactMode,
+            1.85,
             _p0
           );
           evalSwirlCurve(
@@ -1425,12 +1438,14 @@ export function initHeroMatrix() {
             rb.cfg.phase + Math.sin(uNext * 4.0) * 0.25,
             rb.cfg.arcOffset,
             compactMode,
+            1.85,
             _p1
           );
 
           _tangent.subVectors(_p1, _p0).normalize();
-          _side.crossVectors(_tangent, _forward);
-          if (_side.lengthSq() < 0.001) _side.set(0, 1, 0);
+          // Smooth screen-space perpendicular avoids Frenet twisting pinches along 3D loops
+          _side.set(-_tangent.y, _tangent.x, 0.18 * _tangent.z);
+          if (_side.lengthSq() < 0.0005) _side.set(0, 1, 0);
           _side.normalize();
 
           // Organic calligraphic thickness modulation along ribbon length

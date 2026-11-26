@@ -192,7 +192,7 @@ import { CONFIG, escHtml } from './config.js';
         const isGif = mediaUrl.endsWith('.gif') || mediaUrl.includes('animated') || mediaUrl.includes('tweet_video_thumb');
         return `
             <div class="x-card-media x-media-image-wrap" onclick="event.stopPropagation()">
-                <img src="${mediaUrl}" alt="Post media" ${isGif ? '' : 'loading="lazy"'} decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
+                <img src="${mediaUrl}" alt="Post media" width="600" height="340" ${isGif ? '' : 'loading="lazy"'} decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.x-card-media').style.display='none'">
                 ${isGif ? '<span class="x-gif-badge">GIF</span>' : ''}
             </div>`;
     }
@@ -302,13 +302,13 @@ import { CONFIG, escHtml } from './config.js';
                 quoteHtml = `
                     <div class="x-quoted-card" onclick="event.stopPropagation(); window.open('${qLink}', '_blank', 'noopener,noreferrer');" title="Open quoted post on X">
                         <div class="x-quoted-header">
-                            <img src="${qAvatar}" class="x-quoted-avatar" alt="${qAuthor}" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
+                            <img src="${qAvatar}" class="x-quoted-avatar" alt="${qAuthor}" width="24" height="24" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
                             <span class="x-quoted-name">${qName}</span>
                             <span class="x-quoted-handle">@${qAuthor}</span>
                             ${quoteData.pubDate ? `<span class="x-dot">·</span><time class="x-quoted-time">${timeAgo(quoteData.pubDate)}</time>` : ''}
                         </div>
                         <p class="x-quoted-text">${formatTweetText(qClean)}</p>
-                        ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy"></div>` : ''}
+                        ${quoteData.mediaUrl ? `<div class="x-quoted-media"><img src="${quoteData.mediaUrl}" alt="Quoted media" loading="lazy" width="500" height="280"></div>` : ''}
                     </div>`;
             }
 
@@ -347,7 +347,7 @@ import { CONFIG, escHtml } from './config.js';
                     </div>` : ''}
                 <div class="x-post-header">
                     <a href="https://x.com/${postAuthorHandle}" target="_blank" rel="noopener noreferrer" class="x-avatar" onclick="event.stopPropagation()" aria-label="Visit @${postAuthorHandle} on X">
-                        <img src="${postAuthorAvatar}" alt="${postAuthorHandle} Avatar" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
+                        <img src="${postAuthorAvatar}" alt="${postAuthorHandle} Avatar" width="40" height="40" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.webp'">
                     </a>
                     <div class="x-author-info">
                         <div class="x-names">

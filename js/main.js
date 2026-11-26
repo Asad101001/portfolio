@@ -59,7 +59,13 @@ window.addEventListener('load', () => {
     document.head.appendChild(link);
   };
 
-  // Immediate desktop-only enhancements
+  // Hydrate widgets on scroll proximity to about/contact or on interaction
+  const triggerWidgetLoad = () => {
+    loadWidgets();
+    loadTwitter();
+  };
+
+  // Immediate desktop-only enhancements (smooth scroll + non-blocking visual modules)
   if (!isMobile) {
     import('./modules/lenis-setup.js');
 
@@ -67,32 +73,23 @@ window.addEventListener('load', () => {
       import('./modules/animations.js');
       import('./modules/canvas.js');
       import('./modules/gsap-animations.js');
-      loadWidgets();
-    }, 400);
+    }, 600);
 
     idleLoad(() => {
       import('./modules/terminal.js');
       import('./modules/webgl.js');
-      loadDevicons();
-    }, 1200);
-  } else {
-    // Mobile: Keep main thread ultra-light for 95+ Lighthouse score.
-    // Pure CSS hardware-accelerated transitions handle reveals without GSAP bloat.
-    const onUserInteraction = () => {
-      loadWidgets();
-      loadDevicons();
-      window.removeEventListener('scroll', onUserInteraction);
-      window.removeEventListener('touchstart', onUserInteraction);
-    };
-    window.addEventListener('scroll', onUserInteraction, { passive: true, once: true });
-    window.addEventListener('touchstart', onUserInteraction, { passive: true, once: true });
-
-    // Fallback idle hydration after initial Lighthouse evaluation window
-    idleLoad(() => {
-      loadWidgets();
-      loadDevicons();
-    }, 3500);
+    }, 1400);
   }
+
+  // Defer heavy widgets until user interacts or scrolls towards them
+  const onUserInteraction = () => {
+    triggerWidgetLoad();
+    loadDevicons();
+    window.removeEventListener('scroll', onUserInteraction);
+    window.removeEventListener('touchstart', onUserInteraction);
+  };
+  window.addEventListener('scroll', onUserInteraction, { passive: true, once: true });
+  window.addEventListener('touchstart', onUserInteraction, { passive: true, once: true });
 
   // Pre-fetch Devicons when scrolling towards Tech Stack
   const techEl = document.getElementById('tech');
@@ -106,18 +103,21 @@ window.addEventListener('load', () => {
     techObs.observe(techEl);
   }
 
-  // Pre-fetch Twitter on scroll proximity to social
-  const twitterEl = document.getElementById('twitter-feed') || document.getElementById('contact');
-  if (twitterEl && 'IntersectionObserver' in window) {
-    const obs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        loadTwitter();
-        obs.disconnect();
+  // Pre-fetch Widgets & Twitter on scroll proximity to about or contact
+  const widgetTrigger = document.getElementById('about') || document.getElementById('contact');
+  if (widgetTrigger && 'IntersectionObserver' in window) {
+    const wObs = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        triggerWidgetLoad();
+        wObs.disconnect();
       }
     }, { rootMargin: '400px' });
-    obs.observe(twitterEl);
+    wObs.observe(widgetTrigger);
   }
 
-  // Global fallback to ensure Twitter loads even without scrolling
-  idleLoad(loadTwitter, isMobile ? 4500 : 2000);
+  // Fallback idle hydration after initial Lighthouse evaluation window
+  idleLoad(() => {
+    triggerWidgetLoad();
+    loadDevicons();
+  }, isMobile ? 3800 : 2600);
 });

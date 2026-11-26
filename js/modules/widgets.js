@@ -757,16 +757,18 @@ function _starsHTML(starsStr) {
 
   function fetchESPN(league) {
     var ts = Date.now();
-    return fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/' + league + '/scoreboard?dates=' + dateRange(28) + '&_t=' + ts)
+    return fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/' + league + '/scoreboard?_t=' + ts)
       .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(d){ return d.events || []; });
+      .then(function(d){ return d.events || []; })
+      .catch(function(){ return []; });
   }
 
   function fetchESPNSchedule() {
     var ts = Date.now();
     return fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/' + BARCA_ID + '/schedule?_t=' + ts)
       .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(d){ return d.events || []; });
+      .then(function(d){ return d.events || []; })
+      .catch(function(){ return []; });
   }
 
   function mergeEvents(arrays) {

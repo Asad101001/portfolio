@@ -623,7 +623,12 @@ if (document.readyState === 'loading') {
     // Filtering
     fBar.addEventListener('click', (e) => {
       var b = e.target.closest('.af-btn'); if (!b) return;
-      fBar.querySelectorAll('.af-btn').forEach(x => x.classList.remove('active')); b.classList.add('active');
+      fBar.querySelectorAll('.af-btn').forEach(x => {
+        x.classList.remove('active');
+        x.setAttribute('aria-selected', 'false');
+      });
+      b.classList.add('active');
+      b.setAttribute('aria-selected', 'true');
       var f = b.getAttribute('data-filter');
       domains.forEach(d => {
         var k = d.getAttribute('data-domain');
