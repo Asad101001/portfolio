@@ -54,11 +54,15 @@ export default async function handler(req, res) {
           source: 'fallback'
         });
       }
+      const profile = { ...DEFAULT_PROFILE, ...(stored.profile || {}) };
+      if (profile.photo && profile.photo.includes('media.licdn.com')) {
+        profile.photo = 'https://github.com/Asad101001.png';
+      }
       return res.json({
         text:    stored.text,
         url:     stored.url || 'https://www.linkedin.com/in/muhammadasadk/',
         date:    stored.date || null,
-        profile: { ...DEFAULT_PROFILE, ...(stored.profile || {}) },
+        profile: profile,
         source:  'live'
       });
     } catch (e) {

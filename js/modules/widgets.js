@@ -1736,9 +1736,14 @@ function _starsHTML(starsStr) {
     if (headlineEl && profile.headline) headlineEl.textContent = profile.headline;
     if (avatarWrap && profile.photo) {
       avatarWrap.innerHTML = '';
+      const photoUrl = (typeof profile.photo === 'string' && profile.photo.includes('media.licdn.com'))
+        ? 'https://github.com/Asad101001.png'
+        : profile.photo;
       const img = document.createElement('img');
-      img.src = profile.photo;
+      img.src = photoUrl;
       img.alt = profile.name || 'Profile';
+      img.width = 28;
+      img.height = 28;
       img.style.cssText = 'width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,0.1);';
       img.onerror = function() {
         avatarWrap.innerHTML = '';
