@@ -95,12 +95,12 @@ window.addEventListener('load', () => {
       }, 1500);
     };
 
-    idleLoad(loadDesktopExtras, 2200);
+    idleLoad(loadDesktopExtras, 4500);
     window.addEventListener('mousemove', loadDesktopExtras, { passive: true, once: true });
     window.addEventListener('scroll', loadDesktopExtras, { passive: true, once: true });
   } else {
     // On mobile, hydrate section visuals on idle or scroll
-    idleLoad(loadSectionVisuals, 1800);
+    idleLoad(loadSectionVisuals, 3500);
   }
 
   // Defer heavy widgets until user interacts or scrolls towards them
