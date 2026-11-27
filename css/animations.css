@@ -12,8 +12,8 @@ nav {
 
 .section-in { 
   opacity: 0; 
-  transform: translate3d(0, 18px, 0); 
-  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1); 
+  transform: translate3d(0, 12px, 0); 
+  transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1), transform 0.36s cubic-bezier(0.22, 1, 0.36, 1); 
 }
 .section-in.in-view { 
   opacity: 1; 
@@ -21,19 +21,19 @@ nav {
 }
 .section-in .s-child { 
   opacity: 0; 
-  transform: translate3d(0, 14px, 0); 
-  transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1); 
+  transform: translate3d(0, 10px, 0); 
+  transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1), transform 0.34s cubic-bezier(0.22, 1, 0.36, 1); 
 }
 .section-in.in-view .s-child {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
-.section-in.in-view .s-child:nth-child(1)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.05s; }
-.section-in.in-view .s-child:nth-child(2)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.11s; }
-.section-in.in-view .s-child:nth-child(3)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.17s; }
-.section-in.in-view .s-child:nth-child(4)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.23s; }
-.section-in.in-view .s-child:nth-child(5)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.29s; }
-.section-in.in-view .s-child:nth-child(n+6){ opacity:1; transform:translate3d(0,0,0); transition-delay:0.35s; }
+.section-in.in-view .s-child:nth-child(1)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.02s; }
+.section-in.in-view .s-child:nth-child(2)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.06s; }
+.section-in.in-view .s-child:nth-child(3)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.10s; }
+.section-in.in-view .s-child:nth-child(4)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.14s; }
+.section-in.in-view .s-child:nth-child(5)  { opacity:1; transform:translate3d(0,0,0); transition-delay:0.18s; }
+.section-in.in-view .s-child:nth-child(n+6){ opacity:1; transform:translate3d(0,0,0); transition-delay:0.22s; }
 
 @media (prefers-reduced-motion: reduce) {
   .section-in, .section-in .s-child {

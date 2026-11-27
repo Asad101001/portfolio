@@ -77,65 +77,53 @@ function floatingOrbs() {
 
 /* ─── Scroll Reveals (architectural section & card entrances) ───── */
 function scrollReveals() {
-  // Featured Case Studies + Compact Rows
+  // Featured Case Studies + Compact Rows (snappy threshold so cards never lag behind scroll)
   document.querySelectorAll('.case-study-card, .cp-row').forEach((card, i) => {
     gsap.from(card, {
       opacity: 0,
-      y: 24,
-      duration: 0.58,
-      delay: Math.min(i, 3) * 0.07,
+      y: 14,
+      duration: 0.36,
+      delay: Math.min(i, 2) * 0.04,
       ease: 'power3.out',
       clearProps: 'transform,opacity',
       scrollTrigger: {
         trigger: card,
-        start: 'top 90%',
+        start: 'top 95%',
         once: true,
       },
     });
   });
 
-  // About & Focus Cards + GitHub Heatmap
-  const aboutCards = document.querySelectorAll('.about-col, .concurrent-focus-col, .github-heatmap-card');
+  // About & Focus Cards
+  const aboutCards = document.querySelectorAll('.about-col, .concurrent-focus-col');
   if (aboutCards.length) {
     aboutCards.forEach((card, i) => {
       gsap.from(card, {
         opacity: 0,
-        y: 22,
-        duration: 0.55,
-        delay: i * 0.08,
+        y: 14,
+        duration: 0.36,
+        delay: i * 0.05,
         ease: 'power3.out',
         clearProps: 'transform,opacity',
         scrollTrigger: {
           trigger: card,
-          start: 'top 90%',
+          start: 'top 95%',
           once: true,
         },
       });
     });
   }
 
-  // Section titles & headers
-  document.querySelectorAll('.section-title').forEach(el => {
-    gsap.from(el, {
-      opacity: 0,
-      y: 18,
-      duration: 0.52,
-      ease: 'power3.out',
-      clearProps: 'transform,opacity',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-    });
-  });
-
   // Arsenal domain cards & credentials table
   document.querySelectorAll('.arsenal-domain, .credentials-table-wrap').forEach((el, i) => {
     gsap.from(el, {
       opacity: 0,
-      y: 20,
-      duration: 0.5,
-      delay: Math.min(i % 2, 1) * 0.08,
+      y: 14,
+      duration: 0.34,
+      delay: Math.min(i % 2, 1) * 0.05,
       ease: 'power3.out',
       clearProps: 'transform,opacity',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      scrollTrigger: { trigger: el, start: 'top 95%', once: true },
     });
   });
 
@@ -143,15 +131,15 @@ function scrollReveals() {
   document.querySelectorAll('.edu-stair-item').forEach((card, i) => {
     gsap.from(card, {
       opacity: 0,
-      x: isMobile() ? 0 : -20,
-      y: 18,
-      duration: 0.55,
-      delay: i * 0.08,
+      x: isMobile() ? 0 : -14,
+      y: 12,
+      duration: 0.36,
+      delay: i * 0.05,
       ease: 'power3.out',
       clearProps: 'transform,opacity',
       scrollTrigger: {
         trigger: card,
-        start: 'top 90%',
+        start: 'top 95%',
         once: true,
       },
     });
@@ -163,49 +151,18 @@ function scrollReveals() {
     socialCards.forEach((card, i) => {
       gsap.from(card, {
         opacity: 0,
-        y: 18,
-        duration: 0.5,
-        delay: Math.min(i % 5, 4) * 0.05,
+        y: 14,
+        duration: 0.34,
+        delay: Math.min(i % 4, 3) * 0.04,
         ease: 'power3.out',
         clearProps: 'transform,opacity',
         scrollTrigger: {
           trigger: card,
-          start: 'top 92%',
+          start: 'top 95%',
           once: true,
         },
       });
     });
-  }
-
-  // Hero to Section Transition (Subtle parallax depth — card stays 100% visible)
-  const heroMatrixCard = document.getElementById('hero-matrix-card');
-  const heroLeftCol = document.querySelector('.hero-left-col');
-  const heroEl = document.getElementById('hero');
-
-  if (heroMatrixCard && heroEl && !isMobile()) {
-    gsap.to(heroMatrixCard, {
-      y: 30,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroEl,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.5
-      }
-    });
-
-    if (heroLeftCol) {
-      gsap.to(heroLeftCol, {
-        y: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroEl,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.5
-        }
-      });
-    }
   }
 }
 

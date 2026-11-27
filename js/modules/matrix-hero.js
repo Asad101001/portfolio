@@ -47,7 +47,7 @@ export function initHeroMatrix() {
     preserveDrawingBuffer: false
   });
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.setClearColor(0x000000, 0);
 
   // ── 2. Natural Editorial Studio Lighting for 3D Shards ──────────────────
@@ -1184,11 +1184,14 @@ export function initHeroMatrix() {
     }
 
     camera.updateProjectionMatrix();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     particleUniforms.uPixelRatio.value = dpr;
     renderer.setPixelRatio(dpr);
     renderer.setSize(width, height);
+    cachedHeroHeight = (heroSection && heroSection.offsetHeight) || 720;
   }
+
+  let cachedHeroHeight = (heroSection && heroSection.offsetHeight) || 720;
 
   window.addEventListener('resize', updateViewportCalibration, { passive: true });
   // Run once synchronously + once next frame after fonts/grid settle
@@ -1204,15 +1207,14 @@ export function initHeroMatrix() {
   let lastHeroScrollY = window.scrollY || 0;
   let wasBelowHero = false;
 
-  // Direction-aware scroll link: down dissolves/spins outward, up re-enters with fresh morph
+  // Zero-reflow direction-aware scroll link (uses cachedHeroHeight, no layout reads on scroll)
   window.addEventListener(
     'scroll',
     () => {
       const y = window.scrollY || window.pageYOffset || 0;
-      const h = (heroSection && heroSection.offsetHeight) || 720;
       scrollDirection = y >= lastHeroScrollY ? 1 : -1;
       lastHeroScrollY = y;
-      scrollMorphProgress = Math.max(0, Math.min(1, y / Math.max(360, h * 0.85)));
+      scrollMorphProgress = Math.max(0, Math.min(1, y / Math.max(360, cachedHeroHeight * 0.85)));
 
       if (scrollMorphProgress > 0.72) {
         wasBelowHero = true;
