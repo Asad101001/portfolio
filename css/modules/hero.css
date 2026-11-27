@@ -380,12 +380,18 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  cursor: grab;
-  touch-action: none;
+  cursor: default;
+  touch-action: pan-y;
 }
 
-.hero-stage-container:active {
-  cursor: grabbing;
+@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
+  .hero-stage-container {
+    cursor: grab;
+    touch-action: none;
+  }
+  .hero-stage-container:active {
+    cursor: grabbing;
+  }
 }
 
 .hmc-canvas-wrap {
@@ -476,6 +482,14 @@
   .hero-right-col,
   .hero-stage-container {
     min-height: 320px;
+    touch-action: pan-y !important;
+    cursor: default;
+  }
+
+  #hero-matrix-card,
+  .hmc-canvas-wrap,
+  #hero-matrix-canvas {
+    touch-action: pan-y !important;
   }
 
   .hmc-canvas-wrap {

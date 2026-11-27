@@ -218,7 +218,7 @@ section:not(#hero) .view-all-link:hover {
   border-color: #F59E0B;
 }
 
-/* Graphic Slots inside Headers */
+/* Graphic Slots inside Headers -> Live Interactive Canvases */
 .sh-graphic-wrap {
   display: flex;
   align-items: center;
@@ -226,13 +226,168 @@ section:not(#hero) .view-all-link:hover {
   flex-shrink: 0;
 }
 
-.sh-graphic-slot {
+.sh-graphic-slot,
+.sh-canvas-slot {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  opacity: 0.92;
+  width: 224px;
+  height: 80px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  opacity: 0.96;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+
+.sh-canvas-slot.sh-canvas-seal {
+  width: 112px;
+  height: 92px;
+}
+
+.sh-canvas-slot.sh-canvas-orbit {
+  width: 176px;
+  height: 84px;
+}
+
+.sh-live-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* ── Editorial Responsive Stages (#projects, #about, #tech) ─────
+   Floating directly on the paper background with zero bounding boxes/borders.
+   Mobile (<960px): Live canvas sits directly BESIDE the section header.
+   Laptop (>=960px): Live canvas sits SIDE-BY-SIDE with section content. */
+.section-editorial-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 114px;
+  grid-template-areas:
+    "header visual"
+    "content content";
+  gap: 18px 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.section-editorial-stage > .stage-header {
+  grid-area: header;
+  margin-bottom: 0 !important;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.section-editorial-stage > .stage-visual {
+  grid-area: visual;
+  width: 100%;
+  height: 112px;
+  align-self: center;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.section-editorial-stage > .stage-content {
+  grid-area: content;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (max-width: 420px) {
+  .section-editorial-stage {
+    grid-template-columns: minmax(0, 1fr) 98px;
+    gap: 16px 8px;
+  }
+  .section-editorial-stage > .stage-visual {
+    height: 100px;
+  }
+  .section-editorial-stage > .stage-header {
+    padding: 14px 12px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 959px) {
+  .section-editorial-stage {
+    grid-template-columns: minmax(0, 1fr) 148px;
+    gap: 20px 14px;
+  }
+  .section-editorial-stage > .stage-visual {
+    height: 140px;
+  }
+}
+
+@media (min-width: 960px) {
+  #projects .section-inner,
+  #about .section-inner,
+  #tech .section-inner {
+    max-width: min(1320px, 94vw);
+    padding-right: clamp(58px, 5.2vw, 80px);
+  }
+  .section-editorial-stage {
+    grid-template-columns: minmax(0, 1.44fr) minmax(290px, 0.90fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header  header"
+      "content visual";
+    gap: 28px 30px;
+    align-items: start;
+  }
+  .section-editorial-stage > .stage-header {
+    height: auto;
+  }
+  .section-editorial-stage > .stage-visual {
+    position: sticky;
+    top: max(104px, calc(50vh - 175px));
+    height: clamp(290px, 39vh, 360px);
+    align-self: start;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .stage-about > .stage-visual {
+    position: relative;
+    top: auto;
+    align-self: center;
+    height: 330px;
+  }
+  .stage-tech .stage-content .arsenal-filter-bar {
+    justify-content: flex-start;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+  .stage-tech .stage-content .arsenal-grid {
+    max-width: 100%;
+    margin: 0;
+  }
+  .stage-projects .stage-content .case-study-card {
+    gap: 24px;
+    padding: 22px;
+  }
+  .stage-projects .stage-content .case-study-card .cs-img-wrap {
+    height: 240px;
+  }
+  .stage-about .stage-content .about-skills-grid {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1180px) {
+  .stage-projects .stage-content .case-study-card,
+  .stage-projects .stage-content .case-study-card.reverse {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .stage-about .stage-content .about-skills-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── 3. Per-Section Distinct Reversible Effects & Offset Layouts ─ */
@@ -242,14 +397,6 @@ section:not(#hero) .section-header .section-eyebrow,
 section:not(#hero) .section-header .section-title,
 section:not(#hero) .section-header .section-desc {
   transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
-}
-
-.gfx-draw-path {
-  stroke-dashoffset: 185;
-  transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.section-header.sh-active .gfx-draw-path {
-  stroke-dashoffset: 0;
 }
 
 /* 02. Selected Work (#projects): Pipeline Draw + Shutter Bar + Asymmetric Case Study Stagger */
@@ -273,53 +420,86 @@ section:not(#hero) .section-header .section-desc {
   transform-origin: bottom center;
 }
 
+/* ── Playful Off-Axis Card & Border Rhythm Across Sections ──── */
+.case-study-card,
+.compact-projects-wrap,
+.cp-row,
+.about-col,
+.concurrent-focus-col,
+.cef-card,
+.arsenal-domain,
+.acard,
+.credentials-table-wrap,
+.edu-stair-card,
+.social-platform-card,
+.spotify-widget,
+.social-split-right > * {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
 @media (min-width: 960px) {
   #projects.in-view .case-study-card:nth-child(odd),
   #projects .case-study-card.s-child:nth-child(odd) {
-    transform: translate3d(-12px, 0, 0);
+    transform: translate3d(-10px, -4px, 0) rotate(-0.32deg);
+    box-shadow: 5px 5px 0px #F59E0B, inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
   #projects.in-view .case-study-card:nth-child(even),
   #projects .case-study-card.s-child:nth-child(even) {
-    transform: translate3d(12px, 0, 0);
+    transform: translate3d(10px, 5px, 0) rotate(0.32deg);
+    box-shadow: -5px 5px 0px #6366F1, inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  #projects .case-study-card:hover {
+    transform: translate3d(0, -3px, 0) rotate(0deg) !important;
+  }
+  .compact-projects-wrap {
+    transform: translate3d(4px, 4px, 0) rotate(0.22deg);
+  }
+  .compact-projects-table .cp-row:nth-child(odd) {
+    transform: translate3d(-4px, 0, 0);
+  }
+  .compact-projects-table .cp-row:nth-child(even) {
+    transform: translate3d(5px, 2px, 0);
+  }
+  .compact-projects-table .cp-row:hover {
+    transform: translate3d(0, -1px, 0);
   }
 }
 
-/* 03. About (#about): Oscilloscope Sine Wave + Opposing Text + Vertical Asymmetric Split */
+/* 03. About (#about): Interactive Deflecting Wave Canvas + Opposing Text + Playful Offsets */
 #about .section-header:not(.sh-active) .section-title {
   transform: translate3d(-14px, 0, 0);
 }
 #about .section-header:not(.sh-active) .section-desc {
   transform: translate3d(14px, 0, 0);
 }
-#about .section-header .wave-primary,
-#about .section-header .wave-secondary {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-#about .section-header.sh-active.sh-dir-down .wave-primary {
-  transform: translate3d(8px, 0, 0);
-}
-#about .section-header.sh-active.sh-dir-down .wave-secondary {
-  transform: translate3d(-8px, 0, 0);
-}
-#about .section-header.sh-active.sh-dir-up .wave-primary {
-  transform: translate3d(-8px, 0, 0);
-}
-#about .section-header.sh-active.sh-dir-up .wave-secondary {
-  transform: translate3d(8px, 0, 0);
-}
 
 @media (min-width: 901px) {
   #about.in-view .about-col,
   #about .about-col.s-child {
-    transform: translate3d(0, -10px, 0);
+    transform: translate3d(-6px, -7px, 0) rotate(-0.35deg);
+    box-shadow: 5px 5px 0px #F59E0B;
   }
   #about.in-view .concurrent-focus-col,
   #about .concurrent-focus-col.s-child {
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(7px, 9px, 0) rotate(0.35deg);
+    box-shadow: -5px 5px 0px #6366F1;
+  }
+  #about .about-col:hover,
+  #about .concurrent-focus-col:hover {
+    transform: translate3d(0, -2px, 0) rotate(0deg) !important;
+  }
+  #about .cef-card:nth-child(odd) {
+    transform: translate3d(-4px, -1px, 0);
+  }
+  #about .cef-card:nth-child(even) {
+    transform: translate3d(5px, 2px, 0);
+  }
+  #about .cef-card:hover {
+    transform: translate3d(0, -2px, 0);
   }
 }
 
-/* 04. Tech Arsenal (#tech): Isometric Matrix Cube + Diagonal Beam Sweep + Offset Domain Stack */
+/* 04. Tech Arsenal (#tech): Three.js Polyhedral Core + Diagonal Beam Sweep + Offset Stack */
 #tech .section-header::before {
   content: '';
   position: absolute;
@@ -339,22 +519,88 @@ section:not(#hero) .section-header .section-desc {
 #tech .section-header.sh-dir-up.sh-active::before {
   transform: translate3d(-120%, 0, 0) skewX(18deg);
 }
-.sh-gfx-lattice svg {
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-#tech .section-header.sh-active.sh-dir-down .sh-gfx-lattice svg {
-  transform: rotate(30deg);
-}
-#tech .section-header.sh-active.sh-dir-up .sh-gfx-lattice svg {
-  transform: rotate(-30deg);
-}
 
 @media (min-width: 960px) {
   #tech .arsenal-domain.in-view:nth-child(odd) {
-    transform: translate3d(-12px, 0, 0);
+    transform: translate3d(-9px, -3px, 0) rotate(-0.28deg);
+    box-shadow: 4.5px 4.5px 0px #F59E0B;
   }
   #tech .arsenal-domain.in-view:nth-child(even) {
-    transform: translate3d(12px, 0, 0);
+    transform: translate3d(9px, 4px, 0) rotate(0.28deg);
+    box-shadow: -4.5px 4.5px 0px #6366F1;
+  }
+  #tech .arsenal-domain.in-view:hover {
+    transform: translate3d(0, -2px, 0) rotate(0deg);
+  }
+  #tech .acard:nth-child(3n+1) {
+    transform: translate3d(0, -2px, 0);
+  }
+  #tech .acard:nth-child(3n+2) {
+    transform: translate3d(0, 2.5px, 0);
+  }
+  #tech .acard:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+/* Credentials, Education & Contact subtle playful off-axis card/chip accents */
+@media (min-width: 960px) {
+  #credentials .credentials-table-wrap {
+    transform: translate3d(4px, 3px, 0) rotate(0.28deg);
+  }
+  #credentials .credentials-table-wrap:hover {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  #education .edu-stair-item:nth-child(odd) .edu-stair-card {
+    transform: rotate(-0.32deg);
+    box-shadow: 4.5px 4.5px 0px #F59E0B;
+  }
+  #education .edu-stair-item:nth-child(even) .edu-stair-card {
+    transform: rotate(0.32deg);
+    box-shadow: -4.5px 4.5px 0px #6366F1;
+  }
+  #education .edu-stair-card:hover {
+    transform: translate3d(0, -2px, 0) rotate(0deg) !important;
+  }
+  #contact .social-platform-card:nth-child(odd) {
+    transform: translate3d(0, -3px, 0) rotate(-0.55deg);
+  }
+  #contact .social-platform-card:nth-child(even) {
+    transform: translate3d(0, 4px, 0) rotate(0.55deg);
+  }
+  #contact .social-platform-card:hover {
+    transform: translate3d(0, -3px, 0) rotate(0deg) !important;
+  }
+  #contact .spotify-widget {
+    transform: translate3d(-4px, -3px, 0) rotate(-0.25deg);
+  }
+  #contact .social-split-right > *:nth-child(odd) {
+    transform: translate3d(4px, -2px, 0) rotate(0.28deg);
+  }
+  #contact .social-split-right > *:nth-child(even) {
+    transform: translate3d(-3px, 3px, 0) rotate(-0.25deg);
+  }
+  #contact .spotify-widget:hover,
+  #contact .social-split-right > *:hover {
+    transform: translate3d(0, -2px, 0) rotate(0deg);
+  }
+}
+
+/* Gentle safe off-axis micro-play on Mobile (<=959px) without overflow */
+@media (max-width: 959px) {
+  .case-study-card:nth-child(odd),
+  .arsenal-domain:nth-child(odd) {
+    transform: translate3d(-2px, 0, 0) rotate(-0.22deg);
+  }
+  .case-study-card:nth-child(even),
+  .arsenal-domain:nth-child(even) {
+    transform: translate3d(2px, 0, 0) rotate(0.22deg);
+  }
+  #contact .social-platform-card:nth-child(odd) {
+    transform: translateY(-2px) rotate(-0.4deg);
+  }
+  #contact .social-platform-card:nth-child(even) {
+    transform: translateY(2px) rotate(0.4deg);
   }
 }
 
@@ -407,25 +653,7 @@ section:not(#hero) .section-header .section-desc {
   opacity: 1;
 }
 
-.seal-ring-outer,
-.seal-ring-inner {
-  transform-origin: 44px 44px;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-#credentials .section-header.sh-active.sh-dir-down .seal-ring-outer {
-  transform: rotate(45deg);
-}
-#credentials .section-header.sh-active.sh-dir-down .seal-ring-inner {
-  transform: rotate(-45deg);
-}
-#credentials .section-header.sh-active.sh-dir-up .seal-ring-outer {
-  transform: rotate(-45deg);
-}
-#credentials .section-header.sh-active.sh-dir-up .seal-ring-inner {
-  transform: rotate(45deg);
-}
-
-/* 06. Education (#education): Trajectory Curve + Bottom Progression Beam */
+/* 06. Education (#education): Telemetry Curve Canvas + Bottom Progression Beam */
 #education .section-header::after {
   content: '';
   position: absolute;
@@ -453,21 +681,12 @@ body[data-scroll-dir="up"] .edu-stair-item:not(.in-view-ed) .edu-progress-bar-fi
   transform: scaleX(0.75);
 }
 
-/* 07. Contact (#contact): Iris Expand + Orbital Signal SVG */
+/* 07. Contact (#contact): Iris Expand + Orbital Signal Radar Canvas */
 #contact .section-header {
   transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 #contact .section-header:not(.sh-active) {
   transform: scaleX(0.97);
-}
-.sh-gfx-orbit svg {
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-#contact .section-header.sh-active.sh-dir-down .sh-gfx-orbit svg {
-  transform: rotate(18deg);
-}
-#contact .section-header.sh-active.sh-dir-up .sh-gfx-orbit svg {
-  transform: rotate(-18deg);
 }
 
 /* Section Divider Rotation & Revisit Highlights */
@@ -507,17 +726,21 @@ body[data-scroll-dir="up"] .arsenal-domain.revisit-up {
   }
   .sh-graphic-wrap {
     width: 100%;
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  .sh-graphic-slot svg {
-    max-width: 132px;
-    height: auto;
+  .section-header .sh-canvas-slot:not(.stage-visual) {
+    width: 100%;
+    height: 68px;
   }
-  .sh-gfx-seal svg,
-  .sh-gfx-lattice svg,
-  .sh-gfx-orbit svg {
-    width: 64px;
-    height: 54px;
+  .section-header .sh-canvas-slot.sh-canvas-seal {
+    width: 120px;
+    height: 78px;
+  }
+  .section-header .sh-canvas-slot.sh-canvas-orbit {
+    width: 100%;
+    height: 72px;
   }
 }
 
@@ -540,8 +763,5 @@ body[data-scroll-dir="up"] .arsenal-domain.revisit-up {
   .section-header, .section-header * {
     transform: none !important;
     transition: none !important;
-  }
-  .gfx-draw-path {
-    stroke-dashoffset: 0 !important;
   }
 }

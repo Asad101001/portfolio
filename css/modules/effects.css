@@ -84,6 +84,13 @@ section::before {
   line-height: 1; pointer-events: none; z-index: 0; user-select: none;
   letter-spacing: -0.04em;
 }
+@media (max-width: 959px) {
+  #projects::before,
+  #about::before,
+  #tech::before {
+    display: none;
+  }
+}
 
 /* Alternating section padding removed; unified layout padding lives in layout.css */
 

@@ -1106,14 +1106,22 @@ export function initHeroMatrix() {
     }
   }
 
-  // ── 10. Interactive Drag-to-Rotate + Click-to-Morph (Right Column Only) ─
+  // ── 10. Interactive Drag-to-Rotate + Click-to-Morph (Desktop Fine Pointer Only) ─
+  // Disabled on mobile/touch viewports so vertical scrolling over the graphic never locks or shifts axis.
   let isDragging = false;
   let dragDistance = 0;
   let prevPointer = { x: 0, y: 0 };
   let hoverOffset = { x: 0, y: 0 };
   let userSpin = { x: 0, y: 0 };
 
+  function isMobileAxisLocked(e) {
+    if (window.innerWidth <= 960) return true;
+    if (e && e.pointerType === 'touch') return true;
+    return Boolean(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  }
+
   anchorEl.addEventListener('pointerdown', (e) => {
+    if (isMobileAxisLocked(e)) return;
     isDragging = true;
     dragDistance = 0;
     prevPointer = { x: e.clientX, y: e.clientY };
@@ -1122,6 +1130,12 @@ export function initHeroMatrix() {
   window.addEventListener(
     'pointermove',
     (e) => {
+      if (isMobileAxisLocked(e)) {
+        isDragging = false;
+        hoverOffset.x = 0;
+        hoverOffset.y = 0;
+        return;
+      }
       if (isDragging) {
         const dx = e.clientX - prevPointer.x;
         const dy = e.clientY - prevPointer.y;
@@ -1142,9 +1156,13 @@ export function initHeroMatrix() {
     { passive: true }
   );
 
-  window.addEventListener('pointerup', () => {
+  window.addEventListener('pointerup', (e) => {
+    if (isMobileAxisLocked(e)) {
+      isDragging = false;
+      return;
+    }
     if (isDragging && dragDistance < 8) {
-      // Short click/tap on the 3D sculpture immediately triggers the golden swirl morph!
+      // Short click on desktop triggers the golden swirl morph
       triggerSwirlMorph();
     }
     isDragging = false;
@@ -1189,6 +1207,12 @@ export function initHeroMatrix() {
     renderer.setPixelRatio(dpr);
     renderer.setSize(width, height);
     cachedHeroHeight = (heroSection && heroSection.offsetHeight) || 720;
+    if (window.innerWidth <= 960) {
+      isDragging = false;
+      hoverOffset.x = 0;
+      hoverOffset.y = 0;
+      userSpin.x = 0;
+    }
   }
 
   let cachedHeroHeight = (heroSection && heroSection.offsetHeight) || 720;

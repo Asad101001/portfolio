@@ -53,7 +53,7 @@
       if (dir === 'up' && p > 0.02 && p < 0.96) {
         dirPill.innerHTML = 'REWINDING &uarr;';
       } else if (p >= 0.50) {
-        dirPill.innerHTML = 'WORK READY &darr;';
+        dirPill.innerHTML = 'EXPLORE &darr;';
       } else {
         dirPill.innerHTML = 'SCROLL &darr;';
       }

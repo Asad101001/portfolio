@@ -8,29 +8,25 @@
 <section id="tech" class="section-in">
     <div class="ambient-glow" aria-hidden="true"></div>
     <div class="section-inner">
-        
-        <div class="section-header">
-            <div class="section-header-left">
-                <span class="section-eyebrow eyebrow-pink">
-                    <span class="eyebrow-dot"></span>
-                    [ 04 // TECH_ARSENAL ]
-                </span>
-                <h2 class="section-title">Technical Arsenal</h2>
-                <p class="section-desc">
-                    Tools and languages I use across <span class="sh-pop pop-pink">web apps</span>, <span class="sh-pop pop-lime">cloud hosting</span>, and AI projects.
-                </p>
+        <div class="section-editorial-stage stage-tech">
+            <div class="section-header stage-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow eyebrow-pink">
+                        <span class="eyebrow-dot"></span>
+                        [ 04 // TECH_ARSENAL ]
+                    </span>
+                    <h2 class="section-title">Technical Arsenal</h2>
+                    <p class="section-desc">
+                        Tools and languages I use across <span class="sh-pop pop-pink">web apps</span>, <span class="sh-pop pop-lime">cloud hosting</span>, and AI projects.
+                    </p>
+                </div>
             </div>
-            <div class="sh-graphic-slot sh-gfx-lattice" aria-hidden="true">
-                <svg viewBox="0 0 96 76" width="96" height="76" fill="none">
-                    <polygon class="iso-outer" points="48,6 82,23 82,53 48,70 14,53 14,23" stroke="#F59E0B" stroke-width="1.6" />
-                    <polygon class="iso-inner" points="48,18 70,29 70,47 48,58 26,47 26,29" stroke="#818CF8" stroke-width="1.4" />
-                    <path d="M48 6 V70 M14 23 L82 53 M82 23 L14 53" stroke="rgba(247,246,243,0.18)" stroke-width="1" />
-                    <circle cx="48" cy="38" r="3.5" fill="#F59E0B" />
-                </svg>
+            <div class="sh-graphic-slot sh-canvas-slot sh-canvas-lattice stage-visual" aria-hidden="true">
+                <canvas id="canvas-gfx-lattice" class="sh-live-canvas" data-gfx="lattice"></canvas>
             </div>
-        </div>
 
-        <!-- Filter Bar -->
+            <div class="stage-content">
+                <!-- Filter Bar -->
         <div class="arsenal-filter-bar" id="arsenal-filter" role="tablist" aria-label="Filter Arsenal by Domain">
             <button class="af-btn active" data-filter="all" role="tab" aria-selected="true" aria-controls="arsenal-grid" id="af-tab-all">All</button>
             <button class="af-btn" data-filter="lang" role="tab" aria-selected="false" aria-controls="arsenal-grid" id="af-tab-lang">Languages</button>
@@ -315,6 +311,8 @@
             </div>
 
         </div><!-- /.arsenal-grid -->
+            </div><!-- /.stage-content -->
+        </div><!-- /.section-editorial-stage -->
 
     </div><!-- /.section-inner -->
 </section>
