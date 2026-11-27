@@ -132,12 +132,16 @@ export default defineConfig({
         demo: path.resolve(__dirname, 'demo.html')
       },
       output: {
-        // Code-split by module — keeps initial bundle minimal
+        // Code-split by module — keeps initial bundle minimal and prevents Three.js from blocking initial paint
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('three')) return 'vendor-three';
+            if (id.includes('chart.js')) return 'vendor-chartjs';
             if (id.includes('gsap')) return 'vendor-gsap';
             return 'vendor';
           }
+          if (id.includes('matrix-hero')) return 'matrix-hero';
+          if (id.includes('section-visuals')) return 'section-visuals';
           if (id.includes('widgets')) return 'widgets';
           if (id.includes('twitter')) return 'twitter';
           if (id.includes('terminal')) return 'terminal';

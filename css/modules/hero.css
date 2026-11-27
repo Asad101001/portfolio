@@ -130,7 +130,6 @@
 .hnp-first {
   color: var(--name-first-color, #121212);
   transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: color, background-position;
 }
 
 .hnp-last,
@@ -140,7 +139,7 @@
   position: relative;
   text-shadow: 0 0 24px var(--name-glow-color, rgba(245, 158, 11, 0.24));
   transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1), text-shadow 0.45s ease, transform 0.4s ease;
-  will-change: color, text-shadow, transform, background-position;
+  will-change: transform;
 }
 
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {

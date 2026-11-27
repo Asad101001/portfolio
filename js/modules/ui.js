@@ -1,13 +1,37 @@
 /* All UI interactions — Section Nav, Keyboard, Arsenal Grid */
 'use strict';
 
-import { initHeroMatrix } from './matrix-hero.js';
+// Progressive dynamic hydration of Hero Matrix 3D art to never block FCP/LCP
+function loadHeroMatrix() {
+  if (window._heroMatrixLoaded) return;
+  window._heroMatrixLoaded = true;
+  import('./matrix-hero.js')
+    .then((mod) => {
+      if (mod && mod.initHeroMatrix) mod.initHeroMatrix();
+    })
+    .catch((err) => console.warn('Hero matrix deferred init:', err));
+}
 
-// Initialize Hero Matrix Generative Art
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initHeroMatrix);
+const isMob = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+if (isMob) {
+  // Mobile: yield main thread completely during initial paint window
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(loadHeroMatrix, { timeout: 1500 });
+  } else {
+    setTimeout(loadHeroMatrix, 1200);
+  }
+  window.addEventListener('touchstart', loadHeroMatrix, { passive: true, once: true });
+  window.addEventListener('scroll', loadHeroMatrix, { passive: true, once: true });
 } else {
-  initHeroMatrix();
+  // Desktop: initialize right after first paint
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => setTimeout(loadHeroMatrix, 40));
+    });
+  } else {
+    requestAnimationFrame(() => setTimeout(loadHeroMatrix, 40));
+  }
 }
 
 // Ensure smoothTransition helper exists as a fallback

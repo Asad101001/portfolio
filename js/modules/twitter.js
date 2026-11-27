@@ -162,20 +162,10 @@ import { CONFIG, escHtml } from './config.js';
             mediaUrl = mediaUrl.replace('http://', 'https://');
         }
 
-        // Convert any Twitter animated gif thumbnails to genuine looping MP4 videos
-        if (mediaUrl && (mediaUrl.includes('tweet_video_thumb') || mediaUrl.includes('tweet_video'))) {
-            const vidMatch = mediaUrl.match(/tweet_video_thumb(?:%2F|\/)([a-zA-Z0-9_-]+)/i) ||
-                mediaUrl.match(/tweet_video(?:%2F|\/)([a-zA-Z0-9_-]+)/i);
-            if (vidMatch) {
-                mediaUrl = `https://video.twimg.com/tweet_video/${vidMatch[1]}.mp4`;
-                mediaType = 'video';
-            }
-        }
-
         if (mediaType === 'video' || (mediaUrl && mediaUrl.endsWith('.mp4'))) {
             return `
                 <div class="x-card-media x-media-video-wrap" onclick="event.stopPropagation()">
-                    <video class="x-video-player" src="${mediaUrl}" autoplay loop muted playsinline webkit-playsinline preload="metadata" referrerpolicy="no-referrer" width="600" height="340" onerror="this.closest('.x-card-media').style.display='none'"><track kind="captions" src="data:text/vtt,WEBVTT" default></video>
+                    <video class="x-video-player" src="${mediaUrl}" loop muted playsinline webkit-playsinline preload="none" referrerpolicy="no-referrer" width="600" height="340" onerror="this.closest('.x-card-media').style.display='none'"><track kind="captions" src="data:text/vtt,WEBVTT" default></video>
                     <span class="x-gif-badge">GIF</span>
                     <div class="x-video-controls">
                         <button type="button" class="x-video-play-btn is-playing" aria-label="Play or pause video">

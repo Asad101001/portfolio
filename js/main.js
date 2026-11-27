@@ -8,7 +8,6 @@ import './modules/ui.js';
 import './modules/mobile.js';
 import './modules/desktop.js';
 import './modules/scroll-choreography.js';
-import './modules/section-visuals.js';
 
 // Fast native fallback for smoothScrollTo before any deferred libraries load
 if (!window.smoothScrollTo) {
@@ -40,6 +39,13 @@ window.addEventListener('load', () => {
   let widgetsLoaded = false;
   let twitterLoaded = false;
   let deviconsLoaded = false;
+  let sectionVisualsLoaded = false;
+
+  const loadSectionVisuals = () => {
+    if (sectionVisualsLoaded) return;
+    sectionVisualsLoaded = true;
+    import('./modules/section-visuals.js');
+  };
 
   const loadWidgets = () => {
     if (!widgetsLoaded) {
@@ -76,19 +82,24 @@ window.addEventListener('load', () => {
     import('./modules/lenis-setup.js');
 
     idleLoad(() => {
+      loadSectionVisuals();
       import('./modules/animations.js');
       import('./modules/canvas.js');
       import('./modules/gsap-animations.js');
-    }, 600);
+    }, 500);
 
     idleLoad(() => {
       import('./modules/terminal.js');
       import('./modules/webgl.js');
     }, 1400);
+  } else {
+    // On mobile, hydrate section visuals on idle or scroll
+    idleLoad(loadSectionVisuals, 800);
   }
 
   // Defer heavy widgets until user interacts or scrolls towards them
   const onUserInteraction = () => {
+    loadSectionVisuals();
     triggerWidgetLoad();
     loadDevicons();
     window.removeEventListener('scroll', onUserInteraction);
