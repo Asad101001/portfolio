@@ -674,23 +674,27 @@ export function initHeroMatrix() {
     { name: 'Hexacopter Drone', gen: buildHexacopter, tiltX: 0.58, tiltY: 0.25 }
   ];
 
-  const targetArrays = FORMATIONS.map((f, fIdx) => {
-    const arr = new Float32Array(PARTICLE_COUNT * 3);
-    const rand = makeRng(4201 + fIdx * 97);
-    f.gen(arr, rand);
+  const targetArraysCache = new Array(FORMATIONS.length);
+  function getTargetArray(idx) {
+    if (!targetArraysCache[idx]) {
+      const arr = new Float32Array(PARTICLE_COUNT * 3);
+      const rand = makeRng(4201 + idx * 97);
+      FORMATIONS[idx].gen(arr, rand);
 
-    // Keep subtle tight aura dots close to the sculpture edges so silhouettes stay crisp
-    for (let i = BASE_COUNT; i < PARTICLE_COUNT; i++) {
-      const srcIdx = Math.floor(rand() * BASE_COUNT) * 3;
-      const spread = 0.03 + rand() * 0.09;
-      const ang1 = rand() * Math.PI * 2;
-      const ang2 = (rand() - 0.5) * Math.PI;
-      arr[i * 3] = arr[srcIdx] + Math.cos(ang1) * Math.cos(ang2) * spread;
-      arr[i * 3 + 1] = arr[srcIdx + 1] + Math.sin(ang2) * spread;
-      arr[i * 3 + 2] = arr[srcIdx + 2] + Math.sin(ang1) * Math.cos(ang2) * spread;
+      // Keep subtle tight aura dots close to the sculpture edges so silhouettes stay crisp
+      for (let i = BASE_COUNT; i < PARTICLE_COUNT; i++) {
+        const srcIdx = Math.floor(rand() * BASE_COUNT) * 3;
+        const spread = 0.03 + rand() * 0.09;
+        const ang1 = rand() * Math.PI * 2;
+        const ang2 = (rand() - 0.5) * Math.PI;
+        arr[i * 3] = arr[srcIdx] + Math.cos(ang1) * Math.cos(ang2) * spread;
+        arr[i * 3 + 1] = arr[srcIdx + 1] + Math.sin(ang2) * spread;
+        arr[i * 3 + 2] = arr[srcIdx + 2] + Math.sin(ang1) * Math.cos(ang2) * spread;
+      }
+      targetArraysCache[idx] = arr;
     }
-    return arr;
-  });
+    return targetArraysCache[idx];
+  }
 
   // ── 5. Stipple Ink & Gold Particle Cloud (Custom ShaderMaterial) ────────
   const positions = new Float32Array(PARTICLE_COUNT * 3);
@@ -732,8 +736,8 @@ export function initHeroMatrix() {
   }
 
   let currentIdx = 0; // Start on the iconic 4D Tesseract silhouette
-  const sourcePositions = new Float32Array(targetArrays[currentIdx]);
-  const targetPositions = new Float32Array(targetArrays[currentIdx]);
+  const sourcePositions = new Float32Array(getTargetArray(currentIdx));
+  const targetPositions = new Float32Array(getTargetArray(currentIdx));
   positions.set(targetPositions);
 
   const particleGeometry = new THREE.BufferGeometry();
@@ -1031,8 +1035,12 @@ export function initHeroMatrix() {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+  let lastChromaticKey = '';
   function updateNameChromaticSync(loopMix, waveProgress, isSwirlingNow) {
     if (!heroNameEl) return;
+    const key = isSwirlingNow ? `swirl_${waveProgress.toFixed(2)}` : `hold_${paletteIdx}`;
+    if (key === lastChromaticKey) return;
+    lastChromaticKey = key;
 
     const curr = NAME_PALETTES[paletteIdx % NAME_PALETTES.length];
     const next = NAME_PALETTES[(paletteIdx + 1) % NAME_PALETTES.length];
@@ -1091,7 +1099,7 @@ export function initHeroMatrix() {
     const posArr = particleGeometry.attributes.position.array;
     sourcePositions.set(posArr);
     currentIdx = nextIdx;
-    targetPositions.set(targetArrays[currentIdx]);
+    targetPositions.set(getTargetArray(currentIdx));
 
     targetTilt.x = FORMATIONS[currentIdx].tiltX;
     targetTilt.y = FORMATIONS[currentIdx].tiltY;
@@ -1451,11 +1459,14 @@ export function initHeroMatrix() {
       }
     }
 
-    particleGeometry.attributes.position.needsUpdate = true;
-    particleGeometry.attributes.aEnergy.needsUpdate = true;
-    shardMeshes.forEach((m) => {
-      m.instanceMatrix.needsUpdate = true;
-    });
+    // Only upload buffer geometry to GPU when particles or shards are actually transitioning
+    if (phaseState === 'SWIRL') {
+      particleGeometry.attributes.position.needsUpdate = true;
+      particleGeometry.attributes.aEnergy.needsUpdate = true;
+      shardMeshes.forEach((m) => {
+        m.instanceMatrix.needsUpdate = true;
+      });
+    }
 
     // ── 14. Update Calligraphic Liquid-Gold Fluid Ribbons (Zero GC) ───────
     const compactMode = !isDesktopStage;
