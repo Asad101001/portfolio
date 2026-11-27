@@ -77,7 +77,7 @@ window.addEventListener('load', () => {
     loadTwitter();
   };
 
-  // Desktop enhancements: defer to idle or first pointer/scroll interaction to guarantee 0ms TBT
+  // Desktop enhancements: defer to first pointer/scroll interaction to guarantee 0ms TBT
   if (!isMobile) {
     let desktopExtrasLoaded = false;
     const loadDesktopExtras = () => {
@@ -89,15 +89,16 @@ window.addEventListener('load', () => {
       import('./modules/canvas.js');
       import('./modules/gsap-animations.js');
 
-      idleLoad(() => {
+      setTimeout(() => {
         import('./modules/terminal.js');
         import('./modules/webgl.js');
-      }, 2500);
+      }, 3000);
     };
 
-    idleLoad(loadDesktopExtras, 4500);
-    window.addEventListener('mousemove', loadDesktopExtras, { passive: true, once: true });
+    window.addEventListener('pointermove', loadDesktopExtras, { passive: true, once: true });
     window.addEventListener('scroll', loadDesktopExtras, { passive: true, once: true });
+    window.addEventListener('keydown', loadDesktopExtras, { passive: true, once: true });
+    setTimeout(loadDesktopExtras, 7000);
   } else {
     // On mobile, hydrate section visuals on first scroll or near projects
     const onMobileScroll = () => {
