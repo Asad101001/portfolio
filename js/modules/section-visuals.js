@@ -37,17 +37,18 @@ function getScrollDirSign() {
   return document.body.getAttribute('data-scroll-dir') === 'up' ? -1 : 1;
 }
 
-function fitCanvas(canvas, state) {
-  const rect = canvas.getBoundingClientRect();
-  if (rect.width < 2 || rect.height < 2) return false;
+function fitCanvas(canvas, state, forcedW, forcedH) {
+  const w = forcedW || canvas.clientWidth || (canvas.getBoundingClientRect ? canvas.getBoundingClientRect().width : 0);
+  const h = forcedH || canvas.clientHeight || (canvas.getBoundingClientRect ? canvas.getBoundingClientRect().height : 0);
+  if (w < 2 || h < 2) return false;
   const dpr = getDprCap();
-  const pw = Math.round(rect.width * dpr);
-  const ph = Math.round(rect.height * dpr);
-  if (canvas.width !== pw || canvas.height !== ph || state.w !== rect.width || state.h !== rect.height) {
+  const pw = Math.round(w * dpr);
+  const ph = Math.round(h * dpr);
+  if (canvas.width !== pw || canvas.height !== ph || state.w !== w || state.h !== h) {
     canvas.width = pw;
     canvas.height = ph;
-    state.w = rect.width;
-    state.h = rect.height;
+    state.w = w;
+    state.h = h;
     state.dpr = dpr;
     return true;
   }
@@ -282,9 +283,7 @@ function createWaveEngine(canvas) {
       state.dirVel = reduced ? 1 : damp(state.dirVel, getScrollDirSign(), 4.5, dt);
       state.hoverMix = damp(state.hoverMix, ptr.inside ? 1 : 0, 5.5, dt);
       if (ptr.inside) {
-        const cRect = canvas.getBoundingClientRect();
-        const hRect = (container || canvas).getBoundingClientRect();
-        const relX = clamp01(((ptr.x + hRect.left) - cRect.left) / w) * w;
+        const relX = clamp01((ptr.nx + 1) * 0.5) * w;
         state.cursorX = state.cursorX < 0 ? relX : damp(state.cursorX, relX, 9.0, dt);
         state.cursorY = damp(state.cursorY, ptr.ny, 9.0, dt);
       }
@@ -805,6 +804,15 @@ function createCurveEngine(canvas) {
     });
   }
 
+  let cachedEducationMix = 1;
+  const updateEducationMix = () => {
+    if (!section) return;
+    const sr = section.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    cachedEducationMix = clamp01((vh * 0.94 - sr.top) / (vh * 0.55));
+  };
+  window.addEventListener('scroll', updateEducationMix, { passive: true });
+
   return {
     resize() { fitCanvas(canvas, state); },
     render(dt, elapsed, reduced) {
@@ -812,12 +820,7 @@ function createCurveEngine(canvas) {
       const { w, h, dpr } = state;
       if (!w || !h) return;
 
-      let targetMix = 1;
-      if (!reduced && section) {
-        const sr = section.getBoundingClientRect();
-        const vh = window.innerHeight || 800;
-        targetMix = clamp01((vh * 0.94 - sr.top) / (vh * 0.55));
-      }
+      const targetMix = reduced ? 1 : cachedEducationMix;
       state.drawMix = reduced ? 1 : damp(state.drawMix, targetMix, 7.5, dt);
       state.dirVel = reduced ? 1 : damp(state.dirVel, getScrollDirSign(), 4.5, dt);
 
@@ -1122,18 +1125,16 @@ export function initSectionVisuals() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       instances.forEach((item) => {
-        item.engine.resize();
-        if (item.visible && isReducedMotion()) {
-          item.engine.render(0.016, performance.now() * 0.001, true);
+        if (item.visible) {
+          item.engine.resize();
+          if (isReducedMotion()) {
+            item.engine.render(0.016, performance.now() * 0.001, true);
+          }
         }
       });
-    }, 80);
+    }, 150);
   };
   window.addEventListener('resize', handleResizeAll, { passive: true });
-  if ('ResizeObserver' in window) {
-    const ro = new ResizeObserver(handleResizeAll);
-    instances.forEach((item) => ro.observe(item.canvas));
-  }
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && instances.some((i) => i.visible)) {

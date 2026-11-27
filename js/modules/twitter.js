@@ -162,6 +162,18 @@ import { CONFIG, escHtml } from './config.js';
             mediaUrl = mediaUrl.replace('http://', 'https://');
         }
 
+        // Twitter blocks direct browser hotlinking of video.twimg.com MP4s with 403 Forbidden.
+        // Convert tweet video to Twitter's official public image thumbnail or discard to prevent console errors.
+        if (mediaUrl.includes('video.twimg.com')) {
+            const vidIdMatch = mediaUrl.match(/tweet_video\/([^.]+)/);
+            if (vidIdMatch && vidIdMatch[1]) {
+                mediaUrl = `https://pbs.twimg.com/tweet_video_thumb/${vidIdMatch[1]}.jpg`;
+                mediaType = 'image';
+            } else {
+                return '';
+            }
+        }
+
         if (mediaType === 'video' || (mediaUrl && mediaUrl.endsWith('.mp4'))) {
             return `
                 <div class="x-card-media x-media-video-wrap" onclick="event.stopPropagation()">

@@ -410,8 +410,9 @@ window.addEventListener('scroll', loadHeroMatrix, { passive: true, once: true })
         if (card) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           card.classList.remove('highlight-target-cert');
-          void card.offsetWidth;
-          card.classList.add('highlight-target-cert');
+          requestAnimationFrame(function() {
+            card.classList.add('highlight-target-cert');
+          });
           setTimeout(function() {
             card.classList.remove('highlight-target-cert');
           }, 3500);
@@ -441,8 +442,9 @@ window.addEventListener('scroll', loadHeroMatrix, { passive: true, once: true })
           if (card) {
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
             card.classList.remove('highlight-target-cert');
-            void card.offsetWidth;
-            card.classList.add('highlight-target-cert');
+            requestAnimationFrame(function() {
+              card.classList.add('highlight-target-cert');
+            });
             setTimeout(function() { card.classList.remove('highlight-target-cert'); }, 3500);
           }
         } else {

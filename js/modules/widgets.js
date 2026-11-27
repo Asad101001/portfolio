@@ -624,7 +624,8 @@ function _starsHTML(starsStr) {
             if (seasonEpisodes.length > 0 && tvConf.episode != null) {
               var percent = Math.round((tvConf.episode / seasonEpisodes.length) * 100);
               progressWrap.style.display = 'block';
-              progressFill.style.width = percent + '%';
+              progressFill.style.transform = 'scaleX(' + (percent / 100) + ')';
+              progressFill.style.width = '100%';
               
               var existingStamp = document.getElementById('tv-completed-stamp');
               if (percent === 100 && showEnded) {
@@ -699,7 +700,8 @@ function _starsHTML(starsStr) {
           if (progressWrap && progressFill) {
             if (data.progress != null) {
               progressWrap.style.display = 'block';
-              progressFill.style.width   = data.progress + '%';
+              progressFill.style.transform = 'scaleX(' + (data.progress / 100) + ')';
+              progressFill.style.width   = '100%';
               
               var existingStamp = document.getElementById('tv-completed-stamp');
               if (data.progress === 100 && data.showEnded === true) {
@@ -938,7 +940,7 @@ function _starsHTML(starsStr) {
       resultBadgeText = '<span class="result-dot"></span>LIVE';
     }
 
-    var barcaLogo = 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png';
+    var barcaLogo = '/images/fcb-logo.webp';
     var oppLogo   = (opp && opp.team && opp.team.logos && opp.team.logos[0] && opp.team.logos[0].href)
                  || (opp && opp.team && opp.team.logo)
                  || 'https://a.espncdn.com/i/teamlogos/soccer/500/default.webp';
@@ -1198,7 +1200,7 @@ function _starsHTML(starsStr) {
   /** Render an offseason / no-match fallback card so the widget is never stuck on "Loading scores..." */
   function _renderBarcaOffseason() {
     if (!barcaItem) return;
-    var barcaLogo = 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png';
+    var barcaLogo = '/images/fcb-logo.webp';
     // Determine approximate La Liga season start (mid-August)
     var now = new Date();
     var seasonYear = now.getMonth() >= 7 ? now.getFullYear() + 1 : now.getFullYear();

@@ -5,7 +5,10 @@
 /* Google Fonts are loaded asynchronously via HTML link tags in page heads to avoid render-blocking CSS chains */
 @font-face {
   font-family: 'devicon';
+  font-style: normal;
+  font-weight: normal;
   font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/devicons/devicon@latest/fonts/devicon.ttf?sdufl0') format('truetype');
 }
 
 /* ── Reset & Box Sizing ─────────────────────────────────── */

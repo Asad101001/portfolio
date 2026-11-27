@@ -14,9 +14,12 @@
 .tv-progress-fill {
     height: 100%;
     background: var(--cyan);
-    width: 0%;
+    width: 100%;
+    transform-origin: left center;
+    transform: scaleX(0);
     border-radius: 2px;
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
     box-shadow: 0 0 8px var(--cyan);
 }
 

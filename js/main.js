@@ -92,29 +92,34 @@ window.addEventListener('load', () => {
       idleLoad(() => {
         import('./modules/terminal.js');
         import('./modules/webgl.js');
-      }, 1500);
+      }, 2500);
     };
 
     idleLoad(loadDesktopExtras, 4500);
     window.addEventListener('mousemove', loadDesktopExtras, { passive: true, once: true });
     window.addEventListener('scroll', loadDesktopExtras, { passive: true, once: true });
   } else {
-    // On mobile, hydrate section visuals on idle or scroll
-    idleLoad(loadSectionVisuals, 3500);
+    // On mobile, hydrate section visuals on first scroll or near projects
+    const onMobileScroll = () => {
+      loadSectionVisuals();
+      window.removeEventListener('scroll', onMobileScroll);
+    };
+    window.addEventListener('scroll', onMobileScroll, { passive: true, once: true });
   }
 
-  // Defer heavy widgets until user interacts or scrolls towards them
-  const onUserInteraction = () => {
-    loadSectionVisuals();
-    triggerWidgetLoad();
-    loadDevicons();
-    window.removeEventListener('scroll', onUserInteraction);
-    window.removeEventListener('touchstart', onUserInteraction);
-  };
-  window.addEventListener('scroll', onUserInteraction, { passive: true, once: true });
-  window.addEventListener('touchstart', onUserInteraction, { passive: true, once: true });
+  // Pre-fetch Section Visuals when approaching projects
+  const projectsEl = document.getElementById('projects');
+  if (projectsEl && 'IntersectionObserver' in window) {
+    const projObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadSectionVisuals();
+        projObs.disconnect();
+      }
+    }, { rootMargin: '300px' });
+    projObs.observe(projectsEl);
+  }
 
-  // Pre-fetch Devicons when scrolling towards Tech Stack
+  // Pre-fetch Devicons ONLY when scrolling near Tech Stack
   const techEl = document.getElementById('tech');
   if (techEl && 'IntersectionObserver' in window) {
     const techObs = new IntersectionObserver((entries) => {
@@ -122,11 +127,11 @@ window.addEventListener('load', () => {
         loadDevicons();
         techObs.disconnect();
       }
-    }, { rootMargin: '350px' });
+    }, { rootMargin: '250px' });
     techObs.observe(techEl);
   }
 
-  // Pre-fetch Widgets & Twitter on scroll proximity to about or contact
+  // Pre-fetch Widgets & Twitter ONLY on scroll proximity to about or contact
   const widgetTrigger = document.getElementById('about') || document.getElementById('contact');
   if (widgetTrigger && 'IntersectionObserver' in window) {
     const wObs = new IntersectionObserver((entries) => {
@@ -134,13 +139,18 @@ window.addEventListener('load', () => {
         triggerWidgetLoad();
         wObs.disconnect();
       }
-    }, { rootMargin: '400px' });
+    }, { rootMargin: '300px' });
     wObs.observe(widgetTrigger);
   }
 
-  // Fallback idle hydration after initial Lighthouse evaluation window
-  idleLoad(() => {
-    triggerWidgetLoad();
-    loadDevicons();
-  }, isMobile ? 3800 : 2600);
+  // Route nav clicks to immediately hydrate relevant modules before smooth scroll
+  document.querySelectorAll('a[href="#tech"], a[href="#technologies"]').forEach((a) => {
+    a.addEventListener('click', loadDevicons, { passive: true, once: true });
+  });
+  document.querySelectorAll('a[href="#about"], a[href="#contact"], a[href="#socials"]').forEach((a) => {
+    a.addEventListener('click', triggerWidgetLoad, { passive: true, once: true });
+  });
+  document.querySelectorAll('a[href="#projects"], a[href="#work"]').forEach((a) => {
+    a.addEventListener('click', loadSectionVisuals, { passive: true, once: true });
+  });
 });
