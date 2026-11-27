@@ -458,31 +458,6 @@
   border-radius: 2px;
 }
 
-.hmc-caption-row {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.hmc-shape-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(18, 18, 18, 0.56);
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(18, 18, 18, 0.12);
-  padding: 3px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
 /* Responsive (Mobile styles are authored comprehensively in css/mobile.css) */
 @media (max-width: 960px) {
   #hero {

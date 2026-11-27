@@ -4,9 +4,9 @@
    ============================================================ */
 
 (function initMobile() {
-  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth <= 1024;
+  const isTouch = ('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth <= 1024;
   
-  if (isTouch || window._isMobile) {
+  if (window._isMobile || isTouch) {
     document.body.classList.add('is-mobile-device');
     
     // Ensure body and html are 100% scrollable on mobile

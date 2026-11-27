@@ -732,13 +732,6 @@ export function initHeroMatrix() {
   }
 
   let currentIdx = 0; // Start on the iconic 4D Tesseract silhouette
-  const shapeLabelEl = document.getElementById('hmc-shape-label');
-  const updateShapeLabel = (idx) => {
-    if (!shapeLabelEl || !FORMATIONS[idx]) return;
-    const num = String(idx + 1).padStart(2, '0');
-    shapeLabelEl.textContent = `${num} / ${FORMATIONS[idx].name.toUpperCase()} · CLICK TO MORPH`;
-  };
-  updateShapeLabel(currentIdx);
   const sourcePositions = new Float32Array(targetArrays[currentIdx]);
   const targetPositions = new Float32Array(targetArrays[currentIdx]);
   positions.set(targetPositions);
@@ -847,12 +840,12 @@ export function initHeroMatrix() {
         : shardPalette[3 + Math.floor(shardRand() * 2)];
     shardMeshes[typeIdx].setColorAt(localIdx, color);
 
-    const isHaloOrbiter = i % 5 === 0; // ~14 shards orbit gracefully even at rest
+    const isHaloOrbiter = i % 6 === 0; // ~12 delicate outer orbiters at rest; all 72 erupt on swirl
     shardMeta.push({
       typeIdx,
       localIdx,
       anchorParticle: Math.floor((i / TOTAL_SHARDS) * BASE_COUNT),
-      restScale: isHaloOrbiter ? 0.15 + shardRand() * 0.10 : 0.10 + shardRand() * 0.08,
+      restScale: isHaloOrbiter ? 0.09 + shardRand() * 0.05 : 0.001,
       swirlScale: 0.60 + shardRand() * 0.55,
       isHaloOrbiter,
       orbitRadius: 1.50 + shardRand() * 0.65,
@@ -1072,7 +1065,7 @@ export function initHeroMatrix() {
   // Phase timeline (7.4s total per formation -> swirl -> next formation):
   //   'HOLD'     (3.5s) -> crisp shape rotating gently
   //   'SWIRL'    (3.2s) -> dissolve + golden vortex sweep across hero + converge into next shape
-  const HOLD_DURATION = prefersReducedMotion ? 5500 : 3500;
+  const HOLD_DURATION = prefersReducedMotion ? 7000 : 5200;
   const MORPH_DURATION = prefersReducedMotion ? 1400 : 3200;
 
   let phaseState = 'HOLD';
@@ -1102,7 +1095,6 @@ export function initHeroMatrix() {
 
     targetTilt.x = FORMATIONS[currentIdx].tiltX;
     targetTilt.y = FORMATIONS[currentIdx].tiltY;
-    updateShapeLabel(currentIdx);
 
     phaseState = 'SWIRL';
     stateStartTime = performance.now();
@@ -1203,10 +1195,34 @@ export function initHeroMatrix() {
   updateViewportCalibration();
   requestAnimationFrame(updateViewportCalibration);
 
-  // ── 12. Off-Screen Visibility Pause (IntersectionObserver) ─────────────
+  // ── 12. Off-Screen Visibility Pause (IntersectionObserver) & Scroll Morph ─
   let isVisible = true;
   let animationFrameId = null;
-  const clock = new THREE.Clock();
+  const engineStartTime = performance.now();
+  let scrollMorphProgress = 0; // 0 inside hero top -> 1 leaving hero bottom
+  let scrollDirection = 1;
+  let lastHeroScrollY = window.scrollY || 0;
+  let wasBelowHero = false;
+
+  // Direction-aware scroll link: down dissolves/spins outward, up re-enters with fresh morph
+  window.addEventListener(
+    'scroll',
+    () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      const h = (heroSection && heroSection.offsetHeight) || 720;
+      scrollDirection = y >= lastHeroScrollY ? 1 : -1;
+      lastHeroScrollY = y;
+      scrollMorphProgress = Math.max(0, Math.min(1, y / Math.max(360, h * 0.85)));
+
+      if (scrollMorphProgress > 0.72) {
+        wasBelowHero = true;
+      } else if (wasBelowHero && scrollDirection < 0 && scrollMorphProgress < 0.42) {
+        wasBelowHero = false;
+        triggerSwirlMorph();
+      }
+    },
+    { passive: true }
+  );
 
   if ('IntersectionObserver' in window && heroSection) {
     const observer = new IntersectionObserver(
@@ -1233,13 +1249,13 @@ export function initHeroMatrix() {
     }
     animationFrameId = requestAnimationFrame(animate);
 
-    const elapsed = clock.getElapsedTime();
+    const elapsed = (now - engineStartTime) * 0.001;
     const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
     lastFrameTime = now;
 
     // Gentle autonomous rotation & smooth tilt interpolation toward active shape
     if (!isDragging && !prefersReducedMotion) {
-      userSpin.y += dt * 0.22;
+      userSpin.y += dt * (0.22 + scrollMorphProgress * 0.35 * scrollDirection);
       userSpin.x *= 0.96;
     }
 
@@ -1248,7 +1264,9 @@ export function initHeroMatrix() {
 
     sculptureGroup.rotation.x = currentTilt.x;
     sculptureGroup.rotation.y = currentTilt.y;
-    sculptureGroup.position.y = Math.sin(elapsed * 1.35) * 0.045;
+    const scaleScroll = 1.0 - scrollMorphProgress * 0.14;
+    sculptureGroup.scale.setScalar(scaleScroll);
+    sculptureGroup.position.y = Math.sin(elapsed * 1.35) * 0.045 - scrollMorphProgress * 0.35;
     sculptureGroup.updateMatrixWorld(true);
 
     const posArr = particleGeometry.attributes.position.array;

@@ -1,0 +1,286 @@
+/* ════════════════════════════════════════════════════════════════
+   css/modules/scroll-morph.css
+   Bidirectional Scroll-to-Morph Stage & Scroll-Direction Reveals
+   Design Language: Neo-Brutalist Cream (#F7F6F3), Ink (#121212), Amber (#F59E0B)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Sticky Work Transition Morph Stage ───────────────────── */
+section.wt-stage {
+  position: relative;
+  height: 165vh;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  contain: none !important;
+  content-visibility: visible !important;
+  z-index: 3;
+}
+
+.wt-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #F7F6F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(18, 18, 18, 0.08);
+  border-bottom: 1.5px solid rgba(18, 18, 18, 0.14);
+  --wt-p: 0;
+  --wt-dark: 0;
+}
+
+#wt-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 4x4 Modular Tiles */
+.wt-tiles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  pointer-events: none;
+}
+
+.wt-tile {
+  background: #121212;
+  border: 1px solid rgba(245, 158, 11, 0.14);
+  transform: scale(0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.wt-tile.wt-tile-amber {
+  background: linear-gradient(135deg, #161616 0%, #1C1917 75%, rgba(245, 158, 11, 0.22) 100%);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+/* Architectural 3D Floor Plane */
+.wt-perspective-grid {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -18%;
+  height: 55%;
+  z-index: 3;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(245, 158, 11, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.18) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(650px) rotateX(64deg) translateY(calc(32px - var(--wt-floor, 0) * 32px));
+  opacity: calc(var(--wt-floor, 0) * 0.65);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 88%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 88%);
+}
+
+/* Centered Typography */
+.wt-copy {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #121212;
+  transform: translate3d(0, calc((1 - var(--wt-copy-in, 0)) * 22px), 0);
+  opacity: calc(0.18 + var(--wt-copy-in, 0) * 0.82);
+  transition: color 0.25s ease;
+  pointer-events: none;
+}
+
+.wt-sticky.is-ink .wt-copy {
+  color: #F7F6F3;
+}
+
+.wt-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1.5px solid rgba(245, 158, 11, 0.48);
+  color: #B45309;
+}
+
+.wt-sticky.is-ink .wt-kicker {
+  color: #FCD34D;
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+.wt-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.wt-sub {
+  font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+  line-height: 1.55;
+  margin: 0;
+  opacity: 0.76;
+  max-width: 48ch;
+}
+
+.wt-dir-pill {
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(18, 18, 18, 0.18);
+  background: rgba(255, 255, 255, 0.75);
+  color: #121212;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.wt-sticky.is-ink .wt-dir-pill {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.55);
+  color: #F59E0B;
+}
+
+.wt-exit-curtain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18vh;
+  z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(to top, #F7F6F3 0%, transparent 100%);
+  opacity: var(--wt-exit, 0);
+}
+
+/* ── 2. Direction-Aware Case Studies & Section Morphs ────────── */
+.case-study-card .cs-img-wrap {
+  position: relative;
+}
+
+.case-study-card .cs-img-wrap::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F59E0B, #D97706);
+  transform-origin: left center;
+  transform: scaleX(var(--card-p, 0));
+  z-index: 4;
+  pointer-events: none;
+}
+
+.case-study-card .cs-img {
+  transform: translate3d(0, calc((var(--card-p, 0.5) - 0.5) * -12px), 0)
+             scale(calc(1.03 - var(--card-p, 0) * 0.025));
+  will-change: transform;
+}
+
+.case-study-card.revisit-up .cs-actions {
+  border-top-color: rgba(245, 158, 11, 0.55);
+}
+
+.case-study-card.revisit-up {
+  border-color: rgba(245, 158, 11, 0.65) !important;
+}
+
+/* Directional Divider Diamond Rotation */
+.section-divider.in-view::after {
+  transform: scale(1) rotate(calc(var(--div-p, 0) * 42deg));
+}
+
+/* Directional About Split Asymmetric Parallax (Desktop) */
+@media (min-width: 861px) {
+  .about-col {
+    transform: translate3d(0, calc(var(--about-shift, 0) * -6px), 0);
+  }
+  .concurrent-focus-col {
+    transform: translate3d(0, calc(var(--about-shift, 0) * 6px), 0);
+  }
+}
+
+/* Upward Re-entry Highlights on Technical Arsenal & Education */
+body[data-scroll-dir="up"] .arsenal-domain.revisit-up {
+  border-color: rgba(245, 158, 11, 0.65) !important;
+  box-shadow: 5px 5px 0px #F59E0B !important;
+}
+
+body[data-scroll-dir="up"] .arsenal-domain.revisit-up .adom-title {
+  color: #92400E;
+}
+
+.edu-progress-bar-fill {
+  transform-origin: left center;
+  transform: scaleX(var(--edu-p, 1));
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body[data-scroll-dir="up"] .edu-stair-item.revisit-up .edu-year {
+  color: #92400E;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 158, 11, 0.6);
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  section.wt-stage {
+    height: 138vh;
+  }
+  .wt-tiles {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+  .wt-perspective-grid {
+    background-size: 36px 36px;
+  }
+  .wt-copy {
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section.wt-stage {
+    height: auto;
+    min-height: 46vh;
+  }
+  .wt-sticky {
+    position: relative;
+    height: auto;
+    min-height: 46vh;
+    padding: 64px 0;
+  }
+  .wt-tile {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+  }
+  .wt-sticky .wt-copy {
+    opacity: 1 !important;
+    transform: none !important;
+    color: #F7F6F3;
+  }
+}

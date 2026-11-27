@@ -7,6 +7,7 @@ import './modules/theme.js';
 import './modules/ui.js';
 import './modules/mobile.js';
 import './modules/desktop.js';
+import './modules/scroll-choreography.js';
 
 // Fast native fallback for smoothScrollTo before any deferred libraries load
 if (!window.smoothScrollTo) {

@@ -13,6 +13,11 @@ html, body {
   background: #F7F6F3 !important;
   background-image: none !important;
   color: #121212;
+  overflow-x: clip !important;
+}
+
+body {
+  overflow-y: visible !important;
 }
 
 body::before,

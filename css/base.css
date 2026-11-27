@@ -46,9 +46,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 110px;
   font-size: 17px; /* Bumped base size from 16px to 17px for improved global readability */
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: clip;
+  overflow-y: scroll;
 }
 html.lenis,
 html.lenis body {
@@ -65,10 +64,9 @@ body {
   background: #F7F6F3 !important;
   background-image: none !important;
   color: var(--text, #121212);
-  overflow-x: hidden;
-  overflow-y: auto !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
   line-height: 1.65;
-  -webkit-overflow-scrolling: touch;
   transition: color 0.3s ease;
 }
 
@@ -80,8 +78,8 @@ h1, h2, h3, h4, h5, h6, .hero-name, .section-title, .drawer-title {
 /* Guard: Prevent external tools or overlay classes from permanently freezing page scroll */
 html:root body.antigravity-scroll-lock,
 body.antigravity-scroll-lock {
-  overflow: visible !important;
-  overflow-y: auto !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
 }
 body.theme-transitioning,
 body.theme-transitioning * {
