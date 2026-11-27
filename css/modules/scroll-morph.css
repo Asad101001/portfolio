@@ -1,23 +1,171 @@
 /* ════════════════════════════════════════════════════════════════
    css/modules/scroll-morph.css
-   Obsidian Black Editorial Section Headers + Unique Fast GPU Effects
-   & Direction-Aware Scroll Feedback (Scroll Down vs Scroll Up)
+   1. Focused 4-Color Palette: Cream (#F7F6F3), Ink (#121212),
+      Warm Amber (#F59E0B), Deep Indigo (#6366F1)
+   2. Fast Reversible Sticky 8-Tile Morph Stage (#work-transition)
+   3. Obsidian Editorial Headers + Unique Graphics + Offset Layouts
    ════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Exquisite Obsidian Ink Header Card (All 6 Sections) ───── */
+/* ── 1. Fast, Reversible Sticky Interlude (#work-transition) ───── */
+section.wt-stage {
+  position: relative;
+  height: 118vh;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  contain: none !important;
+  content-visibility: visible !important;
+  z-index: 3;
+}
+
+.wt-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #F7F6F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(18, 18, 18, 0.08);
+  border-bottom: 1.5px solid #121212;
+  transition: background-color 0.25s ease;
+}
+
+.wt-tiles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  pointer-events: none;
+}
+
+.wt-tile {
+  background: #121212;
+  border: 1px solid rgba(245, 158, 11, 0.16);
+  transform: scale3d(0, 0, 1);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.wt-tile.wt-tile-accent {
+  background: linear-gradient(135deg, #121212 0%, #1B1B1E 75%, rgba(99, 102, 241, 0.20) 100%);
+  border-color: rgba(245, 158, 11, 0.30);
+}
+
+.wt-grid-floor {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -16%;
+  height: 48%;
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(245, 158, 11, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.14) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(600px) rotateX(64deg) translate3d(0, calc(24px - var(--wt-floor, 0) * 24px), 0);
+  opacity: calc(var(--wt-floor, 0) * 0.7);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 85%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 85%);
+}
+
+.wt-copy {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #121212;
+  transform: translate3d(0, calc((1 - var(--wt-copy, 0)) * 16px), 0);
+  transition: color 0.22s ease;
+  pointer-events: none;
+}
+
+.wt-sticky.is-ink .wt-copy {
+  color: #F7F6F3;
+}
+
+.wt-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1.5px solid rgba(245, 158, 11, 0.50);
+  color: #B45309;
+}
+
+.wt-sticky.is-ink .wt-kicker {
+  color: #FCD34D;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.60);
+}
+
+.wt-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.wt-sub {
+  font-size: clamp(0.92rem, 1.4vw, 1.08rem);
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.78;
+}
+
+.wt-dir-pill {
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(18, 18, 18, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  color: #121212;
+}
+
+.wt-sticky.is-ink .wt-dir-pill {
+  background: rgba(99, 102, 241, 0.16);
+  border-color: rgba(165, 180, 252, 0.45);
+  color: #FCD34D;
+}
+
+/* ── 2. Unified 4-Color Obsidian Headers (All 6 Main Sections) ─ */
 section:not(#hero) .section-header {
   background: #121212;
-  background-image: radial-gradient(rgba(247, 246, 243, 0.065) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(247, 246, 243, 0.06) 1px, transparent 1px);
   background-size: 20px 20px;
   border: 1.5px solid #121212;
   border-radius: 16px;
   box-shadow: 5px 5px 0px #F59E0B;
-  padding: 26px 32px;
+  padding: 26px 30px;
   margin-bottom: 34px;
   position: relative;
   overflow: hidden;
+  display: flex;
   align-items: center;
-  transform: translate3d(0, 0, 0);
+  justify-content: space-between;
+  gap: 20px;
 }
 
 section:not(#hero) .section-title {
@@ -28,56 +176,35 @@ section:not(#hero) .section-desc {
   color: rgba(247, 246, 243, 0.78);
 }
 
-section:not(#hero) .section-eyebrow.eyebrow-purple {
-  background: rgba(167, 139, 250, 0.16);
-  border-color: rgba(167, 139, 250, 0.45);
-  color: #C4B5FD;
-}
-section:not(#hero) .section-eyebrow.eyebrow-cyan {
-  background: rgba(34, 211, 238, 0.14);
-  border-color: rgba(34, 211, 238, 0.45);
-  color: #67E8F9;
-}
+/* Strict 2-accent mapping: Amber + Deep Indigo */
+section:not(#hero) .section-eyebrow.eyebrow-amber,
+section:not(#hero) .section-eyebrow.eyebrow-lime,
 section:not(#hero) .section-eyebrow.eyebrow-pink {
-  background: rgba(244, 114, 182, 0.14);
-  border-color: rgba(244, 114, 182, 0.45);
-  color: #F9A8D4;
-}
-section:not(#hero) .section-eyebrow.eyebrow-lime {
-  background: rgba(163, 230, 53, 0.16);
-  border-color: rgba(163, 230, 53, 0.48);
-  color: #BEF264;
-}
-section:not(#hero) .section-eyebrow.eyebrow-amber {
-  background: rgba(245, 158, 11, 0.18);
-  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.50);
   color: #FCD34D;
 }
 
-section:not(#hero) .sh-pop.pop-purple {
-  background: rgba(167, 139, 250, 0.22);
-  color: #DDD6FE;
-  border-color: rgba(167, 139, 250, 0.45);
+section:not(#hero) .section-eyebrow.eyebrow-purple,
+section:not(#hero) .section-eyebrow.eyebrow-cyan {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(129, 140, 248, 0.52);
+  color: #C7D2FE;
 }
-section:not(#hero) .sh-pop.pop-lime {
-  background: rgba(163, 230, 53, 0.20);
-  color: #D9F99D;
-  border-color: rgba(163, 230, 53, 0.45);
-}
-section:not(#hero) .sh-pop.pop-cyan {
-  background: rgba(34, 211, 238, 0.20);
-  color: #A5F3FC;
-  border-color: rgba(34, 211, 238, 0.42);
-}
+
+section:not(#hero) .sh-pop.pop-amber,
+section:not(#hero) .sh-pop.pop-lime,
 section:not(#hero) .sh-pop.pop-pink {
-  background: rgba(244, 114, 182, 0.20);
-  color: #FBCFE8;
-  border-color: rgba(244, 114, 182, 0.42);
-}
-section:not(#hero) .sh-pop.pop-amber {
-  background: rgba(245, 158, 11, 0.22);
+  background: rgba(245, 158, 11, 0.20);
   color: #FDE68A;
   border-color: rgba(245, 158, 11, 0.45);
+}
+
+section:not(#hero) .sh-pop.pop-purple,
+section:not(#hero) .sh-pop.pop-cyan {
+  background: rgba(99, 102, 241, 0.22);
+  color: #C7D2FE;
+  border-color: rgba(129, 140, 248, 0.48);
 }
 
 section:not(#hero) .view-all-link {
@@ -91,83 +218,116 @@ section:not(#hero) .view-all-link:hover {
   border-color: #F59E0B;
 }
 
-/* ── 2. Shared Fast GPU Entrance Baseline (Never hides on re-scroll) ─ */
-section:not(#hero) .section-header .section-eyebrow,
-section:not(#hero) .section-header .section-title,
-section:not(#hero) .section-header .section-desc,
-section:not(#hero) .section-header .section-meta-right {
-  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.36s ease;
+/* Graphic Slots inside Headers */
+.sh-graphic-wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
 }
 
-/* ── EFFECT 02 (#projects): Amber Modular Tile Shutter Split ───── */
+.sh-graphic-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.92;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+
+/* ── 3. Per-Section Distinct Reversible Effects & Offset Layouts ─ */
+
+/* Shared smooth reversible baseline (text never vanishes) */
+section:not(#hero) .section-header .section-eyebrow,
+section:not(#hero) .section-header .section-title,
+section:not(#hero) .section-header .section-desc {
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+}
+
+.gfx-draw-path {
+  stroke-dashoffset: 185;
+  transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-header.sh-active .gfx-draw-path {
+  stroke-dashoffset: 0;
+}
+
+/* 02. Selected Work (#projects): Pipeline Draw + Shutter Bar + Asymmetric Case Study Stagger */
 #projects .section-header::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(245, 158, 11, 0.20) 0px,
-    rgba(245, 158, 11, 0.20) 2px,
-    #18181B 2px,
-    #18181B 84px
-  );
+  background: repeating-linear-gradient(90deg, rgba(245, 158, 11, 0.18) 0px, rgba(245, 158, 11, 0.18) 2px, #161619 2px, #161619 96px);
   transform-origin: top center;
   transform: scaleY(1);
-  opacity: 0.92;
+  opacity: 0.85;
   z-index: 3;
   pointer-events: none;
-  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
 }
-
 #projects .section-header.sh-active::before {
   transform: scaleY(0);
   opacity: 0;
 }
-
 #projects .section-header.sh-dir-up::before {
   transform-origin: bottom center;
 }
 
-/* ── EFFECT 03 (#about): Dual Horizon Opposing Slide ───────────── */
+@media (min-width: 960px) {
+  #projects.in-view .case-study-card:nth-child(odd),
+  #projects .case-study-card.s-child:nth-child(odd) {
+    transform: translate3d(-12px, 0, 0);
+  }
+  #projects.in-view .case-study-card:nth-child(even),
+  #projects .case-study-card.s-child:nth-child(even) {
+    transform: translate3d(12px, 0, 0);
+  }
+}
+
+/* 03. About (#about): Oscilloscope Sine Wave + Opposing Text + Vertical Asymmetric Split */
 #about .section-header:not(.sh-active) .section-title {
   transform: translate3d(-14px, 0, 0);
-  opacity: 0.92;
 }
 #about .section-header:not(.sh-active) .section-desc {
   transform: translate3d(14px, 0, 0);
-  opacity: 0.92;
 }
-#about .section-header::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #06B6D4, #F59E0B);
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+#about .section-header .wave-primary,
+#about .section-header .wave-secondary {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
-#about .section-header.sh-active::after {
-  transform: scaleX(1);
+#about .section-header.sh-active.sh-dir-down .wave-primary {
+  transform: translate3d(8px, 0, 0);
 }
-#about .section-header.sh-dir-up::after {
-  transform-origin: right center;
+#about .section-header.sh-active.sh-dir-down .wave-secondary {
+  transform: translate3d(-8px, 0, 0);
 }
-#about .section-header.sh-dir-up.sh-active .section-eyebrow {
-  transform: translate3d(4px, 0, 0);
+#about .section-header.sh-active.sh-dir-up .wave-primary {
+  transform: translate3d(-8px, 0, 0);
+}
+#about .section-header.sh-active.sh-dir-up .wave-secondary {
+  transform: translate3d(8px, 0, 0);
 }
 
-/* ── EFFECT 04 (#tech): Diagonal Prism Light Sweep & Mask ─────── */
+@media (min-width: 901px) {
+  #about.in-view .about-col,
+  #about .about-col.s-child {
+    transform: translate3d(0, -10px, 0);
+  }
+  #about.in-view .concurrent-focus-col,
+  #about .concurrent-focus-col.s-child {
+    transform: translate3d(0, 12px, 0);
+  }
+}
+
+/* 04. Tech Arsenal (#tech): Isometric Matrix Cube + Diagonal Beam Sweep + Offset Domain Stack */
 #tech .section-header::before {
   content: '';
   position: absolute;
   top: -20%;
   bottom: -20%;
   left: -40%;
-  width: 45%;
-  background: linear-gradient(105deg, transparent 0%, rgba(236, 72, 153, 0.28) 45%, rgba(245, 158, 11, 0.36) 55%, transparent 100%);
+  width: 40%;
+  background: linear-gradient(105deg, transparent 0%, rgba(99, 102, 241, 0.25) 45%, rgba(245, 158, 11, 0.30) 55%, transparent 100%);
   transform: translate3d(-100%, 0, 0) skewX(-18deg);
   pointer-events: none;
   z-index: 2;
@@ -179,18 +339,48 @@ section:not(#hero) .section-header .section-meta-right {
 #tech .section-header.sh-dir-up.sh-active::before {
   transform: translate3d(-120%, 0, 0) skewX(18deg);
 }
-#tech .section-header:not(.sh-active) .section-title {
-  transform: translate3d(0, 8px, 0);
-  opacity: 0.92;
+.sh-gfx-lattice svg {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#tech .section-header.sh-active.sh-dir-down .sh-gfx-lattice svg {
+  transform: rotate(30deg);
+}
+#tech .section-header.sh-active.sh-dir-up .sh-gfx-lattice svg {
+  transform: rotate(-30deg);
 }
 
-/* ── EFFECT 05 (#credentials): Vault Precision Corner Brackets ─ */
+@media (min-width: 960px) {
+  #tech .arsenal-domain.in-view:nth-child(odd) {
+    transform: translate3d(-12px, 0, 0);
+  }
+  #tech .arsenal-domain.in-view:nth-child(even) {
+    transform: translate3d(12px, 0, 0);
+  }
+}
+
+/* 05. Credentials (#credentials): Editorial 2-Col Split + Vault Seal Brackets & Rotating Rings */
+@media (min-width: 960px) {
+  .credentials-editorial-split {
+    display: grid;
+    grid-template-columns: 0.92fr 1.38fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .credentials-editorial-split .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0 !important;
+    height: 100%;
+    justify-content: space-between;
+  }
+}
+
 #credentials .section-header::before,
 #credentials .section-header::after {
   content: '';
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   pointer-events: none;
   transition: transform 0.36s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   z-index: 2;
@@ -198,17 +388,17 @@ section:not(#hero) .section-header .section-meta-right {
 #credentials .section-header::before {
   top: 12px;
   left: 12px;
-  border-top: 2px solid #A3E635;
-  border-left: 2px solid #A3E635;
-  transform: translate3d(-8px, -8px, 0);
+  border-top: 2px solid #F59E0B;
+  border-left: 2px solid #F59E0B;
+  transform: translate3d(-6px, -6px, 0);
   opacity: 0.35;
 }
 #credentials .section-header::after {
   bottom: 12px;
   right: 12px;
-  border-bottom: 2px solid #F59E0B;
-  border-right: 2px solid #F59E0B;
-  transform: translate3d(8px, 8px, 0);
+  border-bottom: 2px solid #818CF8;
+  border-right: 2px solid #818CF8;
+  transform: translate3d(6px, 6px, 0);
   opacity: 0.35;
 }
 #credentials .section-header.sh-active::before,
@@ -216,11 +406,26 @@ section:not(#hero) .section-header .section-meta-right {
   transform: translate3d(0, 0, 0);
   opacity: 1;
 }
-#credentials .section-header.sh-dir-up.sh-active::before {
-  border-color: #F59E0B;
+
+.seal-ring-outer,
+.seal-ring-inner {
+  transform-origin: 44px 44px;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#credentials .section-header.sh-active.sh-dir-down .seal-ring-outer {
+  transform: rotate(45deg);
+}
+#credentials .section-header.sh-active.sh-dir-down .seal-ring-inner {
+  transform: rotate(-45deg);
+}
+#credentials .section-header.sh-active.sh-dir-up .seal-ring-outer {
+  transform: rotate(-45deg);
+}
+#credentials .section-header.sh-active.sh-dir-up .seal-ring-inner {
+  transform: rotate(45deg);
 }
 
-/* ── EFFECT 06 (#education): Stepped Trajectory Progress Bar ─── */
+/* 06. Education (#education): Trajectory Curve + Bottom Progression Beam */
 #education .section-header::after {
   content: '';
   position: absolute;
@@ -228,10 +433,10 @@ section:not(#hero) .section-header .section-meta-right {
   right: 0;
   bottom: 0;
   height: 3.5px;
-  background: linear-gradient(90deg, #F59E0B 0%, #FCD34D 50%, #10B981 100%);
+  background: linear-gradient(90deg, #F59E0B 0%, #818CF8 100%);
   transform-origin: left center;
   transform: scaleX(0);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
 #education .section-header.sh-active::after {
   transform: scaleX(1);
@@ -239,49 +444,35 @@ section:not(#hero) .section-header .section-meta-right {
 #education .section-header.sh-dir-up::after {
   transform-origin: right center;
 }
-#education .section-header:not(.sh-active) .section-eyebrow {
-  transform: translate3d(0, 8px, 0);
+
+.edu-progress-bar-fill {
+  transform-origin: left center;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
-#education .section-header:not(.sh-active) .section-desc {
-  transform: translate3d(0, 12px, 0);
+body[data-scroll-dir="up"] .edu-stair-item:not(.in-view-ed) .edu-progress-bar-fill {
+  transform: scaleX(0.75);
 }
 
-/* ── EFFECT 07 (#contact): Center Iris Expand & Radar Glow Ring ─ */
+/* 07. Contact (#contact): Iris Expand + Orbital Signal SVG */
 #contact .section-header {
   transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
 }
 #contact .section-header:not(.sh-active) {
-  transform: scaleX(0.96);
+  transform: scaleX(0.97);
 }
-#contact .section-header::after {
-  content: '';
-  position: absolute;
-  right: -36px;
-  top: 50%;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(167, 139, 250, 0.35);
-  box-shadow: 0 0 0 22px rgba(245, 158, 11, 0.08);
-  transform: translateY(-50%) scale(0.65);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+.sh-gfx-orbit svg {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
-#contact .section-header.sh-active::after {
-  transform: translateY(-50%) scale(1);
-  opacity: 1;
+#contact .section-header.sh-active.sh-dir-down .sh-gfx-orbit svg {
+  transform: rotate(18deg);
 }
-#contact .section-header.sh-dir-up.sh-active::after {
-  transform: translateY(-50%) scale(1.12);
+#contact .section-header.sh-active.sh-dir-up .sh-gfx-orbit svg {
+  transform: rotate(-18deg);
 }
 
-/* ── 3. Direction-Aware Card & Divider Accents (Zero Layout Reads) ─ */
-.section-divider {
-  transition: opacity 0.35s ease;
-}
+/* Section Divider Rotation & Revisit Highlights */
 .section-divider::after {
-  transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 body[data-scroll-dir="down"] .section-divider.in-view::after {
   transform: scale(1) rotate(45deg);
@@ -296,33 +487,61 @@ body[data-scroll-dir="up"] .arsenal-domain.revisit-up {
   box-shadow: 5px 5px 0px #F59E0B !important;
 }
 
-body[data-scroll-dir="up"] .case-study-card.revisit-up .cs-actions {
-  border-top-color: rgba(245, 158, 11, 0.55);
-}
-
-/* ── 4. Mobile Adjustments ───────────────────────────────────── */
+/* ── 4. Mobile & Low-End Adjustments ─────────────────────────── */
 @media (max-width: 768px) {
+  section.wt-stage {
+    height: 112vh;
+  }
+  .wt-tiles {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
   section:not(#hero) .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
     padding: 18px 16px !important;
     border-radius: 12px !important;
     box-shadow: 3.5px 3.5px 0px #F59E0B !important;
     margin-bottom: 20px !important;
+    gap: 12px !important;
   }
-  #contact .section-header::after {
-    width: 90px;
-    height: 90px;
-    right: -24px;
+  .sh-graphic-wrap {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .sh-graphic-slot svg {
+    max-width: 132px;
+    height: auto;
+  }
+  .sh-gfx-seal svg,
+  .sh-gfx-lattice svg,
+  .sh-gfx-orbit svg {
+    width: 64px;
+    height: 54px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  section:not(#hero) .section-header,
-  section:not(#hero) .section-header * {
+  section.wt-stage {
+    height: auto;
+    min-height: 36vh;
+  }
+  .wt-sticky {
+    position: relative;
+    height: auto;
+    padding: 48px 0;
+    background: #121212;
+  }
+  .wt-tile, .wt-sticky .wt-copy {
     transform: none !important;
     opacity: 1 !important;
+    color: #F7F6F3;
+  }
+  .section-header, .section-header * {
+    transform: none !important;
     transition: none !important;
   }
-  #projects .section-header::before {
-    display: none !important;
+  .gfx-draw-path {
+    stroke-dashoffset: 0 !important;
   }
 }
