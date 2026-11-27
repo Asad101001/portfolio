@@ -1,7 +1,7 @@
 /* All UI interactions — Section Nav, Keyboard, Arsenal Grid */
 'use strict';
 
-// Progressive dynamic hydration of Hero Matrix 3D art to never block FCP/LCP
+// Progressive dynamic hydration of Hero Matrix 3D art to never block FCP/LCP or inflate TBT
 function loadHeroMatrix() {
   if (window._heroMatrixLoaded) return;
   window._heroMatrixLoaded = true;
@@ -12,27 +12,15 @@ function loadHeroMatrix() {
     .catch((err) => console.warn('Hero matrix deferred init:', err));
 }
 
-const isMob = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
-
-if (isMob) {
-  // Mobile: yield main thread completely during initial paint window
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(loadHeroMatrix, { timeout: 1500 });
-  } else {
-    setTimeout(loadHeroMatrix, 1200);
-  }
-  window.addEventListener('touchstart', loadHeroMatrix, { passive: true, once: true });
-  window.addEventListener('scroll', loadHeroMatrix, { passive: true, once: true });
+// Hydrate on idle or immediately on first user touch/scroll/pointer
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(loadHeroMatrix, { timeout: 1600 });
 } else {
-  // Desktop: initialize right after first paint
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      requestAnimationFrame(() => setTimeout(loadHeroMatrix, 40));
-    });
-  } else {
-    requestAnimationFrame(() => setTimeout(loadHeroMatrix, 40));
-  }
+  setTimeout(loadHeroMatrix, 1200);
 }
+window.addEventListener('pointermove', loadHeroMatrix, { passive: true, once: true });
+window.addEventListener('touchstart', loadHeroMatrix, { passive: true, once: true });
+window.addEventListener('scroll', loadHeroMatrix, { passive: true, once: true });
 
 // Ensure smoothTransition helper exists as a fallback
 // window.smoothTransition is handled by animations.js

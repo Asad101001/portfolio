@@ -77,24 +77,30 @@ window.addEventListener('load', () => {
     loadTwitter();
   };
 
-  // Immediate desktop-only enhancements (smooth scroll + non-blocking visual modules)
+  // Desktop enhancements: defer to idle or first pointer/scroll interaction to guarantee 0ms TBT
   if (!isMobile) {
-    import('./modules/lenis-setup.js');
-
-    idleLoad(() => {
+    let desktopExtrasLoaded = false;
+    const loadDesktopExtras = () => {
+      if (desktopExtrasLoaded) return;
+      desktopExtrasLoaded = true;
+      import('./modules/lenis-setup.js');
       loadSectionVisuals();
       import('./modules/animations.js');
       import('./modules/canvas.js');
       import('./modules/gsap-animations.js');
-    }, 500);
 
-    idleLoad(() => {
-      import('./modules/terminal.js');
-      import('./modules/webgl.js');
-    }, 1400);
+      idleLoad(() => {
+        import('./modules/terminal.js');
+        import('./modules/webgl.js');
+      }, 1500);
+    };
+
+    idleLoad(loadDesktopExtras, 2200);
+    window.addEventListener('mousemove', loadDesktopExtras, { passive: true, once: true });
+    window.addEventListener('scroll', loadDesktopExtras, { passive: true, once: true });
   } else {
     // On mobile, hydrate section visuals on idle or scroll
-    idleLoad(loadSectionVisuals, 800);
+    idleLoad(loadSectionVisuals, 1800);
   }
 
   // Defer heavy widgets until user interacts or scrolls towards them
